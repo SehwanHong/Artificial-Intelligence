@@ -21,3 +21,10 @@ If we could approximate ![H(x)](https://latex.codecogs.com/svg.image?H(x)), then
 Since the residual function is ![F(x) = H(x) - x](https://latex.codecogs.com/svg.image?F(x)=H(x)-x), original function ![H(x)](https://latex.codecogs.com/svg.image?H(x)) should be calculated as ![H(x) = F(x) + x](https://latex.codecogs.com/svg.image?H(x)=F(x)+x).
 
 With the residual Learning reformulation, if the identity mapping is optimal, the solvers may simply derive the weights of the multiple non-linear layers to zero.
+
+#### Identity mapping by shortcuts
+
+Residual Block is defined as ![y=F(x,W_l)+x](https://latex.codecogs.com/svg.image?y=F(x,W_l)+x). In this equation, x is input layer and y is output layer.![F(x,W_l)](https://latex.codecogs.com/svg.image?F(x,W_l)) is residual mapping to be learned.
+
+
+
