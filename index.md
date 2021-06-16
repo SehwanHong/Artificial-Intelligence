@@ -1,18 +1,16 @@
-# Residual neural network
-
-## [Deep residual learning for image recognition](https://arxiv.org/pdf/1512.03385.pdf)
+# [Deep residual learning for image recognition](https://arxiv.org/pdf/1512.03385.pdf)
 
 Author of the paper [Deep residual learning for image recognition](https://arxiv.org/pdf/1512.03385.pdf) have introduced Residual Unit because deeper neural networks are more difficult to train. Thus presents a new framwork that makes training easier which is Residual Unit.
 
-### Why residual Network
+## Why residual Network
 
 When deeper network converges, degradtion problem is emarged. In other word, gradient vanishing problem occurs. As layer increases the derivitive of the value decreases significantly, thus output has less or sometime have no effect on the weights.
 
 Degradation is not caused by overfitting, and using more layers leads to higher training error.
 
-### What is Deep Residual Learning.
+## What is Deep Residual Learning.
 
-#### Residual Learning.
+### Residual Learning.
 
 Let us consider ![H(x)](https://latex.codecogs.com/svg.image?H(x)) as underlying mapping to be fit by a few stacked layers. ![x](https://latex.codecogs.com/svg.image?x) is an input of the layers.  
 
@@ -22,7 +20,7 @@ Since the residual function is ![F(x) = H(x) - x](https://latex.codecogs.com/svg
 
 With the residual Learning reformulation, if the identity mapping is optimal, the solvers may simply derive the weights of the multiple non-linear layers to zero.
 
-#### Identity mapping by shortcuts
+### Identity mapping by shortcuts
  
 Residual Block is defined as ![y=F(x,W_l)+x](https://latex.codecogs.com/svg.image?y=F(x,W_l)+x). In this equation, x is input layer and y is output layer. ![F(x,W_l)](https://latex.codecogs.com/svg.image?F(x,W_l)) is residual mapping to be learned.
 
@@ -34,9 +32,9 @@ For example, if using single layer, equation would be ![singlelayer](https://lat
 
 If using two layers, equation would be ![doublelayer](https://latex.codecogs.com/svg.image?y&space;=&space;W_2&space;\cdot&space;W_1&space;\cdot&space;x&space;&plus;&space;x).
 
-#### Network Architectures
+### Network Architectures
 
-##### Plain Network
+#### Plain Network
 
 Plain network is inspired by the philosophy of VGG networks
 
@@ -45,7 +43,7 @@ Plain network is inspired by the philosophy of VGG networks
 
 Downsampling is done by using convolutional layer that have stride of 2
 
-##### Residual Network
+#### Residual Network
 
 Compared to Plain network, difference is that residual network have shortcut connects
 
