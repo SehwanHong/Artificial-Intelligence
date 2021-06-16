@@ -34,5 +34,24 @@ For example, if using single layer, equation would be ![singlelayer](https://lat
 
 If using two layers, equation would be ![doublelayer](https://latex.codecogs.com/svg.image?y&space;=&space;W_2&space;\cdot&space;W_1&space;\cdot&space;x&space;&plus;&space;x).
 
+#### Network Architectures
 
+##### Plain Network
+
+Plain network is inspired by the philosophy of VGG networks
+
+ 1. For the same output feature map size, the layers have the same number of filters.  
+ 2. If the feature map size is halved, the number of filter is doubled so as to preserve the ime complexity per layer
+
+Downsampling is done by using convolutional layer that have stride of 2
+
+##### Residual Network
+
+Compared to Plain network, difference is that residual network have shortcut connects
+
+Identity shortcut is inserted when input and output have same dimensions
+
+When dimensions increase, consider two options:
+ 1. Using identity mapping with extra zero entried for increasing dimensions
+ 2. The projection shortcuts in equation 2, which is added weights for identity matrix. For example, 1x1 convolutions with stride 2 to match dimensions.
 
