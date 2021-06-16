@@ -18,3 +18,6 @@ Let us consider ![H(x)](https://latex.codecogs.com/svg.image?H(x)) as underlying
 
 If we could approximate ![H(x)](https://latex.codecogs.com/svg.image?H(x)), then we could also approximate the residual function which is ![F(x) = H(x) - x](https://latex.codecogs.com/svg.image?F(x)=H(x)-x).
 
+Since the residual function is ![F(x) = H(x) - x](https://latex.codecogs.com/svg.image?F(x)=H(x)-x), original function ![H(x)](https://latex.codecogs.com/svg.image?H(x)) should be calculated as ![H(x) = F(x) + x](https://latex.codecogs.com/svg.image?H(x)=F(x)+x).
+
+With the residual Learning reformulation, if the identity mapping is optimal, the solvers may simply derive the weights of the multiple non-linear layers to zero.
