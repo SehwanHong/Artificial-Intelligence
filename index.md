@@ -23,8 +23,16 @@ Since the residual function is ![F(x) = H(x) - x](https://latex.codecogs.com/svg
 With the residual Learning reformulation, if the identity mapping is optimal, the solvers may simply derive the weights of the multiple non-linear layers to zero.
 
 #### Identity mapping by shortcuts
+ 
+Residual Block is defined as ![y=F(x,W_l)+x](https://latex.codecogs.com/svg.image?y=F(x,W_l)+x). In this equation, x is input layer and y is output layer. ![F(x,W_l)](https://latex.codecogs.com/svg.image?F(x,W_l)) is residual mapping to be learned.
 
-Residual Block is defined as ![y=F(x,W_l)+x](https://latex.codecogs.com/svg.image?y=F(x,W_l)+x). In this equation, x is input layer and y is output layer.![F(x,W_l)](https://latex.codecogs.com/svg.image?F(x,W_l)) is residual mapping to be learned.
+There is a different way to define residual block. The equation is ![y=F(x,W_l)+W_s\dotx](https://latex.codecogs.com/svg.image?y=F(x,W_l)&plus;W_s&space;\cdot&space;x). Where ![W_s](https://latex.codecogs.com/svg.image?W_s) is used when matching dimensions.
+
+Also for ![F(x,W_l)](https://latex.codecogs.com/svg.image?F(x,W_l)) ![W_i](https://latex.codecogs.com/svg.image?W_i) could be multiple layers.
+
+For example, if using single layer, equation would be ![singlelayer](https://latex.codecogs.com/svg.image?y&space;=&space;W_1*x&space;&plus;&space;x).
+
+If using two layers, equation would be ![doublelayer](https://latex.codecogs.com/svg.image?y&space;=&space;W_2*W_1*x&space;&plus;&space;x).
 
 
 
