@@ -14,4 +14,7 @@ Degradation is not caused by overfitting, and using more layers leads to higher 
 
 #### Residual Learning.
 
-Let us consider $H(x)$ as underlying mapping to be fit by a few stacked layers. $x$ is 
+Let us consider ![H(x)](https://latex.codecogs.com/svg.image?H(x)) as underlying mapping to be fit by a few stacked layers. ![x](https://latex.codecogs.com/svg.image?x) is an input of the layers.  
+
+If we could approximate ![H(x)](https://latex.codecogs.com/svg.image?H(x)), then we could also approximate the residual function which is ![F(x) = H(x) - x](https://latex.codecogs.com/svg.image?F(x)=H(x)-x).
+
