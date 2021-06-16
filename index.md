@@ -53,3 +53,8 @@ When dimensions increase, consider two options:
  1. Using identity mapping with extra zero entried for increasing dimensions
  2. The projection shortcuts in equation 2, which is added weights for identity matrix. For example, 1x1 convolutions with stride 2 to match dimensions.
 
+
+## Reference
+https://m.blog.naver.com/laonple/221259295035  
+https://sike6054.github.io/blog/paper/first-post/  
+https://github.com/taki0112/ResNet-Tensorflow  
