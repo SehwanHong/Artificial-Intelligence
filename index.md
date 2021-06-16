@@ -30,9 +30,9 @@ There is a different way to define residual block. The equation is ![y=F(x,W_l)+
 
 Also for ![F(x,W_l)](https://latex.codecogs.com/svg.image?F(x,W_l)) ![W_i](https://latex.codecogs.com/svg.image?W_i) could be multiple layers.
 
-For example, if using single layer, equation would be ![singlelayer](https://latex.codecogs.com/svg.image?y&space;=&space;W_1*x&space;&plus;&space;x).
+For example, if using single layer, equation would be ![singlelayer](https://latex.codecogs.com/svg.image?y&space;=&space;W_1&space;\cdot&space;x&space;&plus;&space;x).
 
-If using two layers, equation would be ![doublelayer](https://latex.codecogs.com/svg.image?y&space;=&space;W_2*W_1*x&space;&plus;&space;x).
+If using two layers, equation would be ![doublelayer](https://latex.codecogs.com/svg.image?y&space;=&space;W_2&space;\cdot&space;W_1&space;\cdot&space;x&space;&plus;&space;x).
 
 
 
