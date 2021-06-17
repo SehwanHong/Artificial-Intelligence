@@ -6,6 +6,6 @@ In this paper, author analyzes the propagation formulation behind the residual b
 
 The original Residual Unit in [\[1\]](https://arxiv.org/pdf/1512.03385.pdf) performs following computation
 
-![Residual Block Equation](residualblockequation.png)
+![Residual Block Equation](residualblockequation.PNG)
 
 Here ![x_l](https://latex.codecogs.com/svg.image?x_l) represents the input feature to the l-th Residual Unit. Also ![W_l](https://latex.codecogs.com/svg.image?W_l) is a set of weights and biases associated with the l-th Residual Unit, where it could have up to K number of layers.
