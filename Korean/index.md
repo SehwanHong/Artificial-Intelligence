@@ -18,42 +18,42 @@
 
 나머지값이 ![F(x) = H(x) - x](https://latex.codecogs.com/svg.image?F(x)=H(x)-x)이고, 원래의 함수값이 ![H(x)](https://latex.codecogs.com/svg.image?H(x)) 이니 이 두개의 식을 이용해서 우리는 원래 구하고자 했던 함수 값 ![H(x) = F(x) + x](https://latex.codecogs.com/svg.image?H(x)=F(x)+x)를 구할 수 있습니다.
 
-With the residual Learning reformulation, if the identity mapping is optimal, the solvers may simply derive the weights of the multiple non-linear layers to zero.
+만약 ![H(x)](https://latex.codecogs.com/svg.image?H(x))이 identity mapping 이라면, ![H(x)=x](https://latex.codecogs.com/svg.image?H(x)=x) 라고 가정을 한다면, ![H(x)](https://latex.codecogs.com/svg.image?H(x))가 x 값을 가지게 만드는 것 보다는,  ![F(x) = 0](https://latex.codecogs.com/svg.image?F(x)=0)으로 만드는 것이 더 쉬울 것이라는 직관에 따라서 만들어진 것입니다.
 
 ## Identity mapping by shortcuts
  
-Residual Block is defined as ![y=F(x,W_l)+x](https://latex.codecogs.com/svg.image?y=F(x,W_l)+x). In this equation, x is input layer and y is output layer. ![F(x,W_l)](https://latex.codecogs.com/svg.image?F(x,W_l)) is residual mapping to be learned.
+Residual Block은 ![y=F(x,W_l)+x](https://latex.codecogs.com/svg.image?y=F(x,W_l)+x)라는 수식으로 정의 된다. 이 수식에서 x는 입력값, y 는 출력값을 의미하며, ![F(x,W_l)](https://latex.codecogs.com/svg.image?F(x,W_l))는 학습되어야 될 나머지 값이다.
 
-There is a different way to define residual block. The equation is ![y=F(x,W_l)+W_s\dotx](https://latex.codecogs.com/svg.image?y=F(x,W_l)&plus;W_s&space;\cdot&space;x). Where ![W_s](https://latex.codecogs.com/svg.image?W_s) is used when matching dimensions.
+이 Residual Block은 여러가지 방면으로 해석될 수 있는데, 위에서 적혀져 있던 기본적인 수식으로 나타내거나, ![y=F(x,W_l)+W_s\dotx](https://latex.codecogs.com/svg.image?y=F(x,W_l)&plus;W_s&space;\cdot&space;x)으로 나타낼 수 있는데 여기서 ![W_s](https://latex.codecogs.com/svg.image?W_s) 입력값과 출력값의 dimension을 맞춰 주는데 사용하고 있습니다..
 
-Also for ![F(x,W_l)](https://latex.codecogs.com/svg.image?F(x,W_l)) ![W_i](https://latex.codecogs.com/svg.image?W_i) could be multiple layers.
+그리고 ![F(x,W_l)](https://latex.codecogs.com/svg.image?F(x,W_l))에서 ![W_i](https://latex.codecogs.com/svg.image?W_i)는 여러가지 레이어를 포함할 수 있습니다.
 
-For example, if using single layer, equation would be ![singlelayer](https://latex.codecogs.com/svg.image?y&space;=&space;W_1&space;\cdot&space;x&space;&plus;&space;x).
+예를 들어 만약 하나의 레이어를 사용한다고 가정한다면, ![singlelayer](https://latex.codecogs.com/svg.image?y&space;=&space;W_1&space;\cdot&space;x&space;&plus;&space;x)라는 식을 구할 수 있습니다.
 
-If using two layers, equation would be ![doublelayer](https://latex.codecogs.com/svg.image?y&space;=&space;W_2&space;\cdot&space;W_1&space;\cdot&space;x&space;&plus;&space;x).
+그리고 만약 F(x)가 두개의 레이어를 사용한다고 하면 ![doublelayer](https://latex.codecogs.com/svg.image?y&space;=&space;W_2&space;\cdot&space;W_1&space;\cdot&space;x&space;&plus;&space;x)으로 표현할 수 있습니다.
 
-## Network Architectures
+## 인공신경망 구조
 
-### Plain Network
+### 기본적인 신경망 구조
 
-Plain network is inspired by the philosophy of VGG networks
+Plain network는 VGG networks를 기반으로 해서 만들어졌습니다. 기본적인 2개의 Rule은 아래에 표현되어 있습니다.
 
- 1. For the same output feature map size, the layers have the same number of filters.  
- 2. If the feature map size is halved, the number of filter is doubled so as to preserve the ime complexity per layer
+ 1. 만약 입력과 출력의 Channel 수가 같다면, Convolution layer도 같은 filter의 수를 가진다.  
+ 2. 만약 필터의 사이즈가 반으로 줄어든다면, 필터의 갯수는 두배로 상승합니다. 이는 각 레이어당 time complexity를 동일하게 유지하기 위해서 입니다.
 
-Downsampling is done by using convolutional layer that have stride of 2
+Downsampling은 convolutional layer 레이어에서 stride값을 2로 만들어 사용합니다.
 
 ![plainNetwork](../plainNetwork.png)
 
 ### Residual Network
 
-Compared to Plain network, difference is that residual network have shortcut connects
+Plain network와 비교했을 때, residual network는 shortcut connects을 가집니다.
 
-Identity shortcut is inserted when input and output have same dimensions
+Identity shortcut는 입력과 출력의 dimension이 같을 때 사용합니다.
 
-When dimensions increase, consider two options:
- 1. Using identity mapping with extra zero entried for increasing dimensions
- 2. The projection shortcuts in equation 2, which is added weights for identity matrix. For example, 1x1 convolutions with stride 2 to match dimensions.
+만약 출력값의 dimension이 상승한 경우, 두 가지 옵션을 사용해서 해결할수 있습니다.:
+ 1. identity mapping을 사용하고, 부족한 dimension은 0으로 padding 합니다.
+ 2. 위에 표기된 weight 값을 사용해서 projection을 통한 dimension matching을 해줍니다.
 
 ![residualNetwork](../residualNetwork.png)
 
