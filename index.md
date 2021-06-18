@@ -43,6 +43,8 @@ Plain network is inspired by the philosophy of VGG networks
 
 Downsampling is done by using convolutional layer that have stride of 2
 
+![plainNetwork](./plainNetwork.png)
+
 ### Residual Network
 
 Compared to Plain network, difference is that residual network have shortcut connects
@@ -53,6 +55,7 @@ When dimensions increase, consider two options:
  1. Using identity mapping with extra zero entried for increasing dimensions
  2. The projection shortcuts in equation 2, which is added weights for identity matrix. For example, 1x1 convolutions with stride 2 to match dimensions.
 
+![residualNetwork](./residualNetwork.png)
 
 ## Reference
 https://m.blog.naver.com/laonple/221259295035  
