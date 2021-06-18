@@ -39,7 +39,7 @@ If using two layers, equation would be ![doublelayer](https://latex.codecogs.com
 Plain network is inspired by the philosophy of VGG networks
 
  1. For the same output feature map size, the layers have the same number of filters.  
- 2. If the feature map size is halved, the number of filter is doubled so as to preserve the ime complexity per layer
+ 2. If the feature map size is halved, the number of filter is doubled so as to preserve the time complexity per layer
 
 Downsampling is done by using convolutional layer that have stride of 2
 
