@@ -21,7 +21,9 @@ Since the residual function is ![F(x) = H(x) - x](https://latex.codecogs.com/svg
 With the residual Learning reformulation, if the identity mapping is optimal, the solvers may simply derive the weights of the multiple non-linear layers to zero.
 
 ## Identity mapping by shortcuts
- 
+
+![residual Block](./residualBlock.png)
+
 Residual Block is defined as ![y=F(x,W_l)+x](https://latex.codecogs.com/svg.image?y=F(x,W_l)+x). In this equation, x is input layer and y is output layer. ![F(x,W_l)](https://latex.codecogs.com/svg.image?F(x,W_l)) is residual mapping to be learned.
 
 There is a different way to define residual block. The equation is ![y=F(x,W_l)+W_s\dotx](https://latex.codecogs.com/svg.image?y=F(x,W_l)&plus;W_s&space;\cdot&space;x). Where ![W_s](https://latex.codecogs.com/svg.image?W_s) is used when matching dimensions.
@@ -56,6 +58,10 @@ When dimensions increase, consider two options:
  2. The projection shortcuts in equation 2, which is added weights for identity matrix. For example, 1x1 convolutions with stride 2 to match dimensions.
 
 ![residualNetwork](./residualNetwork.png)
+
+# Experiment
+
+Experiment is done using CIFAR-10 and Tensorflow. Code is available in [GitHub Repository](https://github.com/SehwanHong/ResNet).
 
 ## Reference
 https://m.blog.naver.com/laonple/221259295035  
