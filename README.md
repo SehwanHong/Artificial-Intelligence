@@ -14,9 +14,12 @@ For more detail about how these network works, please Read following websites:
 # How to run these python Files.
 
 ```Cmd Line
-python resnet.py [number of Residual block] [Directory for Tensorboard logfile]
+python resnet.py [N] [D]
+```
+```Cmd Line
+python resnetPrenorm.py [N] [D]
 ```
 
-```Cmd Line
-python resnetPrenorm.py [number of Residual block] [Directory for Tensorboard logfile]
-```
+N is Number of Residual Block. If not entered assume it is 3.
+D is Directory for Tensorboard logs. If not entered create log file in ./logs/
+But if D is entered log file is created in ./logs/D/
