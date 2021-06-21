@@ -73,7 +73,9 @@ Author want to kind different arrangement of activation function that would incr
 
 Above image present different activation methods and their error rate using CIFAR 10 data and ResNet 110 and ResNet 164. ResNet 110 uses two ![3 x 3](https://latex.codecogs.com/svg.image?3\times3) convolutional layers. On the other hand, ResNet 164 substitute two ![3 x 3](https://latex.codecogs.com/svg.image?3\times3) convolutional layers with ![1 x 1](https://latex.codecogs.com/svg.image?1\times1) convolutional layer and ![3 x 3](https://latex.codecogs.com/svg.image?3\times3) convolutional layer and ![1 x 1](https://latex.codecogs.com/svg.image?1\times1) convolutional layer.
 
-![ResNet110](ResNet110.png) ![ResNet164](ResNet164.png)
+ResNet 110 Residual Unit | ResNet 164 Residual Unit
+:-----------------------:|:---------------------------:
+![ResNet110](ResNet110.png) | ![ResNet164](ResNet164.png)
 
 Left image present the Residual Unti of ResNet 110, and Right image represent the Residual Unit of ResNet 164. Both ResNet110 and ResNet 164 have same 18 blocks of residual Unit but ResNet 164 have more layers since ResNet 164 have 3 Layers inside Residual Unit while Resnet 110 ahve only 1 layers.
 
