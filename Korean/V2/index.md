@@ -1,20 +1,20 @@
 # [Identity Mapping in Deep Residual Networks](https://arxiv.org/pdf/1603.05027.pdf)
 
-In this paper, author analyzes the propagation formulation behind the residual building blocks. Also author talks about different types of skip connections including identity mapping and after-addition activation.
+이 논문에서 저자는 Residual block의 propagation formulation을 분석했습니다. 또한 Skip connection을 하는 다양한 방식들을 분석했습다. 또한 다양한 activation 방식을 통해서 차이점들을 확인했습니다.
 
 # Analysis of Deep Residual Networks.
 
-The original Residual Unit in [\[1\]](https://arxiv.org/pdf/1512.03385.pdf) performs following computation
+논문 [\[1\]](https://arxiv.org/pdf/1512.03385.pdf)에서 표현한 Residual Unit은 아래와 같은 수식을 표현할 수 있습니다.
 
 ![Residual Block Equation](../../V2/residualblockequation.PNG)
 
-Here ![x_l](https://latex.codecogs.com/svg.image?x_l) represents the input feature to the l-th Residual Unit. Also ![W_l](https://latex.codecogs.com/svg.image?W_l) is a set of weights and biases associated with the l-th Residual Unit, where it could have up to K number of layers.
+여기서 ![x_l](https://latex.codecogs.com/svg.image?x_l)은 Residual Unit에서 l번째 입력값입니다. ![W_l](https://latex.codecogs.com/svg.image?W_l)는  l번째 Residual Unit와 연관된 모든 weights와 bias값의 총 집합입니다. 이때 하나의 Residual Unit은 K 겟수의 layer들을 가질수 있습니다.
 
-If we set the function h as an identity mapping and function f also as an identity mapping, then we could assume following equation.
+만약 우리가 function h를 identity mapping 이라고 가정하고 function f 또한 identity mapping 가정한다면, 아래와 같은 수식으로 변환할 수 있습니다.
 
 ![nextLayer](../../V2/nextLayer.png)
 
-Recusively implimenting following equation from k = 1 to L, we will have:
+이 수식을 k = 1 부터 L 제귀적으로 합친다면, 우리는 아래와 같은 수식으로 바꿀 수 있습니다:
 
 ![recursiveEquation](../../V2/recursiveEquation.png)
 
