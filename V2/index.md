@@ -49,3 +49,32 @@ Unlike Identity(equation5), equation 8 have a term ![product term](https://latex
 
 Thus if the layer is large, then using weighted value for shortcut would cause information propagation and impede the training procedure.
 
+## Experiment on Skip Connections
+
+Looking into above equations, as the layer increases, using skip connection that is not identity matrics would suffer decrease in the training error rate. Thus, author of the paper presents different shortcut variations.
+
+![Differnt types of shortcuts](./DifferentTypeOfShortcut.png)
+
+Using different shortcut methods, Author examines difference between the skip connection methods and test error.
+
+![Skip conncetion and their result](./SkipConnectionAndResult.png)
+
+As shown in this Table, addind different layers to Skip Connection reports higher error rate compared to the identity mapping. Therefore, identity mapping is the best way to use the skip connections.
+
+# On the Usage of Activation Function.
+
+Experiment above talks about different techniques in Skip Connection. In this section, author moves attention from skip Connection to activation function. Finding the best order for activation function.
+
+Author want to kind different arrangement of activation function that would increase the accuracy.
+
+## Experiment on activation
+
+![Experiment On Activation](ExperimentOnActivation.png)
+
+Above image present different activation methods and their error rate using CIFAR 10 data and ResNet 110 and ResNet 164. ResNet 110 uses two ![3 x 3](https://latex.codecogs.com/svg.image?3\times3) convolutional layers. On the other hand, ResNet 164 substitute two ![3 x 3](https://latex.codecogs.com/svg.image?3\times3) convolutional layers with ![1 x 1](https://latex.codecogs.com/svg.image?1\times1) convolutional layer and ![3 x 3](https://latex.codecogs.com/svg.image?3\times3) convolutional layer and ![1 x 1](https://latex.codecogs.com/svg.image?1\times1) convolutional layer.
+
+![ResNet110](ResNet110.png) ![ResNet164](ResNet164.png)
+
+Left image present the Residual Unti of ResNet 110, and Right image represent the Residual Unit of ResNet 164. Both ResNet110 and ResNet 164 have same 18 blocks of residual Unit but ResNet 164 have more layers since ResNet 164 have 3 Layers inside Residual Unit while Resnet 110 ahve only 1 layers.
+
+As above image displays, using preactivation have marginal increase in Test error.
