@@ -68,6 +68,19 @@ def sch(epoch, lr):
         lr = .0001
     return lr
 
+def largeSch(epoch, lr):
+    if epoch < 2:
+        lr = .01
+    elif epoch < 80:
+        lr = .1
+    elif epoch < 120:
+        lr = .01
+    elif epoch < 160:
+        lr = .001
+    elif epoch < 180:
+        lr = .0001
+    return lr
+
 def TestError(y_true, y_pred):
     temp = tf.keras.metrics.categorical_accuracy(y_true, y_pred)
     return (1 - temp) * 100
@@ -96,8 +109,8 @@ if (__name__ == "__main__"):
         lr_callback = tf.keras.callbacks.LearningRateScheduler(largeSch)
     
     resnet.compile(optimizer,
-                        tf.keras.losses.CategoricalCrossentropy(),
-                       metrics=['acc', TestError])
+                   tf.keras.losses.CategoricalCrossentropy(),
+                   metrics=['acc', TestError])
 
 
     log_dir += resnet.name
