@@ -69,15 +69,20 @@ def sch(epoch, lr):
     return lr
 
 def TestError(y_true, y_pred):
-    temp = tf.keras.metrics.mean_absolute_error(y_true, y_pred)
-    return temp * 100
+    temp = tf.keras.metrics.categorical_accuracy(y_true, y_pred)
+    return (1 - temp) * 100
 
 if (__name__ == "__main__"):
     train_data, train_labels, test_data, test_labels = load_cifar10()
 
     num = 3
-    if (len(sys.argv) >= 2):
+    log_dir = "logs/"
+    if (len(sys.argv) == 2):
         num = int(sys.argv[1])
+    elif (len(sys.argv) == 3):
+        num = int(sys.argv[1])
+        dirname = sys.argv[2]
+        log_dir = "logs/" + dirname + '/' + resnet.name
 
     resnet = ResNet(n=num)
 
@@ -87,15 +92,15 @@ if (__name__ == "__main__"):
     optimizer = tf.keras.optimizers.SGD(learning_rate=0.1, momentum=0.9)
     lr_metric = get_lr_metric(optimizer)
     lr_callback = tf.keras.callbacks.LearningRateScheduler(sch)
+    if 6 * num + 1 > 100:
+        lr_callback = tf.keras.callbacks.LearningRateScheduler(largeSch)
+    
     resnet.compile(optimizer,
                         tf.keras.losses.CategoricalCrossentropy(),
                        metrics=['acc', TestError])
 
-    log_dir = "logs/" + resnet.name + "_identity"
-    if (len(sys.argv) == 3):
-        dirname = sys.argv[2]
-        log_dir = "logs/" + dirname + '/' + resnet.name
 
+    log_dir += resnet.name
     tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1)
     
     
