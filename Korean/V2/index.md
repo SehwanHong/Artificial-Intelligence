@@ -51,15 +51,15 @@ Identity를 사용한 수식 5와는 다르게, 수식 8은 ![product term](http
 
 ## Experiment on Skip Connections
 
-Looking into above equations, as the layer increases, using skip connection that is not identity matrics would suffer decrease in the training error rate. Thus, author of the paper presents different shortcut variations.
+위의 수식을 통해서, layer의 수가 증가할수록, identity를 제외한 skip connection 사용시에 training error의 상승하는 문제점이 생깁니다. 그럼으로, 이 논문의 저자는 다양한 shortcut을 통해서 이를 증명하려고 합니다.
 
 ![Differnt types of shortcuts](../../V2/DifferentTypeOfShortcut.png)
 
-Using different shortcut methods, Author examines difference between the skip connection methods and test error.
+위에 보시는 이미지에서 처럼 다양한 shortcut을 실험합니다. 여기서 a) original은 [이전](../) 논문에서 사용한 identity를 의미합니다. b) constant Scaling은 shortcut 이나 Residual function 값에 실수 값을 곱해주는 것을 의미합니다. c) exclusive gating은 Highway Network에서 사용한 gating mechanism을 따른 것입니다. Convolutional network에서 gating function은 ![1x1](https://latex.codecogs.com/svg.image?1\times1) convolutional layer에 sigmoid 함수를 적용한 것입니다. 여기서, Shortcut에는 ![1-g(x)](https://latex.codecogs.com/svg.image?1-g(x))를 residual function에는 ![g(x)](https://latex.codecogs.com/svg.image?g(x))를 적용한 것을 의미합니다. d) shortcut-only gating은 c)의 exclusive gating에서 residual function에 적용한 g(x)를 없엔 것입니다. e)의 convolutional shortcut은 [\[1\]](../) 논문에서 적용해보았던 option C를 크게 적용해본것 입니다. f)의 dropout shortcut은 shortcut에 dropout layer를 적용해본 것입니다.
 
 ![Skip conncetion and their result](../../V2/SkipConnectionAndResult.png)
 
-As shown in this Table, addind different layers to Skip Connection reports higher error rate compared to the identity mapping. Therefore, identity mapping is the best way to use the skip connections.
+위의 Table 1에서의 결과를 보면, 가장 기본적인 orignal layer가 가장 좋은 결과를 자지고 왔고, 나머지는 이론적으로 계산한것과 비슷하게 shortcut에 weight를 적용할 경우 더 안좋은 결과를 냈습니다.
 
 # On the Usage of Activation Function.
 
