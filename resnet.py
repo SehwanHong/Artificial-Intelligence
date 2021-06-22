@@ -10,6 +10,9 @@ from TensorflowResNet_Identity_best import ResNet
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import math
 
+ADAM = True
+
+
 def normalize(train_data, test_data):
     mean = np.mean(train_data, axis=(0,1,2,3))
     std = np.mean(train_data, axis=(0,1,2,3))
@@ -86,8 +89,6 @@ def TestError(y_true, y_pred):
     return (1 - temp) * 100
 
 if (__name__ == "__main__"):
-    train_data, train_labels, test_data, test_labels = load_cifar10()
-
     num = 3
     log_dir = "logs/"
     if (len(sys.argv) == 2):
@@ -96,7 +97,14 @@ if (__name__ == "__main__"):
         num = int(sys.argv[1])
         dirname = sys.argv[2]
         log_dir = "logs/" + dirname + '/'
+    elif (len(sys.argv) == 4):
+        num = int(sys.argv[1])
+        dirname = sys.argv[2]
+        category = sys.argv[3]
+        log_dir = "logs/" + dirname + '/'+ category
+        
 
+    train_data, train_labels, test_data, test_labels = load_cifar10()
     resnet = ResNet(n=num)
 
     resnet.summary()
@@ -105,12 +113,15 @@ if (__name__ == "__main__"):
     optimizer = tf.keras.optimizers.SGD(learning_rate=0.1, momentum=0.9)
     lr_metric = get_lr_metric(optimizer)
     lr_callback = tf.keras.callbacks.LearningRateScheduler(sch)
-    if 6 * num + 1 > 100:
+    if 6 * num + 2 > 100:
         lr_callback = tf.keras.callbacks.LearningRateScheduler(largeSch)
+    if ADAM:
+        optimizer = tf.keras.optimizers.Adam()
+        lr_callback = tf.keras.callbacks.LearningRateScheduler(Scheduler)
     
     resnet.compile(optimizer,
-                        tf.keras.losses.CategoricalCrossentropy(),
-                       metrics=['acc', TestError])
+                   tf.keras.losses.CategoricalCrossentropy(),
+                   metrics=['acc', TestError])
 
 
     log_dir += resnet.name
