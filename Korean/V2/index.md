@@ -63,9 +63,7 @@ Identity를 사용한 수식 5와는 다르게, 수식 8은 ![product term](http
 
 # On the Usage of Activation Function.
 
-Experiment above talks about different techniques in Skip Connection. In this section, author moves attention from skip Connection to activation function. Finding the best order for activation function.
-
-Author want to kind different arrangement of activation function that would increase the accuracy.
+위의 실험에서는 SkipConnection의 다양한 방식에 대해서 이야기 해보았다면, 이 아래에는 Activaiton function을 변경시킬 경우 얻을 수 있는 차이점들을 확인해 보는 실험입니다. 이때 Activation function의 종류를 변경하는 것이 아닌 Activation function의 순서를 변경할 때의 차이점을 확인한 것입니다. 
 
 ## Experiment on activation
 
