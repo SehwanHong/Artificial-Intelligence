@@ -80,3 +80,6 @@ ResNet 110 Residual Unit | ResNet 164 Residual Unit
 Left image present the Residual Unti of ResNet 110, and Right image represent the Residual Unit of ResNet 164. Both ResNet110 and ResNet 164 have same 18 blocks of residual Unit but ResNet 164 have more layers since ResNet 164 have 3 Layers inside Residual Unit while Resnet 110 ahve only 1 layers.
 
 As above image displays, using preactivation have marginal increase in Test error.
+
+## [Link to English Version](../../V2/)
+## [Link to Original Version](../)
