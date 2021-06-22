@@ -55,7 +55,7 @@ Looking into above equations, as the layer increases, using skip connection that
 
 ![Differnt types of shortcuts](./DifferentTypeOfShortcut.png)
 
-Using different shortcut methods, Author examines difference between the skip connection methods and test error.
+Using different shortcut methods, Author examines difference between the skip connection methods and test error. In this skip connections, a) original is from the paper Deep Residual Learning for Image Recongition, where using identity shortcut and zero padding for extanded dimensions. b) constant scaling is multiplying floats between 0 to 1 for skip connection and for residual functions. c) is exclusive gating which is adopted from Highway Net where gating funciton is ![1x1](https://latex.codecogs.com/svg.image?1\times1) convolutional layer and applying sigmoid as activation function. In this exclusive gating, we use ![1-g(x)](https://latex.codecogs.com/svg.image?1-g(x)) for shortcut connections and ![g(x)](https://latex.codecogs.com/svg.image?g(x)) for residual function. d) shortcut only gating is similar to exclusive gating but only eliminating gating function on the residual function. e) is using ![1x1](https://latex.codecogs.com/svg.image?1\times1) convolutional layer as a shortcut. Final, for f) adding dropout layer for shortcut connection.
 
 ![Skip conncetion and their result](./SkipConnectionAndResult.png)
 
@@ -80,3 +80,6 @@ ResNet 110 Residual Unit | ResNet 164 Residual Unit
 Left image present the Residual Unti of ResNet 110, and Right image represent the Residual Unit of ResNet 164. Both ResNet110 and ResNet 164 have same 18 blocks of residual Unit but ResNet 164 have more layers since ResNet 164 have 3 Layers inside Residual Unit while Resnet 110 ahve only 1 layers.
 
 As above image displays, using preactivation have marginal increase in Test error.
+
+## [Link to Original Version](../)
+## [Link to Korean Version](../Korean/V2)
