@@ -31,23 +31,23 @@
 
 # On the Importance of Identity Skip Connections
 
-Let's modify the function h, ![function h](https://latex.codecogs.com/svg.image?h(x_{l&plus;1})=\lambda_lx_l) to break the identity shortcuts.
+위의 분석에서는 function H 값을 identity로 추정한 상태에서의 해석입니다. function h를 ![function h](https://latex.codecogs.com/svg.image?h(x_{l&plus;1})=\lambda_lx_l)  로 바꾸어서 identity shortcut을 없엤다면 아래와 같은 수식이 나옵니다.
 
 ![equation6](../../V2/equation6.png)
 
-The value ![lambda](https://latex.codecogs.com/svg.image?%5Clambda_l) is a modulating scalar.
+여기서 ![lambda](https://latex.codecogs.com/svg.image?%5Clambda_l)은 Shortcut을 변환하는 Scalar 값입니다.
 
-Recursively implimenting this fomular re could get equation similar to equation 4 presented above.
+이 함수는 수식 4번과 같이 제귀적으로 표현한다면, 아래와 같은 수식이 나오게됩니다.
 
 ![equation7](../../V2/equation7.png)
 
-Similar to equation 5, we could get back propagation of following:
+수식 5 번을 구한것처럼 backpropagation equation을 찾아보면 아래와 같이 나옵니다.
 
 ![equation8](../../V2/equation8.png)
 
-Unlike Identity(equation5), equation 8 have a term ![product term](https://latex.codecogs.com/svg.image?\prod_{i=l}^{L-1}{\lambda_i}). If ![greather than](https://latex.codecogs.com/svg.image?%5Clambda_i%3E1), the product term would have exponentially large value. If ![less then](https://latex.codecogs.com/svg.image?\lambda_i<1), then the product term is exponentially small and vanish.
+Identity를 사용한 수식 5와는 다르게, 수식 8은 ![product term](https://latex.codecogs.com/svg.image?\prod_{i=l}^{L-1}{\lambda_i})항이 존재합니다. 이때 ![greather than](https://latex.codecogs.com/svg.image?%5Clambda_i%3E1)라면, 저 곱셈항이 기하급수적으로 증가하게 됩니다. 그와 반대로 ![less then](https://latex.codecogs.com/svg.image?\lambda_i<1)라면, 기하급수적으로 작아지게 되어 graident vanishing효과가 나타나게 됩니다.
 
-Thus if the layer is large, then using weighted value for shortcut would cause information propagation and impede the training procedure.
+그럼으로 만약 레이어의 수가 증가한다면, shortcut을 사용할 때 추가적은 weight를 집어넣는 것이 weight 값들에게 information propagation을 막고 training을 방해합니다.
 
 ## Experiment on Skip Connections
 
