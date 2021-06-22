@@ -18,16 +18,16 @@
 
 ![recursiveEquation](../../V2/recursiveEquation.png)
 
-This equation have nice properties in understanding residual networks.
+이 수식을 통해서 Residual Network에 관한 여러가지 특성들을 알 수 있습니다.
 
-1. For any feature in deeper unit L, could be preseneted as the feature of shallower unit plus the resdual functions in form or summations
-2. The feature of any deeper unit L, is the summation of the outputs of all preceding residual functions.
+1. 깊은 Residual Unit L은 얕은 Residual unit들과 Residual Functions들의 합으로 표현될 수 있다.
+2. 어떠한 깊은 unit L은  unit L 전에 있는 모든 residual function의 출력 값들의 합으로 표현할 수 있다.
 
-This recursing equation leads to nice backward propagation properties. The gradient of the equation above would be following.
+위의 수식 4 번을 통해서 backpropagation 특성들을 확인 할 수 있습니다. Back propagation 하기 전에 graident equation을 살펴보면 아래와 같습니다.
 
 ![gradient](../../V2/gradient.png)
 
-This equation implies that the gradient of a layer does not vanish even when the weights are arbitrarily small.
+이 수식을 통해서 function F가 -1이 되지 않는 이상, graident는 항상 1 이상을 유지합니다. 그럼으로 gradient vanishing 효과가 나타나지 않습니다.
 
 # On the Importance of Identity Skip Connections
 
