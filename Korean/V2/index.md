@@ -69,15 +69,15 @@ Identity를 사용한 수식 5와는 다르게, 수식 8은 ![product term](http
 
 ![Experiment On Activation](../../V2/ExperimentOnActivation.png)
 
-Above image present different activation methods and their error rate using CIFAR 10 data and ResNet 110 and ResNet 164. ResNet 110 uses two ![3 x 3](https://latex.codecogs.com/svg.image?3\times3) convolutional layers. On the other hand, ResNet 164 substitute two ![3 x 3](https://latex.codecogs.com/svg.image?3\times3) convolutional layers with ![1 x 1](https://latex.codecogs.com/svg.image?1\times1) convolutional layer and ![3 x 3](https://latex.codecogs.com/svg.image?3\times3) convolutional layer and ![1 x 1](https://latex.codecogs.com/svg.image?1\times1) convolutional layer.
+위의 이미지는 activation 방법에 ResNet 110과 ResNet164를 CIFAR10 데이터를 훈련시킨 결과입니다. 이때 ResNet 110은 두개의 ![3 x 3](https://latex.codecogs.com/svg.image?3\times3) convolutional layers를 사용한 반면, ResNet 164는 두 개의 ![3 x 3](https://latex.codecogs.com/svg.image?3\times3) convolutional layers를 ![1 x 1](https://latex.codecogs.com/svg.image?1\times1) convolutional layer와 ![3 x 3](https://latex.codecogs.com/svg.image?3\times3) convolutional layer, 마지막으로 ![1 x 1](https://latex.codecogs.com/svg.image?1\times1) convolutional layer로 치환한 것입니다..
 
 ResNet 110 Residual Unit | ResNet 164 Residual Unit
 :-----------------------:|:---------------------------:
 ![ResNet110](../../V2/ResNet110.png) | ![ResNet164](../../V2/ResNet164.png)
 
-Left image present the Residual Unti of ResNet 110, and Right image represent the Residual Unit of ResNet 164. Both ResNet110 and ResNet 164 have same 18 blocks of residual Unit but ResNet 164 have more layers since ResNet 164 have 3 Layers inside Residual Unit while Resnet 110 ahve only 1 layers.
+왼쪽 이미지는 ResNet 110의 Residual Unit을 표현한 것이고, 오른쪽 이미지는 ResNet 164의 Residual Unit을 표현한 것입니다. ResNet110과 ResNet 164 모두 18 개의 Residual Unit을 사용했지만, ResNet 164이 3개의 Layers 를 가지고 있기 때문에 2개의 Layer를 가지고 있는 ResNet110과 비교해서 더 많은 레이어를 가지고 있습니다..
 
-As above image displays, using preactivation have marginal increase in Test error.
+위의 이미지에서 확인할 수 있다싶이 Preactivation을 하는 경우 error rate가 줄어든 것을 확인 할수 있습니다.
 
 ## [Link to English Version](../../V2/)
 ## [Link to Original Version](../)
