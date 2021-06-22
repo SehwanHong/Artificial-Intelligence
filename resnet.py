@@ -95,7 +95,7 @@ if (__name__ == "__main__"):
     elif (len(sys.argv) == 3):
         num = int(sys.argv[1])
         dirname = sys.argv[2]
-        log_dir = "logs/" + dirname + '/' + resnet.name
+        log_dir = "logs/" + dirname + '/'
 
     resnet = ResNet(n=num)
 
