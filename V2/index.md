@@ -77,9 +77,27 @@ ResNet 110 Residual Unit | ResNet 164 Residual Unit
 :-----------------------:|:---------------------------:
 ![ResNet110](ResNet110.png) | ![ResNet164](ResNet164.png)
 
-Left image present the Residual Unti of ResNet 110, and Right image represent the Residual Unit of ResNet 164. Both ResNet110 and ResNet 164 have same 18 blocks of residual Unit but ResNet 164 have more layers since ResNet 164 have 3 Layers inside Residual Unit while Resnet 110 ahve only 1 layers.
+Left image present the Residual Unti of ResNet 110, and Right image represent the Residual Unit of ResNet 164. Both ResNet110 and ResNet 164 have same 18 blocks of residual Unit but ResNet 164 have more layers since ResNet 164 have 3 Layers inside Residual Unit while Resnet 110 have only 1 layers.
 
 As above image displays, using preactivation have marginal increase in Test error.
+
+Since the experiment result for preactivation was good, thus increaseing the layers over 1000 to find the benefit of using preactivation.
+
+![Table 3](.\table3.png)
+
+Looking at the result of using preactivation residual unit, we could find that using preactivation unit gives marginal benefit in lowering classification error.
+
+## Analysis
+
+Author have found two beneifts when applying preactivation.
+
+### Ease of optimization
+
+The first benefit is ease of optimization. This effect was largely visible when using ResNet 1001. As table 3 present, using original residual unit validation classificaion error is higher than ResNet that have smaller layers. However, when using preactivation unit, we could see the benefit of using more layers and gives better result than using less layers.
+
+### Reducing overfitting.
+
+Another impact of using preactivation unit is on regularization. Using original have problem when normalziation. After adding to the shortcut, the result is not normalized. On the contrary, preactivation version, inputs to all weight layers have been normalized.
 
 ## [Link to Original Version](../)
 ## [Link to Korean Version](../Korean/V2)
