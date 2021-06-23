@@ -31,7 +31,7 @@ def ResidualBlock(inputs, out_channel, stride=1, use_bias=True):
     ReLu_3 = ReLU()(Shortcut)
     return ReLu_3
 
-def ResNet(shape=train_data.shape[1:], n = 3, use_bias=True):
+def ResNet(shape=(32,32,3), n = 3, use_bias=True):
     inputs = Input(shape=shape)
     ch = 64
     
