@@ -57,18 +57,19 @@ def ResNet(shape=(32,32,3), n=3, use_bias=True):
     
     ResNet_1 = ReLU_1
     for i in range(n):
-        ResNet_1 = ResBlock(ResNet_1, ch)
+        ResNet_1 = ResBlock(ResNet_1, ch, use_bias=use_bias)
     
     
-    ResNet_2 = ResBlockDown(ResNet_1, ch*2)
+    ResNet_2 = ResBlockDown(ResNet_1, ch*2, use_bias=use_bias)
     for i in range(1,n):
-        ResNet_2 = ResBlock(ResNet_2, ch*2)
+        ResNet_2 = ResBlock(ResNet_2, ch*2, use_bias=use_bias)
     
     
-    ResNet_3 = ResBlockDown(ResNet_2, ch*4)
+    ResNet_3 = ResBlockDown(ResNet_2, ch*4, use_bias=use_bias)
     for i in range(1,n):
-        ResNet_3 = ResBlock(ResNet_3, ch*4)
-    
+        ResNet_3 = ResBlock(ResNet_3, ch*4, use_bias=use_bias)
+
+
     GAP = GlobalAveragePooling2D()(ResNet_3)
     flatten = Flatten()(GAP)
     dense = Dense(10, activation="softmax", kernel_initializer=He_init)(flatten)
