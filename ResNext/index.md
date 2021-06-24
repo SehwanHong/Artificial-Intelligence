@@ -54,6 +54,11 @@ Giving above analysis of simple neuron, Aggregated Transformation will be formal
 
 ![Formal aggregated transformation equation](.\formalAggregatedTransformEquation.png)
 
+where ![tau_i(x)](https://latex.codecogs.com/svg.image?T_i(x)) can be any arbitrary function.
+
+In this equation C is the size of the set of transformations to be aggergated, and is called Cardinatlity. Similar to value D in simple neuron architecture, value C can be an arbitrary number.
+
+
 # Reference
 
 https://takenotesforvision.tistory.com/12
