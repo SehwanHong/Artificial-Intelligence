@@ -58,6 +58,15 @@ where ![tau_i(x)](https://latex.codecogs.com/svg.image?T_i(x)) can be any arbitr
 
 In this equation C is the size of the set of transformations to be aggergated, and is called Cardinatlity. Similar to value D in simple neuron architecture, value C can be an arbitrary number.
 
+The structure of ResNext is using a simple design strategy: all ![tau_i(x)](https://latex.codecogs.com/svg.image?T_i(x)) have the same topology. This extends the style of VGG of repeating layers of same shape which is helpful for isolating a few factors and extending to any large number of trasnformations.
+
+![Structure of ResNext Block](.\StructureOfResNextBlock.png)
+
+Above image represnet how ResNeXt blocks could be represented. In this image, a) is Aggregated Residual transformations, b) a block equivalent of a and implementing early concatenation, c0 a block equivalent of (a,b) implemented as group convolution.
+
+### Relation to ***Inception-ResNet***
+
+ResNeXt appears similar to the Inception-ResNet blovk in that it involves branching. Inception-ResNet uses different convolutional layers for different maths. On the other hand, ResNeXt uses same topoloy among the multiple path.
 
 # Reference
 
