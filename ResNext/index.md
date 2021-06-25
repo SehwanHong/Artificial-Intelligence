@@ -14,7 +14,19 @@ Author emphasice the new method called cardinality which is the size of the set 
 
 # Related work
 ## Multibranch convolutional networks
+
+The Inception models are successful multi-branch architectures where each branch is carefully customized
+
+Inception module | Residual Module
+-----------------|-----------------
+![Inception Module](.\InceptionModuleWithDimensionReductions.png) | ![Residual Module](.\ResidualBlock.png)
+
+These two module use multibrach network, where Inception ResNet uses different types of convoluitonal layers and ResNet module uses Identity matrics and two convolutional layers.
+
 ## Grouped convolutions
+
+
+
 ## Compressing convolutional networks
 ## Ensembling
 
