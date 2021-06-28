@@ -88,4 +88,6 @@ Standard Convolutional layer | Depthwise Separable Convolutional Layer
 -----------|-----------
 ![standard convolutional layer](.\standardConvLayer.png) | ![depth wise separable convolutional layer](.\depthwiseConvLayer.png)
 
-The image above represent how the layers in the standard convolution and depthwise separable convolutional layer is different. 
+The image above represent how the layers in the standard convolution and depthwise separable convolutional layer is different. Standard convolution, as described in the Depthwise separable convolution section, uses one large convolutional filter for all output dimensions. However, depthwise separable convolution uses depthwise convolution for filtering the input image by channel wise, then use pointwise convoluiton for combining the layers.
+
+
