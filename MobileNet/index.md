@@ -26,4 +26,4 @@ MobileNets are build primarily from depthwise separable convolutions which is su
 
 Compression based on product quantization, hashing, and pruning, vector quantization and Huffman coding have been proposed in the literature. Moreover, Various Factorization have been proposed to speed up pretrained netowrks.
 
-Another method for traing small networks is distillations which uses a larger network to teach a smaller netwrok.
+Another method for traing small networks is distillations which uses a larger network to teach a smaller network.
