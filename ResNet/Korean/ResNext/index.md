@@ -19,7 +19,7 @@ The Inception models are successful multi-branch architectures where each branch
 
 Inception module | Residual Module
 -----------------|-----------------
-![Inception Module](.\InceptionModuleWithDimensionReductions.png) | ![Residual Module](.\ResidualBlock.png)
+![Inception Module](../../ResNext/InceptionModuleWithDimensionReductions.png) | ![Residual Module](../../ResNext/ResidualBlock.png)
 
 These two module use multibrach network, where Inception ResNet uses different types of convoluitonal layers and ResNet module uses Identity matrics and two convolutional layers.
 
@@ -49,11 +49,11 @@ With these two rules, authors designed template modules and all modules in a new
 
 The simplest neurons in artificial neural networks perform inner product(weighted sum), which is the elementary transformation done by fully connected nad convolutional layers.
 
-![Inner Product](.\InnerProduct.png)
+![Inner Product](../../ResNext/InnerProduct.png)
 
 Inner product equation, presented above, is similar to aggregated transformation shown below.
 
-![Aggregated Transformation](.\AggregatedTrasnformation.png)
+![Aggregated Transformation](../../ResNext/AggregatedTrasnformation.png)
 
 Where ![x=[x_1,x_2,...,x_D]](https://latex.codecogs.com/svg.image?x=[x_1,x_2,...,x_D]) is a D-Channel input vector to the neuron and ![w_i](https://latex.codecogs.com/svg.image?w_i) is a filter's weight for the i-th Channel. This equation could be represented as a figure below
 
@@ -69,7 +69,7 @@ The operations to build a neuron could be splitted in to three operations:
 
 Giving above analysis of simple neuron, Aggregated Transformation will be formally presented as equation below.
 
-![Formal aggregated transformation equation](.\formalAggregatedTransformEquation.png)
+![Formal aggregated transformation equation](../../ResNext/formalAggregatedTransformEquation.png)
 
 where ![tau_i(x)](https://latex.codecogs.com/svg.image?T_i(x)) can be any arbitrary function.
 
@@ -77,7 +77,7 @@ In this equation C is the size of the set of transformations to be aggergated, a
 
 The structure of ResNext is using a simple design strategy: all ![tau_i(x)](https://latex.codecogs.com/svg.image?T_i(x)) have the same topology. This extends the style of VGG of repeating layers of same shape which is helpful for isolating a few factors and extending to any large number of trasnformations.
 
-![Structure of ResNext Block](.\StructureOfResNextBlock.png)
+![Structure of ResNext Block](../../ResNext/StructureOfResNextBlock.png)
 
 Above image represnet how ResNeXt blocks could be represented. In this image, a) is Aggregated Residual transformations, b) a block equivalent of a and implementing early concatenation, c0 a block equivalent of (a,b) implemented as group convolution.
 
@@ -90,5 +90,5 @@ ResNeXt appears similar to the Inception-ResNet blovk in that it involves branch
 https://takenotesforvision.tistory.com/12
 
 ## [Link to Original Version](../)
-## [Link to ResNet V2](../V2/)
-## [Link to Korean Version](../Korean/ResNext/)
+## [Link to ResNext](../ResNext/)
+## [Link to English Version](../../ResNext)
