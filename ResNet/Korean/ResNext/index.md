@@ -67,23 +67,23 @@ ResNeXt의 구조는 모듈화 되어있는 VGG와 ResNet의 디자인으로부�
 
 ## Aggregated Transformations
 
-Giving above analysis of simple neuron, Aggregated Transformation will be formally presented as equation below.
+위에서 제공된 간단한 뉴런의 해석을 자세하게 살펴보면, Aggregated Transformation와 비슷한 형식으로 나타낼수 있습니다.
 
 ![Formal aggregated transformation equation](../../ResNext/formalAggregatedTransformEquation.png)
 
-where ![tau_i(x)](https://latex.codecogs.com/svg.image?T_i(x)) can be any arbitrary function.
+여기서 ![tau_i(x)](https://latex.codecogs.com/svg.image?T_i(x))는 어떠한 함수를 사용해도 됩니다. Fully Connected layer는 물론 Convolutional layer도 괜찮습니다.
 
-In this equation C is the size of the set of transformations to be aggergated, and is called Cardinatlity. Similar to value D in simple neuron architecture, value C can be an arbitrary number.
+위의 수식에서 C는 Transformation을 할 set의 갯수를 의미하고 Cardinality라고 불리웁니다. 저 위의 수식 D과 같다고 해석할수 있습니다. 여기서 C의 값은 어떠한 양의 정수 값이라면 상관이 없습니다.
 
-The structure of ResNext is using a simple design strategy: all ![tau_i(x)](https://latex.codecogs.com/svg.image?T_i(x)) have the same topology. This extends the style of VGG of repeating layers of same shape which is helpful for isolating a few factors and extending to any large number of trasnformations.
+ResNeXt의 구조는 간단한 법칙에 의해서 지배됩니다. 모든 ![tau_i(x)](https://latex.codecogs.com/svg.image?T_i(x))는 같은 형식으로 이루어 져야한다. 이 법칙은 VGG에서 볼수 있던 던 같은 레이어를 반복하는 것의 연장선입니다. 이러한 방식은 hyperparameter의 갯수를 줄여서 모든 요인들을 독립적으로 변환할수 있게 만듭니다. 게다가 간단한 형식으로 인해서 레이어를 깊게 만들거나 넓게 만드는 것이 쉽습니다.
 
 ![Structure of ResNext Block](../../ResNext/StructureOfResNextBlock.png)
 
-Above image represnet how ResNeXt blocks could be represented. In this image, a) is Aggregated Residual transformations, b) a block equivalent of a and implementing early concatenation, c0 a block equivalent of (a,b) implemented as group convolution.
+위의 이미지는 ResNeXt의 가장 기본적인 Block의 표현방식을 나타냅니다. 이 이미지에서 a)는 Aggregated Residual transformations, b)는 a)와 같지만 early concatenation을 활용한 것이고, c)는 a)와 b)에서 group convolution을 사용한 것입니다.
 
 ### Relation to ***Inception-ResNet***
 
-ResNeXt appears similar to the Inception-ResNet blovk in that it involves branching. Inception-ResNet uses different convolutional layers for different maths. On the other hand, ResNeXt uses same topoloy among the multiple path.
+ResNeXt는 Inception-ResNet block과 branching을 한다는 것에 비슷합니다. 하지만 둘의 가장 큰 차이점은 Inception-ResNet는 다양한 convolutional layers를 사용하는 것이고, ResNeXt 는 다양한 경로에도 같은 구조의 convolutional layer를 사용하는 것입니다.
 
 # Reference
 
