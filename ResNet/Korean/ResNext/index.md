@@ -38,16 +38,16 @@ Decomposition은 deep convolution network의 redundacy를 줄이기 위해서 �
 # Method
 ## Tempalate
 
-Design of ResNeXt is adopted from highly modularized design following VGG/ResNets. This network consist of a stack of residual blocks, which have same topology and are subject to two simple rules.
+ResNeXt의 구조는 모듈화 되어있는 VGG와 ResNet의 디자인으로부터 만들어졌습니다. 이 network들은 Residual block들로 이루어져있는데 모두 같은 형식이고, 두가지 간단한 법칙을 따르고 있습니다.
 
- 1. For the same output feature map size, the layers have the same number of filters.
- 2. If the feature map size is halved, the number of filter is doubled so as to preserve the time complexity per layer
+ 1. Feature map의 크기가 같은 경우, 같은 갯수의 필터를 사용한다.
+ 2. Feature map의 크기가 반으로 줄어들었을 경우, 필터의 갯수를 두배로 늘리는 데, 그 이유는 모든 레이어의 시간복잡도를 동일하게 유지하기 위해서 이다.
 
-With these two rules, authors designed template modules and all modules in a newtork can be determined accordingly.
+이 두개의 법칙을 기반으로, 저자는 간단한 template를 만들었는데, 모든 network는 이 template을 기반으로 만들어집니다. 
 
 ## Revisiting Simple Neurons.
 
-The simplest neurons in artificial neural networks perform inner product(weighted sum), which is the elementary transformation done by fully connected nad convolutional layers.
+인공신경망에서 가장 The simplest neurons in artificial neural networks perform inner product(weighted sum), which is the elementary transformation done by fully connected nad convolutional layers.
 
 ![Inner Product](../../ResNext/InnerProduct.png)
 
