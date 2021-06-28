@@ -80,3 +80,12 @@ From both computational cost equation, we are able to find the reduction ratio i
 
 Since MobileNet is uses kernel size of 3, (![3\times3](https://latex.codecogs.com/svg.image?3\times3)), MobileNet uses 8 to 9 times less computaion than using standard convolutions.
 
+## Network Structure and Training
+
+MobileNet structure is built on depthwise separable convolutions except for the first layer which is a full convolution. All layers are followed by a batch normalization and ReLU non-lineality with the exception of the final fully convolutional layer which has no nonlinearity and feeds into a softmax layer for classification. Downsampling is handled with strided convolution in the depthwise convolutions as well as in the first layer. A final average pooling reduces spatial resolution into 1 before the fully connected layer. Counting depthwise and pointwise convolutions as separate layers, MobileNet has 28 layers.
+
+Standard Convolutional layer | Depthwise Separable Convolutional Layer
+-----------|-----------
+![standard convolutional layer](.\standardConvLayer.png) | ![depth wise separable convolutional layer](.\depthwiseConvLayer.png)
+
+The image above represent how the layers in the standard convolution and depthwise separable convolutional layer is different. 
