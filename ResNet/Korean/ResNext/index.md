@@ -15,25 +15,25 @@
 # Related work
 ## Multibranch convolutional networks
 
-The Inception models are successful multi-branch architectures where each branch is carefully customized
+Inception model들은 성공적인 Multi-brach 구조들입니다. 모델안에 있는 각각의 가지들은 조십스럽게 조율되어 효과적인 neural network를 형성합니다.
 
 Inception module | Residual Module
 -----------------|-----------------
 ![Inception Module](../../ResNext/InceptionModuleWithDimensionReductions.png) | ![Residual Module](../../ResNext/ResidualBlock.png)
 
-These two module use multibrach network, where Inception ResNet uses different types of convoluitonal layers and ResNet module uses Identity matrics and two convolutional layers.
+위의 이미지를 통해서 기본적인 Residual Module도 Multi-brach 모델임을 확인할 수 있습니다. 여기서 Residual network은 Identity matrix와 2개의 연속된 convolution레이어가 brach 이지만, Inception module의 경우 다양한 Convolutional layer가 여러가지 방면으로 뻗어 있는 것을 확인할 수 있ㅅ브니다.
 
 ## Grouped convolutions
 
-The use of group convolution dates back to the AlexNet paper. The mobitation given by the author of AlexNet is for distributing the model over two GPUs. There has been little evident on exploiting grouped convolutions to improve accuracy.
+Group convolution은 AlexNet에서 부터 확인할 수 있습니다. 혹은 그 전에도 있었을 가능 성이 있습니다. 이러한 Group Convolution이 정확도를 올린 다는 것에 대한 연구는 진행되어 오지 않았습니다.
 
 ## Compressing convolutional networks
 
-Decomposition is widely adopted techinque to recude redundancy of deep convolutional networks and accelerate/compress them. 
+Decomposition은 deep convolution network의 redundacy를 줄이기 위해서 널리 활용되는 기술입니다. 또한 이 기술은 deep convolutional network를 accelerate 하거나 compress 하기 위해서도 사용됩니다.
 
 ## Ensembling
 
-Averaginmg a set of independently trained netwroks is an effective solution to improving accuracy, widely adopted in recognition competitions. However, ResNeXt is not ensembling because the members to be aggregated are trained jointly not independently.
+독립적으로 훈련된 신경망의 평균을 구하는 것은 정확도를 올리는 효과적인 방법증 하나입니다. 이러한 방법은 recognition 경쟁에서 활용중입니다. 하지만 ResNeXt는 이러한 ensemble 방법이 아닙니다. 왜냐하면 모든 weight 값들이 독립적으로 훈련된것이 아니라, 동시에 훈련되었기 때문입니다.
 
 # Method
 ## Tempalate
