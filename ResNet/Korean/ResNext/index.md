@@ -47,22 +47,22 @@ ResNeXt의 구조는 모듈화 되어있는 VGG와 ResNet의 디자인으로부�
 
 ## Revisiting Simple Neurons.
 
-인공신경망에서 가장 The simplest neurons in artificial neural networks perform inner product(weighted sum), which is the elementary transformation done by fully connected nad convolutional layers.
+인공신경망에서 가장 간단한 형식의 뉴런을 살펴보면, 뉴런은 스칼라곱 연산을 합니다. 이때  이는 가장 기본적인 스칼라 곱을 합니다. 이는 Fully connected layers 와 convolutional layer에서 쓰는 base unit입니다.
 
 ![Inner Product](../../ResNext/InnerProduct.png)
 
-Inner product equation, presented above, is similar to aggregated transformation shown below.
+위의 수식은 aggregated Transformation이랑 비슷합니다. Aggregated Transformation은 아래의 식으로 확인 할 수 있습니다.
 
 ![Aggregated Transformation](../../ResNext/AggregatedTrasnformation.png)
 
-Where ![x=[x_1,x_2,...,x_D]](https://latex.codecogs.com/svg.image?x=[x_1,x_2,...,x_D]) is a D-Channel input vector to the neuron and ![w_i](https://latex.codecogs.com/svg.image?w_i) is a filter's weight for the i-th Channel. This equation could be represented as a figure below
+여기서 ![x=[x_1,x_2,...,x_D]](https://latex.codecogs.com/svg.image?x=[x_1,x_2,...,x_D])는 D-Channel 입력 백터이고 ![w_i](https://latex.codecogs.com/svg.image?w_i) i-th Channel에 대한 필터의 weight 값입니다. 이 수식은 아래의 이미지와 같이 표한 될수 있습니다.
 
-![neuron](.\neuron.png)
+![neuron](../../ResNext/neuron.png)
 
-The operations to build a neuron could be splitted in to three operations:
+뉴런을 구성하는 연산은 3가지로 나누어 질수 있습니다:
 
-1. *Spliting*: the vector x is sliced as a low-dimensional subspace ![x_i](https://latex.codecogs.com/svg.image?x_i)
-2. *Transforming* : the low-dimensional representation is transformed, ![w_i x_i](https://latex.codecogs.com/svg.image?w_ix_i)
+1. *Spliting*: vector 값 x 를 차원이 작은 subspace ![x_i](https://latex.codecogs.com/svg.image?x_i)들로 나눌 수 있습니다.
+2. *Transforming* : the low-dimensional representation 에 무게 값을 곱해줍니다. ![w_i x_i](https://latex.codecogs.com/svg.image?w_ix_i)
 3. *Aggregating* : the transformations in all embedding are aggregated by ![Aggregation](https://latex.codecogs.com/svg.image?\inline\sum_{i=1}^{D})
 
 ## Aggregated Transformations
