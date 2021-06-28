@@ -19,7 +19,7 @@ The Inception models are successful multi-branch architectures where each branch
 
 Inception module | Residual Module
 -----------------|-----------------
-![Inception Module](..\..\plainNetwork.png) | ![Residual Module](..\..\ResNext\ResidualBlock.png)
+![Inception Module](..\..\ResNext\InceptionModuleWithDimensionReductions.png) | ![Residual Module](..\..\ResNext\ResidualBlock.png)
 
 These two module use multibrach network, where Inception ResNet uses different types of convoluitonal layers and ResNet module uses Identity matrics and two convolutional layers.
 
