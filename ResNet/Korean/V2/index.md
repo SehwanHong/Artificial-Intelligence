@@ -81,3 +81,4 @@ ResNet 110 Residual Unit | ResNet 164 Residual Unit
 
 ## [Link to English Version](../../V2/)
 ## [Link to Original Version](../)
+## [Link to ResNext](../ResNext/)

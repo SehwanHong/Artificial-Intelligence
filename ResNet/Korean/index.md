@@ -64,3 +64,4 @@ https://github.com/taki0112/ResNet-Tensorflow
 
 ## [영문 버전으로](../)
 ## [ResNet 버전 2 로](./V2/)
+## [ResNext](./ResNext/)
