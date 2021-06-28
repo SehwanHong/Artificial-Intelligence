@@ -25,10 +25,15 @@ These two module use multibrach network, where Inception ResNet uses different t
 
 ## Grouped convolutions
 
-
+The use of group convolution dates back to the AlexNet paper. The mobitation given by the author of AlexNet is for distributing the model over two GPUs. There has been little evident on exploiting grouped convolutions to improve accuracy.
 
 ## Compressing convolutional networks
+
+Decomposition is widely adopted techinque to recude redundancy of deep convolutional networks and accelerate/compress them. 
+
 ## Ensembling
+
+Averaginmg a set of independently trained netwroks is an effective solution to improving accuracy, widely adopted in recognition competitions. However, ResNeXt is not ensembling because the members to be aggregated are trained jointly not independently.
 
 # Method
 ## Tempalate
