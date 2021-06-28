@@ -1,16 +1,16 @@
 # [Aggregated Residual Transformations for Deep Neural Network](https://arxiv.org/pdf/1611.05431.pdf)
 
-Author of this paper wants to talk about redesigning residual block using multi-branch architecture so called aggregated Residual Block. This strategy creates a new dimension which the authors call as "cardinality".
+이 논문의 저자는 ResNet의 기본 단위인 Residual block을 Multi-branch를 활용하여 aggregated Residual block을 만드는 방식에 대해서 이야기합니다. 이러한 전략은 Neural Network에 새로운 차원을 소개하는데 저자는 이것을 Cardinality라고 명명했습니다.
 
 # Introduction
 
-Current research on visual recognition is transitioning from feature engineering to network engineering, where features are learned by neural networks from large-scale data.
+최근 visual recogntion에 관련된 연구를 살펴보면, 특징을 찾는 feature engineering에서 network enigneering으로 옮겨 가고 있습니다. 인공신경망이 발전해 가면서, Large-scale data을 기반으로 neural network를 통해서 feature을 찾을 수 있게 되었습니다.
 
-Designing better network architecture becomes increasingly difficult with growing number of hyper-parameters(such as width, filter sizes, strides, ets) with larger numbers of layers. Like VGG nets, which use simple but efficient strategy, ResNets inherit their techniques of stacking building blocks of same shapes.
+좋은 안공신경망을 만드는 것은 레이어의 갯수가 증가할수록 hyper-parameter의 수가 늘어갈수록 만들기 어려워졌습니다. 여기서 hyper-parameter란 인공신경망을 훈련하기 위해서 조절하는 값들을 의미합니다. 예를 들어서 width, filter size, stride, depth 등이 있습니다. VGG network처럼 간단하면서 효율적인 전략을 사용하는 ResNet은 같은 모양읠 레이어를 쌓아가는 technique를 사용합니다.
 
-This paper adopts VGG/ResNet's strategy of repeating layers, while implimenting new techniques of split-transfrom-merge strategy. This strategy appears similar to the Inception-ResNet Module in concatenating multiple paths, but differes from all existing inception modules that this architecture, named ResNeXt, shares the same topology and thus easily isolated as a factor to be investigated.
+이 논문은 VGG/ResNet의 전략은 반복적인 레이어를 사용하면서, 새로운 split-transform-merge 전략을 첨가했습니다. 이 전략은 Inception ResNet과 비슷하게 여러가진 branch로 나뉘어지고 마지막에는 합쳐집니다. 하지만 이 둘의 가장 큰 차이점은, Inception ResNet은 다양한 종류의 레이어를 사용하는것에 비해, ResNeXt리거 불리우는 이 네트워크는 같은 종류의 레이어를 연속적으로 사용합니다. 이를 통해서 network에 영향을 주는 factor들을 독립적으로 확인할수 있게 되었ㅅ브니다.
 
-Author emphasice the new method called cardinality which is the size of the set of trasnformations. Through experiment described below, authors indiation that increasing cardinality is a more effective way of gaining accuracy than going deeper or wider.
+저자는 이 논문에서 새로운 방식인 cardinality를 강조합니다. Cardinality는 set of transofrmation의 크기입니다. 여러가지 실험을 통해서 저자는 cardinality를 늘리는 것이 network를 깊게하는 것이나 넓게 하는 것에 비해서 효과적이라고 말합니다.
 
 # Related work
 ## Multibranch convolutional networks
