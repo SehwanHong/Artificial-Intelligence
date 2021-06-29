@@ -82,6 +82,8 @@ Since MobileNet is uses kernel size of 3, (![3\times3](https://latex.codecogs.co
 
 ## Network Structure and Training
 
+![mobilenet structure](./mobilenetStructure.png)
+
 MobileNet structure is built on depthwise separable convolutions except for the first layer which is a full convolution. All layers are followed by a batch normalization and ReLU non-lineality with the exception of the final fully convolutional layer which has no nonlinearity and feeds into a softmax layer for classification. Downsampling is handled with strided convolution in the depthwise convolutions as well as in the first layer. A final average pooling reduces spatial resolution into 1 before the fully connected layer. Counting depthwise and pointwise convolutions as separate layers, MobileNet has 28 layers.
 
 Standard Convolutional layer | Depthwise Separable Convolutional Layer
@@ -90,4 +92,5 @@ Standard Convolutional layer | Depthwise Separable Convolutional Layer
 
 The image above represent how the layers in the standard convolution and depthwise separable convolutional layer is different. Standard convolution, as described in the Depthwise separable convolution section, uses one large convolutional filter for all output dimensions. However, depthwise separable convolution uses depthwise convolution for filtering the input image by channel wise, then use pointwise convoluiton for combining the layers.
 
+Efficieint Network is not simply defined by the number of Mult-Adds, but it is dependent on how efficiently operation is implimented. For instance, unstructured sparse matrix operations are not typically faster than dense matrix operation until a very high level of sparsity.
 
