@@ -70,7 +70,7 @@ Computational cost of pointwise convolution filter is dependent on the input siz
 
 Total Computational cost of depthwise separable convolutional layer is sum of depthwise convolutional layer and pointwise convolutional layer. Thus it would be:
 
-![D_K \times D_K \times M \times D_F \times D_F + M \times N \times D_F \times D_F](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N&space;\times&space;D_F&space;\times&space;D_F+M&space;\times&space;N&space;\times&space;D_F&space;\times&space;D_F)
+![D_K \times D_K \times M \times D_F \times D_F + M \times N \times D_F \times D_F](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;D_F&space;\times&space;D_F+M&space;\times&space;N&space;\times&space;D_F&space;\times&space;D_F)
 
 ### Reduction in Computation.
 
