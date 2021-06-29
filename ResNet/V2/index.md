@@ -83,7 +83,7 @@ As above image displays, using preactivation have marginal increase in Test erro
 
 Since the experiment result for preactivation was good, thus increaseing the layers over 1000 to find the benefit of using preactivation.
 
-![Table 3](.\table3.png)
+![Table 3](.\Table3.png)
 
 Looking at the result of using preactivation residual unit, we could find that using preactivation unit gives marginal benefit in lowering classification error.
 
