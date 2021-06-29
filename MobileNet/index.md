@@ -94,3 +94,15 @@ The image above represent how the layers in the standard convolution and depthwi
 
 Efficieint Network is not simply defined by the number of Mult-Adds, but it is dependent on how efficiently operation is implimented. For instance, unstructured sparse matrix operations are not typically faster than dense matrix operation until a very high level of sparsity.
 
+## Width Multiplier: Thinner Models
+
+Although the MobileNet architecture is already small and low latency, many times a specific use case or application may require the model to be smaller and faster. To construct smaller and less computantionally expensive models, author introduce width multiplier.
+
+The role of the width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha) is to thin a network uniformly at each layer. For a given layer, with width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha), the number of input channles M will become ![alpha](https://latex.codecogs.com/svg.image?\alpha&space;M), and visa-versa for the output channel. Thus tthe compuational cost will be following.
+
+![D_K \times D_K \times M \times D_F \times D_F + M \times N \times D_F \times D_F](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;\alpha&space;M&space;\times&space;D_F&space;\times&space;D_F+\alpha&space;M&space;\times&space;\alpha&space;N&space;\times&space;D_F&space;\times&space;D_F)
+
+Where ![alpha](https://latex.codecogs.com/svg.image?\alpha) is the value between 0 and 1. When ![alpha=1](https://latex.codecogs.com/svg.image?\alpha=1), it is baseline MobileNet, and when ![alpha<1](https://latex.codecogs.com/svg.image?\alpha<1), it is reduced MobileNets.
+
+Using Width Multiplier, Computational Complexity is quadracially reduced by the factor of ![alpha^2](https://latex.codecogs.com/svg.image?\alpha^2)
+
