@@ -131,3 +131,29 @@ Comparing thinner models with width multiplier to shallower models using less la
 ![thin model vs shallow model](.\compareThinShallow.png)
 
 Looking at the table, both thinner and shallower model have similar computation numbers, such as Multi-adds and number of parameters. However, thinner model have 3% more accurate than using shallower model.
+
+## Model shrinking hyperparameters
+
+![mobile net width multiplier comparison](.\mobilenetWidthMultiplier.png)
+
+The accuracy, computation and size trade offs of shrinking the MobileNet architecure with the width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha). Accuracy drops smoothly with lower width multiplier until the number of parameter is extremely small at ![alpha](https://latex.codecogs.com/svg.image?\alpha=0.25). At this point, number of parameter is extremely small thus have problem in finding correct classifier.
+
+![mobile net resolution mutliplier comparison](.\mobilenetResolutionMultiplier.png)
+
+The accuracy, computation and size trade offs of shrinking the MobileNet architecture with the resolution multiplier ![rho](https://latex.codecogs.com/svg.image?\rho). Accuracy drop smoothly as the resolution decreases.
+
+![computation vs accuracy](.\computationAccuracy.png)
+
+If we see the above graph, we compare computational complexity which is based on width multiplier and resolution multiplier and the accuracy. We could see the trend that larger computational number higher the accuracy for ImageNet benchmark. Must know that x axis are logarithmic.
+
+![parameter vs accuracy](.\parameterAccuracy.png)
+
+The above graph compare the number of parameters and the accuracy. There is a trend that more number of parameters, better accuracy. Also notice that the number of parameters does not depend on the input resolutions.
+
+![MobileNet vs popular models](.\mobilenetPopularnet.png)
+
+If we compare MobileNet to other popular neural networks, we would get above table. MobileNet have similar accuracy rate with VGG 16, but mobile net have approximately 32 times smaller in parameter size and 27 time smaller in computation. Also GoogleNet have approximately 3 times the computation and 1.5 times the parameters size than MobileNet but have lower accuracy rate.
+
+![small mobile net vs popular models](.\smallMobileNetPopularNet.png)
+
+MobileNet using width multiplier of 0.5 and reduced resolution 160¡¿160 is better then both Squeezenet and AlexNet. Squeezenet have similar computation size but have 22 time more computation then MobileNet have 3% lower accuacy rate. Also AlexNet is 45 time more parameter and 9.4 time more computation have 3% less computation.
