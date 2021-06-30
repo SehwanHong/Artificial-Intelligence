@@ -114,3 +114,20 @@ If we both apply width multiplier ![alpha](https://latex.codecogs.com/svg.image?
 
 ![Resolution Multiplier and Width Mutliplier](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;\alpha&space;M&space;\times&space;\rho&space;D_F&space;\times&space;\rho&space;D_F+\alpha&space;M&space;\times&space;\alpha&space;N&space;\times&space;\rho&space;D_F&space;\times&space;\rho&space;D_F)
 
+# Experiment
+
+Effect of depth wise convolution and the choice of shrinking by reducing the width of the network rather then the number of layers.
+
+## Model Choices
+
+First comparing the mobilenet with depthwise separable convolutions with a model built based on full convolutions. 
+
+![depthwise separable vs full convolution mobile net](.\compareConvolution.png)
+
+Looking at the above image we could see that using depthwise separable convolution uses approximately nine times less computation but only reduces 1% accuracy.
+
+Comparing thinner models with width multiplier to shallower models using less layers. To make MobileNet shalloweer, the 5 layers of separable filters with feature size 14 ¡¿ 14 ¡¿ 512 in Mobile net is removed.
+
+![thin model vs shallow model](.\compareThinShallow.png)
+
+Looking at the table, both thinner and shallower model have similar computation numbers, such as Multi-adds and number of parameters. However, thinner model have 3% more accurate than using shallower model.
