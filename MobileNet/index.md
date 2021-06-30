@@ -157,3 +157,10 @@ If we compare MobileNet to other popular neural networks, we would get above tab
 ![small mobile net vs popular models](.\smallMobileNetPopularNet.png)
 
 MobileNet using width multiplier of 0.5 and reduced resolution 160¡¿160 is better then both Squeezenet and AlexNet. Squeezenet have similar computation size but have 22 time more computation then MobileNet have 3% lower accuacy rate. Also AlexNet is 45 time more parameter and 9.4 time more computation have 3% less computation.
+
+## Fine grained Recongition
+
+![Stanford dog data](.\StanfordDog.png)
+
+Training fine grained recognition on the stanford Dogs dataset. MobileNet can almost achieve the state-of-art result using 9 times less computatoins and 7 times parameter size.
+
