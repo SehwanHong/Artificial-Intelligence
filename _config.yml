@@ -3,3 +3,6 @@ title: Study about Neural Network
 description: Contains detailed knowledge about Neural Networks
 plugins:
   - jekyll-relative-links
+relative_links:
+	enabled:     true
+	collections: false
