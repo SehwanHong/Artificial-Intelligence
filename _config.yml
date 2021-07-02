@@ -4,5 +4,5 @@ description: Contains detailed knowledge about Neural Networks
 plugins:
   - jekyll-relative-links
 relative_links:
-	enabled:     true
+	enabled: true
 	collections: false
