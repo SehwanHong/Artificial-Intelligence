@@ -38,7 +38,7 @@ MobileNet model is based on depthwise separable convolutions which is a form of 
 
 Standard convolution both filters and combies inputs into a new set of outpus in one step. If we denote the input feature map as ![D_F \times D_F \times M](https://latex.codecogs.com/svg.image?D_F&space;\times&space;D_F&space;\times&space;M) and output feature map as ![D_F \times D_F \times N](https://latex.codecogs.com/svg.image?D_F&space;\times&space;D_F&space;\times&space;N), then we could calculate the kernal size for standard convolutional layers.
 
-![Standard Convolutional Filters](.\standardConvFilter.png)
+![Standard Convolutional Filters](./standardConvFilter.png)
 
 As shown in the image above, Standard convolutional layer have the filter size of ![D_K \times D_K \times M \times N](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N). ![D_K](https://latex.codecogs.com/svg.image?D_K) is the size of the filter kernel  ![M](https://latex.codecogs.com/svg.image?M) is the size of input Channel. ![N](https://latex.codecogs.com/svg.image?N) is the size of output Channel.
 
@@ -54,7 +54,7 @@ On the other hand the depthwise separable convolution splits this into two layer
 
 Depthwise convolution is the filtering step in depthwise separable convolution. In this step, a single filter is applied per each input channel. As shown in the image below, kernel would be ![D_K \times D_K \times M \times 1](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N).
 
-![Depthwise convolution filter](.\depthwiseConvFilter.png)
+![Depthwise convolution filter](./depthwiseConvFilter.png)
 
 Computational cost of depthwise convolution filter is extremely small compared to standard convolution because it does not need extra parameters for filtering all input channels.
 
@@ -62,7 +62,7 @@ Computational cost of depthwise convolution filter is extremely small compared t
 
 Pointwise convolution is the combining step in depthwise separable convolution. In this step, ![1 \times 1](https://latex.codecogs.com/svg.image?1\times1) convolution is applied to combine the result of depthwise convolutional layer. The kernel size of the this would be ![1 \times 1 \times M \times N](https://latex.codecogs.com/svg.image?1\times1\times&space;M&space;\times&space;N).
 
-![Pointwise convolution filter](.\pointwiseConvFilter.png)
+![Pointwise convolution filter](./pointwiseConvFilter.png)
 
 Computational cost of pointwise convolution filter is dependent on the input size and the output size but not dependent on the kernel size.
 
@@ -88,7 +88,7 @@ MobileNet structure is built on depthwise separable convolutions except for the 
 
 Standard Convolutional layer | Depthwise Separable Convolutional Layer
 -----------|-----------
-![standard convolutional layer](.\standardConvLayer.png) | ![depth wise separable convolutional layer](.\depthwiseConvLayer.png)
+![standard convolutional layer](./standardConvLayer.png) | ![depth wise separable convolutional layer](./depthwiseConvLayer.png)
 
 The image above represent how the layers in the standard convolution and depthwise separable convolutional layer is different. Standard convolution, as described in the Depthwise separable convolution section, uses one large convolutional filter for all output dimensions. However, depthwise separable convolution uses depthwise convolution for filtering the input image by channel wise, then use pointwise convoluiton for combining the layers.
 
@@ -122,13 +122,13 @@ Effect of depth wise convolution and the choice of shrinking by reducing the wid
 
 First comparing the mobilenet with depthwise separable convolutions with a model built based on full convolutions. 
 
-![depthwise separable vs full convolution mobile net](.\compareConvolution.png)
+![depthwise separable vs full convolution mobile net](./compareConvolution.png)
 
 Looking at the above image we could see that using depthwise separable convolution uses approximately nine times less computation but only reduces 1% accuracy.
 
 Comparing thinner models with width multiplier to shallower models using less layers. To make MobileNet shalloweer, the 5 layers of separable filters with feature size 14 ¡¿ 14 ¡¿ 512 in Mobile net is removed.
 
-![thin model vs shallow model](.\compareThinShallow.png)
+![thin model vs shallow model](./compareThinShallow.png)
 
 Looking at the table, both thinner and shallower model have similar computation numbers, such as Multi-adds and number of parameters. However, thinner model have 3% more accurate than using shallower model.
 
@@ -138,30 +138,30 @@ Looking at the table, both thinner and shallower model have similar computation 
 
 The accuracy, computation and size trade offs of shrinking the MobileNet architecure with the width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha). Accuracy drops smoothly with lower width multiplier until the number of parameter is extremely small at ![alpha](https://latex.codecogs.com/svg.image?\alpha=0.25). At this point, number of parameter is extremely small thus have problem in finding correct classifier.
 
-![mobile net resolution mutliplier comparison](.\mobilenetResolutionMultiplier.png)
+![mobile net resolution mutliplier comparison](./mobilenetResolutionMultiplier.png)
 
 The accuracy, computation and size trade offs of shrinking the MobileNet architecture with the resolution multiplier ![rho](https://latex.codecogs.com/svg.image?\rho). Accuracy drop smoothly as the resolution decreases.
 
-![computation vs accuracy](.\computationAccuracy.png)
+![computation vs accuracy](./computationAccuracy.png)
 
 If we see the above graph, we compare computational complexity which is based on width multiplier and resolution multiplier and the accuracy. We could see the trend that larger computational number higher the accuracy for ImageNet benchmark. Must know that x axis are logarithmic.
 
-![parameter vs accuracy](.\parameterAccuracy.png)
+![parameter vs accuracy](./parameterAccuracy.png)
 
 The above graph compare the number of parameters and the accuracy. There is a trend that more number of parameters, better accuracy. Also notice that the number of parameters does not depend on the input resolutions.
 
-![MobileNet vs popular models](.\mobilenetPopularnet.png)
+![MobileNet vs popular models](./mobilenetPopularnet.png)
 
 If we compare MobileNet to other popular neural networks, we would get above table. MobileNet have similar accuracy rate with VGG 16, but mobile net have approximately 32 times smaller in parameter size and 27 time smaller in computation. Also GoogleNet have approximately 3 times the computation and 1.5 times the parameters size than MobileNet but have lower accuracy rate.
 
-![small mobile net vs popular models](.\smallMobileNetPopularNet.png)
+![small mobile net vs popular models](./smallMobileNetPopularNet.png)
 
 MobileNet using width multiplier of 0.5 and reduced resolution 160¡¿160 is better then both Squeezenet and AlexNet. Squeezenet have similar computation size but have 22 time more computation then MobileNet have 3% lower accuacy rate. Also AlexNet is 45 time more parameter and 9.4 time more computation have 3% less computation.
 
 ## Fine grained Recongition
 
-![Stanford dog data](.\StanfordDog.png)
+![Stanford dog data](./StanfordDog.png)
 
 Training fine grained recognition on the stanford Dogs dataset. MobileNet can almost achieve the state-of-art result using 9 times less computatoins and 7 times parameter size.
 
-## [Link to MobileNet V2](.\V2\)
+## [Link to MobileNet V2](./V2/)
