@@ -126,7 +126,7 @@ First comparing the mobilenet with depthwise separable convolutions with a model
 
 Looking at the above image we could see that using depthwise separable convolution uses approximately nine times less computation but only reduces 1% accuracy.
 
-Comparing thinner models with width multiplier to shallower models using less layers. To make MobileNet shalloweer, the 5 layers of separable filters with feature size 14 ¡¿ 14 ¡¿ 512 in Mobile net is removed.
+Comparing thinner models with width multiplier to shallower models using less layers. To make MobileNet shalloweer, the 5 layers of separable filters with feature size ![14 14 512](https://latex.codecogs.com/svg.image?14\times14\times512) in Mobile net is removed.
 
 ![thin model vs shallow model](.\compareThinShallow.png)
 
