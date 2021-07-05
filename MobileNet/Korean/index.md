@@ -108,9 +108,9 @@ Width Multiplier사용할때, 연산량이 width multiplier의 제곱에 비례하게 줄어듭니다
 
 ## Resolution Multiplier: Reduced Representation
 
-Resolution Mutliplier ![rho](https://latex.codecogs.com/svg.image?\rho) is applied to the input image and the internal representation of every layer to reduce the computation.
+Resolution Mutliplier ![rho](https://latex.codecogs.com/svg.image?\rho)는 입력 이미지와 중간 표현값들에게 적용되어 연산량을 줄여줍니다.
 
-If we both apply width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha) and resolution Multiplier ![rho](https://latex.codecogs.com/svg.image?\rho) then computational complexity for a single depthwise separable convolutional layer would be following.
+Width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha)와 resolution Multiplier ![rho](https://latex.codecogs.com/svg.image?\rho)를 동시에 적용시킨다면, depthwise separable convolutional layer의 연산량을 아래와 같이 표현할수 있습니다.
 
 ![Resolution Multiplier and Width Mutliplier](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;\alpha&space;M&space;\times&space;\rho&space;D_F&space;\times&space;\rho&space;D_F+\alpha&space;M&space;\times&space;\alpha&space;N&space;\times&space;\rho&space;D_F&space;\times&space;\rho&space;D_F)
 
