@@ -96,15 +96,15 @@ Standard Convolutional layer | Depthwise Separable Convolutional Layer
 
 ## Width Multiplier: Thinner Models
 
-Although the MobileNet architecture is already small and low latency, many times a specific use case or application may require the model to be smaller and faster. To construct smaller and less computantionally expensive models, author introduce width multiplier.
+MobileNet구조는 이미 작고 연산이 빠릅니다. 하지만 많은 경우, 특별한 경우나 어플리케이션의 경우 더 작은 모델을 원하거나 더 빠른 모델을 원하는 경우가 많습니다. 이때 작은 모델과 연산량이 적은 모델을 만들기 위해서 저자는 width multiplier를 소개합니다.
 
-The role of the width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha) is to thin a network uniformly at each layer. For a given layer, with width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha), the number of input channles M will become ![alpha](https://latex.codecogs.com/svg.image?\alpha&space;M), and visa-versa for the output channel. Thus tthe compuational cost will be following.
+Width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha)의 역할은 전체적으로 신경망의 구조는 얇게 만들어 줍니다. 하나의 레이어가 주어졌을때, width multiplier를 사용하면, 입력값의 크기인 M이 ![alpha](https://latex.codecogs.com/svg.image?\alpha&space;M)로 변하게 되고, 출력값도 비슷하게 적용이 됩니다. 이 경우 총 연산량은 아래와 같이 변하게 됩니다.
 
 ![Width Multiplier](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;\alpha&space;M&space;\times&space;D_F&space;\times&space;D_F+\alpha&space;M&space;\times&space;\alpha&space;N&space;\times&space;D_F&space;\times&space;D_F)
 
-Where ![alpha](https://latex.codecogs.com/svg.image?\alpha) is the value between 0 and 1. When ![alpha=1](https://latex.codecogs.com/svg.image?\alpha=1), it is baseline MobileNet, and when ![alpha<1](https://latex.codecogs.com/svg.image?\alpha<1), it is reduced MobileNets.
+여기서 ![alpha](https://latex.codecogs.com/svg.image?\alpha)의 값은 0과 1 사이의 값이 됩니다. ![alpha=1](https://latex.codecogs.com/svg.image?\alpha=1)일때, baseline MobileNet이고, ![alpha<1](https://latex.codecogs.com/svg.image?\alpha<1), reduced MobileNets입니다..
 
-Using Width Multiplier, Computational Complexity is quadracially reduced by the factor of ![alpha^2](https://latex.codecogs.com/svg.image?\alpha^2)
+Width Multiplier사용할때, 연산량이 width multiplier의 제곱에 비례하게 줄어듭니다. 
 
 ## Resolution Multiplier: Reduced Representation
 
