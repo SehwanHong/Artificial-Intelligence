@@ -1,6 +1,6 @@
 # [MobileNets:Efficient Convolutional Neural Networks for Mobile Vision Application](https://arxiv.org/pdf/1704.04861.pdf)
 
-MobileNets are based on streamlined architecutre that uses depthwise separable convolutions to build light wieght deep neural networks. In this paper, author introudce two global hyper parameters that efficiently trade off between latency and accuracy
+MobileNets are based on streamlined architecutre that uses depthwise separable convolutions to build light weight deep neural networks. In this paper, author introudce two global hyper parameters that efficiently trade off between latency and accuracy
 
 
 # Introduction
@@ -20,7 +20,7 @@ In this paper, author proposes a class of network architectures that allows mode
 
 ## Training small networks
 
-MobileNets are build primarily from depthwise separable convolutions which is subsequently used in Inception models to reduce the computation in the first few layers. Flatten networks build a netwrok out of fully factorized convolutions and showed the potentional of extremely factorized networks. Factorized Networks introduces a small factorized convolutions as well as the use of topological connections. Xception network demonstrated how to scale up depthwise separable filters to out perform Inception V3 networks. Squeezenet uses a bottlenect approach to design a very small network. Other reduced computation networks are structured transform networks and deep fired convnets.
+MobileNets are build primarily from depthwise separable convolutions which is subsequently used in Inception models to reduce the computation in the first few layers. Flatten networks build a network out of fully factorized convolutions and showed the potentional of extremely factorized networks. Factorized Networks introduces a small factorized convolutions as well as the use of topological connections. Xception network demonstrated how to scale up depthwise separable filters to out perform Inception V3 networks. Squeezenet uses a bottlenect approach to design a very small network. Other reduced computation networks are structured transform networks and deep fired convnets.
 
 ## Obtaining small networks by factorizing or compressing pretrained networks.
 
@@ -86,9 +86,9 @@ Since MobileNet is uses kernel size of 3, (![3\times3](https://latex.codecogs.co
 
 MobileNet structure is built on depthwise separable convolutions except for the first layer which is a full convolution. All layers are followed by a batch normalization and ReLU non-lineality with the exception of the final fully convolutional layer which has no nonlinearity and feeds into a softmax layer for classification. Downsampling is handled with strided convolution in the depthwise convolutions as well as in the first layer. A final average pooling reduces spatial resolution into 1 before the fully connected layer. Counting depthwise and pointwise convolutions as separate layers, MobileNet has 28 layers.
 
-Standard Convolutional layer | Depthwise Separable Convolutional Layer
------------|-----------
-![standard convolutional layer](./standardConvLayer.png) | ![depth wise separable convolutional layer](./depthwiseConvLayer.png)
+|Standard Convolutional layer | Depthwise Separable Convolutional Layer|
+|-----------:|:-----------|
+|![standard convolutional layer](./standardConvLayer.png) | ![depth wise separable convolutional layer](./depthwiseConvLayer.png)|
 
 The image above represent how the layers in the standard convolution and depthwise separable convolutional layer is different. Standard convolution, as described in the Depthwise separable convolution section, uses one large convolutional filter for all output dimensions. However, depthwise separable convolution uses depthwise convolution for filtering the input image by channel wise, then use pointwise convoluiton for combining the layers.
 
