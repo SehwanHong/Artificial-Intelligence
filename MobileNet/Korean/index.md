@@ -48,27 +48,27 @@ Kernel의 크기와 입력값의 크기를 알고 있다면, 우리는 기본적인 convolutional layer
 
 ### Depthwise Separable convolution
 
-On the other hand the depthwise separable convolution splits this into two layers:
-* Depthwise convolution for filtering
-* Pointwise convolution for combining
+기본적인 Convolution과는 다르게 depthwise separable convolution은 두개의 레이어로 분류할수 있습니다.
+* 필터를 위한 Depthwise convolution
+* 하나로 합치기 위한 Pointwise convolution
 
-Depthwise convolution is the filtering step in depthwise separable convolution. In this step, a single filter is applied per each input channel. As shown in the image below, kernel would be ![D_K \times D_K \times M \times 1](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N).
+Depthwise convolution은 depthwise separable convolution에서 필터하기 위한 단계입니다. 이 단계에서 하나의 필터가 하나의 입력 Channel에서 적용됩니다. 아래의 이미지와 같이, kernel 크기는 ![D_K \times D_K \times M \times 1](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N)가 됩니다.
 
-![Depthwise convolution filter](./depthwiseConvFilter.png)
+![Depthwise convolution filter](../depthwiseConvFilter.png)
 
-Computational cost of depthwise convolution filter is extremely small compared to standard convolution because it does not need extra parameters for filtering all input channels.
+Depthwise convolution 필터의 연산량은 기본 convolution layer보다 비교했을때 매우 작습니다. 왜냐하면 모든 입력값들을 필터하기 위한 추가적인 parameter가 필요 없기 때문입니다. 연산량을 수식으로 표현한다면 아래와 같습니다.
 
 ![D_K \times D_K \times M \times D_F \times D_F](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N&space;\times&space;D_F&space;\times&space;D_F)
 
-Pointwise convolution is the combining step in depthwise separable convolution. In this step, ![1 \times 1](https://latex.codecogs.com/svg.image?1\times1) convolution is applied to combine the result of depthwise convolutional layer. The kernel size of the this would be ![1 \times 1 \times M \times N](https://latex.codecogs.com/svg.image?1\times1\times&space;M&space;\times&space;N).
+Pointwise convolution은 depthwise separable convolution에서 필터된 값들을 합치는 단계입니다. 이 단계에서 ![1 \times 1](https://latex.codecogs.com/svg.image?1\times1) convolution이 모든 필터 값들을 합치는데 사용됩니다. 이때 kernel 크기는 ![1 \times 1 \times M \times N](https://latex.codecogs.com/svg.image?1\times1\times&space;M&space;\times&space;N)입니다
 
-![Pointwise convolution filter](./pointwiseConvFilter.png)
+![Pointwise convolution filter](../pointwiseConvFilter.png)
 
-Computational cost of pointwise convolution filter is dependent on the input size and the output size but not dependent on the kernel size.
+Pointwise convolution 필터의 연산량은 입력값과 출력값에 비례합니다. 하지만 Kernel 크기와는 무관합니다. 이때의 연산량은 아래의 수식으로 표현됩니다.
 
 ![M \times N \times D_F \times D_F](https://latex.codecogs.com/svg.image?M&space;\times&space;N&space;\times&space;D_F&space;\times&space;D_F)
 
-Total Computational cost of depthwise separable convolutional layer is sum of depthwise convolutional layer and pointwise convolutional layer. Thus it would be:
+Depthwise convolution과 pointwise convolution의 합을 구하면, depthwise separable convolution의 총 연산량을 구할 수 있습니다. 이때의 합은 아래의 수식으로 표현됩니다.
 
 ![D_K \times D_K \times M \times D_F \times D_F + M \times N \times D_F \times D_F](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;D_F&space;\times&space;D_F+M&space;\times&space;N&space;\times&space;D_F&space;\times&space;D_F)
 
