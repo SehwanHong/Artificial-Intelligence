@@ -116,21 +116,21 @@ Width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha)와 resolut
 
 # Experiment
 
-Effect of depth wise convolution and the choice of shrinking by reducing the width of the network rather then the number of layers.
+Depthwise separable convolution의 효과와 layer의 갯수를 줄이는 것 대신에 network의 width를 줄이는 것의 효과
 
 ## Model Choices
 
-First comparing the mobilenet with depthwise separable convolutions with a model built based on full convolutions. 
+Depthwise separable convolution을 사용한 MobileNet과 Full convolution을 사용한 MobileNet의 비교.
 
-![depthwise separable vs full convolution mobile net](./compareConvolution.png)
+![depthwise separable vs full convolution mobile net](../compareConvolution.png)
 
-Looking at the above image we could see that using depthwise separable convolution uses approximately nine times less computation but only reduces 1% accuracy.
+위의 테이블을 확인한 결과, depthwise seaprable convolution을 사용한 결과 9배정도 연산이 줄어들었고 1% 정도의 정확도가 줄어들었다.
 
-Comparing thinner models with width multiplier to shallower models using less layers. To make MobileNet shalloweer, the 5 layers of separable filters with feature size ![14 14 512](https://latex.codecogs.com/svg.image?14\times14\times512) in Mobile net is removed.
+Width multiplier를 사용하는 얇은 모델과 더 적은 수의 layer를 사용하는 얕은 모델을 비교한다. 얕은 MobileNet을 만들기 위해서, 5개의 separable filter를 삭제했다. 이때의 feature map 크기는 ![14 14 512](https://latex.codecogs.com/svg.image?14\times14\times512)이다.
 
-![thin model vs shallow model](./compareThinShallow.png)
+![thin model vs shallow model](../compareThinShallow.png)
 
-Looking at the table, both thinner and shallower model have similar computation numbers, such as Multi-adds and number of parameters. However, thinner model have 3% more accurate than using shallower model.
+위의 표를 확인해 보면, 얇은 모델과 얕은 모델 모두 비슷한 연산량과 parameter 수를 가지고 있다. 하지만 얇은 모델이 얕은 모델에 비해서 3% 더 정확하다.
 
 ## Model shrinking hyperparameters
 
