@@ -164,4 +164,5 @@ MobileNet using width multiplier of 0.5 and reduced resolution ![160 160](https:
 
 Training fine grained recognition on the stanford Dogs dataset. MobileNet can almost achieve the state-of-art result using 9 times less computatoins and 7 times parameter size.
 
+## [Link to Neural Net](../)
 ## [Link to MobileNet V2](./V2/)
