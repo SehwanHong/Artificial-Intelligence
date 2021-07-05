@@ -14,3 +14,8 @@ This is a collection of Neural Network repository where I will build a series of
 * [ResNet](./ResNet/Korean)
 * [ResNet V2](./ResNet/Korean/V2)
 * [ResNeXt](./ResNet/Korean/ResNext)
+
+## Inprogress
+
+* [MobileNet V2](./MobileNet/V2/)
+* [MobileNet Korean version](./MobileNet/Korean/)
