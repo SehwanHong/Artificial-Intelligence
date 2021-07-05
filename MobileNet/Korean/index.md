@@ -11,12 +11,12 @@ AlexNet이 ImageNet Challenge: ILSVRC 2012를 이기고 난 이후, Convolutional Neural
 
 # Prior Work
 
-There are many ways to build small and efficient neural networks. These different approaches could be generallized into two big categories:
+작고 효율적인 인공신경망을 만드는 방법은 여러가지가 있습니다. 다양한 방식들은 두가지의 커다란 분류로 나뉠수 있습니다:
 
-* Compressing pretrained networks
-* Training small networks
+* 미리 훈련된 신경망을 압축하는 방식
+* 작은 인공신경망을 훈련하는 방식
 
-In this paper, author proposes a class of network architectures that allows model developer to specifically choose a small network that matches the resource restriction for their applications. MobileNets primarily focus on optimizing for latency but also yield small network
+이 논문에서 저자는 새로운 부류의 인공신경망 구조를 제시합니다. 이 구조는 모댈 게발자로 하여금 자신들의 어플리케이션의 자원 제한에 맞는 작은 인공신경망을 고를 수 있게 만들어 줍니다. MobileNet의 가장 기초적인 초점은 레이턴시를 최적화 하는 것은 물론 작은 신경망을 만드는 것입니다.
 
 ## Training small networks
 
