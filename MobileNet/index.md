@@ -126,7 +126,7 @@ First comparing the mobilenet with depthwise separable convolutions with a model
 
 Looking at the above image we could see that using depthwise separable convolution uses approximately nine times less computation but only reduces 1% accuracy.
 
-Comparing thinner models with width multiplier to shallower models using less layers. To make MobileNet shalloweer, the 5 layers of separable filters with feature size 14 ¡¿ 14 ¡¿ 512 in Mobile net is removed.
+Comparing thinner models with width multiplier to shallower models using less layers. To make MobileNet shalloweer, the 5 layers of separable filters with feature size ![14 14 512](https://latex.codecogs.com/svg.image?14\times14\times512) in Mobile net is removed.
 
 ![thin model vs shallow model](./compareThinShallow.png)
 
@@ -134,7 +134,7 @@ Looking at the table, both thinner and shallower model have similar computation 
 
 ## Model shrinking hyperparameters
 
-![mobile net width multiplier comparison](.\mobilenetWidthMultiplier.png)
+![mobile net width multiplier comparison](./mobilenetWidthMultiplier.png)
 
 The accuracy, computation and size trade offs of shrinking the MobileNet architecure with the width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha). Accuracy drops smoothly with lower width multiplier until the number of parameter is extremely small at ![alpha](https://latex.codecogs.com/svg.image?\alpha=0.25). At this point, number of parameter is extremely small thus have problem in finding correct classifier.
 
@@ -156,7 +156,7 @@ If we compare MobileNet to other popular neural networks, we would get above tab
 
 ![small mobile net vs popular models](./smallMobileNetPopularNet.png)
 
-MobileNet using width multiplier of 0.5 and reduced resolution 160¡¿160 is better then both Squeezenet and AlexNet. Squeezenet have similar computation size but have 22 time more computation then MobileNet have 3% lower accuacy rate. Also AlexNet is 45 time more parameter and 9.4 time more computation have 3% less computation.
+MobileNet using width multiplier of 0.5 and reduced resolution ![160 160](https://latex.codecogs.com/svg.image?160\times160) is better then both Squeezenet and AlexNet. Squeezenet have similar computation size but have 22 time more computation then MobileNet have 3% lower accuacy rate. Also AlexNet is 45 time more parameter and 9.4 time more computation have 3% less computation.
 
 ## Fine grained Recongition
 
@@ -164,4 +164,8 @@ MobileNet using width multiplier of 0.5 and reduced resolution 160¡¿160 is bette
 
 Training fine grained recognition on the stanford Dogs dataset. MobileNet can almost achieve the state-of-art result using 9 times less computatoins and 7 times parameter size.
 
+<<<<<<< HEAD
 ## [Link to MobileNet V2](./V2/)
+=======
+## [Link to MobileNet V2](./V2/)
+>>>>>>> 75e7ba5cd6bf16c15caaa53aafa83d4bf82d3987
