@@ -82,17 +82,17 @@ MobileNet의 Kernel 크기가 ![3\times3](https://latex.codecogs.com/svg.image?3\tim
 
 ## Network Structure and Training
 
-![mobilenet structure](./mobilenetStructure.png)
+![mobilenet structure](../mobilenetStructure.png)
 
-MobileNet structure is built on depthwise separable convolutions except for the first layer which is a full convolution. All layers are followed by a batch normalization and ReLU non-lineality with the exception of the final fully convolutional layer which has no nonlinearity and feeds into a softmax layer for classification. Downsampling is handled with strided convolution in the depthwise convolutions as well as in the first layer. A final average pooling reduces spatial resolution into 1 before the fully connected layer. Counting depthwise and pointwise convolutions as separate layers, MobileNet has 28 layers.
+MobileNet의 기본적 구조는 depthwise separable convolution을 기반으로 만들어졌습니다. 이때 가장 첫번째 layer만은 Full convolution을 사용합니다. 마지막의 fully connected layer를 제외한 모든 layer는 batch normalization과 ReLU non-lineality가 뒤따릅니다. 마지막 레이어인 Funnly Connected layer는 softmax layer를 사용합니다. Downsamping은 depthwise convolution의 stride를 바꾸는 것으로 합니다. 가장 첫번째 layer인 standard convolution layer에서의 downsampling도 stride를 바꾸는 것으로 대신합니다. 마지막 average pooling은 공간 해상도를 1로 바꾸어 마지막 layer인 fully convolutional layer의 입력방식에 맞추어 줍니다. depthwise convolution과 pointwise convolution을 다른 layer라고 생각했을때 MobileNet은 총 28개의 layer로 이루어 져있습니다.
 
 Standard Convolutional layer | Depthwise Separable Convolutional Layer
 -----------|-----------
-![standard convolutional layer](./standardConvLayer.png) | ![depth wise separable convolutional layer](./depthwiseConvLayer.png)
+![standard convolutional layer](../standardConvLayer.png) | ![depth wise separable convolutional layer](../depthwiseConvLayer.png)
 
-The image above represent how the layers in the standard convolution and depthwise separable convolutional layer is different. Standard convolution, as described in the Depthwise separable convolution section, uses one large convolutional filter for all output dimensions. However, depthwise separable convolution uses depthwise convolution for filtering the input image by channel wise, then use pointwise convoluiton for combining the layers.
+위의 이미지는 standard convolution layer와 depthwiese separable convolutional layer의 차이점을 보여줍니다. 위에서 표현한것 처럼 standard convolution은 한단계에서 모든 것을 연산합니다. 반면, depthwise seaprable convolution은 depthwise separable convolution을 통해서 channel별로 filter하고 pointwise convolution을 통해서 입력값들을 합쳐 출력값으로 변환합니다.
 
-Efficieint Network is not simply defined by the number of Mult-Adds, but it is dependent on how efficiently operation is implimented. For instance, unstructured sparse matrix operations are not typically faster than dense matrix operation until a very high level of sparsity.
+효율적인 신경망은 단순히 Mult-Adds갯수만으로 정의되지 않습니다. 하지만 얼마나 효율적인 연산으로 실행되는 지가 더 중요합니다. 예를 들어서 sparse matrix연산은 dense matrix 연산보다 항상 빠르지 않습니다.
 
 ## Width Multiplier: Thinner Models
 
