@@ -4,5 +4,13 @@ This is a collection of Neural Network repository where I will build a series of
 
 ## Currently what I have built
 
-* [ResNet](https://sehwanhong.github.io/NeuralNet/ResNet)
-* [ResNeXt](https://sehwanhong.github.io/NeuralNet/ResNet/ResNext)
+* [ResNet](./ResNet)
+* [ResNet V2](./ResNet/V2)
+* [ResNeXt](./ResNet/ResNext)
+* [MobileNet](./MobileNet)
+
+## Korean Version
+
+* [ResNet](./ResNet/Korean)
+* [ResNet V2](./ResNet/Korean/V2)
+* [ResNeXt](./ResNet/Korean/ResNext)

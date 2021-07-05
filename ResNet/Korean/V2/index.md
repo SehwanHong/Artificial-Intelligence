@@ -79,6 +79,7 @@ ResNet 110 Residual Unit | ResNet 164 Residual Unit
 
 위의 이미지에서 확인할 수 있다싶이 Preactivation을 하는 경우 error rate가 줄어든 것을 확인 할수 있습니다.
 
+## [Link to Neural Net](../../../)
 ## [Link to English Version](../../V2/)
 ## [Link to Original Version](../)
 ## [Link to ResNext](../ResNext/)

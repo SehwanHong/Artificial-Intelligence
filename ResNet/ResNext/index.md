@@ -89,6 +89,7 @@ ResNeXt appears similar to the Inception-ResNet blovk in that it involves branch
 
 https://takenotesforvision.tistory.com/12
 
+## [Link to Neural Net](../../)
 ## [Link to Original Version](../)
 ## [Link to ResNet V2](../V2/)
 ## [Link to Korean Version](../Korean/ResNext/)

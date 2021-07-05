@@ -68,7 +68,7 @@ https://m.blog.naver.com/laonple/221259295035
 https://sike6054.github.io/blog/paper/first-post/  
 https://github.com/taki0112/ResNet-Tensorflow  
 
-
+## [Link to Neural Net](../)
 ## [Link to ResNet version 2](./V2/)
 ## [Link to ResNeXt](./ResNext/)
 ## [Link to Korean Version](./Korean/)

@@ -89,6 +89,7 @@ ResNeXt는 Inception-ResNet block과 branching을 한다는 것에 비슷합니�
 
 https://takenotesforvision.tistory.com/12
 
+## [Link to Neural Net](../../../)
 ## [Link to Original Version](../)
 ## [Link to ResNext](../ResNext/)
 ## [Link to English Version](../../ResNext)

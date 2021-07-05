@@ -99,6 +99,7 @@ The first benefit is ease of optimization. This effect was largely visible when 
 
 Another impact of using preactivation unit is on regularization. Using original have problem when normalziation. After adding to the shortcut, the result is not normalized. On the contrary, preactivation version, inputs to all weight layers have been normalized.
 
+## [Link to Neural Net](../../)
 ## [Link to Original Version](../)
 ## [Link to ResNext](../ResNext/)
 ## [Link to Korean Version](../Korean/V2)
