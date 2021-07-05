@@ -159,6 +159,6 @@ MobileNet과 다른 유명한 인공신경망을 비교해보았다. MobileNet은 VGG16과 비슷한 정
 Width Multiplier를 0.5를 사용하고 해상도를 ![160 160](https://latex.codecogs.com/svg.image?160\times160)으로 줄인 MobileNet은 Squeezenet과 Alexnet에 비해서 확실하게 좋습니다. Squeezenet은 22베 많은 연산량에고 불구하고 3%정도 낮은 정확도를 보였고, AlexNet도 45배 많은 parameter에 9.4배 많은 연산량에도 불구하고 3%적은 정확도를 보였습니다.
 
 
-## [Link to Neural Net](../)
-## [Link to Korean version](./Korean/)
+## [Link to Neural Net](../../)
+## [Link to Original version](../)
 ## [Link to MobileNet V2](./V2/)
