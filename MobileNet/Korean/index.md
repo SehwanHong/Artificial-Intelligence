@@ -74,11 +74,11 @@ Depthwise convolution과 pointwise convolution의 합을 구하면, depthwise separable
 
 ### Reduction in Computation.
 
-From both computational cost equation, we are able to find the reduction ratio in computation when using depthwise separable convolution compared to standard convolutional layer.
+연산량을 계산한 두 개의 식으로 부터 우리는 depthwise separable convolution을 사용할때와 standard convolution을 사용할때의 연산량을 비교할 수 있습니다. 이를 통해서 depthwise separable convolution이 얼마만큼 연산을 줄일 수 있는지 계산 하게 되면,
 
 ![computaion ratio](https://latex.codecogs.com/svg.image?\frac{D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;D_F&space;\times&space;D_F&space;&plus;&space;M&space;\times&space;N&space;\times&space;D_F&space;\times&space;D_F}{D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N&space;\times&space;D_F&space;\times&space;D_F}&space;=&space;\frac{1}{N}&space;&plus;&space;\frac{1}{D_K^2})
 
-Since MobileNet is uses kernel size of 3, (![3\times3](https://latex.codecogs.com/svg.image?3\times3)), MobileNet uses 8 to 9 times less computaion than using standard convolutions.
+MobileNet의 Kernel 크기가 ![3\times3](https://latex.codecogs.com/svg.image?3\times3)입니다. 그럼으로, MobileNet은 대략 8배에서 9배 정도로 연산을 적게 합니다.
 
 ## Network Structure and Training
 
