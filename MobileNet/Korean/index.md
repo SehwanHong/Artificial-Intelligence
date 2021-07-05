@@ -134,35 +134,30 @@ Width multiplier를 사용하는 얇은 모델과 더 적은 수의 layer를 사용하는 얕은 모델�
 
 ## Model shrinking hyperparameters
 
-![mobile net width multiplier comparison](./mobilenetWidthMultiplier.png)
+![mobile net width multiplier comparison](../mobilenetWidthMultiplier.png)
 
-The accuracy, computation and size trade offs of shrinking the MobileNet architecure with the width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha). Accuracy drops smoothly with lower width multiplier until the number of parameter is extremely small at ![alpha](https://latex.codecogs.com/svg.image?\alpha=0.25). At this point, number of parameter is extremely small thus have problem in finding correct classifier.
+Width Multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha)를 이용한 MobileNet의 축소는 정확도와 연산량, 크기의 교환으로 이루어 진다. Width Mutliplier가 줄어들수록, 정확도도 부드럽게 줄어드는데, parameter의 수가 급격하게 작아지는 ![alpha](https://latex.codecogs.com/svg.image?\alpha=0.25)일때 정확도는 급격하게 떨어진다. 이 때는 parameter의 수가 너무저어서 정확한 결과값을 찾기가 어려워진다.
 
-![mobile net resolution mutliplier comparison](./mobilenetResolutionMultiplier.png)
+![mobile net resolution mutliplier comparison](../mobilenetResolutionMultiplier.png)
 
-The accuracy, computation and size trade offs of shrinking the MobileNet architecture with the resolution multiplier ![rho](https://latex.codecogs.com/svg.image?\rho). Accuracy drop smoothly as the resolution decreases.
+resolution multiplier ![rho](https://latex.codecogs.com/svg.image?\rho)를 이용한 MobileNet의 축소는 정확도와 연산량, 크기의 교환으로 이루어 진다. Resolution  Mutliplier가 줄어들수록, 정확도도 부드럽게 줄어든다.
 
-![computation vs accuracy](./computationAccuracy.png)
+![computation vs accuracy](../computationAccuracy.png)
 
-If we see the above graph, we compare computational complexity which is based on width multiplier and resolution multiplier and the accuracy. We could see the trend that larger computational number higher the accuracy for ImageNet benchmark. Must know that x axis are logarithmic.
+위의 그래프를 확인해보면, Computational complexity에 비래해서 ImageNet benchmark값이 상승하는 것을 볼수 있다. 여기서 x축은 지수적으로 증가하는 것을 알아야한다.
 
-![parameter vs accuracy](./parameterAccuracy.png)
+![parameter vs accuracy](../parameterAccuracy.png)
 
-The above graph compare the number of parameters and the accuracy. There is a trend that more number of parameters, better accuracy. Also notice that the number of parameters does not depend on the input resolutions.
+위의 그래프는 parameter의 개수과 정확도를 비교한 것이다. 여기서 parameter의 수가 높을 수록 정확도가 올라가는 것을 볼수 있다. 그리고 parameter의 수는 resolution multiplier와는 관계가 없는 것을 확인할 수 있다.
 
-![MobileNet vs popular models](./mobilenetPopularnet.png)
+![MobileNet vs popular models](../mobilenetPopularnet.png)
 
-If we compare MobileNet to other popular neural networks, we would get above table. MobileNet have similar accuracy rate with VGG 16, but mobile net have approximately 32 times smaller in parameter size and 27 time smaller in computation. Also GoogleNet have approximately 3 times the computation and 1.5 times the parameters size than MobileNet but have lower accuracy rate.
+MobileNet과 다른 유명한 인공신경망을 비교해보았다. MobileNet은 VGG16과 비슷한 정확도를 가지는데, 32배적은 parameter 수를 가지고 있고 27배 연산량이 작습니다. GoogleNet과 비교시, MobileNet이 1%정도 정확도가 높지만, 3배 정도 연산이 적고 1.5배정도 parameter 수가 적습니다.
 
-![small mobile net vs popular models](./smallMobileNetPopularNet.png)
+![small mobile net vs popular models](../smallMobileNetPopularNet.png)
 
-MobileNet using width multiplier of 0.5 and reduced resolution ![160 160](https://latex.codecogs.com/svg.image?160\times160) is better then both Squeezenet and AlexNet. Squeezenet have similar computation size but have 22 time more computation then MobileNet have 3% lower accuacy rate. Also AlexNet is 45 time more parameter and 9.4 time more computation have 3% less computation.
+Width Multiplier를 0.5를 사용하고 해상도를 ![160 160](https://latex.codecogs.com/svg.image?160\times160)으로 줄인 MobileNet은 Squeezenet과 Alexnet에 비해서 확실하게 좋습니다. Squeezenet은 22베 많은 연산량에고 불구하고 3%정도 낮은 정확도를 보였고, AlexNet도 45배 많은 parameter에 9.4배 많은 연산량에도 불구하고 3%적은 정확도를 보였습니다.
 
-## Fine grained Recongition
-
-![Stanford dog data](./StanfordDog.png)
-
-Training fine grained recognition on the stanford Dogs dataset. MobileNet can almost achieve the state-of-art result using 9 times less computatoins and 7 times parameter size.
 
 ## [Link to Neural Net](../)
 ## [Link to Korean version](./Korean/)
