@@ -32,17 +32,17 @@ Quantization, hashing, pruing 그리고 vector quantization과 허프만 코딩을 사용하�
 
 ## Depthwise separable Convolution
 
-MobileNet model is based on depthwise separable convolutions which is a form of factorized convolutions which factorize a standard convolution into a depthwise convolution and ![1 \times 1](https://latex.codecogs.com/svg.image?1\times1) convolution called pointwise convolution.
+MobileNet 모델은 depthwise separable convolution을 기반으로 만들어졌습니다. Depthwise separable model은 factorized convolution의 한 방식으로 기본적인 convolution을 depthwise convolution과 ![1 \times 1](https://latex.codecogs.com/svg.image?1\times1) convolution인 pointwise convolution으로 분해한 것입니다.
 
 ### Standard Convolution
 
-Standard convolution both filters and combies inputs into a new set of outpus in one step. If we denote the input feature map as ![D_F \times D_F \times M](https://latex.codecogs.com/svg.image?D_F&space;\times&space;D_F&space;\times&space;M) and output feature map as ![D_F \times D_F \times N](https://latex.codecogs.com/svg.image?D_F&space;\times&space;D_F&space;\times&space;N), then we could calculate the kernal size for standard convolutional layers.
+기본적인 convolution은 입력값을 필터를 적용함과 동시에 합쳐서 단 하나의 단계로 출력값으로 변환합니다. 우리가 만약 입력 feature map을 ![D_F \times D_F \times M](https://latex.codecogs.com/svg.image?D_F&space;\times&space;D_F&space;\times&space;M)으로 출력 feature map을 ![D_F \times D_F \times N](https://latex.codecogs.com/svg.image?D_F&space;\times&space;D_F&space;\times&space;N)으로 표현한다면 기본 convolution layer의 kernel 크기를 다음과 같이 표현할 수 있습니다.
 
-![Standard Convolutional Filters](./standardConvFilter.png)
+![Standard Convolutional Filters](../standardConvFilter.png)
 
-As shown in the image above, Standard convolutional layer have the filter size of ![D_K \times D_K \times M \times N](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N). ![D_K](https://latex.codecogs.com/svg.image?D_K) is the size of the filter kernel  ![M](https://latex.codecogs.com/svg.image?M) is the size of input Channel. ![N](https://latex.codecogs.com/svg.image?N) is the size of output Channel.
+위의 이미지에서 보인것 처럼, 기본 convolutional layer는 필터크기가 ![D_K \times D_K \times M \times N](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N)으로 표현 될 수 있습니다. 여기서 ![D_K](https://latex.codecogs.com/svg.image?D_K) 는  filter kernel의 크기,  ![M](https://latex.codecogs.com/svg.image?M)는 input Channel의 크기. ![N](https://latex.codecogs.com/svg.image?N)는 output Channel의 크기입니다..
 
-Using the size of the Kernel and the size of input, we could calculate the computational cost of Standard convolutional layers.
+Kernel의 크기와 입력값의 크기를 알고 있다면, 우리는 기본적인 convolutional layer의 연산량을 대략적으로 계산 할 수 있는데, 그 수식은 아레와 같습니다.
 
 ![D_K \times D_K \times M \times N \times D_F \times D_F](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N&space;\times&space;D_F&space;\times&space;D_F)
 
