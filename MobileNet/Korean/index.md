@@ -20,13 +20,13 @@ AlexNet이 ImageNet Challenge: ILSVRC 2012를 이기고 난 이후, Convolutional Neural
 
 ## Training small networks
 
-MobileNets are build primarily from depthwise separable convolutions which is subsequently used in Inception models to reduce the computation in the first few layers. Flatten networks build a netwrok out of fully factorized convolutions and showed the potentional of extremely factorized networks. Factorized Networks introduces a small factorized convolutions as well as the use of topological connections. Xception network demonstrated how to scale up depthwise separable filters to out perform Inception V3 networks. Squeezenet uses a bottlenect approach to design a very small network. Other reduced computation networks are structured transform networks and deep fired convnets.
+MobileNet은 depthwise separable convolution에 기반하여 만들어 졌습니다. Depthwise separable convolutiondms Inception 모델에서 첫 몇게의 레이어에서 연산을 줄이기 위해서 사용되었습니다. Flatten Network는 인공신경망을 fully factorized convolution을 기반으로 만들어졌고, extremely factorized network에 대한 가능성을 보여주었습니다. Factorized Networks는 small factorized convoutions와 topological conncetions의 사용을 소개했습니다.  Xception Network는 depthwise separable filter를 증가시킴에 따라서 Inception V3 모델을 능가하는 결과를 보여주었습니다. Squeezenet은 bottlenet 방식을 사용해서 아주 작은 신경망을 만들었습니다. 다른 방식으로는 structured transform networks와 deep fried convnet이 있습니다.
+
+작은 신경망을 훈련시키는 또 다른 방식으로는 커다란 인공신경망을 통해서 작은 신경망을 훈련시키는 방식도 있습니다.
 
 ## Obtaining small networks by factorizing or compressing pretrained networks.
 
-Compression based on product quantization, hashing, and pruning, vector quantization and Huffman coding have been proposed in the literature. Moreover, Various Factorization have been proposed to speed up pretrained netowrks.
-
-Another method for traing small networks is distillations which uses a larger network to teach a smaller network.
+Quantization, hashing, pruing 그리고 vector quantization과 허프만 코딩을 사용하는 압축은 다양한 논문에서 확인 할 수 있습니다. 게다가, 다양한 Factorization은 미리 훈련된 신경망의 연산을 더욱더 빠르게 만들어 줍니다.
 
 # MobileNet Architecture
 
