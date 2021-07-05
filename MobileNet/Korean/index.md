@@ -5,9 +5,9 @@ Depthwise separable convolutions를 사용한 간소화된 architecture를 기반으로 Mobil
 
 # Introduction
 
-Convolutional neural networks have become ubiquitous in computer vision after AlexNet became famous by winning the ImageNet Challenge: ILSVRC 2012. The general trend of the neural network ever since was to make deeper and more complicated networks to achive higher accuracy. However, these advances to improve accuracy had a trade off of having higher computational complexity. In real world applications, such as robotics, self-driving car and augmented reality, the recongintion tasks need to be carried out in a timely fashion of computiation.
+AlexNet이 ImageNet Challenge: ILSVRC 2012를 이기고 난 이후, Convolutional Neural Network는 컴퓨터 비전에서 범용적으로 사용되는 기술이 되었습니다. 이 이후로 인공신경망 설계의 전체적인 추세는 깊고 복잡한 신경망을 통해서 높은 정확도를 얻는 것을 목표로 하고 있습니다. 하지만 정확도를 증가시키는 발전은 높은 계산 복잡도를 통해서 이루어지고 있습니다. 실생활 속에서, 예를 들어 로보틱스, 자율주행 자동차, 그리고 증강현실에서, 물체 인식은 빠른시간 내에 계산되어야 합니다.
 
-In this paper author discribes an efficinet network architecture and a set of two hyper-parameters in order to build very small, low latency models that can be easily matched to the design requirement for mobile and embedded vision applications.
+이 논문에서 저자는 효율적인 신경망 구조와 두개의 hyperparameter를 소개합니다. 이를 통해서 아주 작고 연산 속도가 빠른 모델을 만듭니다. 이는 모바일 기기들과 임베디드 비전 프로그램의 설계 요건에도 맞는 인공신경망 입니다.
 
 # Prior Work
 
