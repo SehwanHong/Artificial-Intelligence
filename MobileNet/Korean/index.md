@@ -1,163 +1,162 @@
 # [MobileNets:Efficient Convolutional Neural Networks for Mobile Vision Application](https://arxiv.org/pdf/1704.04861.pdf)
 
-Depthwise separable convolutions¸¦ »ç¿ëÇÑ °£¼ÒÈ­µÈ architecture¸¦ ±â¹İÀ¸·Î MobileNetÀº °¡º­¿î DNNÀ» ¸¸µå·Á°í ÇÕ´Ï´Ù. ÀÌ ³í¹®¿¡¼­ ÀúÀÚ´Â µÎ°¡Áö global hyperparameter¸¦ ¼Ò°³ÇÕ´Ï´Ù. ÀÌ µÎ°³ÀÇ hyperparameter´Â È¿À²ÀûÀ¸·Î Á¤È®µµ¿Í latency¸¦ ±³È¯ÇÕ´Ï´Ù.
+Depthwise separable convolutionsë¥¼ ì‚¬ìš©í•œ ê°„ì†Œí™”ëœ architectureë¥¼ ê¸°ë°˜ìœ¼ë¡œ MobileNetì€ ê°€ë²¼ìš´ DNNì„ ë§Œë“œë ¤ê³  í•©ë‹ˆë‹¤. ì´ ë…¼ë¬¸ì—ì„œ ì €ìëŠ” ë‘ê°€ì§€ global hyperparameterë¥¼ ì†Œê°œí•©ë‹ˆë‹¤. ì´ ë‘ê°œì˜ hyperparameterëŠ” íš¨ìœ¨ì ìœ¼ë¡œ ì •í™•ë„ì™€ latencyë¥¼ êµí™˜í•©ë‹ˆë‹¤.
 
 
 # Introduction
 
-AlexNetÀÌ ImageNet Challenge: ILSVRC 2012¸¦ ÀÌ±â°í ³­ ÀÌÈÄ, Convolutional Neural Network´Â ÄÄÇ»ÅÍ ºñÀü¿¡¼­ ¹ü¿ëÀûÀ¸·Î »ç¿ëµÇ´Â ±â¼úÀÌ µÇ¾ú½À´Ï´Ù. ÀÌ ÀÌÈÄ·Î ÀÎ°ø½Å°æ¸Á ¼³°èÀÇ ÀüÃ¼ÀûÀÎ Ãß¼¼´Â ±í°í º¹ÀâÇÑ ½Å°æ¸ÁÀ» ÅëÇØ¼­ ³ôÀº Á¤È®µµ¸¦ ¾ò´Â °ÍÀ» ¸ñÇ¥·Î ÇÏ°í ÀÖ½À´Ï´Ù. ÇÏÁö¸¸ Á¤È®µµ¸¦ Áõ°¡½ÃÅ°´Â ¹ßÀüÀº ³ôÀº °è»ê º¹Àâµµ¸¦ ÅëÇØ¼­ ÀÌ·ç¾îÁö°í ÀÖ½À´Ï´Ù. ½Ç»ıÈ° ¼Ó¿¡¼­, ¿¹¸¦ µé¾î ·Îº¸Æ½½º, ÀÚÀ²ÁÖÇà ÀÚµ¿Â÷, ±×¸®°í Áõ°­Çö½Ç¿¡¼­, ¹°Ã¼ ÀÎ½ÄÀº ºü¸¥½Ã°£ ³»¿¡ °è»êµÇ¾î¾ß ÇÕ´Ï´Ù.
+AlexNetì´ ImageNet Challenge: ILSVRC 2012ë¥¼ ì´ê¸°ê³  ë‚œ ì´í›„, Convolutional Neural NetworkëŠ” ì»´í“¨í„° ë¹„ì „ì—ì„œ ë²”ìš©ì ìœ¼ë¡œ ì‚¬ìš©ë˜ëŠ” ê¸°ìˆ ì´ ë˜ì—ˆìŠµë‹ˆë‹¤. ì´ ì´í›„ë¡œ ì¸ê³µì‹ ê²½ë§ ì„¤ê³„ì˜ ì „ì²´ì ì¸ ì¶”ì„¸ëŠ” ê¹Šê³  ë³µì¡í•œ ì‹ ê²½ë§ì„ í†µí•´ì„œ ë†’ì€ ì •í™•ë„ë¥¼ ì–»ëŠ” ê²ƒì„ ëª©í‘œë¡œ í•˜ê³  ìˆìŠµë‹ˆë‹¤. í•˜ì§€ë§Œ ì •í™•ë„ë¥¼ ì¦ê°€ì‹œí‚¤ëŠ” ë°œì „ì€ ë†’ì€ ê³„ì‚° ë³µì¡ë„ë¥¼ í†µí•´ì„œ ì´ë£¨ì–´ì§€ê³  ìˆìŠµë‹ˆë‹¤. ì‹¤ìƒí™œ ì†ì—ì„œ, ì˜ˆë¥¼ ë“¤ì–´ ë¡œë³´í‹±ìŠ¤, ììœ¨ì£¼í–‰ ìë™ì°¨, ê·¸ë¦¬ê³  ì¦ê°•í˜„ì‹¤ì—ì„œ, ë¬¼ì²´ ì¸ì‹ì€ ë¹ ë¥¸ì‹œê°„ ë‚´ì— ê³„ì‚°ë˜ì–´ì•¼ í•©ë‹ˆë‹¤.
 
-ÀÌ ³í¹®¿¡¼­ ÀúÀÚ´Â È¿À²ÀûÀÎ ½Å°æ¸Á ±¸Á¶¿Í µÎ°³ÀÇ hyperparameter¸¦ ¼Ò°³ÇÕ´Ï´Ù. ÀÌ¸¦ ÅëÇØ¼­ ¾ÆÁÖ ÀÛ°í ¿¬»ê ¼Óµµ°¡ ºü¸¥ ¸ğµ¨À» ¸¸µì´Ï´Ù. ÀÌ´Â ¸ğ¹ÙÀÏ ±â±âµé°ú ÀÓº£µğµå ºñÀü ÇÁ·Î±×·¥ÀÇ ¼³°è ¿ä°Ç¿¡µµ ¸Â´Â ÀÎ°ø½Å°æ¸Á ÀÔ´Ï´Ù.
+ì´ ë…¼ë¬¸ì—ì„œ ì €ìëŠ” íš¨ìœ¨ì ì¸ ì‹ ê²½ë§ êµ¬ì¡°ì™€ ë‘ê°œì˜ hyperparameterë¥¼ ì†Œê°œí•©ë‹ˆë‹¤. ì´ë¥¼ í†µí•´ì„œ ì•„ì£¼ ì‘ê³  ì—°ì‚° ì†ë„ê°€ ë¹ ë¥¸ ëª¨ë¸ì„ ë§Œë“­ë‹ˆë‹¤. ì´ëŠ” ëª¨ë°”ì¼ ê¸°ê¸°ë“¤ê³¼ ì„ë² ë””ë“œ ë¹„ì „ í”„ë¡œê·¸ë¨ì˜ ì„¤ê³„ ìš”ê±´ì—ë„ ë§ëŠ” ì¸ê³µì‹ ê²½ë§ ì…ë‹ˆë‹¤.
 
 # Prior Work
 
-ÀÛ°í È¿À²ÀûÀÎ ÀÎ°ø½Å°æ¸ÁÀ» ¸¸µå´Â ¹æ¹ıÀº ¿©·¯°¡Áö°¡ ÀÖ½À´Ï´Ù. ´Ù¾çÇÑ ¹æ½ÄµéÀº µÎ°¡ÁöÀÇ Ä¿´Ù¶õ ºĞ·ù·Î ³ª´·¼ö ÀÖ½À´Ï´Ù:
+ì‘ê³  íš¨ìœ¨ì ì¸ ì¸ê³µì‹ ê²½ë§ì„ ë§Œë“œëŠ” ë°©ë²•ì€ ì—¬ëŸ¬ê°€ì§€ê°€ ìˆìŠµë‹ˆë‹¤. ë‹¤ì–‘í•œ ë°©ì‹ë“¤ì€ ë‘ê°€ì§€ì˜ ì»¤ë‹¤ë€ ë¶„ë¥˜ë¡œ ë‚˜ë‰ ìˆ˜ ìˆìŠµë‹ˆë‹¤:
 
-* ¹Ì¸® ÈÆ·ÃµÈ ½Å°æ¸ÁÀ» ¾ĞÃàÇÏ´Â ¹æ½Ä
-* ÀÛÀº ÀÎ°ø½Å°æ¸ÁÀ» ÈÆ·ÃÇÏ´Â ¹æ½Ä
+* ë¯¸ë¦¬ í›ˆë ¨ëœ ì‹ ê²½ë§ì„ ì••ì¶•í•˜ëŠ” ë°©ì‹
+* ì‘ì€ ì¸ê³µì‹ ê²½ë§ì„ í›ˆë ¨í•˜ëŠ” ë°©ì‹
 
-ÀÌ ³í¹®¿¡¼­ ÀúÀÚ´Â »õ·Î¿î ºÎ·ùÀÇ ÀÎ°ø½Å°æ¸Á ±¸Á¶¸¦ Á¦½ÃÇÕ´Ï´Ù. ÀÌ ±¸Á¶´Â ¸ğ´î °Ô¹ßÀÚ·Î ÇÏ¿©±İ ÀÚ½ÅµéÀÇ ¾îÇÃ¸®ÄÉÀÌ¼ÇÀÇ ÀÚ¿ø Á¦ÇÑ¿¡ ¸Â´Â ÀÛÀº ÀÎ°ø½Å°æ¸ÁÀ» °í¸¦ ¼ö ÀÖ°Ô ¸¸µé¾î Áİ´Ï´Ù. MobileNetÀÇ °¡Àå ±âÃÊÀûÀÎ ÃÊÁ¡Àº ·¹ÀÌÅÏ½Ã¸¦ ÃÖÀûÈ­ ÇÏ´Â °ÍÀº ¹°·Ğ ÀÛÀº ½Å°æ¸ÁÀ» ¸¸µå´Â °ÍÀÔ´Ï´Ù.
+ì´ ë…¼ë¬¸ì—ì„œ ì €ìëŠ” ìƒˆë¡œìš´ ë¶€ë¥˜ì˜ ì¸ê³µì‹ ê²½ë§ êµ¬ì¡°ë¥¼ ì œì‹œí•©ë‹ˆë‹¤. ì´ êµ¬ì¡°ëŠ” ëª¨ëŒˆ ê²Œë°œìë¡œ í•˜ì—¬ê¸ˆ ìì‹ ë“¤ì˜ ì–´í”Œë¦¬ì¼€ì´ì…˜ì˜ ìì› ì œí•œì— ë§ëŠ” ì‘ì€ ì¸ê³µì‹ ê²½ë§ì„ ê³ ë¥¼ ìˆ˜ ìˆê²Œ ë§Œë“¤ì–´ ì¤ë‹ˆë‹¤. MobileNetì˜ ê°€ì¥ ê¸°ì´ˆì ì¸ ì´ˆì ì€ ë ˆì´í„´ì‹œë¥¼ ìµœì í™” í•˜ëŠ” ê²ƒì€ ë¬¼ë¡  ì‘ì€ ì‹ ê²½ë§ì„ ë§Œë“œëŠ” ê²ƒì…ë‹ˆë‹¤.
 
 ## Training small networks
 
-MobileNetÀº depthwise separable convolution¿¡ ±â¹İÇÏ¿© ¸¸µé¾î Á³½À´Ï´Ù. Depthwise separable convolutiondms Inception ¸ğµ¨¿¡¼­ Ã¹ ¸î°ÔÀÇ ·¹ÀÌ¾î¿¡¼­ ¿¬»êÀ» ÁÙÀÌ±â À§ÇØ¼­ »ç¿ëµÇ¾ú½À´Ï´Ù. Flatten Network´Â ÀÎ°ø½Å°æ¸ÁÀ» fully factorized convolutionÀ» ±â¹İÀ¸·Î ¸¸µé¾îÁ³°í, extremely factorized network¿¡ ´ëÇÑ °¡´É¼ºÀ» º¸¿©ÁÖ¾ú½À´Ï´Ù. Factorized Networks´Â small factorized convoutions¿Í topological conncetionsÀÇ »ç¿ëÀ» ¼Ò°³Çß½À´Ï´Ù.  Xception Network´Â depthwise separable filter¸¦ Áõ°¡½ÃÅ´¿¡ µû¶ó¼­ Inception V3 ¸ğµ¨À» ´É°¡ÇÏ´Â °á°ú¸¦ º¸¿©ÁÖ¾ú½À´Ï´Ù. SqueezenetÀº bottlenet ¹æ½ÄÀ» »ç¿ëÇØ¼­ ¾ÆÁÖ ÀÛÀº ½Å°æ¸ÁÀ» ¸¸µé¾ú½À´Ï´Ù. ´Ù¸¥ ¹æ½ÄÀ¸·Î´Â structured transform networks¿Í deep fried convnetÀÌ ÀÖ½À´Ï´Ù.
+MobileNetì€ depthwise separable convolutionì— ê¸°ë°˜í•˜ì—¬ ë§Œë“¤ì–´ ì¡ŒìŠµë‹ˆë‹¤. Depthwise separable convolutiondms Inception ëª¨ë¸ì—ì„œ ì²« ëª‡ê²Œì˜ ë ˆì´ì–´ì—ì„œ ì—°ì‚°ì„ ì¤„ì´ê¸° ìœ„í•´ì„œ ì‚¬ìš©ë˜ì—ˆìŠµë‹ˆë‹¤. Flatten NetworkëŠ” ì¸ê³µì‹ ê²½ë§ì„ fully factorized convolutionì„ ê¸°ë°˜ìœ¼ë¡œ ë§Œë“¤ì–´ì¡Œê³ , extremely factorized networkì— ëŒ€í•œ ê°€ëŠ¥ì„±ì„ ë³´ì—¬ì£¼ì—ˆìŠµë‹ˆë‹¤. Factorized NetworksëŠ” small factorized convoutionsì™€ topological conncetionsì˜ ì‚¬ìš©ì„ ì†Œê°œí–ˆìŠµë‹ˆë‹¤.  Xception NetworkëŠ” depthwise separable filterë¥¼ ì¦ê°€ì‹œí‚´ì— ë”°ë¼ì„œ Inception V3 ëª¨ë¸ì„ ëŠ¥ê°€í•˜ëŠ” ê²°ê³¼ë¥¼ ë³´ì—¬ì£¼ì—ˆìŠµë‹ˆë‹¤. Squeezenetì€ bottlenet ë°©ì‹ì„ ì‚¬ìš©í•´ì„œ ì•„ì£¼ ì‘ì€ ì‹ ê²½ë§ì„ ë§Œë“¤ì—ˆìŠµë‹ˆë‹¤. ë‹¤ë¥¸ ë°©ì‹ìœ¼ë¡œëŠ” structured transform networksì™€ deep fried convnetì´ ìˆìŠµë‹ˆë‹¤.
 
-ÀÛÀº ½Å°æ¸ÁÀ» ÈÆ·Ã½ÃÅ°´Â ¶Ç ´Ù¸¥ ¹æ½ÄÀ¸·Î´Â Ä¿´Ù¶õ ÀÎ°ø½Å°æ¸ÁÀ» ÅëÇØ¼­ ÀÛÀº ½Å°æ¸ÁÀ» ÈÆ·Ã½ÃÅ°´Â ¹æ½Äµµ ÀÖ½À´Ï´Ù.
+ì‘ì€ ì‹ ê²½ë§ì„ í›ˆë ¨ì‹œí‚¤ëŠ” ë˜ ë‹¤ë¥¸ ë°©ì‹ìœ¼ë¡œëŠ” ì»¤ë‹¤ë€ ì¸ê³µì‹ ê²½ë§ì„ í†µí•´ì„œ ì‘ì€ ì‹ ê²½ë§ì„ í›ˆë ¨ì‹œí‚¤ëŠ” ë°©ì‹ë„ ìˆìŠµë‹ˆë‹¤.
 
 ## Obtaining small networks by factorizing or compressing pretrained networks.
 
-Quantization, hashing, pruing ±×¸®°í vector quantization°ú ÇãÇÁ¸¸ ÄÚµùÀ» »ç¿ëÇÏ´Â ¾ĞÃàÀº ´Ù¾çÇÑ ³í¹®¿¡¼­ È®ÀÎ ÇÒ ¼ö ÀÖ½À´Ï´Ù. °Ô´Ù°¡, ´Ù¾çÇÑ FactorizationÀº ¹Ì¸® ÈÆ·ÃµÈ ½Å°æ¸ÁÀÇ ¿¬»êÀ» ´õ¿í´õ ºü¸£°Ô ¸¸µé¾î Áİ´Ï´Ù.
+Quantization, hashing, pruing ê·¸ë¦¬ê³  vector quantizationê³¼ í—ˆí”„ë§Œ ì½”ë”©ì„ ì‚¬ìš©í•˜ëŠ” ì••ì¶•ì€ ë‹¤ì–‘í•œ ë…¼ë¬¸ì—ì„œ í™•ì¸ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤. ê²Œë‹¤ê°€, ë‹¤ì–‘í•œ Factorizationì€ ë¯¸ë¦¬ í›ˆë ¨ëœ ì‹ ê²½ë§ì˜ ì—°ì‚°ì„ ë”ìš±ë” ë¹ ë¥´ê²Œ ë§Œë“¤ì–´ ì¤ë‹ˆë‹¤.
 
 # MobileNet Architecture
 
 ## Depthwise separable Convolution
 
-MobileNet ¸ğµ¨Àº depthwise separable convolutionÀ» ±â¹İÀ¸·Î ¸¸µé¾îÁ³½À´Ï´Ù. Depthwise separable modelÀº factorized convolutionÀÇ ÇÑ ¹æ½ÄÀ¸·Î ±âº»ÀûÀÎ convolutionÀ» depthwise convolution°ú ![1 \times 1](https://latex.codecogs.com/svg.image?1\times1) convolutionÀÎ pointwise convolutionÀ¸·Î ºĞÇØÇÑ °ÍÀÔ´Ï´Ù.
+MobileNet ëª¨ë¸ì€ depthwise separable convolutionì„ ê¸°ë°˜ìœ¼ë¡œ ë§Œë“¤ì–´ì¡ŒìŠµë‹ˆë‹¤. Depthwise separable modelì€ factorized convolutionì˜ í•œ ë°©ì‹ìœ¼ë¡œ ê¸°ë³¸ì ì¸ convolutionì„ depthwise convolutionê³¼ ![1 \times 1](https://latex.codecogs.com/svg.image?1\times1) convolutionì¸ pointwise convolutionìœ¼ë¡œ ë¶„í•´í•œ ê²ƒì…ë‹ˆë‹¤.
 
 ### Standard Convolution
 
-±âº»ÀûÀÎ convolutionÀº ÀÔ·Â°ªÀ» ÇÊÅÍ¸¦ Àû¿ëÇÔ°ú µ¿½Ã¿¡ ÇÕÃÄ¼­ ´Ü ÇÏ³ªÀÇ ´Ü°è·Î Ãâ·Â°ªÀ¸·Î º¯È¯ÇÕ´Ï´Ù. ¿ì¸®°¡ ¸¸¾à ÀÔ·Â feature mapÀ» ![D_F \times D_F \times M](https://latex.codecogs.com/svg.image?D_F&space;\times&space;D_F&space;\times&space;M)À¸·Î Ãâ·Â feature mapÀ» ![D_F \times D_F \times N](https://latex.codecogs.com/svg.image?D_F&space;\times&space;D_F&space;\times&space;N)À¸·Î Ç¥ÇöÇÑ´Ù¸é ±âº» convolution layerÀÇ kernel Å©±â¸¦ ´ÙÀ½°ú °°ÀÌ Ç¥ÇöÇÒ ¼ö ÀÖ½À´Ï´Ù.
+ê¸°ë³¸ì ì¸ convolutionì€ ì…ë ¥ê°’ì„ í•„í„°ë¥¼ ì ìš©í•¨ê³¼ ë™ì‹œì— í•©ì³ì„œ ë‹¨ í•˜ë‚˜ì˜ ë‹¨ê³„ë¡œ ì¶œë ¥ê°’ìœ¼ë¡œ ë³€í™˜í•©ë‹ˆë‹¤. ìš°ë¦¬ê°€ ë§Œì•½ ì…ë ¥ feature mapì„ ![D_F \times D_F \times M](https://latex.codecogs.com/svg.image?D_F&space;\times&space;D_F&space;\times&space;M)ìœ¼ë¡œ ì¶œë ¥ feature mapì„ ![D_F \times D_F \times N](https://latex.codecogs.com/svg.image?D_F&space;\times&space;D_F&space;\times&space;N)ìœ¼ë¡œ í‘œí˜„í•œë‹¤ë©´ ê¸°ë³¸ convolution layerì˜ kernel í¬ê¸°ë¥¼ ë‹¤ìŒê³¼ ê°™ì´ í‘œí˜„í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 
 ![Standard Convolutional Filters](../standardConvFilter.png)
 
-À§ÀÇ ÀÌ¹ÌÁö¿¡¼­ º¸ÀÎ°Í Ã³·³, ±âº» convolutional layer´Â ÇÊÅÍÅ©±â°¡ ![D_K \times D_K \times M \times N](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N)À¸·Î Ç¥Çö µÉ ¼ö ÀÖ½À´Ï´Ù. ¿©±â¼­ ![D_K](https://latex.codecogs.com/svg.image?D_K) ´Â  filter kernelÀÇ Å©±â,  ![M](https://latex.codecogs.com/svg.image?M)´Â input ChannelÀÇ Å©±â. ![N](https://latex.codecogs.com/svg.image?N)´Â output ChannelÀÇ Å©±âÀÔ´Ï´Ù..
+ìœ„ì˜ ì´ë¯¸ì§€ì—ì„œ ë³´ì¸ê²ƒ ì²˜ëŸ¼, ê¸°ë³¸ convolutional layerëŠ” í•„í„°í¬ê¸°ê°€ ![D_K \times D_K \times M \times N](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N)ìœ¼ë¡œ í‘œí˜„ ë  ìˆ˜ ìˆìŠµë‹ˆë‹¤. ì—¬ê¸°ì„œ ![D_K](https://latex.codecogs.com/svg.image?D_K) ëŠ”  filter kernelì˜ í¬ê¸°,  ![M](https://latex.codecogs.com/svg.image?M)ëŠ” input Channelì˜ í¬ê¸°. ![N](https://latex.codecogs.com/svg.image?N)ëŠ” output Channelì˜ í¬ê¸°ì…ë‹ˆë‹¤..
 
-KernelÀÇ Å©±â¿Í ÀÔ·Â°ªÀÇ Å©±â¸¦ ¾Ë°í ÀÖ´Ù¸é, ¿ì¸®´Â ±âº»ÀûÀÎ convolutional layerÀÇ ¿¬»ê·®À» ´ë·«ÀûÀ¸·Î °è»ê ÇÒ ¼ö ÀÖ´Âµ¥, ±× ¼ö½ÄÀº ¾Æ·¹¿Í °°½À´Ï´Ù.
+Kernelì˜ í¬ê¸°ì™€ ì…ë ¥ê°’ì˜ í¬ê¸°ë¥¼ ì•Œê³  ìˆë‹¤ë©´, ìš°ë¦¬ëŠ” ê¸°ë³¸ì ì¸ convolutional layerì˜ ì—°ì‚°ëŸ‰ì„ ëŒ€ëµì ìœ¼ë¡œ ê³„ì‚° í•  ìˆ˜ ìˆëŠ”ë°, ê·¸ ìˆ˜ì‹ì€ ì•„ë ˆì™€ ê°™ìŠµë‹ˆë‹¤.
 
 ![D_K \times D_K \times M \times N \times D_F \times D_F](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N&space;\times&space;D_F&space;\times&space;D_F)
 
 ### Depthwise Separable convolution
 
-±âº»ÀûÀÎ Convolution°ú´Â ´Ù¸£°Ô depthwise separable convolutionÀº µÎ°³ÀÇ ·¹ÀÌ¾î·Î ºĞ·ùÇÒ¼ö ÀÖ½À´Ï´Ù.
-* ÇÊÅÍ¸¦ À§ÇÑ Depthwise convolution
-* ÇÏ³ª·Î ÇÕÄ¡±â À§ÇÑ Pointwise convolution
+ê¸°ë³¸ì ì¸ Convolutionê³¼ëŠ” ë‹¤ë¥´ê²Œ depthwise separable convolutionì€ ë‘ê°œì˜ ë ˆì´ì–´ë¡œ ë¶„ë¥˜í• ìˆ˜ ìˆìŠµë‹ˆë‹¤.
+* í•„í„°ë¥¼ ìœ„í•œ Depthwise convolution
+* í•˜ë‚˜ë¡œ í•©ì¹˜ê¸° ìœ„í•œ Pointwise convolution
 
-Depthwise convolutionÀº depthwise separable convolution¿¡¼­ ÇÊÅÍÇÏ±â À§ÇÑ ´Ü°èÀÔ´Ï´Ù. ÀÌ ´Ü°è¿¡¼­ ÇÏ³ªÀÇ ÇÊÅÍ°¡ ÇÏ³ªÀÇ ÀÔ·Â Channel¿¡¼­ Àû¿ëµË´Ï´Ù. ¾Æ·¡ÀÇ ÀÌ¹ÌÁö¿Í °°ÀÌ, kernel Å©±â´Â ![D_K \times D_K \times M \times 1](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N)°¡ µË´Ï´Ù.
+Depthwise convolutionì€ depthwise separable convolutionì—ì„œ í•„í„°í•˜ê¸° ìœ„í•œ ë‹¨ê³„ì…ë‹ˆë‹¤. ì´ ë‹¨ê³„ì—ì„œ í•˜ë‚˜ì˜ í•„í„°ê°€ í•˜ë‚˜ì˜ ì…ë ¥ Channelì—ì„œ ì ìš©ë©ë‹ˆë‹¤. ì•„ë˜ì˜ ì´ë¯¸ì§€ì™€ ê°™ì´, kernel í¬ê¸°ëŠ” ![D_K \times D_K \times M \times 1](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N)ê°€ ë©ë‹ˆë‹¤.
 
 ![Depthwise convolution filter](../depthwiseConvFilter.png)
 
-Depthwise convolution ÇÊÅÍÀÇ ¿¬»ê·®Àº ±âº» convolution layerº¸´Ù ºñ±³ÇßÀ»¶§ ¸Å¿ì ÀÛ½À´Ï´Ù. ¿Ö³ÄÇÏ¸é ¸ğµç ÀÔ·Â°ªµéÀ» ÇÊÅÍÇÏ±â À§ÇÑ Ãß°¡ÀûÀÎ parameter°¡ ÇÊ¿ä ¾ø±â ¶§¹®ÀÔ´Ï´Ù. ¿¬»ê·®À» ¼ö½ÄÀ¸·Î Ç¥ÇöÇÑ´Ù¸é ¾Æ·¡¿Í °°½À´Ï´Ù.
+Depthwise convolution í•„í„°ì˜ ì—°ì‚°ëŸ‰ì€ ê¸°ë³¸ convolution layerë³´ë‹¤ ë¹„êµí–ˆì„ë•Œ ë§¤ìš° ì‘ìŠµë‹ˆë‹¤. ì™œëƒí•˜ë©´ ëª¨ë“  ì…ë ¥ê°’ë“¤ì„ í•„í„°í•˜ê¸° ìœ„í•œ ì¶”ê°€ì ì¸ parameterê°€ í•„ìš” ì—†ê¸° ë•Œë¬¸ì…ë‹ˆë‹¤. ì—°ì‚°ëŸ‰ì„ ìˆ˜ì‹ìœ¼ë¡œ í‘œí˜„í•œë‹¤ë©´ ì•„ë˜ì™€ ê°™ìŠµë‹ˆë‹¤.
 
 ![D_K \times D_K \times M \times D_F \times D_F](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N&space;\times&space;D_F&space;\times&space;D_F)
 
-Pointwise convolutionÀº depthwise separable convolution¿¡¼­ ÇÊÅÍµÈ °ªµéÀ» ÇÕÄ¡´Â ´Ü°èÀÔ´Ï´Ù. ÀÌ ´Ü°è¿¡¼­ ![1 \times 1](https://latex.codecogs.com/svg.image?1\times1) convolutionÀÌ ¸ğµç ÇÊÅÍ °ªµéÀ» ÇÕÄ¡´Âµ¥ »ç¿ëµË´Ï´Ù. ÀÌ¶§ kernel Å©±â´Â ![1 \times 1 \times M \times N](https://latex.codecogs.com/svg.image?1\times1\times&space;M&space;\times&space;N)ÀÔ´Ï´Ù
+Pointwise convolutionì€ depthwise separable convolutionì—ì„œ í•„í„°ëœ ê°’ë“¤ì„ í•©ì¹˜ëŠ” ë‹¨ê³„ì…ë‹ˆë‹¤. ì´ ë‹¨ê³„ì—ì„œ ![1 \times 1](https://latex.codecogs.com/svg.image?1\times1) convolutionì´ ëª¨ë“  í•„í„° ê°’ë“¤ì„ í•©ì¹˜ëŠ”ë° ì‚¬ìš©ë©ë‹ˆë‹¤. ì´ë•Œ kernel í¬ê¸°ëŠ” ![1 \times 1 \times M \times N](https://latex.codecogs.com/svg.image?1\times1\times&space;M&space;\times&space;N)ì…ë‹ˆë‹¤
 
 ![Pointwise convolution filter](../pointwiseConvFilter.png)
 
-Pointwise convolution ÇÊÅÍÀÇ ¿¬»ê·®Àº ÀÔ·Â°ª°ú Ãâ·Â°ª¿¡ ºñ·ÊÇÕ´Ï´Ù. ÇÏÁö¸¸ Kernel Å©±â¿Í´Â ¹«°üÇÕ´Ï´Ù. ÀÌ¶§ÀÇ ¿¬»ê·®Àº ¾Æ·¡ÀÇ ¼ö½ÄÀ¸·Î Ç¥ÇöµË´Ï´Ù.
+Pointwise convolution í•„í„°ì˜ ì—°ì‚°ëŸ‰ì€ ì…ë ¥ê°’ê³¼ ì¶œë ¥ê°’ì— ë¹„ë¡€í•©ë‹ˆë‹¤. í•˜ì§€ë§Œ Kernel í¬ê¸°ì™€ëŠ” ë¬´ê´€í•©ë‹ˆë‹¤. ì´ë•Œì˜ ì—°ì‚°ëŸ‰ì€ ì•„ë˜ì˜ ìˆ˜ì‹ìœ¼ë¡œ í‘œí˜„ë©ë‹ˆë‹¤.
 
 ![M \times N \times D_F \times D_F](https://latex.codecogs.com/svg.image?M&space;\times&space;N&space;\times&space;D_F&space;\times&space;D_F)
 
-Depthwise convolution°ú pointwise convolutionÀÇ ÇÕÀ» ±¸ÇÏ¸é, depthwise separable convolutionÀÇ ÃÑ ¿¬»ê·®À» ±¸ÇÒ ¼ö ÀÖ½À´Ï´Ù. ÀÌ¶§ÀÇ ÇÕÀº ¾Æ·¡ÀÇ ¼ö½ÄÀ¸·Î Ç¥ÇöµË´Ï´Ù.
+Depthwise convolutionê³¼ pointwise convolutionì˜ í•©ì„ êµ¬í•˜ë©´, depthwise separable convolutionì˜ ì´ ì—°ì‚°ëŸ‰ì„ êµ¬í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤. ì´ë•Œì˜ í•©ì€ ì•„ë˜ì˜ ìˆ˜ì‹ìœ¼ë¡œ í‘œí˜„ë©ë‹ˆë‹¤.
 
 ![D_K \times D_K \times M \times D_F \times D_F + M \times N \times D_F \times D_F](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;D_F&space;\times&space;D_F+M&space;\times&space;N&space;\times&space;D_F&space;\times&space;D_F)
 
 ### Reduction in Computation.
 
-¿¬»ê·®À» °è»êÇÑ µÎ °³ÀÇ ½ÄÀ¸·Î ºÎÅÍ ¿ì¸®´Â depthwise separable convolutionÀ» »ç¿ëÇÒ¶§¿Í standard convolutionÀ» »ç¿ëÇÒ¶§ÀÇ ¿¬»ê·®À» ºñ±³ÇÒ ¼ö ÀÖ½À´Ï´Ù. ÀÌ¸¦ ÅëÇØ¼­ depthwise separable convolutionÀÌ ¾ó¸¶¸¸Å­ ¿¬»êÀ» ÁÙÀÏ ¼ö ÀÖ´ÂÁö °è»ê ÇÏ°Ô µÇ¸é,
+ì—°ì‚°ëŸ‰ì„ ê³„ì‚°í•œ ë‘ ê°œì˜ ì‹ìœ¼ë¡œ ë¶€í„° ìš°ë¦¬ëŠ” depthwise separable convolutionì„ ì‚¬ìš©í• ë•Œì™€ standard convolutionì„ ì‚¬ìš©í• ë•Œì˜ ì—°ì‚°ëŸ‰ì„ ë¹„êµí•  ìˆ˜ ìˆìŠµë‹ˆë‹¤. ì´ë¥¼ í†µí•´ì„œ depthwise separable convolutionì´ ì–¼ë§ˆë§Œí¼ ì—°ì‚°ì„ ì¤„ì¼ ìˆ˜ ìˆëŠ”ì§€ ê³„ì‚° í•˜ê²Œ ë˜ë©´,
 
 ![computaion ratio](https://latex.codecogs.com/svg.image?\frac{D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;D_F&space;\times&space;D_F&space;&plus;&space;M&space;\times&space;N&space;\times&space;D_F&space;\times&space;D_F}{D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N&space;\times&space;D_F&space;\times&space;D_F}&space;=&space;\frac{1}{N}&space;&plus;&space;\frac{1}{D_K^2})
 
-MobileNetÀÇ Kernel Å©±â°¡ ![3\times3](https://latex.codecogs.com/svg.image?3\times3)ÀÔ´Ï´Ù. ±×·³À¸·Î, MobileNetÀº ´ë·« 8¹è¿¡¼­ 9¹è Á¤µµ·Î ¿¬»êÀ» Àû°Ô ÇÕ´Ï´Ù.
+MobileNetì˜ Kernel í¬ê¸°ê°€ ![3\times3](https://latex.codecogs.com/svg.image?3\times3)ì…ë‹ˆë‹¤. ê·¸ëŸ¼ìœ¼ë¡œ, MobileNetì€ ëŒ€ëµ 8ë°°ì—ì„œ 9ë°° ì •ë„ë¡œ ì—°ì‚°ì„ ì ê²Œ í•©ë‹ˆë‹¤.
 
 ## Network Structure and Training
 
 ![mobilenet structure](../mobilenetStructure.png)
 
-MobileNetÀÇ ±âº»Àû ±¸Á¶´Â depthwise separable convolutionÀ» ±â¹İÀ¸·Î ¸¸µé¾îÁ³½À´Ï´Ù. ÀÌ¶§ °¡Àå Ã¹¹øÂ° layer¸¸Àº Full convolutionÀ» »ç¿ëÇÕ´Ï´Ù. ¸¶Áö¸·ÀÇ fully connected layer¸¦ Á¦¿ÜÇÑ ¸ğµç layer´Â batch normalization°ú ReLU non-lineality°¡ µÚµû¸¨´Ï´Ù. ¸¶Áö¸· ·¹ÀÌ¾îÀÎ Funnly Connected layer´Â softmax layer¸¦ »ç¿ëÇÕ´Ï´Ù. DownsampingÀº depthwise convolutionÀÇ stride¸¦ ¹Ù²Ù´Â °ÍÀ¸·Î ÇÕ´Ï´Ù. °¡Àå Ã¹¹øÂ° layerÀÎ standard convolution layer¿¡¼­ÀÇ downsamplingµµ stride¸¦ ¹Ù²Ù´Â °ÍÀ¸·Î ´ë½ÅÇÕ´Ï´Ù. ¸¶Áö¸· average poolingÀº °ø°£ ÇØ»óµµ¸¦ 1·Î ¹Ù²Ù¾î ¸¶Áö¸· layerÀÎ fully convolutional layerÀÇ ÀÔ·Â¹æ½Ä¿¡ ¸ÂÃß¾î Áİ´Ï´Ù. depthwise convolution°ú pointwise convolutionÀ» ´Ù¸¥ layer¶ó°í »ı°¢ÇßÀ»¶§ MobileNetÀº ÃÑ 28°³ÀÇ layer·Î ÀÌ·ç¾î Á®ÀÖ½À´Ï´Ù.
+MobileNetì˜ ê¸°ë³¸ì  êµ¬ì¡°ëŠ” depthwise separable convolutionì„ ê¸°ë°˜ìœ¼ë¡œ ë§Œë“¤ì–´ì¡ŒìŠµë‹ˆë‹¤. ì´ë•Œ ê°€ì¥ ì²«ë²ˆì§¸ layerë§Œì€ Full convolutionì„ ì‚¬ìš©í•©ë‹ˆë‹¤. ë§ˆì§€ë§‰ì˜ fully connected layerë¥¼ ì œì™¸í•œ ëª¨ë“  layerëŠ” batch normalizationê³¼ ReLU non-linealityê°€ ë’¤ë”°ë¦…ë‹ˆë‹¤. ë§ˆì§€ë§‰ ë ˆì´ì–´ì¸ Funnly Connected layerëŠ” softmax layerë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤. Downsampingì€ depthwise convolutionì˜ strideë¥¼ ë°”ê¾¸ëŠ” ê²ƒìœ¼ë¡œ í•©ë‹ˆë‹¤. ê°€ì¥ ì²«ë²ˆì§¸ layerì¸ standard convolution layerì—ì„œì˜ downsamplingë„ strideë¥¼ ë°”ê¾¸ëŠ” ê²ƒìœ¼ë¡œ ëŒ€ì‹ í•©ë‹ˆë‹¤. ë§ˆì§€ë§‰ average poolingì€ ê³µê°„ í•´ìƒë„ë¥¼ 1ë¡œ ë°”ê¾¸ì–´ ë§ˆì§€ë§‰ layerì¸ fully convolutional layerì˜ ì…ë ¥ë°©ì‹ì— ë§ì¶”ì–´ ì¤ë‹ˆë‹¤. depthwise convolutionê³¼ pointwise convolutionì„ ë‹¤ë¥¸ layerë¼ê³  ìƒê°í–ˆì„ë•Œ MobileNetì€ ì´ 28ê°œì˜ layerë¡œ ì´ë£¨ì–´ ì ¸ìˆìŠµë‹ˆë‹¤.
 
 Standard Convolutional layer | Depthwise Separable Convolutional Layer
 -----------|-----------
 ![standard convolutional layer](../standardConvLayer.png) | ![depth wise separable convolutional layer](../depthwiseConvLayer.png)
 
-À§ÀÇ ÀÌ¹ÌÁö´Â standard convolution layer¿Í depthwiese separable convolutional layerÀÇ Â÷ÀÌÁ¡À» º¸¿©Áİ´Ï´Ù. À§¿¡¼­ Ç¥ÇöÇÑ°Í Ã³·³ standard convolutionÀº ÇÑ´Ü°è¿¡¼­ ¸ğµç °ÍÀ» ¿¬»êÇÕ´Ï´Ù. ¹İ¸é, depthwise seaprable convolutionÀº depthwise separable convolutionÀ» ÅëÇØ¼­ channelº°·Î filterÇÏ°í pointwise convolutionÀ» ÅëÇØ¼­ ÀÔ·Â°ªµéÀ» ÇÕÃÄ Ãâ·Â°ªÀ¸·Î º¯È¯ÇÕ´Ï´Ù.
+ìœ„ì˜ ì´ë¯¸ì§€ëŠ” standard convolution layerì™€ depthwiese separable convolutional layerì˜ ì°¨ì´ì ì„ ë³´ì—¬ì¤ë‹ˆë‹¤. ìœ„ì—ì„œ í‘œí˜„í•œê²ƒ ì²˜ëŸ¼ standard convolutionì€ í•œë‹¨ê³„ì—ì„œ ëª¨ë“  ê²ƒì„ ì—°ì‚°í•©ë‹ˆë‹¤. ë°˜ë©´, depthwise seaprable convolutionì€ depthwise separable convolutionì„ í†µí•´ì„œ channelë³„ë¡œ filterí•˜ê³  pointwise convolutionì„ í†µí•´ì„œ ì…ë ¥ê°’ë“¤ì„ í•©ì³ ì¶œë ¥ê°’ìœ¼ë¡œ ë³€í™˜í•©ë‹ˆë‹¤.
 
-È¿À²ÀûÀÎ ½Å°æ¸ÁÀº ´Ü¼øÈ÷ Mult-Adds°¹¼ö¸¸À¸·Î Á¤ÀÇµÇÁö ¾Ê½À´Ï´Ù. ÇÏÁö¸¸ ¾ó¸¶³ª È¿À²ÀûÀÎ ¿¬»êÀ¸·Î ½ÇÇàµÇ´Â Áö°¡ ´õ Áß¿äÇÕ´Ï´Ù. ¿¹¸¦ µé¾î¼­ sparse matrix¿¬»êÀº dense matrix ¿¬»êº¸´Ù Ç×»ó ºü¸£Áö ¾Ê½À´Ï´Ù.
+íš¨ìœ¨ì ì¸ ì‹ ê²½ë§ì€ ë‹¨ìˆœíˆ Mult-Addsê°¯ìˆ˜ë§Œìœ¼ë¡œ ì •ì˜ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤. í•˜ì§€ë§Œ ì–¼ë§ˆë‚˜ íš¨ìœ¨ì ì¸ ì—°ì‚°ìœ¼ë¡œ ì‹¤í–‰ë˜ëŠ” ì§€ê°€ ë” ì¤‘ìš”í•©ë‹ˆë‹¤. ì˜ˆë¥¼ ë“¤ì–´ì„œ sparse matrixì—°ì‚°ì€ dense matrix ì—°ì‚°ë³´ë‹¤ í•­ìƒ ë¹ ë¥´ì§€ ì•ŠìŠµë‹ˆë‹¤.
 
 ## Width Multiplier: Thinner Models
 
-MobileNet±¸Á¶´Â ÀÌ¹Ì ÀÛ°í ¿¬»êÀÌ ºü¸¨´Ï´Ù. ÇÏÁö¸¸ ¸¹Àº °æ¿ì, Æ¯º°ÇÑ °æ¿ì³ª ¾îÇÃ¸®ÄÉÀÌ¼ÇÀÇ °æ¿ì ´õ ÀÛÀº ¸ğµ¨À» ¿øÇÏ°Å³ª ´õ ºü¸¥ ¸ğµ¨À» ¿øÇÏ´Â °æ¿ì°¡ ¸¹½À´Ï´Ù. ÀÌ¶§ ÀÛÀº ¸ğµ¨°ú ¿¬»ê·®ÀÌ ÀûÀº ¸ğµ¨À» ¸¸µé±â À§ÇØ¼­ ÀúÀÚ´Â width multiplier¸¦ ¼Ò°³ÇÕ´Ï´Ù.
+MobileNetêµ¬ì¡°ëŠ” ì´ë¯¸ ì‘ê³  ì—°ì‚°ì´ ë¹ ë¦…ë‹ˆë‹¤. í•˜ì§€ë§Œ ë§ì€ ê²½ìš°, íŠ¹ë³„í•œ ê²½ìš°ë‚˜ ì–´í”Œë¦¬ì¼€ì´ì…˜ì˜ ê²½ìš° ë” ì‘ì€ ëª¨ë¸ì„ ì›í•˜ê±°ë‚˜ ë” ë¹ ë¥¸ ëª¨ë¸ì„ ì›í•˜ëŠ” ê²½ìš°ê°€ ë§ìŠµë‹ˆë‹¤. ì´ë•Œ ì‘ì€ ëª¨ë¸ê³¼ ì—°ì‚°ëŸ‰ì´ ì ì€ ëª¨ë¸ì„ ë§Œë“¤ê¸° ìœ„í•´ì„œ ì €ìëŠ” width multiplierë¥¼ ì†Œê°œí•©ë‹ˆë‹¤.
 
-Width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha)ÀÇ ¿ªÇÒÀº ÀüÃ¼ÀûÀ¸·Î ½Å°æ¸ÁÀÇ ±¸Á¶´Â ¾ã°Ô ¸¸µé¾î Áİ´Ï´Ù. ÇÏ³ªÀÇ ·¹ÀÌ¾î°¡ ÁÖ¾îÁ³À»¶§, width multiplier¸¦ »ç¿ëÇÏ¸é, ÀÔ·Â°ªÀÇ Å©±âÀÎ MÀÌ ![alpha](https://latex.codecogs.com/svg.image?\alpha&space;M)·Î º¯ÇÏ°Ô µÇ°í, Ãâ·Â°ªµµ ºñ½ÁÇÏ°Ô Àû¿ëÀÌ µË´Ï´Ù. ÀÌ °æ¿ì ÃÑ ¿¬»ê·®Àº ¾Æ·¡¿Í °°ÀÌ º¯ÇÏ°Ô µË´Ï´Ù.
+Width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha)ì˜ ì—­í• ì€ ì „ì²´ì ìœ¼ë¡œ ì‹ ê²½ë§ì˜ êµ¬ì¡°ëŠ” ì–‡ê²Œ ë§Œë“¤ì–´ ì¤ë‹ˆë‹¤. í•˜ë‚˜ì˜ ë ˆì´ì–´ê°€ ì£¼ì–´ì¡Œì„ë•Œ, width multiplierë¥¼ ì‚¬ìš©í•˜ë©´, ì…ë ¥ê°’ì˜ í¬ê¸°ì¸ Mì´ ![alpha](https://latex.codecogs.com/svg.image?\alpha&space;M)ë¡œ ë³€í•˜ê²Œ ë˜ê³ , ì¶œë ¥ê°’ë„ ë¹„ìŠ·í•˜ê²Œ ì ìš©ì´ ë©ë‹ˆë‹¤. ì´ ê²½ìš° ì´ ì—°ì‚°ëŸ‰ì€ ì•„ë˜ì™€ ê°™ì´ ë³€í•˜ê²Œ ë©ë‹ˆë‹¤.
 
 ![Width Multiplier](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;\alpha&space;M&space;\times&space;D_F&space;\times&space;D_F+\alpha&space;M&space;\times&space;\alpha&space;N&space;\times&space;D_F&space;\times&space;D_F)
 
-¿©±â¼­ ![alpha](https://latex.codecogs.com/svg.image?\alpha)ÀÇ °ªÀº 0°ú 1 »çÀÌÀÇ °ªÀÌ µË´Ï´Ù. ![alpha=1](https://latex.codecogs.com/svg.image?\alpha=1)ÀÏ¶§, baseline MobileNetÀÌ°í, ![alpha<1](https://latex.codecogs.com/svg.image?\alpha<1), reduced MobileNetsÀÔ´Ï´Ù..
+ì—¬ê¸°ì„œ ![alpha](https://latex.codecogs.com/svg.image?\alpha)ì˜ ê°’ì€ 0ê³¼ 1 ì‚¬ì´ì˜ ê°’ì´ ë©ë‹ˆë‹¤. ![alpha=1](https://latex.codecogs.com/svg.image?\alpha=1)ì¼ë•Œ, baseline MobileNetì´ê³ , ![alpha<1](https://latex.codecogs.com/svg.image?\alpha<1), reduced MobileNetsì…ë‹ˆë‹¤..
 
-Width Multiplier»ç¿ëÇÒ¶§, ¿¬»ê·®ÀÌ width multiplierÀÇ Á¦°ö¿¡ ºñ·ÊÇÏ°Ô ÁÙ¾îµì´Ï´Ù. 
+Width Multiplierì‚¬ìš©í• ë•Œ, ì—°ì‚°ëŸ‰ì´ width multiplierì˜ ì œê³±ì— ë¹„ë¡€í•˜ê²Œ ì¤„ì–´ë“­ë‹ˆë‹¤. 
 
 ## Resolution Multiplier: Reduced Representation
 
-Resolution Mutliplier ![rho](https://latex.codecogs.com/svg.image?\rho)´Â ÀÔ·Â ÀÌ¹ÌÁö¿Í Áß°£ Ç¥Çö°ªµé¿¡°Ô Àû¿ëµÇ¾î ¿¬»ê·®À» ÁÙ¿©Áİ´Ï´Ù.
+Resolution Mutliplier ![rho](https://latex.codecogs.com/svg.image?\rho)ëŠ” ì…ë ¥ ì´ë¯¸ì§€ì™€ ì¤‘ê°„ í‘œí˜„ê°’ë“¤ì—ê²Œ ì ìš©ë˜ì–´ ì—°ì‚°ëŸ‰ì„ ì¤„ì—¬ì¤ë‹ˆë‹¤.
 
-Width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha)¿Í resolution Multiplier ![rho](https://latex.codecogs.com/svg.image?\rho)¸¦ µ¿½Ã¿¡ Àû¿ë½ÃÅ²´Ù¸é, depthwise separable convolutional layerÀÇ ¿¬»ê·®À» ¾Æ·¡¿Í °°ÀÌ Ç¥ÇöÇÒ¼ö ÀÖ½À´Ï´Ù.
+Width multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha)ì™€ resolution Multiplier ![rho](https://latex.codecogs.com/svg.image?\rho)ë¥¼ ë™ì‹œì— ì ìš©ì‹œí‚¨ë‹¤ë©´, depthwise separable convolutional layerì˜ ì—°ì‚°ëŸ‰ì„ ì•„ë˜ì™€ ê°™ì´ í‘œí˜„í• ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 
 ![Resolution Multiplier and Width Mutliplier](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;\alpha&space;M&space;\times&space;\rho&space;D_F&space;\times&space;\rho&space;D_F+\alpha&space;M&space;\times&space;\alpha&space;N&space;\times&space;\rho&space;D_F&space;\times&space;\rho&space;D_F)
 
 # Experiment
 
-Depthwise separable convolutionÀÇ È¿°ú¿Í layerÀÇ °¹¼ö¸¦ ÁÙÀÌ´Â °Í ´ë½Å¿¡ networkÀÇ width¸¦ ÁÙÀÌ´Â °ÍÀÇ È¿°ú
+Depthwise separable convolutionì˜ íš¨ê³¼ì™€ layerì˜ ê°¯ìˆ˜ë¥¼ ì¤„ì´ëŠ” ê²ƒ ëŒ€ì‹ ì— networkì˜ widthë¥¼ ì¤„ì´ëŠ” ê²ƒì˜ íš¨ê³¼
 
 ## Model Choices
 
-Depthwise separable convolutionÀ» »ç¿ëÇÑ MobileNet°ú Full convolutionÀ» »ç¿ëÇÑ MobileNetÀÇ ºñ±³.
+Depthwise separable convolutionì„ ì‚¬ìš©í•œ MobileNetê³¼ Full convolutionì„ ì‚¬ìš©í•œ MobileNetì˜ ë¹„êµ.
 
 ![depthwise separable vs full convolution mobile net](../compareConvolution.png)
 
-À§ÀÇ Å×ÀÌºíÀ» È®ÀÎÇÑ °á°ú, depthwise seaprable convolutionÀ» »ç¿ëÇÑ °á°ú 9¹èÁ¤µµ ¿¬»êÀÌ ÁÙ¾îµé¾ú°í 1% Á¤µµÀÇ Á¤È®µµ°¡ ÁÙ¾îµé¾ú´Ù.
+ìœ„ì˜ í…Œì´ë¸”ì„ í™•ì¸í•œ ê²°ê³¼, depthwise seaprable convolutionì„ ì‚¬ìš©í•œ ê²°ê³¼ 9ë°°ì •ë„ ì—°ì‚°ì´ ì¤„ì–´ë“¤ì—ˆê³  1% ì •ë„ì˜ ì •í™•ë„ê°€ ì¤„ì–´ë“¤ì—ˆë‹¤.
 
-Width multiplier¸¦ »ç¿ëÇÏ´Â ¾ãÀº ¸ğµ¨°ú ´õ ÀûÀº ¼öÀÇ layer¸¦ »ç¿ëÇÏ´Â ¾èÀº ¸ğµ¨À» ºñ±³ÇÑ´Ù. ¾èÀº MobileNetÀ» ¸¸µé±â À§ÇØ¼­, 5°³ÀÇ separable filter¸¦ »èÁ¦Çß´Ù. ÀÌ¶§ÀÇ feature map Å©±â´Â ![14 14 512](https://latex.codecogs.com/svg.image?14\times14\times512)ÀÌ´Ù.
+Width multiplierë¥¼ ì‚¬ìš©í•˜ëŠ” ì–‡ì€ ëª¨ë¸ê³¼ ë” ì ì€ ìˆ˜ì˜ layerë¥¼ ì‚¬ìš©í•˜ëŠ” ì–•ì€ ëª¨ë¸ì„ ë¹„êµí•œë‹¤. ì–•ì€ MobileNetì„ ë§Œë“¤ê¸° ìœ„í•´ì„œ, 5ê°œì˜ separable filterë¥¼ ì‚­ì œí–ˆë‹¤. ì´ë•Œì˜ feature map í¬ê¸°ëŠ” ![14 14 512](https://latex.codecogs.com/svg.image?14\times14\times512)ì´ë‹¤.
 
 ![thin model vs shallow model](../compareThinShallow.png)
 
-À§ÀÇ Ç¥¸¦ È®ÀÎÇØ º¸¸é, ¾ãÀº ¸ğµ¨°ú ¾èÀº ¸ğµ¨ ¸ğµÎ ºñ½ÁÇÑ ¿¬»ê·®°ú parameter ¼ö¸¦ °¡Áö°í ÀÖ´Ù. ÇÏÁö¸¸ ¾ãÀº ¸ğµ¨ÀÌ ¾èÀº ¸ğµ¨¿¡ ºñÇØ¼­ 3% ´õ Á¤È®ÇÏ´Ù.
+ìœ„ì˜ í‘œë¥¼ í™•ì¸í•´ ë³´ë©´, ì–‡ì€ ëª¨ë¸ê³¼ ì–•ì€ ëª¨ë¸ ëª¨ë‘ ë¹„ìŠ·í•œ ì—°ì‚°ëŸ‰ê³¼ parameter ìˆ˜ë¥¼ ê°€ì§€ê³  ìˆë‹¤. í•˜ì§€ë§Œ ì–‡ì€ ëª¨ë¸ì´ ì–•ì€ ëª¨ë¸ì— ë¹„í•´ì„œ 3% ë” ì •í™•í•˜ë‹¤.
 
 ## Model shrinking hyperparameters
 
 ![mobile net width multiplier comparison](../mobilenetWidthMultiplier.png)
 
-Width Multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha)¸¦ ÀÌ¿ëÇÑ MobileNetÀÇ Ãà¼Ò´Â Á¤È®µµ¿Í ¿¬»ê·®, Å©±âÀÇ ±³È¯À¸·Î ÀÌ·ç¾î Áø´Ù. Width Mutliplier°¡ ÁÙ¾îµé¼ö·Ï, Á¤È®µµµµ ºÎµå·´°Ô ÁÙ¾îµå´Âµ¥, parameterÀÇ ¼ö°¡ ±Ş°İÇÏ°Ô ÀÛ¾ÆÁö´Â ![alpha](https://latex.codecogs.com/svg.image?\alpha=0.25)ÀÏ¶§ Á¤È®µµ´Â ±Ş°İÇÏ°Ô ¶³¾îÁø´Ù. ÀÌ ¶§´Â parameterÀÇ ¼ö°¡ ³Ê¹«Àú¾î¼­ Á¤È®ÇÑ °á°ú°ªÀ» Ã£±â°¡ ¾î·Á¿öÁø´Ù.
+Width Multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha)ë¥¼ ì´ìš©í•œ MobileNetì˜ ì¶•ì†ŒëŠ” ì •í™•ë„ì™€ ì—°ì‚°ëŸ‰, í¬ê¸°ì˜ êµí™˜ìœ¼ë¡œ ì´ë£¨ì–´ ì§„ë‹¤. Width Mutliplierê°€ ì¤„ì–´ë“¤ìˆ˜ë¡, ì •í™•ë„ë„ ë¶€ë“œëŸ½ê²Œ ì¤„ì–´ë“œëŠ”ë°, parameterì˜ ìˆ˜ê°€ ê¸‰ê²©í•˜ê²Œ ì‘ì•„ì§€ëŠ” ![alpha](https://latex.codecogs.com/svg.image?\alpha=0.25)ì¼ë•Œ ì •í™•ë„ëŠ” ê¸‰ê²©í•˜ê²Œ ë–¨ì–´ì§„ë‹¤. ì´ ë•ŒëŠ” parameterì˜ ìˆ˜ê°€ ë„ˆë¬´ì €ì–´ì„œ ì •í™•í•œ ê²°ê³¼ê°’ì„ ì°¾ê¸°ê°€ ì–´ë ¤ì›Œì§„ë‹¤.
 
 ![mobile net resolution mutliplier comparison](../mobilenetResolutionMultiplier.png)
 
-resolution multiplier ![rho](https://latex.codecogs.com/svg.image?\rho)¸¦ ÀÌ¿ëÇÑ MobileNetÀÇ Ãà¼Ò´Â Á¤È®µµ¿Í ¿¬»ê·®, Å©±âÀÇ ±³È¯À¸·Î ÀÌ·ç¾î Áø´Ù. Resolution  Mutliplier°¡ ÁÙ¾îµé¼ö·Ï, Á¤È®µµµµ ºÎµå·´°Ô ÁÙ¾îµç´Ù.
+resolution multiplier ![rho](https://latex.codecogs.com/svg.image?\rho)ë¥¼ ì´ìš©í•œ MobileNetì˜ ì¶•ì†ŒëŠ” ì •í™•ë„ì™€ ì—°ì‚°ëŸ‰, í¬ê¸°ì˜ êµí™˜ìœ¼ë¡œ ì´ë£¨ì–´ ì§„ë‹¤. Resolution  Mutliplierê°€ ì¤„ì–´ë“¤ìˆ˜ë¡, ì •í™•ë„ë„ ë¶€ë“œëŸ½ê²Œ ì¤„ì–´ë“ ë‹¤.
 
 ![computation vs accuracy](../computationAccuracy.png)
 
-À§ÀÇ ±×·¡ÇÁ¸¦ È®ÀÎÇØº¸¸é, Computational complexity¿¡ ºñ·¡ÇØ¼­ ImageNet benchmark°ªÀÌ »ó½ÂÇÏ´Â °ÍÀ» º¼¼ö ÀÖ´Ù. ¿©±â¼­ xÃàÀº Áö¼öÀûÀ¸·Î Áõ°¡ÇÏ´Â °ÍÀ» ¾Ë¾Æ¾ßÇÑ´Ù.
+ìœ„ì˜ ê·¸ë˜í”„ë¥¼ í™•ì¸í•´ë³´ë©´, Computational complexityì— ë¹„ë˜í•´ì„œ ImageNet benchmarkê°’ì´ ìƒìŠ¹í•˜ëŠ” ê²ƒì„ ë³¼ìˆ˜ ìˆë‹¤. ì—¬ê¸°ì„œ xì¶•ì€ ì§€ìˆ˜ì ìœ¼ë¡œ ì¦ê°€í•˜ëŠ” ê²ƒì„ ì•Œì•„ì•¼í•œë‹¤.
 
 ![parameter vs accuracy](../parameterAccuracy.png)
 
-À§ÀÇ ±×·¡ÇÁ´Â parameterÀÇ °³¼ö°ú Á¤È®µµ¸¦ ºñ±³ÇÑ °ÍÀÌ´Ù. ¿©±â¼­ parameterÀÇ ¼ö°¡ ³ôÀ» ¼ö·Ï Á¤È®µµ°¡ ¿Ã¶ó°¡´Â °ÍÀ» º¼¼ö ÀÖ´Ù. ±×¸®°í parameterÀÇ ¼ö´Â resolution multiplier¿Í´Â °ü°è°¡ ¾ø´Â °ÍÀ» È®ÀÎÇÒ ¼ö ÀÖ´Ù.
+ìœ„ì˜ ê·¸ë˜í”„ëŠ” parameterì˜ ê°œìˆ˜ê³¼ ì •í™•ë„ë¥¼ ë¹„êµí•œ ê²ƒì´ë‹¤. ì—¬ê¸°ì„œ parameterì˜ ìˆ˜ê°€ ë†’ì„ ìˆ˜ë¡ ì •í™•ë„ê°€ ì˜¬ë¼ê°€ëŠ” ê²ƒì„ ë³¼ìˆ˜ ìˆë‹¤. ê·¸ë¦¬ê³  parameterì˜ ìˆ˜ëŠ” resolution multiplierì™€ëŠ” ê´€ê³„ê°€ ì—†ëŠ” ê²ƒì„ í™•ì¸í•  ìˆ˜ ìˆë‹¤.
 
 ![MobileNet vs popular models](../mobilenetPopularnet.png)
 
-MobileNet°ú ´Ù¸¥ À¯¸íÇÑ ÀÎ°ø½Å°æ¸ÁÀ» ºñ±³ÇØº¸¾Ò´Ù. MobileNetÀº VGG16°ú ºñ½ÁÇÑ Á¤È®µµ¸¦ °¡Áö´Âµ¥, 32¹èÀûÀº parameter ¼ö¸¦ °¡Áö°í ÀÖ°í 27¹è ¿¬»ê·®ÀÌ ÀÛ½À´Ï´Ù. GoogleNet°ú ºñ±³½Ã, MobileNetÀÌ 1%Á¤µµ Á¤È®µµ°¡ ³ôÁö¸¸, 3¹è Á¤µµ ¿¬»êÀÌ Àû°í 1.5¹èÁ¤µµ parameter ¼ö°¡ Àû½À´Ï´Ù.
+MobileNetê³¼ ë‹¤ë¥¸ ìœ ëª…í•œ ì¸ê³µì‹ ê²½ë§ì„ ë¹„êµí•´ë³´ì•˜ë‹¤. MobileNetì€ VGG16ê³¼ ë¹„ìŠ·í•œ ì •í™•ë„ë¥¼ ê°€ì§€ëŠ”ë°, 32ë°°ì ì€ parameter ìˆ˜ë¥¼ ê°€ì§€ê³  ìˆê³  27ë°° ì—°ì‚°ëŸ‰ì´ ì‘ìŠµë‹ˆë‹¤. GoogleNetê³¼ ë¹„êµì‹œ, MobileNetì´ 1%ì •ë„ ì •í™•ë„ê°€ ë†’ì§€ë§Œ, 3ë°° ì •ë„ ì—°ì‚°ì´ ì ê³  1.5ë°°ì •ë„ parameter ìˆ˜ê°€ ì ìŠµë‹ˆë‹¤.
 
 ![small mobile net vs popular models](../smallMobileNetPopularNet.png)
 
-Width Multiplier¸¦ 0.5¸¦ »ç¿ëÇÏ°í ÇØ»óµµ¸¦ ![160 160](https://latex.codecogs.com/svg.image?160\times160)À¸·Î ÁÙÀÎ MobileNetÀº Squeezenet°ú Alexnet¿¡ ºñÇØ¼­ È®½ÇÇÏ°Ô ÁÁ½À´Ï´Ù. SqueezenetÀº 22º£ ¸¹Àº ¿¬»ê·®¿¡°í ºÒ±¸ÇÏ°í 3%Á¤µµ ³·Àº Á¤È®µµ¸¦ º¸¿´°í, AlexNetµµ 45¹è ¸¹Àº parameter¿¡ 9.4¹è ¸¹Àº ¿¬»ê·®¿¡µµ ºÒ±¸ÇÏ°í 3%ÀûÀº Á¤È®µµ¸¦ º¸¿´½À´Ï´Ù.
-
+Width Multiplierë¥¼ 0.5ë¥¼ ì‚¬ìš©í•˜ê³  í•´ìƒë„ë¥¼ ![160 160](https://latex.codecogs.com/svg.image?160\times160)ìœ¼ë¡œ ì¤„ì¸ MobileNetì€ Squeezenetê³¼ Alexnetì— ë¹„í•´ì„œ í™•ì‹¤í•˜ê²Œ ì¢‹ìŠµë‹ˆë‹¤. Squeezenetì€ 22ë²  ë§ì€ ì—°ì‚°ëŸ‰ì—ê³  ë¶ˆêµ¬í•˜ê³  3%ì •ë„ ë‚®ì€ ì •í™•ë„ë¥¼ ë³´ì˜€ê³ , AlexNetë„ 45ë°° ë§ì€ parameterì— 9.4ë°° ë§ì€ ì—°ì‚°ëŸ‰ì—ë„ ë¶ˆêµ¬í•˜ê³  3%ì ì€ ì •í™•ë„ë¥¼ ë³´ì˜€ìŠµë‹ˆë‹¤.
 
 ## [Link to Neural Net](../../)
 ## [Link to Original version](../)
