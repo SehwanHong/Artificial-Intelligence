@@ -70,6 +70,11 @@ Above table represent the basic implementation structure of inverse Residual Blo
 
 This number is higher than Depthwise Separable Convolution([described in this page](../)) because of extra layer of ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution. However, using bottleneck residual block is more compact because of smaller input and output dimensions.
 
+![memory for mobilenet v1 and mobilenet v2](./memory.png)
+
+Above table descibes the max number of channels/memory that needs to be macterialized at each spatial resolution for different architectures. In this situation, it is assume to use 16-bit  float for activation.
+
+As described above, mobileNetV2 uses less memory compared to MobileNetV1. For ShuffleNet, author used 2x, g=3 that matches the performance of MobileNetV1 and MobileNetV2.
 
 # Model Architecture
 
