@@ -92,6 +92,37 @@ For non-linearlity, author chose ReLU 6, when x less then 0, returns 0, when x b
 
 ## Memory efficient inference
 
+In most of the famous machine learning platform, network implementation builds a directed acyclic compute hypergraph G. In the graph G, the edge represents the operation and the node consists of tensor of intermediate computaiton. Though these graph, the memory usage can be calculated as following.
+
+![Computational cost of neural network graph](https://latex.codecogs.com/svg.image?M(G)&space;=&space;\min_{\pi&space;\in&space;\Sigma(G)}&space;\max_{i&space;\in&space;1&space;...&space;n}&space;\left&space;[&space;\sum_{A\in&space;R(i,\pi,&space;G)}|A|&space;\right&space;]&space;&plus;&space;size(\pi_i)&space;)
+
+Where ![intermediate tensors](https://latex.codecogs.com/svg.image?R(i,\pi,G)) is the intermediate tensors that are connected to any of ![nodes](https://latex.codecogs.com/svg.image?\pi_i...\pi_n). ![size of tensor](https://latex.codecogs.com/svg.image?|A|) is the size of tensor, and ![size of storage](https://latex.codecogs.com/svg.image?size(\pi_i)) is the total amound of memory in internal storage for operation.
+
+Since there is no other structure rather than residual connection(identity shortcut), memory needed in this neural network is addition of input, output and the tensor size. Therefore, it could be presented as below.
+
+![memory usage for MobileNetV2](https://latex.codecogs.com/svg.image?M(G)=%5Cmax_%7Bop%5Cin%20G%7D%5Cleft%5B%20%5Csum_%7BA%5Cin%20op%7D%7CA%7C%20&plus;%20%5Csum_%7BB%5Cin%20op%7D%7CB%7C%20&plus;%20%7Cop%7C%20%5Cright%5D)
+
+### Bottleneck Residual Block
+
+![Inverted Residual Block](./invertedResidualBlock.png)
+
+In the MobileNetV2, the architecture is defined as the image above. The operation could be represented ad following equation, ![bottleneck operator](https://latex.codecogs.com/svg.image?F(x)=&space;\left&space;[&space;A&space;\circ&space;N&space;\circ&space;B&space;\right&space;]x)
+
+A and B is linear transformation. N is a non linear per-channel transformation. ![inner tensor](https://latex.codecogs.com/svg.iamage?N=\mathrm{ReLU6}\circ\mathrm{dwise}\circ\mathrm{ReLU6}). In this situation, the memory required to compute ![network](https://latex.codecogs.com/svg.iamage?F(x)) can be as low as ![maxium memory](https://latex.codecogs.com/svg.image?|s^2k|&plus;|s'^2k'|&plus;O(\max(s^2,s'^2))), where s is one side of input tensor, s' is a side of output tensor, k is input channel size, k' is output channel size.
+
+From this equation, the inner tensor ![I](https://latex.codecogs.com/svg.image?I) can be represented as concatenation of t tensors wite size of n/t. Following representation below.
+
+![memory saving](https://latex.codecogs.com/svg.image?F(x)=\sum_{i=1}^{t}(A_i\circ&space;N\circ&space;B_i)(x))
+
+From this equation, when n=t, calculating one channel at a time, we only need to keep one channel of the intermediate representation at all time, saving memory significantly.
+
+However, there are two constaints when using this trick of reducing memory.
+
+1. the inner transformation(which includes non-linearlity and depthwise) is per-channel
+2. consecutive non-per-channel operators have significiant ratio of the input size to the output
+
+Using differnt t does not effect the total calculation time, but have effect the runtime by increasing cache misses which cause significant increase in runtime. Using t between 2 to 5 is most helpful of reducing memory usage and utilzing efficient calculation.
+ 
 # Experiments
 
 ## ImageNet Classification
