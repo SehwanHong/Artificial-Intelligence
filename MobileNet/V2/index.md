@@ -78,6 +78,16 @@ As described above, mobileNetV2 uses less memory compared to MobileNetV1. For Sh
 
 # Model Architecture
 
+*Detailed information about the building block is describe above.*
+
+The architecture of MobileNetV2 contains the initiall fully convolutional layer with 32 filters, followed by 19 residual bottleneck layers descibed in the table below.
+
+![Structure of MobileNet Version 2](./mobileNetV2Structure.png)
+
+c is the number of output channel, n number of repeatition for building block, s stride of the first layer, otherwise stride is 1. t is the expanstion factor.
+
+For non-linearlity, author chose ReLU 6, when x less then 0, returns 0, when x between 0 and 6, returns x, when x is greater than 6, returns 6.
+
 # Implementation Notes
 
 ## Memory efficient inference
