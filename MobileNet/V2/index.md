@@ -180,5 +180,12 @@ c. MobileNetV1 is 5 to 6 times more efficient compared to ResNet-101
 d. Building DeepLabv3 on top of the second last feature map of the MobileNetV2 is more efficient than on the original last-layer feature map.
 e. DeepLabv3 heads are computationally expensive and removing the ASPP module significanlty reduces the Multi-add computation with only slight preformance degradation
 
+# Reference
+
+[Toward Data Science](https://towardsdatascience.com/mobilenetv2-inverted-residuals-and-linear-bottlenecks-8a4362f4ffd5)
+
+[Hongl tistory 1](https://hongl.tistory.com/195)
+[Hongl tistory 2](https://hongl.tistory.com/196)
+
 ## [Link to Neural Net](../../)
 ## [Link to MobileNet](../)
