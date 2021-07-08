@@ -127,11 +127,58 @@ Using differnt t does not effect the total calculation time, but have effect the
 
 ## ImageNet Classification
 
+### Training setup
+
+The model is trained using Tensorflow. Optimizer is RMSPropOptimizer with decay and momentum set to 0.9. Batch normalization is used after every layer and standard weight decay is set to 0.00004. Initial learning rate is 0.045, and learning rate decay is rate of 0.98 per epoch. 16 GPU asynchronous workers and a batch size of 96.
+
+### Result
+
+![Preformance Curve for full model](./performanceCurve.png)
+
+This table represents all possible result of the MobileNetV2, MobileNetV1, ShuffleNet, Nas Net. For these networks, multiplier of 0.35, 0.5, 0.75, and 1 is used for all resulutions, and additional 1.4 is used on MobileNetV2 for 224 to obtain better result.
+
+![Performance Table for selected models](./performanceTable.png)
+
+From some of the selected model, we get the number of parameters and the Multi-adds. Last coloumn is implimentation of network in Google Pixel 1 using Tensorflow Lite. The number for shuffleNet is not reported because shuffling and group convolution algorithm are not yet supported.
+
+Above table explains, that MobileNet V2 have higher accuracy rate compared to mobileNet V1 and faster computation time. Also comparing NasNet-A and MobileNetV2(1.4), MobileNet have higher accuracy and is 30% faster than NasNet-A.
+
 ## Object Detection
+
+### SSD Lite
+
+In this papaer, we introduce a mobie friendly variant of regular SSD(single shot detector). SSD Lite replace all the regular convolutions with separable convolutions(depthwise followed by pointwise) in SSD prediction layers.
+
+![SSD and SSDLite configuration](./SSD.png)
+
+Comparison of the size and computational cost between SSD and SSDLite configured with MobileNetV2 and making predictions for 80 classes. SSDLite is approximately 7 times smaller in parameter size and 4 times smaller in computation.
+
+![result for object detection](./performanceObjectDetection.png)
+
+MobileNetV2 with SSDLite makes a decent predection using much less parameters and Multi-add computation. Compared to MobileNetV1, it have similar accuracy but MobileNetV2 computes littlebit faster than MobileNetV2. Also comparing with YOLOv2, MobileNetV2 is 20 times more efficient and 10 times more smaller while still outperforms YOLOv2.
 
 ## Semantic Segmentation
 
-## Ablation Study
+Compare MobileNetV1 and MobileNetV3 with DeepLabv3 for the task of mobile segmantic segmentation. DeepLabv3 use atrous convolution a powerful tool to explicitly control the resolution of computed feature maps and builds five parallel heads including (a) Atrous Spatial Pyramid Pooling module(ASPP) containing three ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution with different atrous rates, (b) ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution head, and (c) Image-level features.
+
+Three design variation is tested in this paper.
+
+1. Different feature extractor
+2. Simplifying the DeepLapv3 heads for faster computation
+3. Different inference strategies for boosting performance
+
+![semantic Segmentation result](./performanceSementicSegmentation.png)
+MNetV2\* Second last feature map is used for DeepLabv3 head.
+OS: output stride
+ASPP: Atrous Spatial Pyramid Pooling
+MF: Multi-scale and left-right flipped input
+
+Observation on the table
+a. the inference strategies, including multi-scale inputs and adding left-right flipped images, significantly increases multi-add computation thus not suitable for on-device applications.
+b. using ![output-stride = 16](https://latex.codecogs.com/svg.image?output\_stride=16) is more efficient than ![output stride = 8](https://latex.codecogs.com/svg.image?output\_stride=8)
+c. MobileNetV1 is 5 to 6 times more efficient compared to ResNet-101
+d. Building DeepLabv3 on top of the second last feature map of the MobileNetV2 is more efficient than on the original last-layer feature map.
+e. DeepLabv3 heads are computationally expensive and removing the ASPP module significanlty reduces the Multi-add computation with only slight preformance degradation
 
 ## [Link to Neural Net](../../)
 ## [Link to MobileNet](../)
