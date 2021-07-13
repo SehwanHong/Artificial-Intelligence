@@ -4,9 +4,9 @@
 
 # Introduction
 
-Neural networks have revolutionized many areas of machine intelligences, enabling superhuman accuracy for challenging image recognition tasks. The drive to improve accuracy often comes at a cost: modern state of art networks require high computational resources beyond the capabilities of many mobile and embedded applications.
+인공신경망은 다양한 분야의 기계학습에서 대혁명을 일으켰습니다. 이미지 인식 과제에서는 이미 인간의 인식률을 뛰어넘었습니다. 이러한 정확도의 증가는 다양한 비용을 기반으로 만들어졌습니다. 최첨단 인공신경망은 빠른 연산을 할수 있는 기기가 필요합니다. 이러한 연산제한때문에 휴대용 기기나 임베디드 기기에서는 사용을 할수가 없습니다.
 
-This paper introduces a new neural network architecture that is specifically tailored for mobile and resource constrained environments. To retain the same accuracy while decreasing the number of operations and memory usage, author introcues a novel layer module: inverted residual with linear bottleneck.
+이 논문에서는 새로운 인공신경망구조를 소개합니다. MobileNetV2라고 불리우는 이 신경망은 휴대용기기와 리소스가 제한된 환경에 적합하도록 만들어진 구조입니다. 연산량과 메모리 사용량을 줄이면서, 비슷한 성능을 내기위해, 저자는 inverted residual with linear bottleneck이라는 새로운 레이어 모듈을 소개합니다
 
 # Related Work
 
