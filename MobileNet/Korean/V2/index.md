@@ -10,11 +10,11 @@
 
 # Related Work
 
-There has been a lot of progress in algorithmic architecture exploration including hyperparameter optimization, various methods of network pruning, and connectivity learning. There are different work to change the connetivity structure of the internal convolutional blocks.
+현재 인공신경망의 구조에 대한 알고리즘적 해석의 탐색에 많은 진전이 있었습니다. 이러한 진전들은 hyperparameter 최적화, 다양한 방식의 network pruning, 그리고 connectivity learning이 있습니다. 이러한 연굴들이 convolution block 내의 connectivity 구조를 변화시켰습니다.
 
-The new direction of bringing optimization methods include genetic algorithms and reinforcement learning to architectural search. However, drawback of these methodes is that the resulting network end up very complex.
+최적화를 하는 다른 방법으로는 유전 알고리즘을 사용하는 방식과 강화학습을 통한 구조 탐색이 있습니다. 하지만 이러한 방식의 단점은 인공신경망의 크기가 커진다는 것입니다.
 
-The network presented in this paper is designed based on [MobileNetV1](../). 
+이 논문에서 사용한 인공신경망의 다자인은 [MobileNetV1](../)에 기반합니다.
 
 # Preliminaries, discussion and intuition
 
