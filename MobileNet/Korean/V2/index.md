@@ -76,15 +76,16 @@ Inverted Residual block은 메모리 사용량도 적고, 성능도 더 좋습니다.
 
 # Model Architecture
 
+*Building block에 관한 자세한 설명은 위에 적혀져 있습니다*
 *Detailed information about the building block is describe above.*
 
-The architecture of MobileNetV2 contains the initiall fully convolutional layer with 32 filters, followed by 19 residual bottleneck layers descibed in the table below.
+MobileNetV2의 구조는 가본적으로 32개의 필터를 가진 Fully convolution layer로 시작합니다. 이후로 19개의 residual bottleneck layer를 가지고 있습니다. 아래에 표를 확인하면 MobileNetV2의 구조를 확인할 수 있습니다.
 
 ![Structure of MobileNet Version 2](../../V2/mobileNetV2Structure.png)
 
-c is the number of output channel, n number of repeatition for building block, s stride of the first layer, otherwise stride is 1. t is the expanstion factor.
+이 표에서 c는 출력 채널의 개수, n은 building block의 반복 횟수, s 는 가장 첫번째 레이어의 stride 크기(다른 레이어의 stride는 1입니다.) t는 expansion factor 입니다.
 
-For non-linearlity, author chose ReLU 6, when x less then 0, returns 0, when x between 0 and 6, returns x, when x is greater than 6, returns 6.
+저나는 non-Linearlity로 ReLU6를 골랐습니다. ReLU6는 값이 0보다 작을때 0을, 0과 6 사이 일 때는 입력값 그대로를 출력하고, x가 6보다 클때는 6을 출력합니다.
 
 # Implementation Notes
 
