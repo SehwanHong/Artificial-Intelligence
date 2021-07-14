@@ -91,13 +91,13 @@ MobileNetV2의 구조는 가본적으로 32개의 필터를 가진 Fully convolution layer로 시�
 
 ## Memory efficient inference
 
-In most of the famous machine learning platform, network implementation builds a directed acyclic compute hypergraph G. In the graph G, the edge represents the operation and the node consists of tensor of intermediate computaiton. Though these graph, the memory usage can be calculated as following.
+대부분의 machine learning platform에서 인공신경망 구현은 directed acyclic compute hypergraph G를 만드는 것입니다. Graph G에서 edge는 operation을 의미하고 node는 중간연산의 tensor를 의미합니다. 이 그래프를 통해서 memory 사용량을 아래와 같이 계산 할 수 있습니다.
 
 ![Computational cost of neural network graph](https://latex.codecogs.com/svg.image?M(G)&space;=&space;\min_{\pi&space;\in&space;\Sigma(G)}&space;\max_{i&space;\in&space;1&space;...&space;n}&space;\left&space;[&space;\sum_{A\in&space;R(i,\pi,&space;G)}|A|&space;\right&space;]&space;&plus;&space;size(\pi_i)&space;)
 
-Where ![intermediate tensors](https://latex.codecogs.com/svg.image?R(i,\pi,G)) is the intermediate tensors that are connected to any of ![nodes](https://latex.codecogs.com/svg.image?\pi_i...\pi_n). ![size of tensor](https://latex.codecogs.com/svg.image?|A|) is the size of tensor, and ![size of storage](https://latex.codecogs.com/svg.image?size(\pi_i)) is the total amound of memory in internal storage for operation.
+여기서 ![intermediate tensors](https://latex.codecogs.com/svg.image?R(i,\pi,G)) 연산 사이에 있는 tensor이고 이는 연산 ![nodes](https://latex.codecogs.com/svg.image?\pi_i...\pi_n)인 node로 연결이 되어 있습니다. Tensor의 크기는 ![size of tensor](https://latex.codecogs.com/svg.image?|A|)이고 연산을 위한 Kernel의 크기는 ![size of storage](https://latex.codecogs.com/svg.image?size(\pi_i))입니다. 
 
-Since there is no other structure rather than residual connection(identity shortcut), memory needed in this neural network is addition of input, output and the tensor size. Therefore, it could be presented as below.
+MobileNetV2에서 Residual Connection(identity Skip Connection)을 제외한 다른 연결 구조는 없음으로, 이 인공신경망을 구성하는데 필요한 memory의 크기는 입력값의 크기, 출력값의 크기와 연산을 위한 kernel tensor의 크기를 더한 값입니다. 이는 아래의 수식에서 잘 표현되어 있습니다.
 
 ![memory usage for MobileNetV2](https://latex.codecogs.com/svg.image?M(G)=%5Cmax_%7Bop%5Cin%20G%7D%5Cleft%5B%20%5Csum_%7BA%5Cin%20op%7D%7CA%7C%20&plus;%20%5Csum_%7BB%5Cin%20op%7D%7CB%7C%20&plus;%20%7Cop%7C%20%5Cright%5D)
 
@@ -105,22 +105,22 @@ Since there is no other structure rather than residual connection(identity short
 
 ![Inverted Residual Block](../../V2/invertedResidualBlock.png)
 
-In the MobileNetV2, the architecture is defined as the image above. The operation could be represented ad following equation, ![bottleneck operator](https://latex.codecogs.com/svg.image?F(x)=&space;\left&space;[&space;A&space;\circ&space;N&space;\circ&space;B&space;\right&space;]x)
+MobileNetV2의 구조는 위의 이미지와도 같습니다. 위의 구조의 operation은 다음과 같은 식으로 표현할수 있습니다. ![bottleneck operator](https://latex.codecogs.com/svg.image?F(x)=&space;\left&space;[&space;A&space;\circ&space;N&space;\circ&space;B&space;\right&space;]x)
 
-A and B is linear transformation. N is a non linear per-channel transformation. ![inner tensor](https://latex.codecogs.com/svg.iamage?N=\mathrm{ReLU6}\circ\mathrm{dwise}\circ\mathrm{ReLU6}). In this situation, the memory required to compute ![network](https://latex.codecogs.com/svg.iamage?F(x)) can be as low as ![maxium memory](https://latex.codecogs.com/svg.image?|s^2k|&plus;|s'^2k'|&plus;O(\max(s^2,s'^2))), where s is one side of input tensor, s' is a side of output tensor, k is input channel size, k' is output channel size.
+여기서 A와 B는 linear transformation을 N은 non-linear per-channel transformation을 의미합니다. ![inner tensor](https://latex.codecogs.com/svg.iamage?N=\mathrm{ReLU6}\circ\mathrm{dwise}\circ\mathrm{ReLU6}). 이 상황에서 ![network](https://latex.codecogs.com/svg.iamage?F(x)) 연산을 하는 데 필요한 memory의 량은 최소 ![maxium memory](https://latex.codecogs.com/svg.image?|s^2k|&plus;|s'^2k'|&plus;O(\max(s^2,s'^2)))입니다. 이 수식에서 s는 입력 tensor의 한 변을 s'는 출력 tensor의 한변을. k는 입력 channel의 크기를 k'은 출력 tensor의 크기를 의미합니다.
 
-From this equation, the inner tensor ![I](https://latex.codecogs.com/svg.image?I) can be represented as concatenation of t tensors wite size of n/t. Following representation below.
+위의 식으로 부터, inner tensor ![I](https://latex.codecogs.com/svg.image?I)는 t개의 n/t크기의 tensor들을 합친것을 표현됩니다. 이는 아래와 같은 수식으로 표현할수 있습니다.
 
 ![memory saving](https://latex.codecogs.com/svg.image?F(x)=\sum_{i=1}^{t}(A_i\circ&space;N\circ&space;B_i)(x))
 
-From this equation, when n=t, calculating one channel at a time, we only need to keep one channel of the intermediate representation at all time, saving memory significantly.
+이 수식을 이용하면, n=t 일때, 한번에 하나의 channel을 연산하는 것을 의미합니다. 이때 memory에 하나의 channel만 넣어도 가능함으로, memory를 많이 절약할수 있습니다.
 
-However, there are two constaints when using this trick of reducing memory.
+하지만 이 방법을 사용해서 memory를 절약을 가능하게 해주는 두가지 제약사항이 있습니다.
 
-1. the inner transformation(which includes non-linearlity and depthwise) is per-channel
-2. consecutive non-per-channel operators have significiant ratio of the input size to the output
+1. inner transformation(non-linearlity와 depthwise 연산을 모두 포함한)은 per-channel연산입니다.
+2. 이후의 non-per-channel 변환은 출력 channel의 수가 입력 channel의 수보다 훨씬 작기 때문입니다.
 
-Using differnt t does not effect the total calculation time, but have effect the runtime by increasing cache misses which cause significant increase in runtime. Using t between 2 to 5 is most helpful of reducing memory usage and utilzing efficient calculation.
+T의 크기를 변화시키는 것에 전체적인 연산량은 변화하지 않습니다. 하지만 연산을 하는데 걸리는 시간은 t의 크기에 따라서 변화합니다. 그 이유는 t가 너무 작으면 cache miss가 발생하여 연산 시간이 증가하기 때문입니다. 그럼으로 t가 2와 5 사이의 값을 사용하는 것이 memory 사용량과 효율적인 연산시간의 절충안이 됩니다.
  
 # Experiments
 
