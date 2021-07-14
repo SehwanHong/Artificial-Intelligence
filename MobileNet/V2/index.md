@@ -44,7 +44,8 @@ To summarize, there are two properties that are indicative of the requirement th
 1. If the manifold of interest remains non-zero volume after ReLU transformation, it corresponds to a linear transformation.
 2. ReLU is capable of preserving complete information about the input manifold, but only if the input manifold lies in a low-dimensional subspace of the input space.
 
-Assuming the manifold of interest is low-dimensional, by inserting linear bottleneck layer into the convolutional blocks. Through experiemtn, using linear layer is crucial as it prevents non-linearities from desctorying too much information.
+Assuming the manifold of interest is low-dimensional, we are able to capture manifold of interest by inserting linear bottleneck layer into the convolutional blocks. Through experiment
+, using linear layer is crucial as it prevents non-linearities from desctorying too much information.
 
 ## Inverted residuals
 
@@ -116,7 +117,7 @@ From this equation, the inner tensor ![I](https://latex.codecogs.com/svg.image?I
 
 From this equation, when n=t, calculating one channel at a time, we only need to keep one channel of the intermediate representation at all time, saving memory significantly.
 
-However, there are two constaints when using this trick of reducing memory.
+However, there are two constaints that enables the trick of reducing memory.
 
 1. the inner transformation(which includes non-linearlity and depthwise) is per-channel
 2. consecutive non-per-channel operators have significiant ratio of the input size to the output
@@ -135,7 +136,7 @@ The model is trained using Tensorflow. Optimizer is RMSPropOptimizer with decay 
 
 ![Preformance Curve for full model](./performanceCurve.png)
 
-This table represents all possible result of the MobileNetV2, MobileNetV1, ShuffleNet, Nas Net. For these networks, multiplier of 0.35, 0.5, 0.75, and 1 is used for all resulutions, and additional 1.4 is used on MobileNetV2 for 224 to obtain better result.
+This graph represents all possible result of the MobileNetV2, MobileNetV1, ShuffleNet, Nas Net. For these networks, multiplier of 0.35, 0.5, 0.75, and 1 is used for all resulutions, and additional 1.4 is used on MobileNetV2 for 224 to obtain better result.
 
 ![Performance Table for selected models](./performanceTable.png)
 
@@ -159,7 +160,7 @@ MobileNetV2 with SSDLite makes a decent predection using much less parameters an
 
 ## Semantic Segmentation
 
-Compare MobileNetV1 and MobileNetV3 with DeepLabv3 for the task of mobile segmantic segmentation. DeepLabv3 use atrous convolution a powerful tool to explicitly control the resolution of computed feature maps and builds five parallel heads including (a) Atrous Spatial Pyramid Pooling module(ASPP) containing three ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution with different atrous rates, (b) ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution head, and (c) Image-level features.
+Compare MobileNetV1 and MobileNetV2 with DeepLabv3 for the task of mobile segmantic segmentation. DeepLabv3 use atrous convolution a powerful tool to explicitly control the resolution of computed feature maps and builds five parallel heads including (a) Atrous Spatial Pyramid Pooling module(ASPP) containing three ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution with different atrous rates, (b) ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution head, and (c) Image-level features.
 
 Three design variation is tested in this paper.
 
@@ -168,17 +169,17 @@ Three design variation is tested in this paper.
 3. Different inference strategies for boosting performance
 
 ![semantic Segmentation result](./performanceSementicSegmentation.png)
-MNetV2\* Second last feature map is used for DeepLabv3 head.
-OS: output stride
-ASPP: Atrous Spatial Pyramid Pooling
-MF: Multi-scale and left-right flipped input
+**MNetV2\*** Second last feature map is used for DeepLabv3 head.
+**OS**: output stride
+**ASPP**: Atrous Spatial Pyramid Pooling
+**MF**: Multi-scale and left-right flipped input
 
 Observation on the table
-a. the inference strategies, including multi-scale inputs and adding left-right flipped images, significantly increases multi-add computation thus not suitable for on-device applications.
-b. using ![output-stride = 16](https://latex.codecogs.com/svg.image?output\_stride=16) is more efficient than ![output stride = 8](https://latex.codecogs.com/svg.image?output\_stride=8)
-c. MobileNetV1 is 5 to 6 times more efficient compared to ResNet-101
-d. Building DeepLabv3 on top of the second last feature map of the MobileNetV2 is more efficient than on the original last-layer feature map.
-e. DeepLabv3 heads are computationally expensive and removing the ASPP module significanlty reduces the Multi-add computation with only slight preformance degradation
+1. the inference strategies, including multi-scale inputs and adding left-right flipped images, significantly increases multi-add computation thus not suitable for on-device applications.
+2. using ![output-stride = 16](https://latex.codecogs.com/svg.image?output\_stride=16) is more efficient than ![output stride = 8](https://latex.codecogs.com/svg.image?output\_stride=8)
+3. MobileNetV1 is 5 to 6 times more efficient compared to ResNet-101
+4. Building DeepLabv3 on top of the second last feature map of the MobileNetV2 is more efficient than on the original last-layer feature map.
+5. DeepLabv3 heads are computationally expensive and removing the ASPP module significanlty reduces the Multi-add computation with only slight preformance degradation
 
 # Reference
 

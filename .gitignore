@@ -1,2 +1,4 @@
 ## .vs/ folder ignore
 .vs/
+
+.editorconfig
