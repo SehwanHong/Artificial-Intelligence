@@ -128,56 +128,60 @@ T의 크기를 변화시키는 것에 전체적인 연산량은 변화하지 않습니다. 하지만 연산을 하
 
 ### Training setup
 
-The model is trained using Tensorflow. Optimizer is RMSPropOptimizer with decay and momentum set to 0.9. Batch normalization is used after every layer and standard weight decay is set to 0.00004. Initial learning rate is 0.045, and learning rate decay is rate of 0.98 per epoch. 16 GPU asynchronous workers and a batch size of 96.
+이 인공신경망 model은 Tensorflow를 활용해서 훈련되었습니다. Optimizer는 RMSPropOptimizer를 사용했습니다. 이때 decay와 momentum은 0.9를 사용했습니다. Batch normalization은 모든 layer의 뒤에 사용되었으며, weight decay는 0.00004가 사용되었습니다. Learning rate는 최초에 0.045가 사용되었고, 하나의 epoch 가 지나갈때 마다 0.98을 곱해주었습ㅂ니다. 훈련에는 16개의 GPU를 사용했고, batch의 크기는 96개였습니다.
 
 ### Result
 
 ![Preformance Curve for full model](../../V2/performanceCurve.png)
 
-This table represents all possible result of the MobileNetV2, MobileNetV1, ShuffleNet, Nas Net. For these networks, multiplier of 0.35, 0.5, 0.75, and 1 is used for all resulutions, and additional 1.4 is used on MobileNetV2 for 224 to obtain better result.
+위의 그래프는 MobileNetV2, MobileNetV1, ShuffleNet, NasNet을 사용했을 때 얻을 수 있는 다양한 결과를 나타낸 것입니다. 이때 resolution multiplier로 0.35, 0.5, 0.75, 1를 사용한 것입니다. MobileNetV2에서는 1.4를 추가적으로 사용해서 더 좋은 결과를 얻었습니다.
 
 ![Performance Table for selected models](../../V2/performanceTable.png)
 
-From some of the selected model, we get the number of parameters and the Multi-adds. Last coloumn is implimentation of network in Google Pixel 1 using Tensorflow Lite. The number for shuffleNet is not reported because shuffling and group convolution algorithm are not yet supported.
+위의 표는 그래프에서 선택된 모델을 나타낸 것입니다. 여기서 모델에 사용된 parameter의 갯수와 multi-add 연산량을 알수 있습니다. 마지막 숫자는 Google Pixel 1이라는 스마트 폰에서 Tensorflow Lite를 사용했을 때의 연산 시간을 표현한 것입니다. 이때 ShuffleNet의 시간은 표현이 되지 않았는데, 그이유는 shuffling과 group convolution 알고리즘이 지원되지 않았기 때문입니다.
 
-Above table explains, that MobileNet V2 have higher accuracy rate compared to mobileNet V1 and faster computation time. Also comparing NasNet-A and MobileNetV2(1.4), MobileNet have higher accuracy and is 30% faster than NasNet-A.
+
+위의 표가 의미하는 바는, MobileNetV2가 MobileNetV1보다 정확도도 높고 연산시간도 빠른 것을 확인할수 있습니다. 또한 NasNet-A와 MobileNetV2(1.4)를 비교하면, MobileNetV2(1.4)가 더 높은 정확도를 가지고 있음과 동시 대략 30%정도 빠른 것을 확인 할 수 있습니다.
+
 
 ## Object Detection
 
 ### SSD Lite
 
-In this papaer, we introduce a mobie friendly variant of regular SSD(single shot detector). SSD Lite replace all the regular convolutions with separable convolutions(depthwise followed by pointwise) in SSD prediction layers.
+이 논문에서 mobile에 더 최적화된 SSD의 새로운 버전을 소개합니다. SSD Lite라고도 불리우는 이 모델은 SSD의 예측 레이어의 일반적인 convolution 연산을 모두 separable convolution(depthwise 후에 pointwise)연산으로 바꾼 것입니다.
+
 
 ![SSD and SSDLite configuration](../../V2/SSD.png)
 
-Comparison of the size and computational cost between SSD and SSDLite configured with MobileNetV2 and making predictions for 80 classes. SSDLite is approximately 7 times smaller in parameter size and 4 times smaller in computation.
+MobileNetV2를 기반으로 80개의 class를 예측하는 SSD와 SSDLite의 크기와 연산량을 비교해보면, SSDLite가 대략 7배 정도 적은 parameter 수를 가지고 있고 연산량도 4배 적은 것을 확인 할 수 있습니다.
+
 
 ![result for object detection](../../V2/performanceObjectDetection.png)
 
-MobileNetV2 with SSDLite makes a decent predection using much less parameters and Multi-add computation. Compared to MobileNetV1, it have similar accuracy but MobileNetV2 computes littlebit faster than MobileNetV2. Also comparing with YOLOv2, MobileNetV2 is 20 times more efficient and 10 times more smaller while still outperforms YOLOv2.
+MobileNetV2와 SSDLite를 동시에 사용 하는 것이 parameter와 multi-add의 수를 많이 줄이는 것에 비해 좋은 percision을 가집니다. MobileNetV1과 비교할 경우, 비슷한 정확도를 가지고 있지만, MobileNetV2가 조금더 빠릅니다. 또한, YOLOv2와 비교할 경우, MobileNetV2가 20배 더 효율적이고, parameter 가 10배 작습니다.
 
 ## Semantic Segmentation
 
-Compare MobileNetV1 and MobileNetV3 with DeepLabv3 for the task of mobile segmantic segmentation. DeepLabv3 use atrous convolution a powerful tool to explicitly control the resolution of computed feature maps and builds five parallel heads including (a) Atrous Spatial Pyramid Pooling module(ASPP) containing three ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution with different atrous rates, (b) ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution head, and (c) Image-level features.
+DeepLabv3를 사용하는 MobileNetV1과 MobileNetV2를 mobile segmentic segmentation의 작업에서 비교해봅시다. DeepLabv3는 atrous convolution을 사용합니다. Atrous convolution은 계산된 feature map의 해상도를 제어하는 강력한 도구입니다. DeepLabv3는 5개의 연산 head를 가지고 있습니다. 여기에는 a) atrous spatial pyramid pooling module(three ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution with different atrous rates)와 b) ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution head와 c) Image-level features가 있습니다.
 
-Three design variation is tested in this paper.
+이 논문에서는 3가지 다른 설계방법을 실험했습니다.
 
-1. Different feature extractor
-2. Simplifying the DeepLapv3 heads for faster computation
-3. Different inference strategies for boosting performance
+1. 다양한 feature extractor
+2. 빠른 연산을 위한 DeepLabv3 head의 간소화
+3. performance boosting을 위한 다양한 inference 전략
 
 ![semantic Segmentation result](../../V2/performanceSementicSegmentation.png)
-MNetV2\* Second last feature map is used for DeepLabv3 head.
-OS: output stride
-ASPP: Atrous Spatial Pyramid Pooling
-MF: Multi-scale and left-right flipped input
+**MNetV2\*** Second last feature map is used for DeepLabv3 head.
+**OS**: output stride
+**ASPP**: Atrous Spatial Pyramid Pooling
+**MF**: Multi-scale and left-right flipped input
 
-Observation on the table
-a. the inference strategies, including multi-scale inputs and adding left-right flipped images, significantly increases multi-add computation thus not suitable for on-device applications.
-b. using ![output-stride = 16](https://latex.codecogs.com/svg.image?output\_stride=16) is more efficient than ![output stride = 8](https://latex.codecogs.com/svg.image?output\_stride=8)
-c. MobileNetV1 is 5 to 6 times more efficient compared to ResNet-101
-d. Building DeepLabv3 on top of the second last feature map of the MobileNetV2 is more efficient than on the original last-layer feature map.
-e. DeepLabv3 heads are computationally expensive and removing the ASPP module significanlty reduces the Multi-add computation with only slight preformance degradation
+위의 표를 분석해 본 결과:
+a. inference 전략을 사용할 경우 multi-add computation의 수가 기하급수적으로 증가합니다. 이는 multi-scale input과 left-right flip에도 포함하는 것입니다. 연산량이 배수로 증가함으로 이는 기기안에 포함하기에는 좋은 전략이 아닙니다.
+b. ![output-stride = 16](https://latex.codecogs.com/svg.image?output\_stride=16)를 사용하는 것이 ![output stride = 8](https://latex.codecogs.com/svg.image?output\_stride=8)를 사용하는 것보다 더 효율적입니다.
+c. MobileNetV1을 사용하는 것이 ResNet-101를 사용하는 것과 비교해 5에서 6배 더 효율적입니다.
+d. DeepLabv3를 MobileNetV2의 마지막에서 두번째 feature map에 적용하는 것이 마지막 featuremap 에 적용하는 것보더 더 효율적입니다.
+e. DeepLabv3 heads는 연산복잡도가 높습니다. ASPP module을 제거하는 것이 조금의 성능희생으로 multi-add 연산 수를 많이 줄일 수 있습니다.
 
 # Reference
 
