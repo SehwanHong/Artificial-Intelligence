@@ -1,103 +1,103 @@
 # [MobileNetV2: Inverted Residuals and Linear Bottlenecks](https://arxiv.org/pdf/1801.04381.pdf)
 
-ÀÌ ³í¹®¿¡¼­ ÀúÀÚ´Â »õ·Î¿î mobile architecture, MobileNetV2¸¦ ¼Ò°³ÇÕ´Ï´Ù. MobileNetV2´Â Àü ¸ğµ¨º¸´Ù ´Ù¾çÇÑ Å×½ºÆ® È¯°æ°ú ¹êÄ¡¸¶Å©¿¡¼­ ´õ ÁÁÀº ½ÇÀûÀ» ³À´Ï´Ù.
+ì´ ë…¼ë¬¸ì—ì„œ ì €ìëŠ” ìƒˆë¡œìš´ mobile architecture, MobileNetV2ë¥¼ ì†Œê°œí•©ë‹ˆë‹¤. MobileNetV2ëŠ” ì „ ëª¨ë¸ë³´ë‹¤ ë‹¤ì–‘í•œ í…ŒìŠ¤íŠ¸ í™˜ê²½ê³¼ ë°´ì¹˜ë§ˆí¬ì—ì„œ ë” ì¢‹ì€ ì‹¤ì ì„ ëƒ…ë‹ˆë‹¤.
 
 # Introduction
 
-ÀÎ°ø½Å°æ¸ÁÀº ´Ù¾çÇÑ ºĞ¾ßÀÇ ±â°èÇĞ½À¿¡¼­ ´ëÇõ¸íÀ» ÀÏÀ¸Ä×½À´Ï´Ù. ÀÌ¹ÌÁö ÀÎ½Ä °úÁ¦¿¡¼­´Â ÀÌ¹Ì ÀÎ°£ÀÇ ÀÎ½Ä·üÀ» ¶Ù¾î³Ñ¾ú½À´Ï´Ù. ÀÌ·¯ÇÑ Á¤È®µµÀÇ Áõ°¡´Â ´Ù¾çÇÑ ºñ¿ëÀ» ±â¹İÀ¸·Î ¸¸µé¾îÁ³½À´Ï´Ù. ÃÖÃ·´Ü ÀÎ°ø½Å°æ¸ÁÀº ºü¸¥ ¿¬»êÀ» ÇÒ¼ö ÀÖ´Â ±â±â°¡ ÇÊ¿äÇÕ´Ï´Ù. ÀÌ·¯ÇÑ ¿¬»êÁ¦ÇÑ¶§¹®¿¡ ÈŞ´ë¿ë ±â±â³ª ÀÓº£µğµå ±â±â¿¡¼­´Â »ç¿ëÀ» ÇÒ¼ö°¡ ¾ø½À´Ï´Ù.
+ì¸ê³µì‹ ê²½ë§ì€ ë‹¤ì–‘í•œ ë¶„ì•¼ì˜ ê¸°ê³„í•™ìŠµì—ì„œ ëŒ€í˜ëª…ì„ ì¼ìœ¼ì¼°ìŠµë‹ˆë‹¤. ì´ë¯¸ì§€ ì¸ì‹ ê³¼ì œì—ì„œëŠ” ì´ë¯¸ ì¸ê°„ì˜ ì¸ì‹ë¥ ì„ ë›°ì–´ë„˜ì—ˆìŠµë‹ˆë‹¤. ì´ëŸ¬í•œ ì •í™•ë„ì˜ ì¦ê°€ëŠ” ë‹¤ì–‘í•œ ë¹„ìš©ì„ ê¸°ë°˜ìœ¼ë¡œ ë§Œë“¤ì–´ì¡ŒìŠµë‹ˆë‹¤. ìµœì²¨ë‹¨ ì¸ê³µì‹ ê²½ë§ì€ ë¹ ë¥¸ ì—°ì‚°ì„ í• ìˆ˜ ìˆëŠ” ê¸°ê¸°ê°€ í•„ìš”í•©ë‹ˆë‹¤. ì´ëŸ¬í•œ ì—°ì‚°ì œí•œë•Œë¬¸ì— íœ´ëŒ€ìš© ê¸°ê¸°ë‚˜ ì„ë² ë””ë“œ ê¸°ê¸°ì—ì„œëŠ” ì‚¬ìš©ì„ í• ìˆ˜ê°€ ì—†ìŠµë‹ˆë‹¤.
 
-ÀÌ ³í¹®¿¡¼­´Â »õ·Î¿î ÀÎ°ø½Å°æ¸Á±¸Á¶¸¦ ¼Ò°³ÇÕ´Ï´Ù. MobileNetV2¶ó°í ºÒ¸®¿ì´Â ÀÌ ½Å°æ¸ÁÀº ÈŞ´ë¿ë±â±â¿Í ¸®¼Ò½º°¡ Á¦ÇÑµÈ È¯°æ¿¡ ÀûÇÕÇÏµµ·Ï ¸¸µé¾îÁø ±¸Á¶ÀÔ´Ï´Ù. ¿¬»ê·®°ú ¸Ş¸ğ¸® »ç¿ë·®À» ÁÙÀÌ¸é¼­, ºñ½ÁÇÑ ¼º´ÉÀ» ³»±âÀ§ÇØ, ÀúÀÚ´Â inverted residual with linear bottleneckÀÌ¶ó´Â »õ·Î¿î ·¹ÀÌ¾î ¸ğµâÀ» ¼Ò°³ÇÕ´Ï´Ù
+ì´ ë…¼ë¬¸ì—ì„œëŠ” ìƒˆë¡œìš´ ì¸ê³µì‹ ê²½ë§êµ¬ì¡°ë¥¼ ì†Œê°œí•©ë‹ˆë‹¤. MobileNetV2ë¼ê³  ë¶ˆë¦¬ìš°ëŠ” ì´ ì‹ ê²½ë§ì€ íœ´ëŒ€ìš©ê¸°ê¸°ì™€ ë¦¬ì†ŒìŠ¤ê°€ ì œí•œëœ í™˜ê²½ì— ì í•©í•˜ë„ë¡ ë§Œë“¤ì–´ì§„ êµ¬ì¡°ì…ë‹ˆë‹¤. ì—°ì‚°ëŸ‰ê³¼ ë©”ëª¨ë¦¬ ì‚¬ìš©ëŸ‰ì„ ì¤„ì´ë©´ì„œ, ë¹„ìŠ·í•œ ì„±ëŠ¥ì„ ë‚´ê¸°ìœ„í•´, ì €ìëŠ” inverted residual with linear bottleneckì´ë¼ëŠ” ìƒˆë¡œìš´ ë ˆì´ì–´ ëª¨ë“ˆì„ ì†Œê°œí•©ë‹ˆë‹¤
 
 # Related Work
 
-ÇöÀç ÀÎ°ø½Å°æ¸ÁÀÇ ±¸Á¶¿¡ ´ëÇÑ ¾Ë°í¸®ÁòÀû ÇØ¼®ÀÇ Å½»ö¿¡ ¸¹Àº ÁøÀüÀÌ ÀÖ¾ú½À´Ï´Ù. ÀÌ·¯ÇÑ ÁøÀüµéÀº hyperparameter ÃÖÀûÈ­, ´Ù¾çÇÑ ¹æ½ÄÀÇ network pruning, ±×¸®°í connectivity learningÀÌ ÀÖ½À´Ï´Ù. ÀÌ·¯ÇÑ ¿¬±¼µéÀÌ convolution block ³»ÀÇ connectivity ±¸Á¶¸¦ º¯È­½ÃÄ×½À´Ï´Ù.
+í˜„ì¬ ì¸ê³µì‹ ê²½ë§ì˜ êµ¬ì¡°ì— ëŒ€í•œ ì•Œê³ ë¦¬ì¦˜ì  í•´ì„ì˜ íƒìƒ‰ì— ë§ì€ ì§„ì „ì´ ìˆì—ˆìŠµë‹ˆë‹¤. ì´ëŸ¬í•œ ì§„ì „ë“¤ì€ hyperparameter ìµœì í™”, ë‹¤ì–‘í•œ ë°©ì‹ì˜ network pruning, ê·¸ë¦¬ê³  connectivity learningì´ ìˆìŠµë‹ˆë‹¤. ì´ëŸ¬í•œ ì—°êµ´ë“¤ì´ convolution block ë‚´ì˜ connectivity êµ¬ì¡°ë¥¼ ë³€í™”ì‹œì¼°ìŠµë‹ˆë‹¤.
 
-ÃÖÀûÈ­¸¦ ÇÏ´Â ´Ù¸¥ ¹æ¹ıÀ¸·Î´Â À¯Àü ¾Ë°í¸®ÁòÀ» »ç¿ëÇÏ´Â ¹æ½Ä°ú °­È­ÇĞ½ÀÀ» ÅëÇÑ ±¸Á¶ Å½»öÀÌ ÀÖ½À´Ï´Ù. ÇÏÁö¸¸ ÀÌ·¯ÇÑ ¹æ½ÄÀÇ ´ÜÁ¡Àº ÀÎ°ø½Å°æ¸ÁÀÇ Å©±â°¡ Ä¿Áø´Ù´Â °ÍÀÔ´Ï´Ù.
+ìµœì í™”ë¥¼ í•˜ëŠ” ë‹¤ë¥¸ ë°©ë²•ìœ¼ë¡œëŠ” ìœ ì „ ì•Œê³ ë¦¬ì¦˜ì„ ì‚¬ìš©í•˜ëŠ” ë°©ì‹ê³¼ ê°•í™”í•™ìŠµì„ í†µí•œ êµ¬ì¡° íƒìƒ‰ì´ ìˆìŠµë‹ˆë‹¤. í•˜ì§€ë§Œ ì´ëŸ¬í•œ ë°©ì‹ì˜ ë‹¨ì ì€ ì¸ê³µì‹ ê²½ë§ì˜ í¬ê¸°ê°€ ì»¤ì§„ë‹¤ëŠ” ê²ƒì…ë‹ˆë‹¤.
 
-ÀÌ ³í¹®¿¡¼­ »ç¿ëÇÑ ÀÎ°ø½Å°æ¸ÁÀÇ ´ÙÀÚÀÎÀº [MobileNetV1](../)¿¡ ±â¹İÇÕ´Ï´Ù.
+ì´ ë…¼ë¬¸ì—ì„œ ì‚¬ìš©í•œ ì¸ê³µì‹ ê²½ë§ì˜ ë‹¤ìì¸ì€ [MobileNetV1](../)ì— ê¸°ë°˜í•©ë‹ˆë‹¤.
 
 # Preliminaries, discussion and intuition
 
 ## Depthwise separable convolution
 
-Depthwise Separable ConvolutionÀº È¿À²ÀûÀÎ ÀÎ°ø½Å°æ¸ÁÀ» ¸¸µå´Â µ¥ ÇÊ¿äÇÑ ±âº» ¿ä¼ÒÀÔ´Ï´Ù. ÀÌ´Â full convolutional operator¸¦ ºĞÇØÇÏ¿© µÎ°³ÀÇ ·¹ÀÌ¾î·Î ¸¸µì´Ï´Ù.
+Depthwise Separable Convolutionì€ íš¨ìœ¨ì ì¸ ì¸ê³µì‹ ê²½ë§ì„ ë§Œë“œëŠ” ë° í•„ìš”í•œ ê¸°ë³¸ ìš”ì†Œì…ë‹ˆë‹¤. ì´ëŠ” full convolutional operatorë¥¼ ë¶„í•´í•˜ì—¬ ë‘ê°œì˜ ë ˆì´ì–´ë¡œ ë§Œë“­ë‹ˆë‹¤.
 
   1. Depthwise convolution
   2. pointwise convolution
 
-ÀÚ¼¼ÇÑ ³»¿ëÀÎ [¸µÅ©](../)¸¦ È®ÀÎÇØ ÁÖ½Ã±â ¹Ù¶ø´Ï´Ù.
+ìì„¸í•œ ë‚´ìš©ì¸ [ë§í¬](../)ë¥¼ í™•ì¸í•´ ì£¼ì‹œê¸° ë°”ëë‹ˆë‹¤.
 
 ## Linear Bottlenecks
 
-±íÀº ÀÎ°ø½Å°æ¸Á¿¡ N°³ÀÇ ·¹ÀÌ¾î°¡ ÀÖ´Ù°í °¡Á¤ÇÕ½Ã´Ù. ·¹ÀÌ¾î ![L_i](https://latex.codecogs.com/svg.image?L_i)´Â °¢°¢ ![tensor dimension](https://latex.codecogs.com/svg.image?h_i\times&space;w_i\times&space;d_i)ÀÇ activation tensor·Î ±¸¼ºµÇ¾ú½À´Ï´Ù. ÀÌ·¯ÇÑ activation layerµéÀÇ ÁıÇÕÀº manifold of interest¸¦ ±¸¼ºÇÕ´Ï´Ù. Manfold of interest´Â low-dimensional subspace¿¡ ³»ÀåµÇ¾î ÀÖ½À´Ï´Ù. ´Ù¸¥ ¸»·Î ÇÏ¸é deep convolutional layerÀÇ d-channel pixelµé¿¡ ¾ÏÈ£È­µÇ¾î ÀÖ´Â Á¤º¸´Â ½ÇÁúÀûÀ¸·Î ¾î¶°ÇÑ mainfold ¾È¿¡ ÀúÀåµÇ¾î ÀÖ½À´Ï´Ù. ÀÌ´Â low-dimensional subspace¿¡ ³»Àå °¡´ÉÇÕ´Ï´Ù.
+ê¹Šì€ ì¸ê³µì‹ ê²½ë§ì— Nê°œì˜ ë ˆì´ì–´ê°€ ìˆë‹¤ê³  ê°€ì •í•©ì‹œë‹¤. ë ˆì´ì–´ ![L_i](https://latex.codecogs.com/svg.image?L_i)ëŠ” ê°ê° ![tensor dimension](https://latex.codecogs.com/svg.image?h_i\times&space;w_i\times&space;d_i)ì˜ activation tensorë¡œ êµ¬ì„±ë˜ì—ˆìŠµë‹ˆë‹¤. ì´ëŸ¬í•œ activation layerë“¤ì˜ ì§‘í•©ì€ manifold of interestë¥¼ êµ¬ì„±í•©ë‹ˆë‹¤. Manfold of interestëŠ” low-dimensional subspaceì— ë‚´ì¥ë˜ì–´ ìˆìŠµë‹ˆë‹¤. ë‹¤ë¥¸ ë§ë¡œ í•˜ë©´ deep convolutional layerì˜ d-channel pixelë“¤ì— ì•”í˜¸í™”ë˜ì–´ ìˆëŠ” ì •ë³´ëŠ” ì‹¤ì§ˆì ìœ¼ë¡œ ì–´ë– í•œ mainfold ì•ˆì— ì €ì¥ë˜ì–´ ìˆìŠµë‹ˆë‹¤. ì´ëŠ” low-dimensional subspaceì— ë‚´ì¥ ê°€ëŠ¥í•©ë‹ˆë‹¤.
 
-º¸ÆíÀûÀ¸·Î layer transformation ![ReLU(Bx)](https://latex.codecogs.com/svg.image?ReLU(Bx))ÀÇ °á°ú°¡ non-zero volume ![S](https://latex.codecogs.com/svg.image?S)¸¦ °¡Áø´Ù¸é, ![S](https://latex.codecogs.com/svg.image?S)¾ÈÀ¸·Î Åõ¿µµÈ point´Â linear transformation ![B](https://latex.codecogs.com/svg.image?B)ÀÇ ÀÔ·Â°ªÀ» ÅëÇØ¼­ ±¸ÇÒ¼ö ÀÖ½À´Ï´Ù. ÀÌ¸¦ ÅëÇØ¼­ ÀüÃ¼ Ãâ·Â°ª¿¡ ´ëÀÀÇÏ´Â ÀÔ·Â°ªÀÇ ÇÑ ºÎºĞÀº linear transformationÀ¸·Î Á¦ÇÑµË´Ï´Ù. ´Ù¸¥ ¸»·Î ÇÏ¸é, ±íÀº ÀÎ°ø½Å°æ¸ÁÀº Ãâ·ÂÀÇ non-zero volume¿¡ ´ëÇÑ linear claissifierÀÇ Áö¼ö·Î Ç¥ÇöµË´Ï´Ù.
+ë³´í¸ì ìœ¼ë¡œ layer transformation ![ReLU(Bx)](https://latex.codecogs.com/svg.image?ReLU(Bx))ì˜ ê²°ê³¼ê°€ non-zero volume ![S](https://latex.codecogs.com/svg.image?S)ë¥¼ ê°€ì§„ë‹¤ë©´, ![S](https://latex.codecogs.com/svg.image?S)ì•ˆìœ¼ë¡œ íˆ¬ì˜ëœ pointëŠ” linear transformation ![B](https://latex.codecogs.com/svg.image?B)ì˜ ì…ë ¥ê°’ì„ í†µí•´ì„œ êµ¬í• ìˆ˜ ìˆìŠµë‹ˆë‹¤. ì´ë¥¼ í†µí•´ì„œ ì „ì²´ ì¶œë ¥ê°’ì— ëŒ€ì‘í•˜ëŠ” ì…ë ¥ê°’ì˜ í•œ ë¶€ë¶„ì€ linear transformationìœ¼ë¡œ ì œí•œë©ë‹ˆë‹¤. ë‹¤ë¥¸ ë§ë¡œ í•˜ë©´, ê¹Šì€ ì¸ê³µì‹ ê²½ë§ì€ ì¶œë ¥ì˜ non-zero volumeì— ëŒ€í•œ linear claissifierì˜ ì§€ìˆ˜ë¡œ í‘œí˜„ë©ë‹ˆë‹¤.
 
-´Ù¸¥ ÇÑÆíÀ¸·Î, ReLU°¡ ChannelÀ» ¾ĞÃàÇÏ°ÔµÇ¸é, ±× ChannelÀÇ Á¤º¸´Â ÇÊ¿¬ÀûÀ¸·Î ¼Ò½ÇµÇ°Ô µË´Ï´Ù. ÇÏÁö¸¸ Ã¤³ÎÀÇ ¼ö°¡ ¸¹´Ù¸é, activation manifold°¡ Á¤º¸¸¦ º¸Á¸ÇÏ°í ÀÖÀ» °¡´É¼ºÀÌ ÀÖ½À´Ï´Ù. ¾Æ·¡ÀÇ ÀÌ¹ÌÁö°¡ ÀÌ¸¦ ¼³¸íÇÕ´Ï´Ù.
+ë‹¤ë¥¸ í•œí¸ìœ¼ë¡œ, ReLUê°€ Channelì„ ì••ì¶•í•˜ê²Œë˜ë©´, ê·¸ Channelì˜ ì •ë³´ëŠ” í•„ì—°ì ìœ¼ë¡œ ì†Œì‹¤ë˜ê²Œ ë©ë‹ˆë‹¤. í•˜ì§€ë§Œ ì±„ë„ì˜ ìˆ˜ê°€ ë§ë‹¤ë©´, activation manifoldê°€ ì •ë³´ë¥¼ ë³´ì¡´í•˜ê³  ìˆì„ ê°€ëŠ¥ì„±ì´ ìˆìŠµë‹ˆë‹¤. ì•„ë˜ì˜ ì´ë¯¸ì§€ê°€ ì´ë¥¼ ì„¤ëª…í•©ë‹ˆë‹¤.
 
 ![ReLU transformations of low-dimensional manifold embedded in higher-dimensional spaces](../../V2/ReLUtransformation.png)
 
-ÀÌ ¿¹Á¦¿¡¼­, °¡Àå Ã¹¹øÂ° ³ª¼±Àº n Â÷¿ø °ø°£¿¡ ³»ÀåµÇ¾î ÀÖ½À´Ï´Ù. ÀÌ¸¦ ¹«ÀÛÀ§ ÀûÀÎ Çà·Ä ![T](https://latex.codecogs.com/svg.image?T)¸¦ °öÇÏ°í ReLU¸¦ »ç¿ëÇÑ ´ÙÀ½ ¿ªÇà·ÄÀÎ ![inverse of T](https://latex.codecogs.com/svg.image?T^{-1})¸¦ »ç¿ëÇØ ´Ù½Ã 2DÀÌ¹ÌÁö·Î º¯È¯ÇÑ °ÍÀÔ´Ï´Ù. ¿©±â¼­ ![n = 2,3](https://latex.codecogs.com/svg.image?n=2,3)ÀÏ¶§ Á¤º¸ÀÇ ¼ÕÀÏÀÌ »ı°Ü ¸î¸îºÎºĞ¿¡´Â ÇÏ³ªÀÇ ¼±À¸·Î º¯È¯ µÈ °ÍÀ» È®ÀÎÇÒ¼ö ÀÖ½À´Ï´Ù. ÇÏÁö¸¸ ![n = 15](https://latex.codecogs.com/svg.image?n=15)¿Í 30ÀÏ¶§¿¡´Â Á¤º¸ÀÇ ¼Õ½ÇÀÌ Àû¾î ÀÔ·Â°ª°ú ºñ½ÁÇÑ ÀÌ¹ÌÁö°¡ ³ª¿É´Ï´Ù.
+ì´ ì˜ˆì œì—ì„œ, ê°€ì¥ ì²«ë²ˆì§¸ ë‚˜ì„ ì€ n ì°¨ì› ê³µê°„ì— ë‚´ì¥ë˜ì–´ ìˆìŠµë‹ˆë‹¤. ì´ë¥¼ ë¬´ì‘ìœ„ ì ì¸ í–‰ë ¬ ![T](https://latex.codecogs.com/svg.image?T)ë¥¼ ê³±í•˜ê³  ReLUë¥¼ ì‚¬ìš©í•œ ë‹¤ìŒ ì—­í–‰ë ¬ì¸ ![inverse of T](https://latex.codecogs.com/svg.image?T^{-1})ë¥¼ ì‚¬ìš©í•´ ë‹¤ì‹œ 2Dì´ë¯¸ì§€ë¡œ ë³€í™˜í•œ ê²ƒì…ë‹ˆë‹¤. ì—¬ê¸°ì„œ ![n = 2,3](https://latex.codecogs.com/svg.image?n=2,3)ì¼ë•Œ ì •ë³´ì˜ ì†ì‹¤ì´ ìƒê²¨ ëª‡ëª‡ë¶€ë¶„ì—ëŠ” í•˜ë‚˜ì˜ ì„ ìœ¼ë¡œ ë³€í™˜ ëœ ê²ƒì„ í™•ì¸í• ìˆ˜ ìˆìŠµë‹ˆë‹¤. í•˜ì§€ë§Œ ![n = 15](https://latex.codecogs.com/svg.image?n=15)ì™€ 30ì¼ë•Œì—ëŠ” ì •ë³´ì˜ ì†ì‹¤ì´ ì ì–´ ì…ë ¥ê°’ê³¼ ë¹„ìŠ·í•œ ì´ë¯¸ì§€ê°€ ë‚˜ì˜µë‹ˆë‹¤.
 
-¿ä¾àÇÏÀÚ¸é, manifold of interest°¡ higher-dimenstional activation space ¾È¿¡ ÀÖ´Â low-dimensional subspace¿¡ Á¸ÀçÇÏ±â À§ÇÑ µÎ°¡Áö Æ¯¼ºÀº :
+ìš”ì•½í•˜ìë©´, manifold of interestê°€ higher-dimenstional activation space ì•ˆì— ìˆëŠ” low-dimensional subspaceì— ì¡´ì¬í•˜ê¸° ìœ„í•œ ë‘ê°€ì§€ íŠ¹ì„±ì€ :
 
-1. Manfold of interest°¡ ReLU transformation ÈÄ¿¡ non-zero volumne¿¡ ³²¾ÆÀÖ´Ù¸é, ÀÌ´Â Linear transformationÀ¸·Î º¼ ¼ö ÀÖ´Ù.
-2. ¸¸¾à input manifold°¡ ÀÔ·Â °ø°£ ³»¿¡¼­ low-dimansional subspace¿¡ Á¸ÀçÇÑ´Ù¸é, ReLU°¡ input manifold¿¡ °üÇÑ Á¤º¸¸¦ ¼Õ½Ç¾øÀÌ º¸Á¸ÇÒ¼ö ÀÖ½À´Ï´Ù.
+1. Manfold of interestê°€ ReLU transformation í›„ì— non-zero volumneì— ë‚¨ì•„ìˆë‹¤ë©´, ì´ëŠ” Linear transformationìœ¼ë¡œ ë³¼ ìˆ˜ ìˆë‹¤.
+2. ë§Œì•½ input manifoldê°€ ì…ë ¥ ê³µê°„ ë‚´ì—ì„œ low-dimansional subspaceì— ì¡´ì¬í•œë‹¤ë©´, ReLUê°€ input manifoldì— ê´€í•œ ì •ë³´ë¥¼ ì†ì‹¤ì—†ì´ ë³´ì¡´í• ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 
-Manifold of interest°¡ low-dimensionÀÌ¶ó¸é, linear bottleneck layer¸¦ convolutional block¿¡ »ğÀÔÇÏ¿© manifold of interest¸¦ ÃßÃâÇÒ¼ö ÀÖ´Ù. ½ÇÇèÀ» ÅëÇØ¼­, linear layer ¸¦ »ç¿ëÇÏ´Â °ÍÀÌ non-linearity°¡ Á¤º¸¸¦ ¼Ò½Ç ½ÃÅ°´Â °ÍÀ» ¹æÁö ÇÒ¼ö ÀÖ´Ù.
+Manifold of interestê°€ low-dimensionì´ë¼ë©´, linear bottleneck layerë¥¼ convolutional blockì— ì‚½ì…í•˜ì—¬ manifold of interestë¥¼ ì¶”ì¶œí• ìˆ˜ ìˆë‹¤. ì‹¤í—˜ì„ í†µí•´ì„œ, linear layer ë¥¼ ì‚¬ìš©í•˜ëŠ” ê²ƒì´ non-linearityê°€ ì •ë³´ë¥¼ ì†Œì‹¤ ì‹œí‚¤ëŠ” ê²ƒì„ ë°©ì§€ í• ìˆ˜ ìˆë‹¤.
 
 ## Inverted residuals
 
-Bottleneck ±¸Á¶°¡ ¸ğµç Á¤º¸¸¦ º¸Á¸ÇÑ´Ù´Â »ç½Ç·ÎºÎÅÍ Âø¾ÈÇÏ¿© skip connectionÀ» bottleneck ±¸Á¶ »çÀÌ¿¡ ¸¸µé¾ú½À´Ï´Ù. ¿©±â¼­ expansion layer´Â non-linear transpormationÀ» Àû¿ëÇÏ±â À§ÇÑ implementation deatilÀÔ´Ï´Ù.
+Bottleneck êµ¬ì¡°ê°€ ëª¨ë“  ì •ë³´ë¥¼ ë³´ì¡´í•œë‹¤ëŠ” ì‚¬ì‹¤ë¡œë¶€í„° ì°©ì•ˆí•˜ì—¬ skip connectionì„ bottleneck êµ¬ì¡° ì‚¬ì´ì— ë§Œë“¤ì—ˆìŠµë‹ˆë‹¤. ì—¬ê¸°ì„œ expansion layerëŠ” non-linear transpormationì„ ì ìš©í•˜ê¸° ìœ„í•œ implementation deatilì…ë‹ˆë‹¤.
 
 Residual block | Inverted Residual Block
 --------------|---------------
 ![Residual Block](../../V2/residualBlock.png) | ![Inverted Residual Block](../../V2/invertedResidualBlock.png)
 
-Residual BlockÀº º¸Åë ¿ŞÂÊÀÇ ÀÌ¹ÌÁö·Î Ç¥ÇöµË´Ï´Ù. ÀÌ¹ÌÁö¿¡¼­ Ç¥ÇöµÈ°Í Ã³·³ wide -> narrow -> wide ÀÇ ÇüÅÂ·Î bottleneck±¸Á¶¸¦ ¸¸µé¾ú½À´Ï´Ù. ÇÏÁö¸¸ ÀÌ ³í¹®¿¡¼­, ÀúÀÚ´Â inverted residualÀ» Á¦°øÇÕ´Ï´Ù. ¿À¸¥ÂÊÀÇ ÀÌ¹ÌÁöÃ³·³ narrow -> wide -> narrowÀÇ ±¸Á¶¸¦ Ã¤ÅÃÇß½À´Ï´Ù. »ç¼±À¸·Î Ç¥ÇöµÈ ºÎºĞÀº non-linearlities¸¦ »ç¿ëÇÏÁö ¾Ê½À´Ï´Ù. ÀÌ´Â non-linearlity¸¦ »ç¿ëÇØ¼­ »ı±â´Â Á¤º¸¼Õ½ÇÀ» ÁÙÀÌ±â À§ÇÔÀÔ´Ï´Ù.
+Residual Blockì€ ë³´í†µ ì™¼ìª½ì˜ ì´ë¯¸ì§€ë¡œ í‘œí˜„ë©ë‹ˆë‹¤. ì´ë¯¸ì§€ì—ì„œ í‘œí˜„ëœê²ƒ ì²˜ëŸ¼ wide -> narrow -> wide ì˜ í˜•íƒœë¡œ bottleneckêµ¬ì¡°ë¥¼ ë§Œë“¤ì—ˆìŠµë‹ˆë‹¤. í•˜ì§€ë§Œ ì´ ë…¼ë¬¸ì—ì„œ, ì €ìëŠ” inverted residualì„ ì œê³µí•©ë‹ˆë‹¤. ì˜¤ë¥¸ìª½ì˜ ì´ë¯¸ì§€ì²˜ëŸ¼ narrow -> wide -> narrowì˜ êµ¬ì¡°ë¥¼ ì±„íƒí–ˆìŠµë‹ˆë‹¤. ì‚¬ì„ ìœ¼ë¡œ í‘œí˜„ëœ ë¶€ë¶„ì€ non-linearlitiesë¥¼ ì‚¬ìš©í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤. ì´ëŠ” non-linearlityë¥¼ ì‚¬ìš©í•´ì„œ ìƒê¸°ëŠ” ì •ë³´ì†ì‹¤ì„ ì¤„ì´ê¸° ìœ„í•¨ì…ë‹ˆë‹¤.
 
-Inverted residual block¿¡¼­ »ç¿ëÇÏ´Â skip connectionÀº [ResNet](../../../ResNet/Korean/)¿¡¼­ »ç¿ë ÇÏ´Â °Í°ú °°½À´Ï´Ù. ÀÌ´Â ¿©·¯°³ÀÇ ·¹ÀÌ¾î¸¦ »ç¿ëÇÔ¿¡µµ gradient°¡ vanishingÇÏ´Â °ÍÀ» ¹æÁöÇÏ±â À§ÇÔ ÀÔ´Ï´Ù.
+Inverted residual blockì—ì„œ ì‚¬ìš©í•˜ëŠ” skip connectionì€ [ResNet](../../../ResNet/Korean/)ì—ì„œ ì‚¬ìš© í•˜ëŠ” ê²ƒê³¼ ê°™ìŠµë‹ˆë‹¤. ì´ëŠ” ì—¬ëŸ¬ê°œì˜ ë ˆì´ì–´ë¥¼ ì‚¬ìš©í•¨ì—ë„ gradientê°€ vanishingí•˜ëŠ” ê²ƒì„ ë°©ì§€í•˜ê¸° ìœ„í•¨ ì…ë‹ˆë‹¤.
 
-Inverted Residual blockÀº ¸Ş¸ğ¸® »ç¿ë·®µµ Àû°í, ¼º´Éµµ ´õ ÁÁ½À´Ï´Ù.
+Inverted Residual blockì€ ë©”ëª¨ë¦¬ ì‚¬ìš©ëŸ‰ë„ ì ê³ , ì„±ëŠ¥ë„ ë” ì¢‹ìŠµë‹ˆë‹¤.
 
 ### Running time and parameter count for bottleneck convolution
 
 ![bottleneck residual block](../../V2/bottleneckResidualBlock.png)
 
-À§ÀÇ Ç¥´Â inverse residual functionÀÇ °¡Àå ±âº»ÀûÀÎ ±¸Á¶¸¦ ³ªÅ¸³½ °ÍÀÔ´Ï´Ù. À§ÀÇ ÀÔ·Â°ª¿¡¼­ ![h w](https://latex.codecogs.com/svg.image?h\times&space;w)´Â ÀÌ¹ÌÁöÀÇ Å©±â, ![k](https://latex.codecogs.com/svg.image?k)´Â Ä¿³Î »çÀÌÁî, ![t](https://latex.codecogs.com/svg.image?t)´Â expansion factor, ![d'](https://latex.codecogs.com/svg.image?d')¿Í ![d''](https://latex.codecogs.com/svg.image?d'')´Â °¢°¢ ÀÔ·ÂÃ¤³ÎÀÇ ¼ö¿Í Ãâ·ÂÃ¤³ÎÀÇ ¼ö ÀÔ´Ï´Ù. ÀÌ °ªµéÀ» »ç¿ëÇØ¼­ multi-addÀÇ °¹¼ö¸¦ ±¸ÇÏ¸é ¾Æ·¡¿Í °°½À´Ï´Ù.
+ìœ„ì˜ í‘œëŠ” inverse residual functionì˜ ê°€ì¥ ê¸°ë³¸ì ì¸ êµ¬ì¡°ë¥¼ ë‚˜íƒ€ë‚¸ ê²ƒì…ë‹ˆë‹¤. ìœ„ì˜ ì…ë ¥ê°’ì—ì„œ ![h w](https://latex.codecogs.com/svg.image?h\times&space;w)ëŠ” ì´ë¯¸ì§€ì˜ í¬ê¸°, ![k](https://latex.codecogs.com/svg.image?k)ëŠ” ì»¤ë„ ì‚¬ì´ì¦ˆ, ![t](https://latex.codecogs.com/svg.image?t)ëŠ” expansion factor, ![d'](https://latex.codecogs.com/svg.image?d')ì™€ ![d''](https://latex.codecogs.com/svg.image?d'')ëŠ” ê°ê° ì…ë ¥ì±„ë„ì˜ ìˆ˜ì™€ ì¶œë ¥ì±„ë„ì˜ ìˆ˜ ì…ë‹ˆë‹¤. ì´ ê°’ë“¤ì„ ì‚¬ìš©í•´ì„œ multi-addì˜ ê°¯ìˆ˜ë¥¼ êµ¬í•˜ë©´ ì•„ë˜ì™€ ê°™ìŠµë‹ˆë‹¤.
 
 ![complexity for bottlencck residual block](https://latex.codecogs.com/svg.image?h&space;\times&space;w&space;\times&space;t&space;\times&space;d'&space;\times&space;d'&space;&plus;&space;h&space;\times&space;w&space;\times&space;t&space;\times&space;d'&space;\times&space;k&space;\times&space;k&space;&plus;h&space;\times&space;w&space;\times&space;t&space;\times&space;d'&space;\times&space;d''&space;=&space;h&space;\times&space;w&space;\times&space;t&space;\times&space;d'&space;\times&space;(d'&space;&plus;&space;k^2&space;&plus;&space;d''))
 
-ÀÌ ¼ıÀÚ´Â depthwise separable convolution(ÀÌ ¸µÅ©¿¡¼­ ¼³¸íµÈ)ÀÇ ¿¬»ê·®º¸´Ù ³ô½À´Ï´Ù. ÀÌ´Â Ãß°¡ÀûÀ¸·Î µé¾î°£ ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution layer ¶§¹®ÀÔ´Ï´Ù. ÇÏÁö¸¸, ÀÔ·Â°ú Ãâ·ÂÀÇ Â÷¿øÀÌ depthwise convolution layer º¸´Ù ÀÛ±â ¶§¹®¿¡, bottleneck residual blockÀÇ ÀüÃ¼ÀûÀÎ ¿¬»ê·®Àº ÀÛ¾ÆÁı´Ï´Ù.
+ì´ ìˆ«ìëŠ” depthwise separable convolution(ì´ ë§í¬ì—ì„œ ì„¤ëª…ëœ)ì˜ ì—°ì‚°ëŸ‰ë³´ë‹¤ ë†’ìŠµë‹ˆë‹¤. ì´ëŠ” ì¶”ê°€ì ìœ¼ë¡œ ë“¤ì–´ê°„ ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution layer ë•Œë¬¸ì…ë‹ˆë‹¤. í•˜ì§€ë§Œ, ì…ë ¥ê³¼ ì¶œë ¥ì˜ ì°¨ì›ì´ depthwise convolution layer ë³´ë‹¤ ì‘ê¸° ë•Œë¬¸ì—, bottleneck residual blockì˜ ì „ì²´ì ì¸ ì—°ì‚°ëŸ‰ì€ ì‘ì•„ì§‘ë‹ˆë‹¤.
 
 ![memory for mobilenet v1 and mobilenet v2](../../V2/memory.png)
 
-À§ÀÇ Ç¥¿¡¼­ È®ÀÎ ÇÒ¼ö ÀÖ½À´Ï´Ù. ¿©±â¼­ Ç¥ÇöµÈ ¼ıÀÚµéÀº, channelÀÇ ¼ıÀÚ/memoryÀÇ ·®À» Àû¾ú½À´Ï´Ù. 16bit float¸¦ »ç¿ëÇÑ´Ù°í °¡Á¤ÇßÀ» ¶§ÀÇ memory »ç¿ë·®ÀÔ´Ï´Ù. ¿©±â¼­ MobileNetV2°¡ °¡Á¤ ÀûÀº ¸Å¸ğ¸®¸¦ »ç¿ëÇÕ´Ï´Ù. ShuffleNetÀÇ Å©±â´Â 2x, g=3¸¦ »ç¿ëÇß´Âµ¥, ÀÌ´Â MobileNetV1°ú MobileNetV2¿ÍÀÇ ¼º´ÉÀ» ¸ÂÃß±â À§ÇÔÀÔ´Ï´Ù.
+ìœ„ì˜ í‘œì—ì„œ í™•ì¸ í• ìˆ˜ ìˆìŠµë‹ˆë‹¤. ì—¬ê¸°ì„œ í‘œí˜„ëœ ìˆ«ìë“¤ì€, channelì˜ ìˆ«ì/memoryì˜ ëŸ‰ì„ ì ì—ˆìŠµë‹ˆë‹¤. 16bit floatë¥¼ ì‚¬ìš©í•œë‹¤ê³  ê°€ì •í–ˆì„ ë•Œì˜ memory ì‚¬ìš©ëŸ‰ì…ë‹ˆë‹¤. ì—¬ê¸°ì„œ MobileNetV2ê°€ ê°€ì • ì ì€ ë§¤ëª¨ë¦¬ë¥¼ ì‚¬ìš©í•©ë‹ˆë‹¤. ShuffleNetì˜ í¬ê¸°ëŠ” 2x, g=3ë¥¼ ì‚¬ìš©í–ˆëŠ”ë°, ì´ëŠ” MobileNetV1ê³¼ MobileNetV2ì™€ì˜ ì„±ëŠ¥ì„ ë§ì¶”ê¸° ìœ„í•¨ì…ë‹ˆë‹¤.
 
 # Model Architecture
 
-*Building block¿¡ °üÇÑ ÀÚ¼¼ÇÑ ¼³¸íÀº À§¿¡ ÀûÇôÁ® ÀÖ½À´Ï´Ù*
+*Building blockì— ê´€í•œ ìì„¸í•œ ì„¤ëª…ì€ ìœ„ì— ì í˜€ì ¸ ìˆìŠµë‹ˆë‹¤*
 *Detailed information about the building block is describe above.*
 
-MobileNetV2ÀÇ ±¸Á¶´Â °¡º»ÀûÀ¸·Î 32°³ÀÇ ÇÊÅÍ¸¦ °¡Áø Fully convolution layer·Î ½ÃÀÛÇÕ´Ï´Ù. ÀÌÈÄ·Î 19°³ÀÇ residual bottleneck layer¸¦ °¡Áö°í ÀÖ½À´Ï´Ù. ¾Æ·¡¿¡ Ç¥¸¦ È®ÀÎÇÏ¸é MobileNetV2ÀÇ ±¸Á¶¸¦ È®ÀÎÇÒ ¼ö ÀÖ½À´Ï´Ù.
+MobileNetV2ì˜ êµ¬ì¡°ëŠ” ê°€ë³¸ì ìœ¼ë¡œ 32ê°œì˜ í•„í„°ë¥¼ ê°€ì§„ Fully convolution layerë¡œ ì‹œì‘í•©ë‹ˆë‹¤. ì´í›„ë¡œ 19ê°œì˜ residual bottleneck layerë¥¼ ê°€ì§€ê³  ìˆìŠµë‹ˆë‹¤. ì•„ë˜ì— í‘œë¥¼ í™•ì¸í•˜ë©´ MobileNetV2ì˜ êµ¬ì¡°ë¥¼ í™•ì¸í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 
 ![Structure of MobileNet Version 2](../../V2/mobileNetV2Structure.png)
 
-ÀÌ Ç¥¿¡¼­ c´Â Ãâ·Â Ã¤³ÎÀÇ °³¼ö, nÀº building blockÀÇ ¹İº¹ È½¼ö, s ´Â °¡Àå Ã¹¹øÂ° ·¹ÀÌ¾îÀÇ stride Å©±â(´Ù¸¥ ·¹ÀÌ¾îÀÇ stride´Â 1ÀÔ´Ï´Ù.) t´Â expansion factor ÀÔ´Ï´Ù.
+ì´ í‘œì—ì„œ cëŠ” ì¶œë ¥ ì±„ë„ì˜ ê°œìˆ˜, nì€ building blockì˜ ë°˜ë³µ íšŸìˆ˜, s ëŠ” ê°€ì¥ ì²«ë²ˆì§¸ ë ˆì´ì–´ì˜ stride í¬ê¸°(ë‹¤ë¥¸ ë ˆì´ì–´ì˜ strideëŠ” 1ì…ë‹ˆë‹¤.) tëŠ” expansion factor ì…ë‹ˆë‹¤.
 
-Àú³ª´Â non-Linearlity·Î ReLU6¸¦ °ñ¶ú½À´Ï´Ù. ReLU6´Â °ªÀÌ 0º¸´Ù ÀÛÀ»¶§ 0À», 0°ú 6 »çÀÌ ÀÏ ¶§´Â ÀÔ·Â°ª ±×´ë·Î¸¦ Ãâ·ÂÇÏ°í, x°¡ 6º¸´Ù Å¬¶§´Â 6À» Ãâ·ÂÇÕ´Ï´Ù.
+ì €ë‚˜ëŠ” non-Linearlityë¡œ ReLU6ë¥¼ ê³¨ëìŠµë‹ˆë‹¤. ReLU6ëŠ” ê°’ì´ 0ë³´ë‹¤ ì‘ì„ë•Œ 0ì„, 0ê³¼ 6 ì‚¬ì´ ì¼ ë•ŒëŠ” ì…ë ¥ê°’ ê·¸ëŒ€ë¡œë¥¼ ì¶œë ¥í•˜ê³ , xê°€ 6ë³´ë‹¤ í´ë•ŒëŠ” 6ì„ ì¶œë ¥í•©ë‹ˆë‹¤.
 
 # Implementation Notes
 
 ## Memory efficient inference
 
-´ëºÎºĞÀÇ machine learning platform¿¡¼­ ÀÎ°ø½Å°æ¸Á ±¸ÇöÀº directed acyclic compute hypergraph G¸¦ ¸¸µå´Â °ÍÀÔ´Ï´Ù. Graph G¿¡¼­ edge´Â operationÀ» ÀÇ¹ÌÇÏ°í node´Â Áß°£¿¬»êÀÇ tensor¸¦ ÀÇ¹ÌÇÕ´Ï´Ù. ÀÌ ±×·¡ÇÁ¸¦ ÅëÇØ¼­ memory »ç¿ë·®À» ¾Æ·¡¿Í °°ÀÌ °è»ê ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+ëŒ€ë¶€ë¶„ì˜ machine learning platformì—ì„œ ì¸ê³µì‹ ê²½ë§ êµ¬í˜„ì€ directed acyclic compute hypergraph Gë¥¼ ë§Œë“œëŠ” ê²ƒì…ë‹ˆë‹¤. Graph Gì—ì„œ edgeëŠ” operationì„ ì˜ë¯¸í•˜ê³  nodeëŠ” ì¤‘ê°„ì—°ì‚°ì˜ tensorë¥¼ ì˜ë¯¸í•©ë‹ˆë‹¤. ì´ ê·¸ë˜í”„ë¥¼ í†µí•´ì„œ memory ì‚¬ìš©ëŸ‰ì„ ì•„ë˜ì™€ ê°™ì´ ê³„ì‚° í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 
 ![Computational cost of neural network graph](https://latex.codecogs.com/svg.image?M(G)&space;=&space;\min_{\pi&space;\in&space;\Sigma(G)}&space;\max_{i&space;\in&space;1&space;...&space;n}&space;\left&space;[&space;\sum_{A\in&space;R(i,\pi,&space;G)}|A|&space;\right&space;]&space;&plus;&space;size(\pi_i)&space;)
 
-¿©±â¼­ ![intermediate tensors](https://latex.codecogs.com/svg.image?R(i,\pi,G)) ¿¬»ê »çÀÌ¿¡ ÀÖ´Â tensorÀÌ°í ÀÌ´Â ¿¬»ê ![nodes](https://latex.codecogs.com/svg.image?\pi_i...\pi_n)ÀÎ node·Î ¿¬°áÀÌ µÇ¾î ÀÖ½À´Ï´Ù. TensorÀÇ Å©±â´Â ![size of tensor](https://latex.codecogs.com/svg.image?|A|)ÀÌ°í ¿¬»êÀ» À§ÇÑ KernelÀÇ Å©±â´Â ![size of storage](https://latex.codecogs.com/svg.image?size(\pi_i))ÀÔ´Ï´Ù. 
+ì—¬ê¸°ì„œ ![intermediate tensors](https://latex.codecogs.com/svg.image?R(i,\pi,G)) ì—°ì‚° ì‚¬ì´ì— ìˆëŠ” tensorì´ê³  ì´ëŠ” ì—°ì‚° ![nodes](https://latex.codecogs.com/svg.image?\pi_i...\pi_n)ì¸ nodeë¡œ ì—°ê²°ì´ ë˜ì–´ ìˆìŠµë‹ˆë‹¤. Tensorì˜ í¬ê¸°ëŠ” ![size of tensor](https://latex.codecogs.com/svg.image?|A|)ì´ê³  ì—°ì‚°ì„ ìœ„í•œ Kernelì˜ í¬ê¸°ëŠ” ![size of storage](https://latex.codecogs.com/svg.image?size(\pi_i))ì…ë‹ˆë‹¤. 
 
-MobileNetV2¿¡¼­ Residual Connection(identity Skip Connection)À» Á¦¿ÜÇÑ ´Ù¸¥ ¿¬°á ±¸Á¶´Â ¾øÀ½À¸·Î, ÀÌ ÀÎ°ø½Å°æ¸ÁÀ» ±¸¼ºÇÏ´Âµ¥ ÇÊ¿äÇÑ memoryÀÇ Å©±â´Â ÀÔ·Â°ªÀÇ Å©±â, Ãâ·Â°ªÀÇ Å©±â¿Í ¿¬»êÀ» À§ÇÑ kernel tensorÀÇ Å©±â¸¦ ´õÇÑ °ªÀÔ´Ï´Ù. ÀÌ´Â ¾Æ·¡ÀÇ ¼ö½Ä¿¡¼­ Àß Ç¥ÇöµÇ¾î ÀÖ½À´Ï´Ù.
+MobileNetV2ì—ì„œ Residual Connection(identity Skip Connection)ì„ ì œì™¸í•œ ë‹¤ë¥¸ ì—°ê²° êµ¬ì¡°ëŠ” ì—†ìŒìœ¼ë¡œ, ì´ ì¸ê³µì‹ ê²½ë§ì„ êµ¬ì„±í•˜ëŠ”ë° í•„ìš”í•œ memoryì˜ í¬ê¸°ëŠ” ì…ë ¥ê°’ì˜ í¬ê¸°, ì¶œë ¥ê°’ì˜ í¬ê¸°ì™€ ì—°ì‚°ì„ ìœ„í•œ kernel tensorì˜ í¬ê¸°ë¥¼ ë”í•œ ê°’ì…ë‹ˆë‹¤. ì´ëŠ” ì•„ë˜ì˜ ìˆ˜ì‹ì—ì„œ ì˜ í‘œí˜„ë˜ì–´ ìˆìŠµë‹ˆë‹¤.
 
 ![memory usage for MobileNetV2](https://latex.codecogs.com/svg.image?M(G)=%5Cmax_%7Bop%5Cin%20G%7D%5Cleft%5B%20%5Csum_%7BA%5Cin%20op%7D%7CA%7C%20&plus;%20%5Csum_%7BB%5Cin%20op%7D%7CB%7C%20&plus;%20%7Cop%7C%20%5Cright%5D)
 
@@ -105,22 +105,22 @@ MobileNetV2¿¡¼­ Residual Connection(identity Skip Connection)À» Á¦¿ÜÇÑ ´Ù¸¥ ¿¬°á
 
 ![Inverted Residual Block](../../V2/invertedResidualBlock.png)
 
-MobileNetV2ÀÇ ±¸Á¶´Â À§ÀÇ ÀÌ¹ÌÁö¿Íµµ °°½À´Ï´Ù. À§ÀÇ ±¸Á¶ÀÇ operationÀº ´ÙÀ½°ú °°Àº ½ÄÀ¸·Î Ç¥ÇöÇÒ¼ö ÀÖ½À´Ï´Ù. ![bottleneck operator](https://latex.codecogs.com/svg.image?F(x)=&space;\left&space;[&space;A&space;\circ&space;N&space;\circ&space;B&space;\right&space;]x)
+MobileNetV2ì˜ êµ¬ì¡°ëŠ” ìœ„ì˜ ì´ë¯¸ì§€ì™€ë„ ê°™ìŠµë‹ˆë‹¤. ìœ„ì˜ êµ¬ì¡°ì˜ operationì€ ë‹¤ìŒê³¼ ê°™ì€ ì‹ìœ¼ë¡œ í‘œí˜„í• ìˆ˜ ìˆìŠµë‹ˆë‹¤. ![bottleneck operator](https://latex.codecogs.com/svg.image?F(x)=&space;\left&space;[&space;A&space;\circ&space;N&space;\circ&space;B&space;\right&space;]x)
 
-¿©±â¼­ A¿Í B´Â linear transformationÀ» NÀº non-linear per-channel transformationÀ» ÀÇ¹ÌÇÕ´Ï´Ù. ![inner tensor](https://latex.codecogs.com/svg.iamage?N=\mathrm{ReLU6}\circ\mathrm{dwise}\circ\mathrm{ReLU6}). ÀÌ »óÈ²¿¡¼­ ![network](https://latex.codecogs.com/svg.iamage?F(x)) ¿¬»êÀ» ÇÏ´Â µ¥ ÇÊ¿äÇÑ memoryÀÇ ·®Àº ÃÖ¼Ò ![maxium memory](https://latex.codecogs.com/svg.image?|s^2k|&plus;|s'^2k'|&plus;O(\max(s^2,s'^2)))ÀÔ´Ï´Ù. ÀÌ ¼ö½Ä¿¡¼­ s´Â ÀÔ·Â tensorÀÇ ÇÑ º¯À» s'´Â Ãâ·Â tensorÀÇ ÇÑº¯À». k´Â ÀÔ·Â channelÀÇ Å©±â¸¦ k'Àº Ãâ·Â tensorÀÇ Å©±â¸¦ ÀÇ¹ÌÇÕ´Ï´Ù.
+ì—¬ê¸°ì„œ Aì™€ BëŠ” linear transformationì„ Nì€ non-linear per-channel transformationì„ ì˜ë¯¸í•©ë‹ˆë‹¤. ![inner tensor](https://latex.codecogs.com/svg.iamage?N=\mathrm{ReLU6}\circ\mathrm{dwise}\circ\mathrm{ReLU6}). ì´ ìƒí™©ì—ì„œ ![network](https://latex.codecogs.com/svg.iamage?F(x)) ì—°ì‚°ì„ í•˜ëŠ” ë° í•„ìš”í•œ memoryì˜ ëŸ‰ì€ ìµœì†Œ ![maxium memory](https://latex.codecogs.com/svg.image?|s^2k|&plus;|s'^2k'|&plus;O(\max(s^2,s'^2)))ì…ë‹ˆë‹¤. ì´ ìˆ˜ì‹ì—ì„œ sëŠ” ì…ë ¥ tensorì˜ í•œ ë³€ì„ s'ëŠ” ì¶œë ¥ tensorì˜ í•œë³€ì„. këŠ” ì…ë ¥ channelì˜ í¬ê¸°ë¥¼ k'ì€ ì¶œë ¥ tensorì˜ í¬ê¸°ë¥¼ ì˜ë¯¸í•©ë‹ˆë‹¤.
 
-À§ÀÇ ½ÄÀ¸·Î ºÎÅÍ, inner tensor ![I](https://latex.codecogs.com/svg.image?I)´Â t°³ÀÇ n/tÅ©±âÀÇ tensorµéÀ» ÇÕÄ£°ÍÀ» Ç¥ÇöµË´Ï´Ù. ÀÌ´Â ¾Æ·¡¿Í °°Àº ¼ö½ÄÀ¸·Î Ç¥ÇöÇÒ¼ö ÀÖ½À´Ï´Ù.
+ìœ„ì˜ ì‹ìœ¼ë¡œ ë¶€í„°, inner tensor ![I](https://latex.codecogs.com/svg.image?I)ëŠ” tê°œì˜ n/tí¬ê¸°ì˜ tensorë“¤ì„ í•©ì¹œê²ƒì„ í‘œí˜„ë©ë‹ˆë‹¤. ì´ëŠ” ì•„ë˜ì™€ ê°™ì€ ìˆ˜ì‹ìœ¼ë¡œ í‘œí˜„í• ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 
 ![memory saving](https://latex.codecogs.com/svg.image?F(x)=\sum_{i=1}^{t}(A_i\circ&space;N\circ&space;B_i)(x))
 
-ÀÌ ¼ö½ÄÀ» ÀÌ¿ëÇÏ¸é, n=t ÀÏ¶§, ÇÑ¹ø¿¡ ÇÏ³ªÀÇ channelÀ» ¿¬»êÇÏ´Â °ÍÀ» ÀÇ¹ÌÇÕ´Ï´Ù. ÀÌ¶§ memory¿¡ ÇÏ³ªÀÇ channel¸¸ ³Ö¾îµµ °¡´ÉÇÔÀ¸·Î, memory¸¦ ¸¹ÀÌ Àı¾àÇÒ¼ö ÀÖ½À´Ï´Ù.
+ì´ ìˆ˜ì‹ì„ ì´ìš©í•˜ë©´, n=t ì¼ë•Œ, í•œë²ˆì— í•˜ë‚˜ì˜ channelì„ ì—°ì‚°í•˜ëŠ” ê²ƒì„ ì˜ë¯¸í•©ë‹ˆë‹¤. ì´ë•Œ memoryì— í•˜ë‚˜ì˜ channelë§Œ ë„£ì–´ë„ ê°€ëŠ¥í•¨ìœ¼ë¡œ, memoryë¥¼ ë§ì´ ì ˆì•½í• ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 
-ÇÏÁö¸¸ ÀÌ ¹æ¹ıÀ» »ç¿ëÇØ¼­ memory¸¦ Àı¾àÀ» °¡´ÉÇÏ°Ô ÇØÁÖ´Â µÎ°¡Áö Á¦¾à»çÇ×ÀÌ ÀÖ½À´Ï´Ù.
+í•˜ì§€ë§Œ ì´ ë°©ë²•ì„ ì‚¬ìš©í•´ì„œ memoryë¥¼ ì ˆì•½ì„ ê°€ëŠ¥í•˜ê²Œ í•´ì£¼ëŠ” ë‘ê°€ì§€ ì œì•½ì‚¬í•­ì´ ìˆìŠµë‹ˆë‹¤.
 
-1. inner transformation(non-linearlity¿Í depthwise ¿¬»êÀ» ¸ğµÎ Æ÷ÇÔÇÑ)Àº per-channel¿¬»êÀÔ´Ï´Ù.
-2. ÀÌÈÄÀÇ non-per-channel º¯È¯Àº Ãâ·Â channelÀÇ ¼ö°¡ ÀÔ·Â channelÀÇ ¼öº¸´Ù ÈÎ¾À ÀÛ±â ¶§¹®ÀÔ´Ï´Ù.
+1. inner transformation(non-linearlityì™€ depthwise ì—°ì‚°ì„ ëª¨ë‘ í¬í•¨í•œ)ì€ per-channelì—°ì‚°ì…ë‹ˆë‹¤.
+2. ì´í›„ì˜ non-per-channel ë³€í™˜ì€ ì¶œë ¥ channelì˜ ìˆ˜ê°€ ì…ë ¥ channelì˜ ìˆ˜ë³´ë‹¤ í›¨ì”¬ ì‘ê¸° ë•Œë¬¸ì…ë‹ˆë‹¤.
 
-TÀÇ Å©±â¸¦ º¯È­½ÃÅ°´Â °Í¿¡ ÀüÃ¼ÀûÀÎ ¿¬»ê·®Àº º¯È­ÇÏÁö ¾Ê½À´Ï´Ù. ÇÏÁö¸¸ ¿¬»êÀ» ÇÏ´Âµ¥ °É¸®´Â ½Ã°£Àº tÀÇ Å©±â¿¡ µû¶ó¼­ º¯È­ÇÕ´Ï´Ù. ±× ÀÌÀ¯´Â t°¡ ³Ê¹« ÀÛÀ¸¸é cache miss°¡ ¹ß»ıÇÏ¿© ¿¬»ê ½Ã°£ÀÌ Áõ°¡ÇÏ±â ¶§¹®ÀÔ´Ï´Ù. ±×·³À¸·Î t°¡ 2¿Í 5 »çÀÌÀÇ °ªÀ» »ç¿ëÇÏ´Â °ÍÀÌ memory »ç¿ë·®°ú È¿À²ÀûÀÎ ¿¬»ê½Ã°£ÀÇ ÀıÃæ¾ÈÀÌ µË´Ï´Ù.
+Tì˜ í¬ê¸°ë¥¼ ë³€í™”ì‹œí‚¤ëŠ” ê²ƒì— ì „ì²´ì ì¸ ì—°ì‚°ëŸ‰ì€ ë³€í™”í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤. í•˜ì§€ë§Œ ì—°ì‚°ì„ í•˜ëŠ”ë° ê±¸ë¦¬ëŠ” ì‹œê°„ì€ tì˜ í¬ê¸°ì— ë”°ë¼ì„œ ë³€í™”í•©ë‹ˆë‹¤. ê·¸ ì´ìœ ëŠ” tê°€ ë„ˆë¬´ ì‘ìœ¼ë©´ cache missê°€ ë°œìƒí•˜ì—¬ ì—°ì‚° ì‹œê°„ì´ ì¦ê°€í•˜ê¸° ë•Œë¬¸ì…ë‹ˆë‹¤. ê·¸ëŸ¼ìœ¼ë¡œ tê°€ 2ì™€ 5 ì‚¬ì´ì˜ ê°’ì„ ì‚¬ìš©í•˜ëŠ” ê²ƒì´ memory ì‚¬ìš©ëŸ‰ê³¼ íš¨ìœ¨ì ì¸ ì—°ì‚°ì‹œê°„ì˜ ì ˆì¶©ì•ˆì´ ë©ë‹ˆë‹¤.
  
 # Experiments
 
@@ -128,47 +128,47 @@ TÀÇ Å©±â¸¦ º¯È­½ÃÅ°´Â °Í¿¡ ÀüÃ¼ÀûÀÎ ¿¬»ê·®Àº º¯È­ÇÏÁö ¾Ê½À´Ï´Ù. ÇÏÁö¸¸ ¿¬»êÀ» ÇÏ
 
 ### Training setup
 
-ÀÌ ÀÎ°ø½Å°æ¸Á modelÀº Tensorflow¸¦ È°¿ëÇØ¼­ ÈÆ·ÃµÇ¾ú½À´Ï´Ù. Optimizer´Â RMSPropOptimizer¸¦ »ç¿ëÇß½À´Ï´Ù. ÀÌ¶§ decay¿Í momentumÀº 0.9¸¦ »ç¿ëÇß½À´Ï´Ù. Batch normalizationÀº ¸ğµç layerÀÇ µÚ¿¡ »ç¿ëµÇ¾úÀ¸¸ç, weight decay´Â 0.00004°¡ »ç¿ëµÇ¾ú½À´Ï´Ù. Learning rate´Â ÃÖÃÊ¿¡ 0.045°¡ »ç¿ëµÇ¾ú°í, ÇÏ³ªÀÇ epoch °¡ Áö³ª°¥¶§ ¸¶´Ù 0.98À» °öÇØÁÖ¾ú½À¤²´Ï´Ù. ÈÆ·Ã¿¡´Â 16°³ÀÇ GPU¸¦ »ç¿ëÇß°í, batchÀÇ Å©±â´Â 96°³¿´½À´Ï´Ù.
+ì´ ì¸ê³µì‹ ê²½ë§ modelì€ Tensorflowë¥¼ í™œìš©í•´ì„œ í›ˆë ¨ë˜ì—ˆìŠµë‹ˆë‹¤. OptimizerëŠ” RMSPropOptimizerë¥¼ ì‚¬ìš©í–ˆìŠµë‹ˆë‹¤. ì´ë•Œ decayì™€ momentumì€ 0.9ë¥¼ ì‚¬ìš©í–ˆìŠµë‹ˆë‹¤. Batch normalizationì€ ëª¨ë“  layerì˜ ë’¤ì— ì‚¬ìš©ë˜ì—ˆìœ¼ë©°, weight decayëŠ” 0.00004ê°€ ì‚¬ìš©ë˜ì—ˆìŠµë‹ˆë‹¤. Learning rateëŠ” ìµœì´ˆì— 0.045ê°€ ì‚¬ìš©ë˜ì—ˆê³ , í•˜ë‚˜ì˜ epoch ê°€ ì§€ë‚˜ê°ˆë•Œ ë§ˆë‹¤ 0.98ì„ ê³±í•´ì£¼ì—ˆìŠµã…‚ë‹ˆë‹¤. í›ˆë ¨ì—ëŠ” 16ê°œì˜ GPUë¥¼ ì‚¬ìš©í–ˆê³ , batchì˜ í¬ê¸°ëŠ” 96ê°œì˜€ìŠµë‹ˆë‹¤.
 
 ### Result
 
 ![Preformance Curve for full model](../../V2/performanceCurve.png)
 
-À§ÀÇ ±×·¡ÇÁ´Â MobileNetV2, MobileNetV1, ShuffleNet, NasNetÀ» »ç¿ëÇßÀ» ¶§ ¾òÀ» ¼ö ÀÖ´Â ´Ù¾çÇÑ °á°ú¸¦ ³ªÅ¸³½ °ÍÀÔ´Ï´Ù. ÀÌ¶§ resolution multiplier·Î 0.35, 0.5, 0.75, 1¸¦ »ç¿ëÇÑ °ÍÀÔ´Ï´Ù. MobileNetV2¿¡¼­´Â 1.4¸¦ Ãß°¡ÀûÀ¸·Î »ç¿ëÇØ¼­ ´õ ÁÁÀº °á°ú¸¦ ¾ò¾ú½À´Ï´Ù.
+ìœ„ì˜ ê·¸ë˜í”„ëŠ” MobileNetV2, MobileNetV1, ShuffleNet, NasNetì„ ì‚¬ìš©í–ˆì„ ë•Œ ì–»ì„ ìˆ˜ ìˆëŠ” ë‹¤ì–‘í•œ ê²°ê³¼ë¥¼ ë‚˜íƒ€ë‚¸ ê²ƒì…ë‹ˆë‹¤. ì´ë•Œ resolution multiplierë¡œ 0.35, 0.5, 0.75, 1ë¥¼ ì‚¬ìš©í•œ ê²ƒì…ë‹ˆë‹¤. MobileNetV2ì—ì„œëŠ” 1.4ë¥¼ ì¶”ê°€ì ìœ¼ë¡œ ì‚¬ìš©í•´ì„œ ë” ì¢‹ì€ ê²°ê³¼ë¥¼ ì–»ì—ˆìŠµë‹ˆë‹¤.
 
 ![Performance Table for selected models](../../V2/performanceTable.png)
 
-À§ÀÇ Ç¥´Â ±×·¡ÇÁ¿¡¼­ ¼±ÅÃµÈ ¸ğµ¨À» ³ªÅ¸³½ °ÍÀÔ´Ï´Ù. ¿©±â¼­ ¸ğµ¨¿¡ »ç¿ëµÈ parameterÀÇ °¹¼ö¿Í multi-add ¿¬»ê·®À» ¾Ë¼ö ÀÖ½À´Ï´Ù. ¸¶Áö¸· ¼ıÀÚ´Â Google Pixel 1ÀÌ¶ó´Â ½º¸¶Æ® Æù¿¡¼­ Tensorflow Lite¸¦ »ç¿ëÇßÀ» ¶§ÀÇ ¿¬»ê ½Ã°£À» Ç¥ÇöÇÑ °ÍÀÔ´Ï´Ù. ÀÌ¶§ ShuffleNetÀÇ ½Ã°£Àº Ç¥ÇöÀÌ µÇÁö ¾Ê¾Ò´Âµ¥, ±×ÀÌÀ¯´Â shuffling°ú group convolution ¾Ë°í¸®ÁòÀÌ Áö¿øµÇÁö ¾Ê¾Ò±â ¶§¹®ÀÔ´Ï´Ù.
+ìœ„ì˜ í‘œëŠ” ê·¸ë˜í”„ì—ì„œ ì„ íƒëœ ëª¨ë¸ì„ ë‚˜íƒ€ë‚¸ ê²ƒì…ë‹ˆë‹¤. ì—¬ê¸°ì„œ ëª¨ë¸ì— ì‚¬ìš©ëœ parameterì˜ ê°¯ìˆ˜ì™€ multi-add ì—°ì‚°ëŸ‰ì„ ì•Œìˆ˜ ìˆìŠµë‹ˆë‹¤. ë§ˆì§€ë§‰ ìˆ«ìëŠ” Google Pixel 1ì´ë¼ëŠ” ìŠ¤ë§ˆíŠ¸ í°ì—ì„œ Tensorflow Liteë¥¼ ì‚¬ìš©í–ˆì„ ë•Œì˜ ì—°ì‚° ì‹œê°„ì„ í‘œí˜„í•œ ê²ƒì…ë‹ˆë‹¤. ì´ë•Œ ShuffleNetì˜ ì‹œê°„ì€ í‘œí˜„ì´ ë˜ì§€ ì•Šì•˜ëŠ”ë°, ê·¸ì´ìœ ëŠ” shufflingê³¼ group convolution ì•Œê³ ë¦¬ì¦˜ì´ ì§€ì›ë˜ì§€ ì•Šì•˜ê¸° ë•Œë¬¸ì…ë‹ˆë‹¤.
 
 
-À§ÀÇ Ç¥°¡ ÀÇ¹ÌÇÏ´Â ¹Ù´Â, MobileNetV2°¡ MobileNetV1º¸´Ù Á¤È®µµµµ ³ô°í ¿¬»ê½Ã°£µµ ºü¸¥ °ÍÀ» È®ÀÎÇÒ¼ö ÀÖ½À´Ï´Ù. ¶ÇÇÑ NasNet-A¿Í MobileNetV2(1.4)¸¦ ºñ±³ÇÏ¸é, MobileNetV2(1.4)°¡ ´õ ³ôÀº Á¤È®µµ¸¦ °¡Áö°í ÀÖÀ½°ú µ¿½Ã ´ë·« 30%Á¤µµ ºü¸¥ °ÍÀ» È®ÀÎ ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+ìœ„ì˜ í‘œê°€ ì˜ë¯¸í•˜ëŠ” ë°”ëŠ”, MobileNetV2ê°€ MobileNetV1ë³´ë‹¤ ì •í™•ë„ë„ ë†’ê³  ì—°ì‚°ì‹œê°„ë„ ë¹ ë¥¸ ê²ƒì„ í™•ì¸í• ìˆ˜ ìˆìŠµë‹ˆë‹¤. ë˜í•œ NasNet-Aì™€ MobileNetV2(1.4)ë¥¼ ë¹„êµí•˜ë©´, MobileNetV2(1.4)ê°€ ë” ë†’ì€ ì •í™•ë„ë¥¼ ê°€ì§€ê³  ìˆìŒê³¼ ë™ì‹œ ëŒ€ëµ 30%ì •ë„ ë¹ ë¥¸ ê²ƒì„ í™•ì¸ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 
 
 ## Object Detection
 
 ### SSD Lite
 
-ÀÌ ³í¹®¿¡¼­ mobile¿¡ ´õ ÃÖÀûÈ­µÈ SSDÀÇ »õ·Î¿î ¹öÀüÀ» ¼Ò°³ÇÕ´Ï´Ù. SSD Lite¶ó°íµµ ºÒ¸®¿ì´Â ÀÌ ¸ğµ¨Àº SSDÀÇ ¿¹Ãø ·¹ÀÌ¾îÀÇ ÀÏ¹İÀûÀÎ convolution ¿¬»êÀ» ¸ğµÎ separable convolution(depthwise ÈÄ¿¡ pointwise)¿¬»êÀ¸·Î ¹Ù²Û °ÍÀÔ´Ï´Ù.
+ì´ ë…¼ë¬¸ì—ì„œ mobileì— ë” ìµœì í™”ëœ SSDì˜ ìƒˆë¡œìš´ ë²„ì „ì„ ì†Œê°œí•©ë‹ˆë‹¤. SSD Liteë¼ê³ ë„ ë¶ˆë¦¬ìš°ëŠ” ì´ ëª¨ë¸ì€ SSDì˜ ì˜ˆì¸¡ ë ˆì´ì–´ì˜ ì¼ë°˜ì ì¸ convolution ì—°ì‚°ì„ ëª¨ë‘ separable convolution(depthwise í›„ì— pointwise)ì—°ì‚°ìœ¼ë¡œ ë°”ê¾¼ ê²ƒì…ë‹ˆë‹¤.
 
 
 ![SSD and SSDLite configuration](../../V2/SSD.png)
 
-MobileNetV2¸¦ ±â¹İÀ¸·Î 80°³ÀÇ class¸¦ ¿¹ÃøÇÏ´Â SSD¿Í SSDLiteÀÇ Å©±â¿Í ¿¬»ê·®À» ºñ±³ÇØº¸¸é, SSDLite°¡ ´ë·« 7¹è Á¤µµ ÀûÀº parameter ¼ö¸¦ °¡Áö°í ÀÖ°í ¿¬»ê·®µµ 4¹è ÀûÀº °ÍÀ» È®ÀÎ ÇÒ ¼ö ÀÖ½À´Ï´Ù.
+MobileNetV2ë¥¼ ê¸°ë°˜ìœ¼ë¡œ 80ê°œì˜ classë¥¼ ì˜ˆì¸¡í•˜ëŠ” SSDì™€ SSDLiteì˜ í¬ê¸°ì™€ ì—°ì‚°ëŸ‰ì„ ë¹„êµí•´ë³´ë©´, SSDLiteê°€ ëŒ€ëµ 7ë°° ì •ë„ ì ì€ parameter ìˆ˜ë¥¼ ê°€ì§€ê³  ìˆê³  ì—°ì‚°ëŸ‰ë„ 4ë°° ì ì€ ê²ƒì„ í™•ì¸ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 
 
 ![result for object detection](../../V2/performanceObjectDetection.png)
 
-MobileNetV2¿Í SSDLite¸¦ µ¿½Ã¿¡ »ç¿ë ÇÏ´Â °ÍÀÌ parameter¿Í multi-addÀÇ ¼ö¸¦ ¸¹ÀÌ ÁÙÀÌ´Â °Í¿¡ ºñÇØ ÁÁÀº percisionÀ» °¡Áı´Ï´Ù. MobileNetV1°ú ºñ±³ÇÒ °æ¿ì, ºñ½ÁÇÑ Á¤È®µµ¸¦ °¡Áö°í ÀÖÁö¸¸, MobileNetV2°¡ Á¶±İ´õ ºü¸¨´Ï´Ù. ¶ÇÇÑ, YOLOv2¿Í ºñ±³ÇÒ °æ¿ì, MobileNetV2°¡ 20¹è ´õ È¿À²ÀûÀÌ°í, parameter °¡ 10¹è ÀÛ½À´Ï´Ù.
+MobileNetV2ì™€ SSDLiteë¥¼ ë™ì‹œì— ì‚¬ìš© í•˜ëŠ” ê²ƒì´ parameterì™€ multi-addì˜ ìˆ˜ë¥¼ ë§ì´ ì¤„ì´ëŠ” ê²ƒì— ë¹„í•´ ì¢‹ì€ percisionì„ ê°€ì§‘ë‹ˆë‹¤. MobileNetV1ê³¼ ë¹„êµí•  ê²½ìš°, ë¹„ìŠ·í•œ ì •í™•ë„ë¥¼ ê°€ì§€ê³  ìˆì§€ë§Œ, MobileNetV2ê°€ ì¡°ê¸ˆë” ë¹ ë¦…ë‹ˆë‹¤. ë˜í•œ, YOLOv2ì™€ ë¹„êµí•  ê²½ìš°, MobileNetV2ê°€ 20ë°° ë” íš¨ìœ¨ì ì´ê³ , parameter ê°€ 10ë°° ì‘ìŠµë‹ˆë‹¤.
 
 ## Semantic Segmentation
 
-DeepLabv3¸¦ »ç¿ëÇÏ´Â MobileNetV1°ú MobileNetV2¸¦ mobile segmentic segmentationÀÇ ÀÛ¾÷¿¡¼­ ºñ±³ÇØº¾½Ã´Ù. DeepLabv3´Â atrous convolutionÀ» »ç¿ëÇÕ´Ï´Ù. Atrous convolutionÀº °è»êµÈ feature mapÀÇ ÇØ»óµµ¸¦ Á¦¾îÇÏ´Â °­·ÂÇÑ µµ±¸ÀÔ´Ï´Ù. DeepLabv3´Â 5°³ÀÇ ¿¬»ê head¸¦ °¡Áö°í ÀÖ½À´Ï´Ù. ¿©±â¿¡´Â a) atrous spatial pyramid pooling module(three ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution with different atrous rates)¿Í b) ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution head¿Í c) Image-level features°¡ ÀÖ½À´Ï´Ù.
+DeepLabv3ë¥¼ ì‚¬ìš©í•˜ëŠ” MobileNetV1ê³¼ MobileNetV2ë¥¼ mobile segmentic segmentationì˜ ì‘ì—…ì—ì„œ ë¹„êµí•´ë´…ì‹œë‹¤. DeepLabv3ëŠ” atrous convolutionì„ ì‚¬ìš©í•©ë‹ˆë‹¤. Atrous convolutionì€ ê³„ì‚°ëœ feature mapì˜ í•´ìƒë„ë¥¼ ì œì–´í•˜ëŠ” ê°•ë ¥í•œ ë„êµ¬ì…ë‹ˆë‹¤. DeepLabv3ëŠ” 5ê°œì˜ ì—°ì‚° headë¥¼ ê°€ì§€ê³  ìˆìŠµë‹ˆë‹¤. ì—¬ê¸°ì—ëŠ” a) atrous spatial pyramid pooling module(three ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution with different atrous rates)ì™€ b) ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution headì™€ c) Image-level featuresê°€ ìˆìŠµë‹ˆë‹¤.
 
-ÀÌ ³í¹®¿¡¼­´Â 3°¡Áö ´Ù¸¥ ¼³°è¹æ¹ıÀ» ½ÇÇèÇß½À´Ï´Ù.
+ì´ ë…¼ë¬¸ì—ì„œëŠ” 3ê°€ì§€ ë‹¤ë¥¸ ì„¤ê³„ë°©ë²•ì„ ì‹¤í—˜í–ˆìŠµë‹ˆë‹¤.
 
-1. ´Ù¾çÇÑ feature extractor
-2. ºü¸¥ ¿¬»êÀ» À§ÇÑ DeepLabv3 headÀÇ °£¼ÒÈ­
-3. performance boostingÀ» À§ÇÑ ´Ù¾çÇÑ inference Àü·«
+1. ë‹¤ì–‘í•œ feature extractor
+2. ë¹ ë¥¸ ì—°ì‚°ì„ ìœ„í•œ DeepLabv3 headì˜ ê°„ì†Œí™”
+3. performance boostingì„ ìœ„í•œ ë‹¤ì–‘í•œ inference ì „ëµ
 
 ![semantic Segmentation result](../../V2/performanceSementicSegmentation.png)
 **MNetV2\*** Second last feature map is used for DeepLabv3 head.
@@ -176,12 +176,12 @@ DeepLabv3¸¦ »ç¿ëÇÏ´Â MobileNetV1°ú MobileNetV2¸¦ mobile segmentic segmentationÀÇ
 **ASPP**: Atrous Spatial Pyramid Pooling
 **MF**: Multi-scale and left-right flipped input
 
-À§ÀÇ Ç¥¸¦ ºĞ¼®ÇØ º» °á°ú:
-a. inference Àü·«À» »ç¿ëÇÒ °æ¿ì multi-add computationÀÇ ¼ö°¡ ±âÇÏ±Ş¼öÀûÀ¸·Î Áõ°¡ÇÕ´Ï´Ù. ÀÌ´Â multi-scale input°ú left-right flip¿¡µµ Æ÷ÇÔÇÏ´Â °ÍÀÔ´Ï´Ù. ¿¬»ê·®ÀÌ ¹è¼ö·Î Áõ°¡ÇÔÀ¸·Î ÀÌ´Â ±â±â¾È¿¡ Æ÷ÇÔÇÏ±â¿¡´Â ÁÁÀº Àü·«ÀÌ ¾Æ´Õ´Ï´Ù.
-b. ![output-stride = 16](https://latex.codecogs.com/svg.image?output\_stride=16)¸¦ »ç¿ëÇÏ´Â °ÍÀÌ ![output stride = 8](https://latex.codecogs.com/svg.image?output\_stride=8)¸¦ »ç¿ëÇÏ´Â °Íº¸´Ù ´õ È¿À²ÀûÀÔ´Ï´Ù.
-c. MobileNetV1À» »ç¿ëÇÏ´Â °ÍÀÌ ResNet-101¸¦ »ç¿ëÇÏ´Â °Í°ú ºñ±³ÇØ 5¿¡¼­ 6¹è ´õ È¿À²ÀûÀÔ´Ï´Ù.
-d. DeepLabv3¸¦ MobileNetV2ÀÇ ¸¶Áö¸·¿¡¼­ µÎ¹øÂ° feature map¿¡ Àû¿ëÇÏ´Â °ÍÀÌ ¸¶Áö¸· featuremap ¿¡ Àû¿ëÇÏ´Â °Íº¸´õ ´õ È¿À²ÀûÀÔ´Ï´Ù.
-e. DeepLabv3 heads´Â ¿¬»êº¹Àâµµ°¡ ³ô½À´Ï´Ù. ASPP moduleÀ» Á¦°ÅÇÏ´Â °ÍÀÌ Á¶±İÀÇ ¼º´ÉÈñ»ıÀ¸·Î multi-add ¿¬»ê ¼ö¸¦ ¸¹ÀÌ ÁÙÀÏ ¼ö ÀÖ½À´Ï´Ù.
+ìœ„ì˜ í‘œë¥¼ ë¶„ì„í•´ ë³¸ ê²°ê³¼:
+a. inference ì „ëµì„ ì‚¬ìš©í•  ê²½ìš° multi-add computationì˜ ìˆ˜ê°€ ê¸°í•˜ê¸‰ìˆ˜ì ìœ¼ë¡œ ì¦ê°€í•©ë‹ˆë‹¤. ì´ëŠ” multi-scale inputê³¼ left-right flipì—ë„ í¬í•¨í•˜ëŠ” ê²ƒì…ë‹ˆë‹¤. ì—°ì‚°ëŸ‰ì´ ë°°ìˆ˜ë¡œ ì¦ê°€í•¨ìœ¼ë¡œ ì´ëŠ” ê¸°ê¸°ì•ˆì— í¬í•¨í•˜ê¸°ì—ëŠ” ì¢‹ì€ ì „ëµì´ ì•„ë‹™ë‹ˆë‹¤.
+b. ![output-stride = 16](https://latex.codecogs.com/svg.image?output\_stride=16)ë¥¼ ì‚¬ìš©í•˜ëŠ” ê²ƒì´ ![output stride = 8](https://latex.codecogs.com/svg.image?output\_stride=8)ë¥¼ ì‚¬ìš©í•˜ëŠ” ê²ƒë³´ë‹¤ ë” íš¨ìœ¨ì ì…ë‹ˆë‹¤.
+c. MobileNetV1ì„ ì‚¬ìš©í•˜ëŠ” ê²ƒì´ ResNet-101ë¥¼ ì‚¬ìš©í•˜ëŠ” ê²ƒê³¼ ë¹„êµí•´ 5ì—ì„œ 6ë°° ë” íš¨ìœ¨ì ì…ë‹ˆë‹¤.
+d. DeepLabv3ë¥¼ MobileNetV2ì˜ ë§ˆì§€ë§‰ì—ì„œ ë‘ë²ˆì§¸ feature mapì— ì ìš©í•˜ëŠ” ê²ƒì´ ë§ˆì§€ë§‰ featuremap ì— ì ìš©í•˜ëŠ” ê²ƒë³´ë” ë” íš¨ìœ¨ì ì…ë‹ˆë‹¤.
+e. DeepLabv3 headsëŠ” ì—°ì‚°ë³µì¡ë„ê°€ ë†’ìŠµë‹ˆë‹¤. ASPP moduleì„ ì œê±°í•˜ëŠ” ê²ƒì´ ì¡°ê¸ˆì˜ ì„±ëŠ¥í¬ìƒìœ¼ë¡œ multi-add ì—°ì‚° ìˆ˜ë¥¼ ë§ì´ ì¤„ì¼ ìˆ˜ ìˆìŠµë‹ˆë‹¤.
 
 # Reference
 
