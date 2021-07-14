@@ -177,11 +177,11 @@ DeepLabv3를 사용하는 MobileNetV1과 MobileNetV2를 mobile segmentic segment
 **MF**: Multi-scale and left-right flipped input
 
 위의 표를 분석해 본 결과:
-a. inference 전략을 사용할 경우 multi-add computation의 수가 기하급수적으로 증가합니다. 이는 multi-scale input과 left-right flip에도 포함하는 것입니다. 연산량이 배수로 증가함으로 이는 기기안에 포함하기에는 좋은 전략이 아닙니다.
-b. ![output-stride = 16](https://latex.codecogs.com/svg.image?output\_stride=16)를 사용하는 것이 ![output stride = 8](https://latex.codecogs.com/svg.image?output\_stride=8)를 사용하는 것보다 더 효율적입니다.
-c. MobileNetV1을 사용하는 것이 ResNet-101를 사용하는 것과 비교해 5에서 6배 더 효율적입니다.
-d. DeepLabv3를 MobileNetV2의 마지막에서 두번째 feature map에 적용하는 것이 마지막 featuremap 에 적용하는 것보더 더 효율적입니다.
-e. DeepLabv3 heads는 연산복잡도가 높습니다. ASPP module을 제거하는 것이 조금의 성능희생으로 multi-add 연산 수를 많이 줄일 수 있습니다.
+1. inference 전략을 사용할 경우 multi-add computation의 수가 기하급수적으로 증가합니다. 이는 multi-scale input과 left-right flip에도 포함하는 것입니다. 연산량이 배수로 증가함으로 이는 기기안에 포함하기에는 좋은 전략이 아닙니다.
+2. ![output-stride = 16](https://latex.codecogs.com/svg.image?output\_stride=16)를 사용하는 것이 ![output stride = 8](https://latex.codecogs.com/svg.image?output\_stride=8)를 사용하는 것보다 더 효율적입니다.
+3. MobileNetV1을 사용하는 것이 ResNet-101를 사용하는 것과 비교해 5에서 6배 더 효율적입니다.
+4. DeepLabv3를 MobileNetV2의 마지막에서 두번째 feature map에 적용하는 것이 마지막 featuremap 에 적용하는 것보더 더 효율적입니다.
+5. DeepLabv3 heads는 연산복잡도가 높습니다. ASPP module을 제거하는 것이 조금의 성능희생으로 multi-add 연산 수를 많이 줄일 수 있습니다.
 
 # Reference
 
