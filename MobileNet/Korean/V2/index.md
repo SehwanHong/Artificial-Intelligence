@@ -20,61 +20,59 @@
 
 ## Depthwise separable convolution
 
-Depthwise Separable Convolutions are a key building block for many efficient neural network architectures. The basic idea is to replace a full convolutional operator with a factorized version that split convolution into two separate layers.
+Depthwise Separable Convolution은 효율적인 인공신경망을 만드는 데 필요한 기본 요소입니다. 이는 full convolutional operator를 분해하여 두개의 레이어로 만듭니다.
 
   1. Depthwise convolution
   2. pointwise convolution
 
-For more detail, follow [this link](../)
+자세한 내용인 [링크](../)를 확인해 주시기 바랍니다.
 
 ## Linear Bottlenecks
 
-Consider a deep neural network consisting of n layers ![L_i](https://latex.codecogs.com/svg.image?L_i) each of which has an activation tensor of dimensions ![tensor dimension](https://latex.codecogs.com/svg.image?h_i\times&space;w_i\times&space;d_i). The set of layer activations(for any layer ![L_i](https://latex.codecogs.com/svg.image?L_i)) forms a "manifold of interest" which could be embedded in low-dimensional subspaces. In other words, the information encoded in d-channel pixels of a deep convolutional layer actually lie in some manifold, which in turn is embeddable into a low-dimensional subspace.
+깊은 인공신경망에 N개의 레이어가 있다고 가정합시다. 레이어 ![L_i](https://latex.codecogs.com/svg.image?L_i)는 각각 ![tensor dimension](https://latex.codecogs.com/svg.image?h_i\times&space;w_i\times&space;d_i)의 activation tensor로 구성되었습니다. 이러한 activation layer들의 집합은 manifold of interest를 구성합니다. Manfold of interest는 low-dimensional subspace에 내장되어 있습니다. 다른 말로 하면 deep convolutional layer의 d-channel pixel들에 암호화되어 있는 정보는 실질적으로 어떠한 mainfold 안에 저장되어 있습니다. 이는 low-dimensional subspace에 내장 가능합니다.
 
-In general if a result of a layer transformation ![ReLU(Bx)](https://latex.codecogs.com/svg.image?ReLU(Bx)) has a non-zero volume ![S](https://latex.codecogs.com/svg.image?S), the points mapped to interior ![S](https://latex.codecogs.com/svg.image?S) are obtained via a linear transformation ![B](https://latex.codecogs.com/svg.image?B) of the input is limited to a linear transformation. In other words, deep networks only have the power of a linear classifier on the non-zero volume part of the output domain.
+보편적으로 layer transformation ![ReLU(Bx)](https://latex.codecogs.com/svg.image?ReLU(Bx))의 결과가 non-zero volume ![S](https://latex.codecogs.com/svg.image?S)를 가진다면, ![S](https://latex.codecogs.com/svg.image?S)안으로 투영된 point는 linear transformation ![B](https://latex.codecogs.com/svg.image?B)의 입력값을 통해서 구할수 있습니다. 이를 통해서 전체 출력값에 대응하는 입력값의 한 부분은 linear transformation으로 제한됩니다. 다른 말로 하면, 깊은 인공신경망은 출력의 non-zero volume에 대한 linear claissifier의 지수로 표현됩니다.
 
-On the other hand, when ReLU collapses the channel, it is inevitabley loses information in that channel. However, if we have lots of channels, there is a structure in the activation manifold that information might still be preserved in the other channel. The bottom image represent this example.
+다른 한편으로, ReLU가 Channel을 압축하게되면, 그 Channel의 정보는 필연적으로 소실되게 됩니다. 하지만 채널의 수가 많다면, activation manifold가 정보를 보존하고 있을 가능성이 있습니다. 아래의 이미지가 이를 설명합니다.
 
 ![ReLU transformations of low-dimensional manifold embedded in higher-dimensional spaces](../../V2/ReLUtransformation.png)
 
-In these example, the initial spiral is embedded into an n-dimensional space using random matrix ![T](https://latex.codecogs.com/svg.image?T) followed by ReLU, and then projected back to the 2d space using ![inverse of T](https://latex.codecogs.com/svg.image?T^{-1}). When ![n = 2,3](https://latex.codecogs.com/svg.image?n=2,3), there is an information loss where certain point of the manifold collaps into each other. While for ![n = 15](https://latex.codecogs.com/svg.image?n=15) to 30, the transformation is highly non-convex.
+이 예제에서, 가장 첫번째 나선은 n 차원 공간에 내장되어 있습니다. 이를 무작위 적인 행렬 ![T](https://latex.codecogs.com/svg.image?T)를 곱하고 ReLU를 사용한 다음 역행렬인 ![inverse of T](https://latex.codecogs.com/svg.image?T^{-1})를 사용해 다시 2D이미지로 변환한 것입니다. 여기서 ![n = 2,3](https://latex.codecogs.com/svg.image?n=2,3)일때 정보의 손일이 생겨 몇몇부분에는 하나의 선으로 변환 된 것을 확인할수 있습니다. 하지만 ![n = 15](https://latex.codecogs.com/svg.image?n=15)와 30일때에는 정보의 손실이 적어 입력값과 비슷한 이미지가 나옵니다.
 
-To summarize, there are two properties that are indicative of the requirement that the manifold of interest should lie in a low-dimensional subspace of the higher-dimensional activation space:
+요약하자면, manifold of interest가 higher-dimenstional activation space 안에 있는 low-dimensional subspace에 존재하기 위한 두가지 특성은 :
 
-1. If the manifold of interest remains non-zero volume after ReLU transformation, it corresponds to a linear transformation.
-2. ReLU is capable of preserving complete information about the input manifold, but only if the input manifold lies in a low-dimensional subspace of the input space.
+1. Manfold of interest가 ReLU transformation 후에 non-zero volumne에 남아있다면, 이는 Linear transformation으로 볼 수 있다.
+2. 만약 input manifold가 입력 공간 내에서 low-dimansional subspace에 존재한다면, ReLU가 input manifold에 관한 정보를 손실없이 보존할수 있습니다.
 
-Assuming the manifold of interest is low-dimensional, by inserting linear bottleneck layer into the convolutional blocks. Through experiemtn, using linear layer is crucial as it prevents non-linearities from desctorying too much information.
+Manifold of interest가 low-dimension이라면, linear bottleneck layer를 convolutional block에 삽입하여 manifold of interest를 추출할수 있다. 실험을 통해서, linear layer 를 사용하는 것이 non-linearity가 정보를 소실 시키는 것을 방지 할수 있다.
 
 ## Inverted residuals
 
-Inspired by the intuition that the bottlenecks actually contain all the necessary information, while an expansion layer acts merely as an implementation detail that accompanies a non-linear trasnformation of the tensor, uses shortcuts directly between the bottlenecks.
+Bottleneck 구조가 모든 정보를 보존한다는 사실로부터 착안하여 skip connection을 bottleneck 구조 사이에 만들었습니다. 여기서 expansion layer는 non-linear transpormation을 적용하기 위한 implementation deatil입니다.
 
 Residual block | Inverted Residual Block
 --------------|---------------
-![Residual Block](./residualBlock.png) | ![Inverted Residual Block](./invertedResidualBlock.png)
+![Residual Block](../../V2/residualBlock.png) | ![Inverted Residual Block](../../V2/invertedResidualBlock.png)
 
-Residual block is normally represented as the left image. It is represented with wide -> narrow -> wide, creating a bottleneck structure. However, in this paper, author presents inverted residual where structure is narrow -> wide -> narrow. The diagonally hatched layer do not use non-linearlities to reserve the information loss by using non-linearlity.
+Residual Block은 보통 왼쪽의 이미지로 표현됩니다. 이미지에서 표현된것 처럼 wide -> narrow -> wide 의 형태로 bottleneck구조를 만들었습니다. 하지만 이 논문에서, 저자는 inverted residual을 제공합니다. 오른쪽의 이미지처럼 narrow -> wide -> narrow의 구조를 채택했습니다. 사선으로 표현된 부분은 non-linearlities를 사용하지 않습니다. 이는 non-linearlity를 사용해서 생기는 정보손실을 줄이기 위함입니다.
 
-The use of shortcut in the inverted residual block is same as the [ResNet](../../../ResNet/Korean/) to improve the ability of a gradient to propagate across multiplier layers.
+Inverted residual block에서 사용하는 skip connection은 [ResNet](../../../ResNet/Korean/)에서 사용 하는 것과 같습니다. 이는 여러개의 레이어를 사용함에도 gradient가 vanishing하는 것을 방지하기 위함 입니다.
 
-Inverted Residual block uses less memory as well as having improved performance.
+Inverted Residual block은 메모리 사용량도 적고, 성능도 더 좋습니다.
 
 ### Running time and parameter count for bottleneck convolution
 
 ![bottleneck residual block](../../V2/bottleneckResidualBlock.png)
 
-Above table represent the basic implementation structure of inverse Residual Block. For block size ![h w](https://latex.codecogs.com/svg.image?h\times&space;w), expansion factor ![t](https://latex.codecogs.com/svg.image?t) and kernel size ![k](https://latex.codecogs.com/svg.image?k) with ![d'](https://latex.codecogs.com/svg.image?d') input channels and ![d''](https://latex.codecogs.com/svg.image?d''), total number of multiply add required is
+위의 표는 inverse residual function의 가장 기본적인 구조를 나타낸 것입니다. 위의 입력값에서 ![h w](https://latex.codecogs.com/svg.image?h\times&space;w)는 이미지의 크기, ![k](https://latex.codecogs.com/svg.image?k)는 커널 사이즈, ![t](https://latex.codecogs.com/svg.image?t)는 expansion factor, ![d'](https://latex.codecogs.com/svg.image?d')와 ![d''](https://latex.codecogs.com/svg.image?d'')는 각각 입력채널의 수와 출력채널의 수 입니다. 이 값들을 사용해서 multi-add의 갯수를 구하면 아래와 같습니다.
 
 ![complexity for bottlencck residual block](https://latex.codecogs.com/svg.image?h&space;\times&space;w&space;\times&space;t&space;\times&space;d'&space;\times&space;d'&space;&plus;&space;h&space;\times&space;w&space;\times&space;t&space;\times&space;d'&space;\times&space;k&space;\times&space;k&space;&plus;h&space;\times&space;w&space;\times&space;t&space;\times&space;d'&space;\times&space;d''&space;=&space;h&space;\times&space;w&space;\times&space;t&space;\times&space;d'&space;\times&space;(d'&space;&plus;&space;k^2&space;&plus;&space;d''))
 
-This number is higher than Depthwise Separable Convolution([described in this page](../)) because of extra layer of ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution. However, using bottleneck residual block is more compact because of smaller input and output dimensions.
+이 숫자는 depthwise separable convolution(이 링크에서 설명된)의 연산량보다 높습니다. 이는 추가적으로 들어간 ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution layer 때문입니다. 하지만, 입력과 출력의 차원이 depthwise convolution layer 보다 작기 때문에, bottleneck residual block의 전체적인 연산량은 작아집니다.
 
 ![memory for mobilenet v1 and mobilenet v2](../../V2/memory.png)
 
-Above table descibes the max number of channels/memory that needs to be macterialized at each spatial resolution for different architectures. In this situation, it is assume to use 16-bit  float for activation.
-
-As described above, mobileNetV2 uses less memory compared to MobileNetV1. For ShuffleNet, author used 2x, g=3 that matches the performance of MobileNetV1 and MobileNetV2.
+위의 표에서 확인 할수 있습니다. 여기서 표현된 숫자들은, channel의 숫자/memory의 량을 적었습니다. 16bit float를 사용한다고 가정했을 때의 memory 사용량입니다. 여기서 MobileNetV2가 가정 적은 매모리를 사용합니다. ShuffleNet의 크기는 2x, g=3를 사용했는데, 이는 MobileNetV1과 MobileNetV2와의 성능을 맞추기 위함입니다.
 
 # Model Architecture
 
