@@ -93,9 +93,9 @@ MobileNetV2의 구조는 가본적으로 32개의 필터를 가진 Fully convolu
 
 대부분의 machine learning platform에서 인공신경망 구현은 directed acyclic compute hypergraph G를 만드는 것입니다. Graph G에서 edge는 operation을 의미하고 node는 중간연산의 tensor를 의미합니다. 이 그래프를 통해서 memory 사용량을 아래와 같이 계산 할 수 있습니다.
 
-![Computational cost of neural network graph](https://latex.codecogs.com/svg.image?M(G)&space;=&space;\min_{\pi&space;\in&space;\Sigma(G)}&space;\max_{i&space;\in&space;1&space;...&space;n}&space;\left&space;[&space;\sum_{A\in&space;R(i,\pi,&space;G)}|A|&space;\right&space;]&space;&plus;&space;size(\pi_i)&space;)
+![Computational cost of neural network graph](https://latex.codecogs.com/svg.image?M(G)&space;=&space;%5Cmin_%7B%5Cpi&space;%5Cin&space;%5CSigma(G)%7D&space;%5Cmax_%7Bi&space;%5Cin&space;1&space;...&space;n%7D&space;%5Cleft&space;%5B&space;%5Csum_%7BA%5Cin&space;R(i,%5Cpi,&space;G)%7D%7CA%7C&space;%5Cright&space;%5D&space;&plus;&space;size(%5Cpi_i))
 
-여기서 ![intermediate tensors](https://latex.codecogs.com/svg.image?R(i,\pi,G)) 연산 사이에 있는 tensor이고 이는 연산 ![nodes](https://latex.codecogs.com/svg.image?\pi_i...\pi_n)인 node로 연결이 되어 있습니다. Tensor의 크기는 ![size of tensor](https://latex.codecogs.com/svg.image?|A|)이고 연산을 위한 Kernel의 크기는 ![size of storage](https://latex.codecogs.com/svg.image?size(\pi_i))입니다. 
+여기서 ![intermediate tensors](https://latex.codecogs.com/svg.image?R(i,\pi,G)) 연산 사이에 있는 tensor이고 이는 연산 ![nodes](https://latex.codecogs.com/svg.image?\pi_i...\pi_n)인 node로 연결이 되어 있습니다. Tensor의 크기는 ![size of tensor](https://latex.codecogs.com/svg.image?%5Cleft%7CA%20%5Cright%7C)이고 연산을 위한 Kernel의 크기는 ![size of storage](https://latex.codecogs.com/svg.image?size(\pi_i))입니다. 
 
 MobileNetV2에서 Residual Connection(identity Skip Connection)을 제외한 다른 연결 구조는 없음으로, 이 인공신경망을 구성하는데 필요한 memory의 크기는 입력값의 크기, 출력값의 크기와 연산을 위한 kernel tensor의 크기를 더한 값입니다. 이는 아래의 수식에서 잘 표현되어 있습니다.
 

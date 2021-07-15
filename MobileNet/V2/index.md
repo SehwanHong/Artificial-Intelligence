@@ -95,9 +95,9 @@ For non-linearlity, author chose ReLU 6, when x less then 0, returns 0, when x b
 
 In most of the famous machine learning platform, network implementation builds a directed acyclic compute hypergraph G. In the graph G, the edge represents the operation and the node consists of tensor of intermediate computaiton. Though these graph, the memory usage can be calculated as following.
 
-![Computational cost of neural network graph](https://latex.codecogs.com/svg.image?M(G)&space;=&space;\min_{\pi&space;\in&space;\Sigma(G)}&space;\max_{i&space;\in&space;1&space;...&space;n}&space;\left&space;[&space;\sum_{A\in&space;R(i,\pi,&space;G)}|A|&space;\right&space;]&space;&plus;&space;size(\pi_i)&space;)
+![Computational cost of neural network graph](https://latex.codecogs.com/svg.image?M(G)&space;=&space;%5Cmin_%7B%5Cpi&space;%5Cin&space;%5CSigma(G)%7D&space;%5Cmax_%7Bi&space;%5Cin&space;1&space;...&space;n%7D&space;%5Cleft&space;%5B&space;%5Csum_%7BA%5Cin&space;R(i,%5Cpi,&space;G)%7D%7CA%7C&space;%5Cright&space;%5D&space;&plus;&space;size(%5Cpi_i))
 
-Where ![intermediate tensors](https://latex.codecogs.com/svg.image?R(i,\pi,G)) is the intermediate tensors that are connected to any of ![nodes](https://latex.codecogs.com/svg.image?\pi_i...\pi_n). ![size of tensor](https://latex.codecogs.com/svg.image?|A|) is the size of tensor, and ![size of storage](https://latex.codecogs.com/svg.image?size(\pi_i)) is the total amound of memory in internal storage for operation.
+Where ![intermediate tensors](https://latex.codecogs.com/svg.image?R(i,\pi,G)) is the intermediate tensors that are connected to any of ![nodes](https://latex.codecogs.com/svg.image?\pi_i...\pi_n). ![size of tensor](https://latex.codecogs.com/svg.image?%5Cleft%7CA%20%5Cright%7C) is the size of tensor, and ![size of storage](https://latex.codecogs.com/svg.image?size(\pi_i)) is the total amound of memory in internal storage for operation.
 
 Since there is no other structure rather than residual connection(identity shortcut), memory needed in this neural network is addition of input, output and the tensor size. Therefore, it could be presented as below.
 
