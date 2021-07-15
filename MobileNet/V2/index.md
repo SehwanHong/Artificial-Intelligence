@@ -109,7 +109,7 @@ Since there is no other structure rather than residual connection(identity short
 
 In the MobileNetV2, the architecture is defined as the image above. The operation could be represented ad following equation, ![bottleneck operator](https://latex.codecogs.com/svg.image?F(x)=&space;\left&space;[&space;A&space;\circ&space;N&space;\circ&space;B&space;\right&space;]x)
 
-A and B is linear transformation. N is a non linear per-channel transformation. ![inner tensor](https://latex.codecogs.com/svg.iamage?N=\mathrm{ReLU6}\circ\mathrm{dwise}\circ\mathrm{ReLU6}). In this situation, the memory required to compute ![network](https://latex.codecogs.com/svg.iamage?F(x)) can be as low as ![maxium memory](https://latex.codecogs.com/svg.image?|s^2k|&plus;|s'^2k'|&plus;O(\max(s^2,s'^2))), where s is one side of input tensor, s' is a side of output tensor, k is input channel size, k' is output channel size.
+A and B is linear transformation. N is a non linear per-channel transformation. ![inner tensor](https://latex.codecogs.com/svg.iamage?N=\mathrm{ReLU6}\circ\mathrm{dwise}\circ\mathrm{ReLU6}). In this situation, the memory required to compute ![network](https://latex.codecogs.com/svg.iamage?F(x)) can be as low as ![maxium memory](https://latex.codecogs.com/svg.image?%7Cs%5E2k%7C&plus;%7Cs'%5E2k'%7C&plus;O(%5Cmax(s%5E2,s'%5E2))), where s is one side of input tensor, s' is a side of output tensor, k is input channel size, k' is output channel size.
 
 From this equation, the inner tensor ![I](https://latex.codecogs.com/svg.image?I) can be represented as concatenation of t tensors wite size of n/t. Following representation below.
 

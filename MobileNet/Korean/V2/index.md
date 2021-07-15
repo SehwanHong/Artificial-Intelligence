@@ -107,7 +107,7 @@ MobileNetV2에서 Residual Connection(identity Skip Connection)을 제외한 다
 
 MobileNetV2의 구조는 위의 이미지와도 같습니다. 위의 구조의 operation은 다음과 같은 식으로 표현할수 있습니다. ![bottleneck operator](https://latex.codecogs.com/svg.image?F(x)=&space;\left&space;[&space;A&space;\circ&space;N&space;\circ&space;B&space;\right&space;]x)
 
-여기서 A와 B는 linear transformation을 N은 non-linear per-channel transformation을 의미합니다. ![inner tensor](https://latex.codecogs.com/svg.iamage?N=\mathrm{ReLU6}\circ\mathrm{dwise}\circ\mathrm{ReLU6}). 이 상황에서 ![network](https://latex.codecogs.com/svg.iamage?F(x)) 연산을 하는 데 필요한 memory의 량은 최소 ![maxium memory](https://latex.codecogs.com/svg.image?|s^2k|&plus;|s'^2k'|&plus;O(\max(s^2,s'^2)))입니다. 이 수식에서 s는 입력 tensor의 한 변을 s'는 출력 tensor의 한변을. k는 입력 channel의 크기를 k'은 출력 tensor의 크기를 의미합니다.
+여기서 A와 B는 linear transformation을 N은 non-linear per-channel transformation을 의미합니다. ![inner tensor](https://latex.codecogs.com/svg.iamage?N=\mathrm{ReLU6}\circ\mathrm{dwise}\circ\mathrm{ReLU6}). 이 상황에서 ![network](https://latex.codecogs.com/svg.iamage?F(x)) 연산을 하는 데 필요한 memory의 량은 최소 ![maxium memory](https://latex.codecogs.com/svg.image?%7Cs%5E2k%7C&plus;%7Cs'%5E2k'%7C&plus;O(%5Cmax(s%5E2,s'%5E2)))입니다. 이 수식에서 s는 입력 tensor의 한 변을 s'는 출력 tensor의 한변을. k는 입력 channel의 크기를 k'은 출력 tensor의 크기를 의미합니다.
 
 위의 식으로 부터, inner tensor ![I](https://latex.codecogs.com/svg.image?I)는 t개의 n/t크기의 tensor들을 합친것을 표현됩니다. 이는 아래와 같은 수식으로 표현할수 있습니다.
 
