@@ -41,3 +41,8 @@ Estimating the expressiveness was studied in a model compression work. The paper
 
 Inspired by these two papers, Author conjecture that the rank may be closely related to the expressiveness of a network and studying it may provide an effective layer design guide.
 
+### Layer Designs in practice
+
+ ResNet Families ([1](../ResNet), [2](../ResNet/V2), [3](../ResNet/ResNext)) have bottleneck blocks doubling the input channel dimensions to make the final dimension above the number of classes at last. The efficient models increase the channel dimensions steadily in inverted bottlenecks, involving a large expansion layer at the penultimate layer. Both bottleneck and inverted bottleneck block have the convolutional expansion layer with the predefined expansion ratio.
+
+Author propose a question about the building block used in many different network models. **Are these layers designed correctly and just need to design a new model accordingly?**
