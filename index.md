@@ -19,3 +19,5 @@ This is a collection of Neural Network repository where I will build a series of
 * [MobileNet V2 Korean](./MobileNet/Korean/V2/)
 
 ## Inprogress
+
+* [ReXNet](./ReXNet)
