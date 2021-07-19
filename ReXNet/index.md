@@ -20,3 +20,9 @@ This paper contains following information:
 2. a network architecture exploration concerning the channel configuration towards a simple yet effective parameterization
 3. using proposed model to achieve remarkable results on ImageNet outperformed recent lightweight models including NAS-based models
 4. Transfering trained model to different tasks, indicating high expressiveness of the model.
+
+# Related Work
+
+After appearance of AlexNet, VGG, GoogleNet and ResNet, lighter models have been proposed with lower computational budgets. Using new operator depthwise convolution, several architecture have been proposed with futher efficent architecture designs. Depthwise convolution reduces a large amount of trainable parameters and significant FLOPS reduction. Structured network architecture search(NAS) methods have been proposed to yield the lightweight models. EfficientNet, based on compound scaling of width, depth, and resolution, became a de facto state-of-art model.
+
+This paper focus on finding an effective channel configuration for an inverted bottleneck module, which is an alternative to searching building blocks.
