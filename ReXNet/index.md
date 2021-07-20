@@ -131,3 +131,53 @@ From the Figure 2, author have found that linear parameterization has higher acc
 From the baseline MobileNetV2 which introduced the convention of channel confoiguration, the author only reassigned output channel dimension of inverted bottlenecks by following the parameterization. The design schemetic is similar to the MobileNetV2. Using same stem(![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution with BatchNormalization and ReLU6) and inverted bottleneck with the expansion ratio 6. Same large expansion layer at the penulimate layer. After replacing ReLU6 with SiLU, adopted SE in the inverted Bottlenecks
 
 Based on the experiment found above at section 3, ReLU 6 is replaced only after the first ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution in each inverted bottleneck. Depthwise convolution has dimension ratio of 1 thus does not replace ReLU6.
+
+# Experiment
+
+## ImageNet Classificstion
+
+### Training on ImageNet
+
+The model is trained on ImageNet dataset using standard data augmentation and Stocastic Gradient Descent and mini batch size of 512 on four GPUs. The result of this Network with comparison is shown in the table below.
+
+![Comparison of ImageNet performance](./ComparisonImageNet.png)
+
+Looking at the table, ReXNet have the highest accuracy among the model searched by NAS.
+
+### Comparison with Efficientnets
+
+Comparing with ReXNet and EfficientNets about model scalability with performances.
+
+![Scalablity of ReXNet model](./ScalabilityModel.png)
+
+The graph version of above table is presented below.
+
+![ImageNet accuracy and FLOPs and latencies](./ImageNetFLOPLatency.png)
+
+Comparing EfficiencyNet and ReXNet, ReXNet is generally more accurate and have lower latency.
+
+## COCO object detection
+
+### Training SSDLite
+
+Using the ReXNet backbone through object detection on the COCO dataset in SSDLite.
+
+![COCO Object detection result with SSDLite](./COCOObjectDetectionWithSSDLite.png)
+
+### Training Faster RCNN
+
+Adopted RCNN to explore maximal performance of ReXNet.
+
+![COCO object detection results with Faster RCNN and FPN](./COCOObjectDetectionWithRCNN.png)
+
+## Fine-grained classification
+
+Finetune the ImageNet-pretrained models on the datasets Food-101, Stanford Cars, FGVC Aircraft, and Oxford Flowers to verify the transferability.
+
+![Transfer learning results on fine-graned datasets](./TransferLearningResult.png)
+
+## COCO Instance Segmentation
+
+Use Mask RCNN to validate the performance of ReXNets on instance segmentation.
+
+![COCO instance segmentaion results with Mask RCNN and FPN](./COCOInstanceSegmentation.png)
