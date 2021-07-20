@@ -128,6 +128,6 @@ From the Figure 2, author have found that linear parameterization has higher acc
 
 ## Network Upgrade
 
-From the baseline MobileNetV2 which introduced the convention of channel confoiguration, the author only reassigned output channel dimension of inverted bottlenecks by following the parameterization. 
+From the baseline MobileNetV2 which introduced the convention of channel confoiguration, the author only reassigned output channel dimension of inverted bottlenecks by following the parameterization. The design schemetic is similar to the MobileNetV2. Using same stem(![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution with BatchNormalization and ReLU6) and inverted bottleneck with the expansion ratio 6. Same large expansion layer at the penulimate layer. After replacing ReLU6 with SiLU, adopted SE in the inverted Bottlenecks
 
 Based on the experiment found above at section 3, ReLU 6 is replaced only after the first ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution in each inverted bottleneck. Depthwise convolution has dimension ratio of 1 thus does not replace ReLU6.
