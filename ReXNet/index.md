@@ -95,3 +95,39 @@ From the figure, we observe the following:
 Author provide experimental backup to support current idea. The model trained in this paper consists of two inverted bottlenecks to ajust dimension ratio of IBs and the first ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolutions in each IB. Starting from the baseline with the low DR 1/20. Modified by increasing DR of the first ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution to 1/6; 2) increasing DR at every IB from .22 to .8; 3) replacing the first ReLU6 with SiLU in each IB.
 
 The above table presents the result. As each factor is included the rank and the accuracy increase together.
+
+# Designing with Channel Configuration
+
+## Problem Formulation
+
+The goal of this paper is to reveal an effective channel configuration of designing a network under the computational demands. This problem can be formulated by following:
+
+![](https://latex.codecogs.com/svg.image?%5Cmax_%7BC_i,i=1...d%7D%5Ctextrm%7BAcc%7D(N(C_1,...c_d)),%5C:%5C:%5C:%5Ctextrm%7Bs.t.%20%20%7Dc_1%5Cleq%20c_2%5Cleq%5Ccdots%5Cleq%20c_%7Bd-1%7D%5Cleq%20c_d,%20%5Ctextrm%7BParams%7D(N)%20%5Cleq%20P,%20%5Ctextrm%7BFLOPs%7D(N)%5Cleq%20F)
+
+The funciton ![Acc function](https://latex.codecogs.com/svg.image?\textrm{Acc}) denotes the top-1 accuracy of the model. ![ith block](https://latex.codecogs.com/svg.image?c_i) is ouput channel of i-th block among d building blocks. ![P](https://latex.codecogs.com/svg.image?P) and ![F](https://latex.codecogs.com/svg.image?F) each denotes parameter size and FLOPs. The channel dimension is monotonically increasing as denoted in Table 1(Image in the Introduction). 
+
+In this paper, author consider FLOPs rather than inference latency because of it's generality. Moreover, compared to NASnet, which finds Network with fixed channel width, this model search for ![ith block](https://latex.codecogs.com/svg.image?c_i) while fixing the Network.
+
+## Searching with channel parameterization
+
+Parameterized channel dimensions as ![channel dimension function](https://latex.codecogs.com/svg.image?c_i=af(i)&plus;b), where a and b are to be searched. ![piecewise linear function](https://latex.codecogs.com/svg.image?f(i)) is a piecewise linear function by picking a subset of ![piecewise linear function](https://latex.codecogs.com/svg.image?f(i)) up from ![1 to d](https://latex.codecogs.com/svg.image?1...d). 
+
+The search is done on CIFAR-10 and CIFAR-100 data as done in NAS methods. To control the variables, other is set to have fixed channels. Also expansion ratio for the bottleneck layer is fixed to 6.
+
+Optimization is done alternatively by searching and training a network. Each model searched is trained for 30 epochs for faster training and early stopping strategy. Each training is repeated three times for averaging accuracy to reduce the accuracy fluctuation caused by random initialization.
+
+## Search Results
+
+![Visualization of the searched model's channel dimensions vs. block index](./VisualizationSearchedModelChannelDimensionsBlockIndex.png)
+
+![Detailed searched channel configurations](./DetailedSearchedChannelConfiguration.png)
+
+As shown in the image, in this paper, author searched for four different constraints described in the Table 3. From these constrains, author collected top-10%, middle-10%, and bottom-10% to compare the model interms of accuacy.
+
+From the Figure 2, author have found that linear parameterization has higher accuracy rates while maintatining similar compuational costs. The Blue line is similar to the conventional configuration described in the Table 1. Though this experiment, we must select new channel configuration rather than conventional channel configuration.
+
+## Network Upgrade
+
+From the baseline MobileNetV2 which introduced the convention of channel confoiguration, the author only reassigned output channel dimension of inverted bottlenecks by following the parameterization. 
+
+Based on the experiment found above at section 3, ReLU 6 is replaced only after the first ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution in each inverted bottleneck. Depthwise convolution has dimension ratio of 1 thus does not replace ReLU6.
