@@ -2,7 +2,7 @@
 
 This is a collection of Neural Network repository where I will build a series of different neural network
 
-## Currently what I have built
+## Paper Review
 
 * [ResNet](./ResNet)
 * [ResNet V2](./ResNet/V2)
