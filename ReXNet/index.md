@@ -181,3 +181,15 @@ Finetune the ImageNet-pretrained models on the datasets Food-101, Stanford Cars,
 Use Mask RCNN to validate the performance of ReXNets on instance segmentation.
 
 ![COCO instance segmentaion results with Mask RCNN and FPN](./COCOInstanceSegmentation.png)
+
+# Discussion
+
+### Fixing network depth and searching models
+
+![Searched Channel Configuration under fixed depth](./ChannelConfigurationFixedDepth.png)
+
+Linear channel parameterization by searching for new models under different constraints. Fixing network depth as 18 and 30, and given constraints with FLOPS. Above image presents that linear channel configurations outperforms the conventional configuration for vairous computational demends.
+
+
+
+## Link to NeuralNet(../)
