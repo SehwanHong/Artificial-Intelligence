@@ -103,21 +103,21 @@ Building blocks is presented by following equation:
 
 ## Problem Formulation
 
-The goal of this paper is to reveal an effective channel configuration of designing a network under the computational demands. This problem can be formulated by following:
+이 논문의 목표는 제한적인 연산량에서 효과적인 Channel Configuration을 찾는 것입니다. 이 문제는 아래와 같이 표현될 수 있습니다.
 
 ![](https://latex.codecogs.com/svg.image?%5Cmax_%7BC_i,i=1...d%7D%5Ctextrm%7BAcc%7D(N(C_1,...c_d)),%5C:%5C:%5C:%5Ctextrm%7Bs.t.%20%20%7Dc_1%5Cleq%20c_2%5Cleq%5Ccdots%5Cleq%20c_%7Bd-1%7D%5Cleq%20c_d,%20%5Ctextrm%7BParams%7D(N)%20%5Cleq%20P,%20%5Ctextrm%7BFLOPs%7D(N)%5Cleq%20F)
 
-The funciton ![Acc function](https://latex.codecogs.com/svg.image?\textrm{Acc}) denotes the top-1 accuracy of the model. ![ith block](https://latex.codecogs.com/svg.image?c_i) is ouput channel of i-th block among d building blocks. ![P](https://latex.codecogs.com/svg.image?P) and ![F](https://latex.codecogs.com/svg.image?F) each denotes parameter size and FLOPs. The channel dimension is monotonically increasing as denoted in Table 1(Image in the Introduction). 
+여기서 함수 ![Acc function](https://latex.codecogs.com/svg.image?\textrm{Acc})는 top-1정확도를 의미합니다. ![ith block](https://latex.codecogs.com/svg.image?c_i)는 i번째 block의 출력 channel의 크기를 의미합니다. ![P](https://latex.codecogs.com/svg.image?P) and ![F](https://latex.codecogs.com/svg.image?F)는 각각 parameter의 크기와 FLOPs를 의미합니다. Channel 크기는 단조롭게 증가합니다.
 
-In this paper, author consider FLOPs rather than inference latency because of it's generality. Moreover, compared to NASnet, which finds Network with fixed channel width, this model search for ![ith block](https://latex.codecogs.com/svg.image?c_i) while fixing the Network.
+이 논문에서 inference latency대신에 FLOPs에 집중하는 이유는 범용성에 있습니다. 또한 NASNet과 비교를 했을 떄, NASNet이 channel 크기를 고정한 상태에서 Network를 찾았다면, 이 ReXNet은 Network의 크기를 고정시킨 상태에서 ![ith block](https://latex.codecogs.com/svg.image?c_i)를 탐색합니다.
 
 ## Searching with channel parameterization
 
-Parameterized channel dimensions as ![channel dimension function](https://latex.codecogs.com/svg.image?c_i=af(i)&plus;b), where a and b are to be searched. ![piecewise linear function](https://latex.codecogs.com/svg.image?f(i)) is a piecewise linear function by picking a subset of ![piecewise linear function](https://latex.codecogs.com/svg.image?f(i)) up from ![1 to d](https://latex.codecogs.com/svg.image?1...d). 
+Channel dimension은 ![channel dimension function](https://latex.codecogs.com/svg.image?c_i=af(i)&plus;b)을 표현할 수 있습니다. 여기서 a와 b는 탐색해야 하는 값입니다. 여기서 ![piecewise linear function](https://latex.codecogs.com/svg.image?f(i))는 a piecewise linear function으로 ![piecewise linear function](https://latex.codecogs.com/svg.image?f(i))의 부분집합으로 ![1 to d](https://latex.codecogs.com/svg.image?1...d)에서 선택된 값입니다.
 
-The search is done on CIFAR-10 and CIFAR-100 data as done in NAS methods. To control the variables, other is set to have fixed channels. Also expansion ratio for the bottleneck layer is fixed to 6.
+탐색은, NASNet과 비슷하게, CIFAR-10과 CIFAR-100에서 이루어졌습니다. 다른 값들을 제한하기 위해서, 다른 값들을 제한하였습니다. 또한 Expansion ratio 또한 6으로 고정하였습니다.
 
-Optimization is done alternatively by searching and training a network. Each model searched is trained for 30 epochs for faster training and early stopping strategy. Each training is repeated three times for averaging accuracy to reduce the accuracy fluctuation caused by random initialization.
+Optimization은 인공신경망의 탐색과 훈련을 통해서 구했습니다. 또한 하나의 모델은 각각 30epoch씩 훈련되었고, early stopping 또한 사용하여 빠른 훈련을 하게 만들었습니다. 한 인공신경망은 3번 훈련하였습니다. 이는 random initialization을 통해서 발생하는 정확도의 fluctuation을 잡기 위함입니다.
 
 ## Search Results
 
@@ -125,15 +125,15 @@ Optimization is done alternatively by searching and training a network. Each mod
 
 ![Detailed searched channel configurations](../DetailedSearchedChannelConfiguration.png)
 
-As shown in the image, in this paper, author searched for four different constraints described in the Table 3. From these constrains, author collected top-10%, middle-10%, and bottom-10% to compare the model interms of accuacy.
+위의 그래프에서 보는 것처럼, 저자는 4가지 제한점을 준 상태에서 훈련을 하였습니다. 제한에 대한 자세한 설명은 위의 표를 참고해주시기 바람니다. 이러한 제한을 사용해서 상위 10%, 중간 10%, 하위 10%의 결과 값을 모았습니다.
 
-From the Figure 2, author have found that linear parameterization has higher accuracy rates while maintatining similar compuational costs. The Blue line is similar to the conventional configuration described in the Table 1. Though this experiment, we must select new channel configuration rather than conventional channel configuration.
+Figure 2에서 보는 것처럼, channel dimension이 Linear 할 경우, 비슷한 연산량에서 더 높은 정확도를 가지고 있는 것을 볼 수 있습니다. 파란색 선은 위에서 설정된 일반적인 channel configuration과 비슷합니다. 이를 통해서 conventional configuration에서 이 논문에서 제시하는 channel configuration으로 바꿀 경우, 정확도의 향상이 있는 것을 확인 할 수 있습니다.
 
 ## Network Upgrade
 
-From the baseline MobileNetV2 which introduced the convention of channel confoiguration, the author only reassigned output channel dimension of inverted bottlenecks by following the parameterization. The design schemetic is similar to the MobileNetV2. Using same stem(![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution with BatchNormalization and ReLU6) and inverted bottleneck with the expansion ratio 6. Same large expansion layer at the penulimate layer. After replacing ReLU6 with SiLU, adopted SE in the inverted Bottlenecks
+현제 사용되고 있는 channel configuration의 관습을 소개한 MobileNetV2에 기반하여, 저자는 inverted bottleneck의 output channel의 크기만 parameterization을 기바능로 바꾸었습니다. Stem의 구조 또한 ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution with BatchNormalization and ReLU6) and inverted bottleneck with the expansion ratio 6로 똑같이 맞추어주었습니다. 하지만 차이점이 있다면, ReLU6를 SiLU로 바꾼것과, SE를 추가한 것입니다.
 
-Based on the experiment found above at section 3, ReLU 6 is replaced only after the first ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution in each inverted bottleneck. Depthwise convolution has dimension ratio of 1 thus does not replace ReLU6.
+Section 3에서 확인한 실험 결과에 기반하여, 첮번째 ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution 뒤에 있는 ReLU6만 SiLU로 바꾸었습니다. Depthwise convolution은 Dimenison ratio가 1임으로 ReLU5를 바꾸지는 않았습니다.
 
 # Experiment
 
