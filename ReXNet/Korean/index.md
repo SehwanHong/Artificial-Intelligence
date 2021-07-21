@@ -51,50 +51,53 @@ ResNet 계열의 인공신경망들은([1](../ResNet/Korean), [2](../ResNet/Kore
 
 ### Sketch of the Study
 
-Lets first explore the design guide of a single expansion layer that expands the input dimension.
+입력값의 dimension을 늘리는 expansion layer에 대한 고찰을 해보자.
 
-This experiment explores the trend between the rank ratio and the dimension ratio. The rank is originally bounded to the input dimension, but the subsequenct non-linear function will increase the rank above the input dimensions. However, a certain network fails to expand the rank close to the output dimensions and the feature will not be fully utilized. The study uncovers the effect of complicated nonlinear functions such as ELU and SiLU(Swish-1) and where to use them when designing lightweight models.
+이 실험은 rank ratio와 dimensio ratio 사이의 관계를 확인하는 실험입니다. 여기서 Rank는 일반적으로 입력값의 dimension에 의해 제한되어왔습니다. 하지만 non-linear 함수를 사용함에 따라 Rank는 입력값의 크기보다 더 커질 수 있습니다. 하지만 몇몇 인공신경망은 rank를 출력값의 dimension에 가깝게 만드는 것을 실패했습니다. 이는 feature가 fully utilized 되지 않는 것을 의미합니다. 이 연구는 ELU나 SiLU(Swish-1)등의 복잡한 non-linear 함수의 영향과, 가벼운 인공신경망을 설계할때 사용하는 방식에 관한 설명을 합니다.
 
 ### Materials
 
-Generate a network with the building block consists of
+인공신경망을 구성하는 기본적인 구조를 다음과 같이 설정합니다.
 
-1. a single ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution or ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution
-2. an inverted bottleneck block with a ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution or ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) depthwise convolution
+1. 하나의 ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution 또는 ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution
+2. ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution 또는 ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) depthwise convolution을 사용하는 inverted bottleneck
 
+기본적인 구조는 다음과 같은 수식으로 표현할 수 있습니다.
 Building blocks is presented by following equation:
 
-![building block](https://latex.codecogs.com/svg.image?f(WX)) where weight ![weight](https://latex.codecogs.com/svg.image?W%5Cin%5Cmathbb%7BR%7D%5E%7Bd_%7Bout%7D%5Ctimes%20d_%7Bin%7D%7D) and the input ![input](https://latex.codecogs.com/svg.image?X%5Cin%5Cmathbb%7BR%7D%5E%7Bd_%7Bin%7D%5Ctimes%20N%7D)
+![building block](https://latex.codecogs.com/svg.image?f(WX)) 여기서 weight ![weight](https://latex.codecogs.com/svg.image?W%5Cin%5Cmathbb%7BR%7D%5E%7Bd_%7Bout%7D%5Ctimes%20d_%7Bin%7D%7D)이고 입력값은 ![input](https://latex.codecogs.com/svg.image?X%5Cin%5Cmathbb%7BR%7D%5E%7Bd_%7Bin%7D%5Ctimes%20N%7D)입니다.
 
-From this equation, ![f](https://latex.codecogs.com/svg.image?f) denotes different kinds of nonlinear function with normalization(in this paper used Batch Normalziation). ![d out](https://latex.codecogs.com/svg.image?d_{out}) is randomly sampled to realize a random-sized network. ![d in](https://latex.codecogs.com/svg.image?d_{in}) is proportionally adjusted for each channel dimension ratio(![dimension ratio](https://latex.codecogs.com/svg.image?d_%7Bout%7D/d_%7Bin%7D)) in the range ![range](https://latex.codecogs.com/svg.image?%5B0.1,%201.0%5D). ![N](https://latex.codecogs.com/svg.image?N) denotes the batch-size, where ![limit of batch size](https://latex.codecogs.com/svg.image?N%3Ed_%7Bout%7D%3Ed_%7Bin%7D).
+이 수식에서 ![f](https://latex.codecogs.com/svg.image?f)는 normalization(이 논문에서는 batch normaliztion)을 포함한 다양한 non-linear 함수를 의미합니다. ![d out](https://latex.codecogs.com/svg.image?d_{out})은 현실적인 값들을 사용하기 위해서 random하게 선택하였습니다. ![d in](https://latex.codecogs.com/svg.image?d_{in})은 (![dimension ratio](https://latex.codecogs.com/svg.image?d_%7Bout%7D/d_%7Bin%7D))가 ![range](https://latex.codecogs.com/svg.image?%5B0.1,%201.0%5D)의 값을 가지도록 비율적으로 조절하였습니다. ![N](https://latex.codecogs.com/svg.image?N)은 batch-size를 의미합니다. Batch size는 반드시 ![limit of batch size](https://latex.codecogs.com/svg.image?N%3Ed_%7Bout%7D%3Ed_%7Bin%7D)의 제한을 지킵니다.
 
-After the building block is calculated, author computes the *rank ratio* (![rank ratio](https://latex.codecogs.com/svg.image?%5Ctextrm%7Brank%7D(f(WX))/d_%7Bout%7D)) for each model and average them. For inverted bottleneck, input and output is assumed to be the input of the first convolution and output after the addition operation of the shortcut.
+기본적인 구조가 만들어졌다면, 각 인공신경망의 *rank ratio* (![rank ratio](https://latex.codecogs.com/svg.image?%5Ctextrm%7Brank%7D(f(WX))/d_%7Bout%7D))를 계산한 후에 평균값을 찾습니다. Inverted bottleneck에서는 입력값의 크기는 첫번째 convolution의 입력값으로 계산하고, 출력값의 크기는 skip connection이 더해진 후의 출력값의 dimension을 기반으로 만들어졌습니다.
 
 ### Observations
 
 ![Visualization of the Output Rank](../VisualizationOutputRank.png)
 
-Above image represents the rank changes with respect to the input channel dimension on average. Dimension ratio is on x axis is reciprocal of expansion ratio.
+위의 이미지가 rank의 변화를 입력 channel의 크기와 비교한 것입니다. Dimension ratio는 x출에 있고 이는 expansion ratio의 역수로 생각하면 됩니다.
 
-From the figure, we observe the following:
+위의 그래프를 통해서 여러가지를 알 수 있습니다.
 
-1. **Drastic Channel expansion harms the rank**
-2. **Nonlinearities expand rank**
-3. **Nonlinearities are critical for convolutions**
+1. **Channel 크기의 급격한 변화는 Rank가 감소합니다**
+2. **Nonlinearities가 Rank를 증가시킵니다**
+3. **Nonlinearities는 convolution에 사용하는 것이 중요합니다.**
 
 ### What we learn from the observations
 
-1. an inverted bottleneck is needed to design with the expansion ratio of 6 or smaller values at the first ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution
-2. each inverted bottleneck with a depthwise convolution in a lightweight model needs a higher channel dimension ratio
-3. a complicated nonlinearity such as ELU and SiLU needs to be placed after ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution or ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution
+위에서 관찰한 것을 기반으로, 3가지 중요한 설계 원칙을 배울 수 있습니다.
+
+1. Inverted Bottleneck 구조에서 첫번째 ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution의 expansion ratio는 6이하의 값을 사용해야 합니다. 
+2. Depthwise convolution을 사용하는 Inverted Bottleneck은 channel dimension ratio가 높은 것을 사용해야 합니다.
+3. 복잡한 nonlinerlity(ELU, SiLU)는 ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution or ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution뒤에 사용되어야 합니다.
 
 ### Verificaiton of the study
 
 ![Factor analysis of the study](../FactorAnalysis.png)
 
-Author provide experimental backup to support current idea. The model trained in this paper consists of two inverted bottlenecks to ajust dimension ratio of IBs and the first ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolutions in each IB. Starting from the baseline with the low DR 1/20. Modified by increasing DR of the first ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution to 1/6; 2) increasing DR at every IB from .22 to .8; 3) replacing the first ReLU6 with SiLU in each IB.
+위에서 설명하는 이점을 확인하기 위해서 실험을 설계했습니다. 실험에 사용한 인공신경망은, 2개의 Inverted Bottleneck을 사용했고, Dimension ratio와 the first ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolutions in each IB 를 변경하였습니다. 처음으로는 expansion ratio를 20에서 6으로 줄였습니다. 다음으로는 DRfmf .22 에서 .8로 증가시켰습니다. 마지막으로는 ReLU6를 SiLU로 바꾸었습니다.
 
-The above table presents the result. As each factor is included the rank and the accuracy increase together.
+위의 표에서 나타난 결과값을 확인하면, 새로운 변화를 줄때마다 정확도와 계수(Rank)가 증가하는 것을 볼 수 있습니다.
 
 # Designing with Channel Configuration
 
