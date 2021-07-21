@@ -133,7 +133,7 @@ Figure 2에서 보는 것처럼, channel dimension이 Linear 할 경우, 비슷�
 
 현제 사용되고 있는 channel configuration의 관습을 소개한 MobileNetV2에 기반하여, 저자는 inverted bottleneck의 output channel의 크기만 parameterization을 기바능로 바꾸었습니다. Stem의 구조 또한 ![3 by 3](https://latex.codecogs.com/svg.image?3\times3) convolution with BatchNormalization and ReLU6) and inverted bottleneck with the expansion ratio 6로 똑같이 맞추어주었습니다. 하지만 차이점이 있다면, ReLU6를 SiLU로 바꾼것과, SE를 추가한 것입니다.
 
-Section 3에서 확인한 실험 결과에 기반하여, 첮번째 ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution 뒤에 있는 ReLU6만 SiLU로 바꾸었습니다. Depthwise convolution은 Dimenison ratio가 1임으로 ReLU5를 바꾸지는 않았습니다.
+Section 3에서 확인한 실험 결과에 기반하여, 첮번째 ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution 뒤에 있는 ReLU6만 SiLU로 바꾸었습니다. Depthwise convolution은 Dimenison ratio가 1임으로 ReLU6를 바꾸지는 않았습니다.
 
 # Experiment
 
@@ -141,47 +141,46 @@ Section 3에서 확인한 실험 결과에 기반하여, 첮번째 ![1 by 1](htt
 
 ### Training on ImageNet
 
-The model is trained on ImageNet dataset using standard data augmentation and Stocastic Gradient Descent and mini batch size of 512 on four GPUs. The result of this Network with comparison is shown in the table below.
+인공신경망은 ImageNet data를 기반으로 훈련되었습니다. Data augmentation은 기본적인 것으로 적용했고, SGD와 mini-batch 512를 4개의 GPU에서 사용하였습니다. 이 ReXNet의 결과를 다른 것과 비교한 표는 아레에 표현되었습니다.
 
 ![Comparison of ImageNet performance](../ComparisonImageNet.png)
 
-Looking at the table, ReXNet have the highest accuracy among the model searched by NAS.
+위의 표에서 확인한 결과 ReXNet이 가장 높은 정확도를 가진 것을 확인 할 수 있습니다.
 
 ### Comparison with Efficientnets
 
-Comparing with ReXNet and EfficientNets about model scalability with performances.
+ReXNet과 EfficientNet을 scalability에 관해서 비교한 것입니다.
 
 ![Scalablity of ReXNet model](../ScalabilityModel.png)
 
-The graph version of above table is presented below.
+이 표의 그래프는 아레에 표현되었습니다.
 
 ![ImageNet accuracy and FLOPs and latencies](../ImageNetFLOPLatency.png)
 
-Comparing EfficiencyNet and ReXNet, ReXNet is generally more accurate and have lower latency.
+둘을 비교한 결과 ReXNet이 대체로 더 정확하고 latency는 물론 FLOPs도 작은 것을 확인 할 수 있습니다.
 
 ## COCO object detection
 
 ### Training SSDLite
 
-Using the ReXNet backbone through object detection on the COCO dataset in SSDLite.
+ReXNet을 기반으로 object detection을 실행한 결과입니다. ReXNet에 SSDLite를 사용한 것입니다.
 
 ![COCO Object detection result with SSDLite](../COCOObjectDetectionWithSSDLite.png)
 
 ### Training Faster RCNN
 
-Adopted RCNN to explore maximal performance of ReXNet.
+ReXNet에 RCNN을 추가하여 성능을 확인 한 것입니다.
 
 ![COCO object detection results with Faster RCNN and FPN](../COCOObjectDetectionWithRCNN.png)
 
 ## Fine-grained classification
 
-Finetune the ImageNet-pretrained models on the datasets Food-101, Stanford Cars, FGVC Aircraft, and Oxford Flowers to verify the transferability.
-
+다양한 데이터셋에서 ImageNet에서 구한 모델을 기반으로 찾은 결과입니다.
 ![Transfer learning results on fine-graned datasets](../TransferLearningResult.png)
 
 ## COCO Instance Segmentation
 
-Use Mask RCNN to validate the performance of ReXNets on instance segmentation.
+Mask RCNN 을 사용해 ReXNets의 instance segmentation에 대한 성능을 확인한 것입니다..
 
 ![COCO instance segmentaion results with Mask RCNN and FPN](../COCOInstanceSegmentation.png)
 
@@ -191,8 +190,8 @@ Use Mask RCNN to validate the performance of ReXNets on instance segmentation.
 
 ![Searched Channel Configuration under fixed depth](../ChannelConfigurationFixedDepth.png)
 
-Linear channel parameterization by searching for new models under different constraints. Fixing network depth as 18 and 30, and given constraints with FLOPS. Above image presents that linear channel configurations outperforms the conventional configuration for vairous computational demends.
 
+Linear channel parameterization을 다양한 제한 상황에서 탐색한 것입니다. 인공신경망의 크기를 18과 30으로 고정한 다음 FLOPs에 다양한 성능의 제한을 준 것입니다. 위의 이미지에서 확인 할 수 있다싶이, channel의 크기가 linear하게 증가하는 것을 확인 할 수 있습니다. 이를 통해서 관례처럼 사용되던 channel configuration보다 높은 성능을 가지고 있는 것을 학인 할 수 있습니다.
 
 
 ## Link to NeuralNet(../../)
