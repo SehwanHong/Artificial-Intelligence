@@ -21,3 +21,5 @@ This is a collection of Neural Network repository where I will build a series of
 * [ReXNet Korean Verion](./ReXNet/Korean/) [자세한 워드파일](./ReXNet/Korean/ReXNet_Summary.docx)
 
 ## Inprogress
+
+* [On Network Design Spaces for Visual Recognition](./NDSVR)

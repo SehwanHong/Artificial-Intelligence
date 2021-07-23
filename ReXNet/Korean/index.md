@@ -111,6 +111,7 @@ Building blocks is presented by following equation:
 
 이 논문에서 inference latency대신에 FLOPs에 집중하는 이유는 범용성에 있습니다. 또한 NASNet과 비교를 했을 떄, NASNet이 channel 크기를 고정한 상태에서 Network를 찾았다면, 이 ReXNet은 Network의 크기를 고정시킨 상태에서 ![ith block](https://latex.codecogs.com/svg.image?c_i)를 탐색합니다.
 
+
 ## Searching with channel parameterization
 
 Channel dimension은 ![channel dimension function](https://latex.codecogs.com/svg.image?c_i=af(i)&plus;b)을 표현할 수 있습니다. 여기서 a와 b는 탐색해야 하는 값입니다. 여기서 ![piecewise linear function](https://latex.codecogs.com/svg.image?f(i))는 a piecewise linear function으로 ![piecewise linear function](https://latex.codecogs.com/svg.image?f(i))의 부분집합으로 ![1 to d](https://latex.codecogs.com/svg.image?1...d)에서 선택된 값입니다.
