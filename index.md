@@ -18,6 +18,6 @@ This is a collection of Neural Network repository where I will build a series of
 * [ResNeXt](./ResNet/Korean/ResNext)
 * [MobileNet Korean version](./MobileNet/Korean/)
 * [MobileNet V2 Korean](./MobileNet/Korean/V2/)
-* [ReXNet Korean Verion](./ReXNet/Korean/)
+* [ReXNet Korean Verion](./ReXNet/Korean/) [자세한 워드파일](./ReXNet/Korean/ReXNet_Summary.docx)
 
 ## Inprogress
