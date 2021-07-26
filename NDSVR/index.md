@@ -305,3 +305,10 @@ From above image, we observe two interesting facts.
 1. The ordering of design spaces by random search efficiency is consistent with the ordering of the EDFs.
 2. For a fixed search algorithm, the differences in the design space leads to clear difference in performance.
 
+## Comparisons to Standard Design Spaces
+
+![NAS vs Standard Design spaces](./NASvsStandard.png)
+
+From selecting best and worst performing NAS design spaces(DARTS and NASNet) and compare them to the ResNeXt design spaces. ResNet-B is on par tiwh DARTS when normalized by parameter( as shown in the left), while DARTS slightly outperforms ResNeXt-B when normalized by flops(as shown in the right).
+
+These result demonstarate that the design of the design space plays a key role and suggest that designing design spaces, manually or via data-driven approaches is a promising avenue for future work.
