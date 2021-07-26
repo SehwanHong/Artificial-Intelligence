@@ -312,3 +312,12 @@ From above image, we observe two interesting facts.
 From selecting best and worst performing NAS design spaces(DARTS and NASNet) and compare them to the ResNeXt design spaces. ResNet-B is on par tiwh DARTS when normalized by parameter( as shown in the left), while DARTS slightly outperforms ResNeXt-B when normalized by flops(as shown in the right).
 
 These result demonstarate that the design of the design space plays a key role and suggest that designing design spaces, manually or via data-driven approaches is a promising avenue for future work.
+
+## Sanity Check: point Comparison
+
+![Point Comparisons](./PointComparison.png)
+
+As a sanity check, author perform point comparisons using larger models and the exact training setting from DARTS with deep supervision, Cutout and modified DropPath. DARTS, ResNeXt, and ResNet-110.
+
+The result presented in the above table. With enhanced setup, ResNeXt achieves similar error as DARTS.
+
