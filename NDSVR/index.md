@@ -321,3 +321,8 @@ As a sanity check, author perform point comparisons using larger models and the 
 
 The result presented in the above table. With enhanced setup, ResNeXt achieves similar error as DARTS.
 
+# Conclusion
+
+Author present methodology for analyzing and comparing model design space. This methodology should be applicable to other model types, domains, and tasks.
+
+## [Link to NeuralNet](../)
