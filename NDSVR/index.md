@@ -100,3 +100,51 @@ Author generate model distributions by uniformly sampling hyperparameters from t
 Author uses image classification models trained on CIFAR-10. This setting enables large-scale analysis and is used often used as a testbed for recognition networks. From the above table, author selected 25k models and used to evaluate the methodology
 
 
+# Proposed Methodology
+
+## Comparing Distribution
+
+When developing a new network architecture, human experts employ a combination ffrom a design spacce, and select the model achieving the lowest error. The final model is a point estimate of the design space. 
+
+Comparing design spaces via point estimates can be misleading. This is illustrated by comparing two sets of models of different sizes sampled from the same design space.
+
+### Point estimates
+
+The baseline model set (B) by uniform sampling 100 architecure from ResNet design space described above. The second model set(M) uses 1000 samples instead of 100. The difference in number of samples could arise from more effort in the development of M over the baseline, or simply access to more computational resources for generating M. These imbalanced comparisons are common in the practice.
+
+After traing, M's minimum error is lower than B's minimum error. Since the best error is lower, a naive comparison of point estimates concludes that M is superior. 
+
+![Point distribution](./PointDistribution.png)
+
+Repeating this experiment yield the same results. Above iamge represent the difference in the minimum error of B and M over multiple trials. This experiment was simulated by repeatedly sampling B and M from the pool of 25k pre-trained models.
+
+In 90% of the cases M has a lower minimum than B, often with large margin. However, M and B were drawn from the same design space. Thus using point estimation can be misleading.
+
+### Distributions
+
+Author argues that one can estimate more robust conclusion by directly comapraing distributions rather than point estimates such as minimum error.
+
+To compare distributions, author use empirical distribution functions(EDFs). Given the set of n models, with errors ![errors](https://latex.codecogs.com/svg.image?%7Be_i%7D), the error EDF is given as following:
+
+![Empirical distribution functions](https://latex.codecogs.com/svg.image?F(x)=%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi=1%7D%5E%7Bn%7D%7B1%5Be_i%3Ce%5D%7D)
+
+This equation represent the fraction of models with error less than e.
+
+![EDF](./EDF.png)
+
+Using B and M, author plotted the empirical distribution instead of just their minimum errors. The small tail to the bottom left indicate a small population of models with low error and the long tail on the upper right shows there are few models with error over 10%.
+
+Quantitatively there is little visible difference between the error EDFs for B and M, suggesting that these two set of models were drawn form an identical design space.
+
+To make quantitative comparison, use Kolmogorove-Smirnov test, a nonparametric statistical test for the null hypothesis that two samples were drawn from the same distributions. Given ![function 1](https://latex.codecogs.com/svg.image?F_1) and ![function 2](https://latex.codecogs.com/svg.image?F_2), the KS statistic D is defined as:
+
+![Kolmogorove Smirnov test](https://latex.codecogs.com/svg.image?D=%5Csup_%7Bx%7D%5Cleft%7CF_%7Bi%7D(x)-F_%7B2%7D(x)%5Cright%7C)
+
+D measures the maximum vertical discrepancy between EDFs(the zoomed panel in the graph); small value suggest that ![function 1](https://latex.codecogs.com/svg.image?F_1) and ![function 2](https://latex.codecogs.com/svg.image?F_2) are sampled from same distribution. In this experiement, the KS test gives ![D value](https://latex.codecogs.com/svg.image?D=0.079) and a p-value of 0,60. Thus from this result we could assume that B and M follow the same distribution.
+
+### Discussion
+
+The above example demonstate the necessity of comparing distributions rather than point estimates, as the latter can give misleading results in even simple cases.
+
+The most work reports results for only a small number of best models, and rarely reports the number of total points explored during model development, which can vary substantially.
+
