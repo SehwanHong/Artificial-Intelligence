@@ -248,3 +248,40 @@ Therefore, evaluating the full distribution for a small-sized problem like CIFAR
 
 Overall, distribution comparison is quite feasible under typical setting.
 
+# Case Study: NAS
+
+As a case study of distribution estimation, author examime design space from recent neural architecture search(NAS) literature.
+
+NAS has two core components:
+1. a design space
+2. a search algorithm over design space
+
+## Design Spaces
+
+### Model family
+
+NAS model is contructed by repeatedly stacking a single computational unit. A cell can vary in the operatioons it performs and in its connectivity parttern.
+
+A cell takes output from two previous cells as inputs and contains a number of nodes. Each nodes in a cell takes as input two previously constructed nodes, applies an operator to each input, and combines the output of two operators.
+
+### Design Space
+
+![NAS Design Space](./NASDesignSpace.png)
+
+From five different NAS model family, NASNet, AmoebaNet, PNAS, Enas, and DARTS was selected. As shown in the table above, most of the NASNet is limited to have five cell structure. The Output L means, loose node not used as input to other nodes, and A all nodes are concatenated to the output.
+
+The full network architecture also varies slightly between recent papers. Thus author standardized this aspect of design spaces. The network arhitecture setting from DARTS was adopted. 
+
+The network depth d and initial filter width are typically kept fixed. However these hyperparameters directly affect model complexity. 
+
+![NAS Complexity Distribution](./NASComplexityDistribution.png)
+
+As Shown in the image above, each model generates different complexity. Therefore to factor this confounding factor, author vary w and d (![](https://latex.codecogs.com/svg.image?w%5Cin%5Cleft%5C%7B16,24,32%5Cright%5C%7D) and ![](https://latex.codecogs.com/svg.image?d%5Cin%5Cleft%5C%7B4,8,12,16,20%5Cright%5C%7D)).
+
+### Model Distribution
+
+Author sampled NAS cells by using uniform sampling at each step. Likewise w and d is uniformly sampled.
+
+### Data Generation
+
+Training approximately 1000 CIFAR models for each of the Five NAS design spaces. Ensure 1000 models per design space for both full flop range and full parameter range.
