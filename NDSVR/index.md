@@ -41,3 +41,28 @@ NAS has proven effective for learning networks architecctures. A NAS instantiati
 ### Complexity measures
 
 In this work, author focus on analyzing network design space while controlling for confounding factors like network complexity. Author adopt commonly-used network complexity measures, including number of model parameters or multiply-add operations. 
+
+# Design Spces
+
+## Definitions
+
+### Model family
+
+A model family is large (possibly infinite) collection of related neural network architectures, typically shraing some high-level architectural structures or design principles (residual connections)
+
+### Design Space
+
+Performing empirical studies on model families are difficult since they are broadly defined and typically not fully specified. To make disctinctino between abstract model families, design space is introduces. Design space is a concrete set of architectures taht can be isntantiated from the model family.
+
+A design space consist of two components
+1. parameterization of a model family
+2. a set of allowable values for each hyper parameters.
+
+### Model distribution
+
+As design space an contain an eponential number of candidate models, exhaustive evaluation is not feasible. Therefore, from a design space, author sampled and excaluated a fixed set of models, giving rise to a model distribution. Then, author use classical statistics for analysis. Any standard distribution, as well as learned distributions like in NAS, can be integrated into our paradigm.
+
+### Data Generation
+
+To analyze network design spaces, author smaple and evaluate numerous models from each design space. In doing so, author generate datasets of trained models upon which we perform empirical studies.
+
