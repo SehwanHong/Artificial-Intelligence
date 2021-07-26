@@ -148,3 +148,65 @@ The above example demonstate the necessity of comparing distributions rather tha
 
 The most work reports results for only a small number of best models, and rarely reports the number of total points explored during model development, which can vary substantially.
 
+## Controlling for Complexity
+
+While comparing distributions can lead to more robust conclusions about design spaces, comparison must done between controlled confounding factos that correlate with model error to avoid biased conclusions.
+
+Relevant confounding factor is model complexity. The next section study how to control the complexity of the model.
+
+### Unnormalized comparison
+
+![Comparisons conditinoed on complexity](./ComparisonComplexity.png)
+
+The leftmost image shows the error EDFs for the ResNeXt-A and ResNeXt-B design spaces, which only differes in the allowable hyperparameter set in the above table.
+
+Looking through the image, qualitative difference is visible and suggest that ResNeXt-B is a better design space. For every error, EDF for ResNeXt-B is higher at every error threshold.
+
+This image present that different design space form the same model family under the same model distribution can result in very different error distributions.
+
+### Error vs Complexity
+
+Though different papers, we know that model's error is related to it's complexity; in particular more complex models are often more accurate.
+
+![Complexity vs Error](./ComplexityError.png)
+
+This two graphs plot the error of each trained model against its complexity, measured by either parameter or flop count. While there are poorly-performing high-complexity models, the best models have the highest complexity.
+
+### Complexity distribution
+
+The difference between the ResNeXt-A and ResNeXt-B might be due to the differences in their complexity distributions.
+
+![Complexity Distribution](./ComplexityDistribution.png)
+
+As shown in the image above, ResNeXt-A have more low compelxity models and ResNeXt-B have heavy tail of high-complexity models. Thus, it is plausible that ResNeXt-B's apparent superiority is due to the confounding effect of plexity.
+
+### Normalized Comparison
+
+Author propose a normalziation procedure to factor out the confounding effect of the differences in the complexity of model distributions.
+
+Given a set of n models where each model has complexity ![](https://latex.codecogs.com/svg.image?c_i), the idea is to assign to each model a weight ![](https://latex.codecogs.com/svg.image?w_i), where ![](https://latex.codecogs.com/svg.image?%5Cinline%7B%5Csum_iw_i=1%7D) to create a more representative set under that complexity measure.
+
+From using above parameters, we define normalized complexity EDF as 
+
+![Normalized Complexity EDF](https://latex.codecogs.com/svg.image?C(c)=%5Csum_%7Bi=1%7D%5E%7Bn%7D%7Bw_i1%5Bc_i%3Cc%5D%7D)
+
+Likewise the normalized error EDF is defined as :
+
+![normalized error EDF](https://latex.codecogs.com/svg.image?%5Chat%7BF%7D(e)=%5Csum_%7Bi=1%7D%5E%7Bn%7D%7Bw_i1%5Be_i%3Ce%5D%7D)
+
+From given two model set, our goal is to find weights for each model set such that ![](https://latex.codecogs.com/svg.image?C_i(c)%5Capprox%20C_2(c)) for all c in a given complexity range. After finding the weights, comparison between ![function 1](https://latex.codecogs.com/svg.image?%5Chat%7BF%7D_1) and ![function 2](https://latex.codecogs.com/svg.image?%5Chat%7BF%7D_2) reveal the difference between design spaces that cannot be explained by model complexity alone.
+
+In the Figure found on section Unnormalized comparison, the middle and right image is normalized by parameters and flops. Controlling the complexity brings the curve closer. However, the small gap between ResNeXt-A and ResNeXt-B might caused by higher number of groups and wider width.
+
+## Characterizing Distributions
+
+An advantage of examining the full errror distribution of a design space is it gives insights beyond the minimum achieveable error. Examining distributions allows us to more fully characterize a design space.
+
+### Distribution shape
+
+![Finding good models quickly](./FindingGoodModelQuickly.png)
+
+The left iamge shows EDFs for the Vanilla and ResNet design space. For ResNet majority(>80%) of the model have error under 8%. In constrast, the Vanilla design space has a much smaller fraction of such models(~15%). This represent it is easier to find a good ResNet model.
+
+### Distribution area
+
