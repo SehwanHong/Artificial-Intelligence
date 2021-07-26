@@ -285,3 +285,23 @@ Author sampled NAS cells by using uniform sampling at each step. Likewise w and 
 ### Data Generation
 
 Training approximately 1000 CIFAR models for each of the Five NAS design spaces. Ensure 1000 models per design space for both full flop range and full parameter range.
+
+## Design Space Comparison
+
+### Distribution comparison
+
+![NAS Distribution Comparison](./NASDistribution.png)
+
+Above image show normalized error EDFs for each of the NAS design spaces. The NASNet and Amoeba design space are noticeably worse than the others, while DARTS is best overall. Comparing ENAS and PNAS, they are similar but ENAS has more intermediate error while Enase has more lower/higher performing models.
+
+Author thinks the gains in each paper may come from improvements of the design space.
+
+### Random Search efficiency
+
+![NAS Random Search Efficiecny](./NASEfficiency.png)
+
+From above image, we observe two interesting facts.
+
+1. The ordering of design spaces by random search efficiency is consistent with the ordering of the EDFs.
+2. For a fixed search algorithm, the differences in the design space leads to clear difference in performance.
+
