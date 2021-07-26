@@ -66,3 +66,37 @@ As design space an contain an eponential number of candidate models, exhaustive 
 
 To analyze network design spaces, author smaple and evaluate numerous models from each design space. In doing so, author generate datasets of trained models upon which we perform empirical studies.
 
+## Instantiations
+
+### Model family
+
+Author study three standarad model families:
+1. Vanilla model family (feedforward network loosely inspired by VGG)
+2. ResNet model family
+3. ResNeXt model family
+
+### Design space
+
+![Design Space Parameterization](./DesignSpaceParameterization.png)
+
+As shown in the table above, author used networks consisting of a stem, followed by three stages and a head, as described in the table above.
+
+* For ResNet design space, a single block consists of two convolutions and residual connection.
+* Vanilla design space uses an identical block structure as ResNet but without residual connection.
+* In the Case of ResNeXt design spaces, we use bottleneck blocks with groups.
+
+![Design Spaces](./DesignSpace.png)
+
+This table above specify the set of allowable hyperparameters for each. The notation, ![a, b, n](https://latex.codecogs.com/svg.image?a,b,c) means we sample, n values sapced about evenly in log spaces in the range a to b. From these value, we select independently for three network stages, number of blocks ![d_i](https://latex.codecogs.com/svg.image?d_i), and the number of channels per block ![w_i](https://latex.codecogs.com/svg.image?w_i).
+
+From these number, the total number of models  is ![number of models without groups](https://latex.codecogs.com/svg.image?(dw)^3) for models without groups and ![number of models with groups](https://latex.codecogs.com/svg.image?(dwrg)^3) for models with groups.
+
+### Model distribution
+
+Author generate model distributions by uniformly sampling hyperparameters from the allowable values for each design spaces.
+
+### Data generation
+
+Author uses image classification models trained on CIFAR-10. This setting enables large-scale analysis and is used often used as a testbed for recognition networks. From the above table, author selected 25k models and used to evaluate the methodology
+
+
