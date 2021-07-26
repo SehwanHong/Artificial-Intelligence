@@ -224,4 +224,27 @@ To simulate random search experiments of varying m, author sampled m models from
 
 In the right of the above graph, random search was used on both Vanilla and ResNet to simulate random search. Using random search finds better models faster in the ResNet design space.
 
+## Minial Sample Size
+
+In practice far fewer samples can be used to compare distrubtions of models as we now demonstrate.
+
+### Qualitative analysis
+
+![Number of samples](./NumberOfSamples.png)
+
+Left image shows EDFs for the ResNet design space with varying number of samples. Using 10 samples to generate EDF is quite nosizy, However, 100 samples gives reasonalbe approximation. 1000 sample is indistinguishable from 10000. Thus author suggest to use 100 to 1000 samples.
+
+### Quantitative analysis
+
+For quantitative analysis, we compute the KS statistic D between full smaple of 25k models and sub samples of increasing size n. The right image above is the result of the comparison. At 100 samples D is about 0.1 and at 1000, D begins to satuate. Beyong 1000 samples, shows diminishing returns.
+
+Thus as qualitative analysis, using sample size between 100 and 1000 is a reasonable sample size.
+
+### Deasibility discussion
+
+Some might wonder about feasibility of training between 100 and 1000 models for evaluating  distribution. In authors setting, Training 500 CIFAR models required about 250 GPU hours. In comparison, Training a typical ResNet-50 baseline on ImageNet requires about 192 GPU hours.
+
+Therefore, evaluating the full distribution for a small-sized problem like CIFAR requires a computational budget on par with a point estimate for a medium-sized problem like ImageNet
+
+Overall, distribution comparison is quite feasible under typical setting.
 
