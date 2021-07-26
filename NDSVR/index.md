@@ -210,3 +210,18 @@ The left iamge shows EDFs for the Vanilla and ResNet design space. For ResNet ma
 
 ### Distribution area
 
+EDF can be summarized by the average area under the curve up to max ![epsilon](https://latex.codecogs.com/svg.image?%5Cepsilon). By this we could compute :
+
+![](https://latex.codecogs.com/svg.image?%5Cint_%7B0%7D%5E%7B%5Cepsilon%7D%7B%5Chat%7BF%7D(e)/%5Cepsilon%20%5Ctextrm%7Bd%7De%7D=1-%5Csum%20w_i%5Cmin%5Cleft(1,%5Cfrac%7Be_i%7D%7B%5Cepsilon%7D%5Cright))
+
+However, the area gives only a partial view of the EDF.
+
+### Random Search Efficiency
+
+Another way to assess the ease of finding a good model is to measure random search efficiency.
+
+To simulate random search experiments of varying m, author sampled m models from our pool on n models and take their minimum error. Then repeat the process n/m times to obtain the mean along with the error vars for each m. To eliminate confounding effect of complexity, weight is assigned to each model.
+
+In the right of the above graph, random search was used on both Vanilla and ResNet to simulate random search. Using random search finds better models faster in the ResNet design space.
+
+
