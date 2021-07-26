@@ -20,3 +20,24 @@ Unlike Curve estimates where  they compare a few selected members of a model fam
 
 This methodology rocuses on characterizing the model family. Thus enable research into designing the design space for model search.
 
+# Related Work
+
+### Reproducible resarch
+
+There has been an encouraging recent trend toward better reproducibility in machine learning. Thus author share the goal of introducing a more robust methodology for evaluating model architectures in the domain of visual recognition
+
+### Empirical studies
+
+In the absence of rigorous theoretical understanding of deep networks, it is imperative to perform large-scale studies of deep networks to aid development. Empricial studies and robust methodology play in enabling progress toward discovering better architectures.
+
+### Hyperparameter search
+
+General hyperparameter search techniques address the laborious model tuning process in machine learning. In this work, author propose to directly compare full model distributions not just their minima.
+
+### Neural architecture Search
+
+NAS has proven effective for learning networks architecctures. A NAS instantiation has two components: a network design space and a search algorithm. Most work on NAS focuses on the search algorithm. However, in this work, author focus on characterizing the model design space.
+
+### Complexity measures
+
+In this work, author focus on analyzing network design space while controlling for confounding factors like network complexity. Author adopt commonly-used network complexity measures, including number of model parameters or multiply-add operations. 
