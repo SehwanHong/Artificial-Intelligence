@@ -199,7 +199,7 @@ Full error distribution을 검증하는 것의 장점은 minimum achievable erro
 
 ### Distribution shape
 
-![Finding good models quickly](./FindingGoodModelQuickly.png)
+![Finding good models quickly](../FindingGoodModelQuickly.png)
 
 왼쪽 이미는 Vanilla와 ResNet design space의 EDF를 표현한 그래프입니다. ResNet의 경우 80%이상의 경우가 8%이하의 error rate를 가지고 있습니다. 하지만 Vanilla design space의 경우 훨씬 적은 15%정도의 model만 8%의 정확도를 가집니다. 이를 통해서 더 좋은 ResNet model을 찾는 것이 좋은 Vanilla model을 찾는 것 보다 쉽습니다.
 
