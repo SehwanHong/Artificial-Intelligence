@@ -311,3 +311,10 @@ NAS design space에서 최상의 결과를 낸 DARTS와 가장 안좋은 결과�
 ![Point Comparisons](../PointComparison.png)
 
 저자는 이런한 현상이 사실을 확인하기 위해서 deep supervision과 Cutout, modified DropPath를 사용해서 DARTS, ResNeXt 그리고 ResNet-110을 사용해서 비교한 것입니다. 이러한 결과는 위의 표에서 확인 할 수 있는데, 이러한 효과를통해서 ResNeXt가 DARTS가 비슷한 error rate를 가지는 것을 확인 할 수 있습니다.
+
+# Conclusion
+
+저자는 model design space를 해석하는 비교하는 새로운 방식을 소개합니다. 이러한 빙식은 다른 model type나 domain, task에 적용할 수 있습니다.
+
+## [Link to NeuralNet](../../)
+## [Link to English Version](../)
