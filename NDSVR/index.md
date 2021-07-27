@@ -8,27 +8,27 @@ There has been a general trend toward better empiricism in the literature on net
 
 ![Comparing Network using different estimations](./ComparingNetworks.png)
 
-In the early development stages, the simple method was used. The progress of the neural network was measured by simple point estimates. The architecture was makred superiror if it achieved lower error on a benchmark dataset, often irrespective of model complexity.
+In the early development stages, the simple method was used. The progress of the neural network was measured by simple point estimates. The architecture was marked superiror if it achieved lower error on a benchmark dataset, often irrespective of model complexity.
 
 The improved methodoloy adopted in more recent work compares curve estimates.  This methods explore design tradeoffs of network architectures by instantiating a handful of models from a loosely defined model familes and tracing curve of error vs. model complexity. In this estimation, one model family is considered superior if it acheives lower error at every point along a curve. In this example, ResNeXt are considered better than ResNet because, ResNeXt have lower error in all the point.
 
 However, there is some draw back in using this methodology. Curve estimates does not consider confounding factors, which may vary between model familes and may be suboptimal for one of them.
 
-Rather than varying a single network hyperparameter while keeping all others fixed, what if instead we varu all relevant network hyperparameters? However, this is not feasible, because there are often infinite number of possible models. Therefore, author introduce a new comparison paradigm: that of distribution estimates.
+Rather than varying a single network hyperparameter while keeping all others fixed, what if instead we vary all relevant network hyperparameters? However, this is not feasible, because there are often infinite number of possible models. Therefore, author introduce a new comparison paradigm: that of distribution estimates.
 
-Unlike Curve estimates where  they compare a few selected members of a model family, distribution estimates sample modles from a design space, parameterizing possible architectures, giving rise to distrivutions of error rates and model complexities.
+Unlike Curve estimates where they compare a few selected members of a model family, distribution estimates sample models from a design space, parameterizing possible architectures, giving rise to distributions of error rates and model complexities.
 
-This methodology rocuses on characterizing the model family. Thus enable research into designing the design space for model search.
+This methodology focuses on characterizing the model family. Thus enable research into designing the design space for model search.
 
 # Related Work
 
-### Reproducible resarch
+### Reproducible research
 
 There has been an encouraging recent trend toward better reproducibility in machine learning. Thus author share the goal of introducing a more robust methodology for evaluating model architectures in the domain of visual recognition
 
 ### Empirical studies
 
-In the absence of rigorous theoretical understanding of deep networks, it is imperative to perform large-scale studies of deep networks to aid development. Empricial studies and robust methodology play in enabling progress toward discovering better architectures.
+In the absence of rigorous theoretical understanding of deep networks, it is imperative to perform large-scale studies of deep networks to aid development. Empricial studies and robust methodology play crucial role in enabling progress toward discovering better architectures.
 
 ### Hyperparameter search
 
@@ -36,13 +36,13 @@ General hyperparameter search techniques address the laborious model tuning proc
 
 ### Neural architecture Search
 
-NAS has proven effective for learning networks architecctures. A NAS instantiation has two components: a network design space and a search algorithm. Most work on NAS focuses on the search algorithm. However, in this work, author focus on characterizing the model design space.
+NAS has proven effective for learning networks architectures. A NAS instantiation has two components: a network design space and a search algorithm. Most work on NAS focuses on the search algorithm. However, in this work, author focus on characterizing the model design space.
 
 ### Complexity measures
 
 In this work, author focus on analyzing network design space while controlling for confounding factors like network complexity. Author adopt commonly-used network complexity measures, including number of model parameters or multiply-add operations. 
 
-# Design Spces
+# Design Spaces
 
 ## Definitions
 
@@ -52,7 +52,7 @@ A model family is large (possibly infinite) collection of related neural network
 
 ### Design Space
 
-Performing empirical studies on model families are difficult since they are broadly defined and typically not fully specified. To make disctinctino between abstract model families, design space is introduces. Design space is a concrete set of architectures taht can be isntantiated from the model family.
+Performing empirical studies on model families are difficult since they are broadly defined and typically not fully specified. To make disctinction between abstract model families, design space is introduces. Design space is a concrete set of architectures that can be instantiated from the model family.
 
 A design space consist of two components
 1. parameterization of a model family
@@ -60,11 +60,11 @@ A design space consist of two components
 
 ### Model distribution
 
-As design space an contain an eponential number of candidate models, exhaustive evaluation is not feasible. Therefore, from a design space, author sampled and excaluated a fixed set of models, giving rise to a model distribution. Then, author use classical statistics for analysis. Any standard distribution, as well as learned distributions like in NAS, can be integrated into our paradigm.
+As design space can contain an exponential number of candidate models, exhaustive evaluation is not feasible. Therefore, from a design space, author sampled and evaluated a fixed set of models, giving rise to a model distribution. Then, author use classical statistics for analysis. Any standard distribution, as well as learned distributions like in NAS, can be integrated into our paradigm.
 
 ### Data Generation
 
-To analyze network design spaces, author smaple and evaluate numerous models from each design space. In doing so, author generate datasets of trained models upon which we perform empirical studies.
+To analyze network design spaces, author sample and evaluate numerous models from each design space. In doing so, author generate datasets of trained models upon which we perform empirical studies.
 
 ## Instantiations
 
@@ -104,7 +104,7 @@ Author uses image classification models trained on CIFAR-10. This setting enable
 
 ## Comparing Distribution
 
-When developing a new network architecture, human experts employ a combination ffrom a design spacce, and select the model achieving the lowest error. The final model is a point estimate of the design space. 
+When developing a new network architecture, human experts employ a combination of grid and manual search from a design space, and select the model achieving the lowest error. The final model is a point estimate of the design space. 
 
 Comparing design spaces via point estimates can be misleading. This is illustrated by comparing two sets of models of different sizes sampled from the same design space.
 
@@ -116,7 +116,7 @@ After traing, M's minimum error is lower than B's minimum error. Since the best 
 
 ![Point distribution](./PointDistribution.png)
 
-Repeating this experiment yield the same results. Above iamge represent the difference in the minimum error of B and M over multiple trials. This experiment was simulated by repeatedly sampling B and M from the pool of 25k pre-trained models.
+Repeating this experiment yield the same results. Above image represent the difference in the minimum error of B and M over multiple trials. This experiment was simulated by repeatedly sampling B and M from the pool of 25k pre-trained models.
 
 In 90% of the cases M has a lower minimum than B, often with large margin. However, M and B were drawn from the same design space. Thus using point estimation can be misleading.
 
@@ -134,7 +134,7 @@ This equation represent the fraction of models with error less than e.
 
 Using B and M, author plotted the empirical distribution instead of just their minimum errors. The small tail to the bottom left indicate a small population of models with low error and the long tail on the upper right shows there are few models with error over 10%.
 
-Quantitatively there is little visible difference between the error EDFs for B and M, suggesting that these two set of models were drawn form an identical design space.
+Quanlitatively there is little visible difference between the error EDFs for B and M, suggesting that these two set of models were drawn from an identical design space.
 
 To make quantitative comparison, use Kolmogorove-Smirnov test, a nonparametric statistical test for the null hypothesis that two samples were drawn from the same distributions. Given ![function 1](https://latex.codecogs.com/svg.image?F_1) and ![function 2](https://latex.codecogs.com/svg.image?F_2), the KS statistic D is defined as:
 
@@ -150,7 +150,7 @@ The most work reports results for only a small number of best models, and rarely
 
 ## Controlling for Complexity
 
-While comparing distributions can lead to more robust conclusions about design spaces, comparison must done between controlled confounding factos that correlate with model error to avoid biased conclusions.
+While comparing distributions can lead to more robust conclusions about design spaces, comparison must done between controlled confounding factors that correlate with model error to avoid biased conclusions.
 
 Relevant confounding factor is model complexity. The next section study how to control the complexity of the model.
 
@@ -162,7 +162,7 @@ The leftmost image shows the error EDFs for the ResNeXt-A and ResNeXt-B design s
 
 Looking through the image, qualitative difference is visible and suggest that ResNeXt-B is a better design space. For every error, EDF for ResNeXt-B is higher at every error threshold.
 
-This image present that different design space form the same model family under the same model distribution can result in very different error distributions.
+This image present that different design space from the same model family under the same model distribution can result in very different error distributions.
 
 ### Error vs Complexity
 
@@ -178,7 +178,7 @@ The difference between the ResNeXt-A and ResNeXt-B might be due to the differenc
 
 ![Complexity Distribution](./ComplexityDistribution.png)
 
-As shown in the image above, ResNeXt-A have more low compelxity models and ResNeXt-B have heavy tail of high-complexity models. Thus, it is plausible that ResNeXt-B's apparent superiority is due to the confounding effect of plexity.
+As shown in the image above, ResNeXt-A have more low compelxity models and ResNeXt-B have heavy tail of high-complexity models. Thus, it is plausible that ResNeXt-B's apparent superiority is due to the confounding effect of complexity.
 
 ### Normalized Comparison
 
@@ -200,13 +200,13 @@ In the Figure found on section Unnormalized comparison, the middle and right ima
 
 ## Characterizing Distributions
 
-An advantage of examining the full errror distribution of a design space is it gives insights beyond the minimum achieveable error. Examining distributions allows us to more fully characterize a design space.
+An advantage of examining the full errror distribution of a design space is it gives insights beyond the minimum achievable error. Examining distributions allows us to more fully characterize a design space.
 
 ### Distribution shape
 
 ![Finding good models quickly](./FindingGoodModelQuickly.png)
 
-The left iamge shows EDFs for the Vanilla and ResNet design space. For ResNet majority(>80%) of the model have error under 8%. In constrast, the Vanilla design space has a much smaller fraction of such models(~15%). This represent it is easier to find a good ResNet model.
+The left image shows EDFs for the Vanilla and ResNet design space. For ResNet majority(>80%) of the model have error under 8%. In constrast, the Vanilla design space has a much smaller fraction of such models(~15%). This represent it is easier to find a good ResNet model.
 
 ### Distribution area
 
@@ -224,7 +224,7 @@ To simulate random search experiments of varying m, author sampled m models from
 
 In the right of the above graph, random search was used on both Vanilla and ResNet to simulate random search. Using random search finds better models faster in the ResNet design space.
 
-## Minial Sample Size
+## Minimal Sample Size
 
 In practice far fewer samples can be used to compare distrubtions of models as we now demonstrate.
 
@@ -240,7 +240,7 @@ For quantitative analysis, we compute the KS statistic D between full smaple of 
 
 Thus as qualitative analysis, using sample size between 100 and 1000 is a reasonable sample size.
 
-### Deasibility discussion
+### Feasibility discussion
 
 Some might wonder about feasibility of training between 100 and 1000 models for evaluating  distribution. In authors setting, Training 500 CIFAR models required about 250 GPU hours. In comparison, Training a typical ResNet-50 baseline on ImageNet requires about 192 GPU hours.
 
@@ -260,7 +260,7 @@ NAS has two core components:
 
 ### Model family
 
-NAS model is contructed by repeatedly stacking a single computational unit. A cell can vary in the operatioons it performs and in its connectivity parttern.
+NAS model is contructed by repeatedly stacking a single computational unit. A cell can vary in the operations it performs and in its connectivity parttern.
 
 A cell takes output from two previous cells as inputs and contains a number of nodes. Each nodes in a cell takes as input two previously constructed nodes, applies an operator to each input, and combines the output of two operators.
 
@@ -309,7 +309,7 @@ From above image, we observe two interesting facts.
 
 ![NAS vs Standard Design spaces](./NASvsStandard.png)
 
-From selecting best and worst performing NAS design spaces(DARTS and NASNet) and compare them to the ResNeXt design spaces. ResNet-B is on par tiwh DARTS when normalized by parameter( as shown in the left), while DARTS slightly outperforms ResNeXt-B when normalized by flops(as shown in the right).
+From selecting best and worst performing NAS design spaces(DARTS and NASNet) and compare them to the ResNeXt design spaces. ResNet-B is on par with DARTS when normalized by parameter( as shown in the left), while DARTS slightly outperforms ResNeXt-B when normalized by flops(as shown in the right).
 
 These result demonstarate that the design of the design space plays a key role and suggest that designing design spaces, manually or via data-driven approaches is a promising avenue for future work.
 
@@ -326,3 +326,5 @@ The result presented in the above table. With enhanced setup, ResNeXt achieves s
 Author present methodology for analyzing and comparing model design space. This methodology should be applicable to other model types, domains, and tasks.
 
 ## [Link to NeuralNet](../)
+
+## [Link to Korean](./Korean/)
