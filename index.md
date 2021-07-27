@@ -20,6 +20,6 @@ This is a collection of Neural Network repository where I will build a series of
 * [MobileNet Korean version](./MobileNet/Korean/)
 * [MobileNet V2 Korean](./MobileNet/Korean/V2/)
 * [ReXNet Korean Verion](./ReXNet/Korean/) [자세한 워드파일](./ReXNet/Korean/ReXNet_Summary.docx)
+* [On Network Design Spaces for Visual Recognition Korean version](./NDSVR/Korean)
 
 ## Inprogress
-* [On Network Design Spaces for Visual Recognition Korean version](./NDSVR/Korean)
