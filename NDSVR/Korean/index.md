@@ -14,11 +14,11 @@
 
 하지만 이러한 방식에도 단점은 있습니다. Curve estimate는 다른 confounding factor를 고려하지 않습니다. Confounding factor가 model family 마다 다를 수도 있도, 어떠한 model family에게는 차선의 선택일 때도 있습니다.
 
-다른 변수들을 고정시키고 하나의 network hyperparameter를 변화시키는 것 보다, 모든 network hyperparameter를 변화시키면 어떻겠습니까? 이러한 방식은 confounding factor의 영향을 없에줍지만, 무한대에 가까운 model을 만듭니다. 그렇기에 저자는 새로운 방식의 비교방식을 소개합니다: distribution estimates.
+다른 변수들을 고정시키고 하나의 network hyperparameter를 변화시키는 것 보다, 모든 network hyperparameter를 변화시키면 어떻겠습니까? 이러한 방식은 confounding factor의 영향을 없애줍지만, 무한대에 가까운 model을 만듭니다. 그렇기에 저자는 새로운 방식의 비교방식을 소개합니다: distribution estimates.
 
 선택된 몇게의 모델을 비교하는 Curve Estimate와는 다르게 distribution estimate는 design space(parameterize 가능한 인공신경망 구조)에서 model을 선택합니다. 이를 통해서 error rate와 model complexity사이의 distribution을 확인할 수 있습니다.
 
-이러한 방식은 model family의 character에 중접을 둡니다. 그렇기에 이러한 방식은 model 탐색을 위한 design space에 관한 연구를 가능하게 합니다.
+이러한 방식은 model family의 character에 중점을 둡니다. 그렇기에 이러한 방식은 model 탐색을 위한 design space에 관한 연구를 가능하게 합니다.
 
 # Related Work
 
@@ -189,7 +189,7 @@ n개의 model이 주어졌을 때, 복잡도가 ![](https://latex.codecogs.com/s
 
 이와 같이 정의합니다.
 
-두개의 model이 주어졌을 때, 각각의 weight가 ![](https://latex.codecogs.com/svg.image?C_i(c)%5Capprox%20C_2(c))을 모든 c의 값에서 만족하도록 하는 값을 찾습니다. 만약 모든 weight를 찾았다면, [function 1](https://latex.codecogs.com/svg.image?%5Chat%7BF%7D_1) and ![function 2](https://latex.codecogs.com/svg.image?%5Chat%7BF%7D_2)값의 차가 model complexity를 제외한 다른 영향력을 보여줍니다.
+두개의 model이 주어졌을 때, 각각의 weight가 ![](https://latex.codecogs.com/svg.image?C_i(c)%5Capprox%20C_2(c))을 모든 c의 값에서 만족하도록 하는 값을 찾습니다. 만약 모든 weight를 찾았다면, ![function 1](https://latex.codecogs.com/svg.image?%5Chat%7BF%7D_1) and ![function 2](https://latex.codecogs.com/svg.image?%5Chat%7BF%7D_2)값의 차가 model complexity를 제외한 다른 영향력을 보여줍니다.
 
 Unnormalized comparison에서 보여주는 이미지를 확인해보면, 중앙과 오른쪽이미지가 parameter와 flops에 의해서 normalized 된 것을 보여줍니다. 가장 왼쪽의 이미지와 비교했을 때 둘의 차이가 줄어들었지만, 약간의 차이가 남아 있습니다. 이러한 차이는 ResNeXt-A와 ResNeXt-B의 group의 크기와 width의 크기의 차로 생각되어집니다.
 
