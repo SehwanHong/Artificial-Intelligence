@@ -41,3 +41,61 @@ NAS는 인공신경망 구조를 배우는 것에 효과적이라는 것이 증�
 ### Complexity measures
 
 이 논문에서 저자는 confounding factor를 조절하면서 network design space의 해석에 집중합니다. 저자는 일반적으로 사용되는 복잡도 계산 방법인 model parameter 수와 multiply-add 연산의 수를 활용합니다.
+
+# Design Spaces
+
+## Definitions
+
+### Model Family
+
+Model Family는 연관된 인공신경망 구조들을 묶은 무한에 가까운 거대한 집합입니다. 대체적으로 이들은 고차원적인 설계 구조나 설계 원칙(예를 들어 residual connection)을 공유합니다.
+
+### Design Space
+
+Model family에 Empirical Study를 한다는 것은 매우 어렵습니다. 왜냐하면 model family는 대략적으로 정의되있고 대체적으로 자세하게 설명되지 않습니다. 이러한 추상적인 model family들 사이를 구별하기 위해서 Design Space가 소개되었습니다. Design space는 model family로부터 예시화 가능한 구체적인 인공신경망의 집합입니다.
+
+Degisn space는 2개의 구성으로 이루어져 있습니다.
+1. Model faimly의 parameterization
+2. 각각의 hyperparameter에 가능한 값의 집합
+
+### Model Distribution
+
+Design space는 기하급수적인 숫자의 인공신경망 model을 포함하고 있습니다. 이에 철저한 조사를 하는 것은 적절하지 못합니다. 그렇기에 design space에서 저자는 고정된 model의 집합을 만들고 평가합니다. 그 뒤로 통계학적인 해석을 사용합니다. 어떠한 standard distribution은 물론 NAS 처럼 learned distribution 또한 이 paradigm에 통합될 수 있습니다.
+
+### Data Generation
+
+Network Design Spaces를 해석하기 위해서 저자는 각각의 design space로부터 수많은 model을 sample 하고 평가합니다. 이를 통해서 저자는 empirical study에 사용할 훌녀된 모델의 dataset을 만듭니다.
+
+## Instantiations
+
+### Model Family
+
+저자는 3개의 기본적인 model family에 대하여 연구합니다.
+1. Vanilla model family(VGG에서 영감을 얻은 feedforward 인공신경망)
+2. ResNet model family
+3. ResNeXt model family
+
+### Design space
+
+![Design Space Parameterization](../DesignSpaceParameterization.png)
+
+위의 표에서 보는 것처럼 저자는 stem을 포함하여 3개의 stage와 head를 가진 인공신경망을 사용했습니다.
+
+* ResNet design space에서 하나의 block은 2개의 convolution과 하나의 residual connection으로 이루어 져 있습니다.
+* Vanilla design space는 ResNet design space와 같지만 residual conneciton이 없습니다.
+* ResNeXt design space는 bottleneck block과 group을 사용합니다.
+
+![Design Spaces](./DesignSpace.png)
+
+이 표는 각각의 모델에서 사용할 hyperparameter를 적은 것입니다. 여기서 ![a, b, n](https://latex.codecogs.com/svg.image?a,b,c) 표기법을 사용했습니다. n개의 hyperparameter를 a와 b 사이에서 log-scale uniform 하서 선택합니다. 3개의 독립적인 stage는 이러한 hyperparameter를 각자 block의 개수 ![d_i](https://latex.codecogs.com/svg.image?d_i)와 channel의 개수, ![w_i](https://latex.codecogs.com/svg.image?w_i)를 선택하게 됩니다. 
+
+이를 통해서 전체 가능한 모델의 수는 group이 없을 경우 ![number of models without groups](https://latex.codecogs.com/svg.image?(dw)^3) 그룹이 있을 경우 ![number of models with groups](https://latex.codecogs.com/svg.image?(dwrg)^3) 개가 있습니다.
+
+### Model Distribution
+
+저자는 위에서 설정된 각각의 design space에서 hyperparameter를 uniform하게 선택하여 model distribution을 만들었습니다.
+
+### Data generation
+
+저자는 CIFAR-10 dataset을 이용해서 훈련을 하였습니다. 이러한 방식은 large-scale 해석을 가능하게 하고 가끔은 recognition network의 성능평가를 위해서 사용하기도 합니다. 위의 표에서 설정된 hyperparameter를 이용해 모든 design space 에서 25000개의 model을 선택해서 평가를 위해 사용되었습니다.
+
