@@ -241,3 +241,73 @@ Random search experiment를 모의 실험하기 위해서 m의 값을 n개의 �
 
 다시 요약하면, 이러한 방식은 평범한 상황에서는 가능하다고 이야기 가능합니다.
 
+# Case Study: NAS
+
+Distribution estimation의 case study로 저자는 인공신경망 탐색(NAS)의 논문에 관한 실험을 합니다.
+
+NAS는 두가지 핵짐 구성으로 이루어졌습니다.
+1. design space
+2. design space의 탐색 algorithm
+
+## Design Spaces
+
+### Model family
+
+NAS model은 하나의 computation unit을 반복적으로 쌓는 것으로 시작합니다. cell이 행하는 연산이 다르고 어떻게 연결하는 방식 또한 다릅니다.
+
+Cell은 자신 이전에 있는 2개의 cell 에서 입력을 받아옵니다. cell 은 몇개의 node로 구성되어 있고 각각의 node는 이전 두개의 node로 부터 입력을 받습니다. 그리고 각각의 input에 연산을 적용한다음, 두개의 연산을 합칩니다.
+
+### Design Space
+
+![NAS Design Space](../NASDesignSpace.png)
+
+다섯개의 NAS model family, NASNet AmoebaNet, PNAS, ENAS, DARTS가 선택되었습니다. 위의 표에서 보는 것처럼 대부분의 경우 5개의 Cell로 제한 되었습니다. 출력 L은 loose node를 의미하고 A는 모든 노드를 의미합니다.
+
+모든 인공신경망이 조금씩 다릅니다. 그렇기에 DARTS에서 사용된 방식으로 전체적으로 통합했습니다.
+
+인공신경망의 깊이와 가장 첫번째 필터의 width는 고정되었습니다. 하지만 이러한 방식은 model complexity에 영향을 줍니다.
+
+![NAS Complexity Distribution](../NASComplexityDistribution.png)
+
+위에서 보는 것처럼, 각각의 모델이 다 다른 복잡도를 가지고 있습니다. 이러한 방식을 조절하기 위해서 저자는 w와 d의 값을 (![](https://latex.codecogs.com/svg.image?w%5Cin%5Cleft%5C%7B16,24,32%5Cright%5C%7D)와 ![](https://latex.codecogs.com/svg.image?d%5Cin%5Cleft%5C%7B4,8,12,16,20%5Cright%5C%7D))으로 조절하였습니다.
+
+### Model distribution
+
+저자는 uniformly random하게 sample 하였습니다. w와 d의 값 또한 uniformly sample 하였습니다.
+
+### Data Generation
+
+각각의 NASnet이 CIFAR-10에 1000개의 model을 훈련하였습니다. 둘다 제한된 parameter와 flops에서 1000개의 모델이 되도록 설게하였습니다.
+
+## Design Space Comparison
+
+### Distribution comparison
+
+![NAS Distribution Comparison](../NASDistribution.png)
+
+위의 normalized error EDF를 확인할 수 있습니다. NASNet과 AmoebaNet이 가장 안좋은 결과를 가지고 있습니다. DARTS가 가장 좋은 결과를 가지고 있는 것 또한 확인 할 수 있습니다. ENAS와 PNAS는 비슷합니다. 하지만 ENAS가 중간 값에 더 좋고 PNAS가 lower/higher performing model을 가지고 있습니다. 
+
+저자는 이러한 성능의 향상은 design space의 개선으로 이루저 졌다고 생각합니다.
+
+### Random Search efficiency
+
+![NAS Random Search Efficiecny](../NASEfficiency.png)
+
+위의 그래프를 통해서 두가지를 확인 할 수 있습니다.
+
+1. random search efficiency의 순서가 EDFs의 순서와 똑같다
+2. Design space의 차이가 성능의 차이로 이루어진다.
+
+## Comparisons to Standard Design Spaces
+
+![NAS vs Standard Design spaces](../NASvsStandard.png)
+
+NAS design space에서 최상의 결과를 낸 DARTS와 가장 안좋은 결과를 낸 NASNet을 일반적인 ResNeXt와 비교해보았습니다. ResNeXt-B의 경우 parameter로 normalize 한 경우 DARTS와 비슷한 결과를 낸 것을 확인 할 수 있습니다. 하지만 FLOPs로 normalize 한경우 ResNeXt-B가 살짝 결과 가 안좋습니다.
+
+이 결과는 Design space의 설계가 중점이 됩니다. 또한 손수 하거나 data를 사용해서 design space를 설계하는 것은 미래의 작업을 위해서 좋은 방향이 됩니다.
+
+## Sanity Check: point Comparison
+
+![Point Comparisons](../PointComparison.png)
+
+저자는 이런한 현상이 사실을 확인하기 위해서 deep supervision과 Cutout, modified DropPath를 사용해서 DARTS, ResNeXt 그리고 ResNet-110을 사용해서 비교한 것입니다. 이러한 결과는 위의 표에서 확인 할 수 있는데, 이러한 효과를통해서 ResNeXt가 DARTS가 비슷한 error rate를 가지는 것을 확인 할 수 있습니다.
