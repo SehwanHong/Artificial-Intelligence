@@ -23,5 +23,5 @@ This is a collection of Neural Network repository where I will build a series of
 * [On Network Design Spaces for Visual Recognition Korean version](./NDSVR/Korean)
 
 ## Inprogress
-* [Designing Network Design Spaces](./DNDS/)
-* [Designing Network Design Spaces](./DNDS/Korean)
+* [RegNet](./DNDS/)
+* [RegNet Korean version](./DNDS/Korean)
