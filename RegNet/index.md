@@ -137,3 +137,52 @@ Applying constraints ![increasing depth](https://latex.codecogs.com/svg.image?d_
 
 The constraints on ![d_i](https://latex.codecogs.com/svg.image?d_i) and ![w_i](https://latex.codecogs.com/svg.image?w_i) each reduce the design space by 4!, with a cumulative reduction of ![](https://latex.codecogs.com/svg.image?O(10%5E7)) from AnyNetXA.
 
+## The RegNet Design Space
+
+![The best 20 models form AnyNetXE in a single plot](./Best20AnyNetXE.png)
+
+Above image show the best 20 models form AnyNetXE in a single plot. For each model, per-block width ![w_j](https://latex.codecogs.com/svg.image?w_j) of every block j up to the network depth d. There are significant variance in the individual models(gray curves). However, there is a trivial linear fit(![](https://latex.codecogs.com/svg.image?w_j=48%5Ccdot(j&plus;1)), black solid line) that explain the trend of the growth of network widths for top models. *Note that the y-axis are logarithmic*
+
+Since individual models have quanitzed widths (piecewise constant functions), author introduce a linear parameterization for block widths:
+
+![linear parameterization](https://latex.codecogs.com/svg.image?u_j=w_0&plus;w_a%5Ccdot%20j%5C;%5C;%5C;%5Ctextrm%7Bfor%7D%5C;%5C;%5C;0%5Cleq%20j%20%3C%20d)
+
+This parameterization has three parameters: depth ![d](https://latex.codecogs.com/svg.image?d), initial width ![initial width](https://latex.codecogs.com/svg.image?w_0%3E0), and slope ![slope](https://latex.codecogs.com/svg.image?w_a%3E0). Using this generates a different block width ![u_j](https://latex.codecogs.com/svg.image?u_j) for each block ![j<d](https://latex.codecogs.com/svg.image?j%3Cd). 
+
+To quantize ![u_j](https://latex.codecogs.com/svg.image?u_j), author introduce an additional parameter ![w_m](https://latex.codecogs.com/svg.image?w_m%3E0) that controls quantization as follows. First given ![u_j](https://latex.codecogs.com/svg.image?u_j) from above equation, computes ![s_j](https://latex.codecogs.com/svg.image?s_j) for each block j such that the following holds:
+
+![](https://latex.codecogs.com/svg.image?u_j=w_0%5Ccdot%20w_m%5E%7Bs_j%7D)
+
+Then, to quantize ![u_j](https://latex.codecogs.com/svg.image?u_j), simply round ![s_j](https://latex.codecogs.com/svg.image?s_j)(denoted as ![round s_j](https://latex.codecogs.com/svg.image?%5Cleft%5Clfloor%20s_j%20%5Cright%5Crceil))and compute quantized per-block widths ![w_j](https://latex.codecogs.com/svg.image?w_j) via :
+
+![](https://latex.codecogs.com/svg.image?w_j=w_0%5Ccdot%20w_m%5E%7B%5Cleft%5Clfloor%20s_j%20%5Cright%5Crceil%7D)
+
+From this per-block ![w_j](https://latex.codecogs.com/svg.image?w_j) representation, conversion to per-stage format by simply counding the number of blocks with constant width, where each stage i has block width as ![per stage width](https://latex.codecogs.com/svg.image?w_i=w_0%5Ccdot%20w_m%5Ei) and number of block ![number of block](https://latex.codecogs.com/svg.image?%5CSigma_j1%5Cleft%5B%5Cleft%5Clfloor%20s_j%5Cright%5Crceil=i%5Cright%5D). 
+
+Author test this parameterization by fittingto models from AnyNetX. Given a model, comput the fit by setting d to the network depth and performing a grid search over ![w_0](https://latex.codecogs.com/svg.image?w_0), ![w_a](https://latex.codecogs.com/svg.image?w_a), and ![w_m](https://latex.codecogs.com/svg.image?w_m) to minimize the mean log-ratio(denoted by ![e_fit](https://latex.codecogs.com/svg.image?e_%7Bfit%7D)) of predicted to observed per-block widths.
+
+![Quantized linear fit](./QuantizedLinearFit.png)
+
+Result for two top networks form AnyNetXE are shown in the image above. The quantized linear fits(dashed curves) are good fits of these best models(solid curves).
+
+![](./LogRatioNetworkError.png)
+
+Plotting the fitting error ![e_fit](https://latex.codecogs.com/svg.image?e_%7Bfit%7D) versus network error for every network in AnyNetXC through AnyNetXE in the image above. From this image we could find two observations.
+
+1. The best models in each design space all ahve good linear fits
+	* Empirical bootstrap gives a narrow band of ![e_fit](https://latex.codecogs.com/svg.image?e_%7Bfit%7D) near zero that likely contains the best models in each design space.
+2. On average, ![e_fit](https://latex.codecogs.com/svg.image?e_%7Bfit%7D) improves going from AnyNetXC tp AnyNetXE
+	* Showing that the linear parameterization naturally enforces related constrains to ![w_i](https://latex.codecogs.com/svg.image?w_i) and  ![d_i](https://latex.codecogs.com/svg.image?d_i) increasing.
+
+To further test the linear parameterization, author design a design space that only	contains models with such linear structure. Particularly, network structure is specified by 6 parameters:  d, ![w_0](https://latex.codecogs.com/svg.image?w_0), ![w_a](https://latex.codecogs.com/svg.image?w_a), ![w_m](https://latex.codecogs.com/svg.image?w_m), b and g. Given these parameters, author generate block widths and depth using equations written above. With these definition author defined resulting space as RegNet. Parameter is sampled from ![parameters](https://latex.codecogs.com/svg.image?d%3C64,%20w_0,w_a%3C256,%201.5%5Cleq%20w_m%5Cleq3,b%5Cin%5Cleft%5C%7B1,2,4%5Cright%5C%7D,%20g%5Cin%5Cleft%5C%7B1,2,%5Ccdots,32%5Cright%5C%7D).
+
+![RegNet Design Space](./RegNetDesignSpace.png)
+
+The Error EDF of RegNetX is shown in the leftmost image. Models in RegNetX have better average error than AnyNetX while maintaining the best models. The middle image represent two additional improvement. First is using ![](https://latex.codecogs.com/svg.image?w_m=2), and Second is ![](https://latex.codecogs.com/svg.image?w_0=w_a). However, to maintain the diversity of models, author did not impose either restrictions. The final image shows the random search efficiency for both AnyNetXA and RegNetX.
+
+## Design Space Summary
+
+![Design Space Summary](./DesignSpaceSummary.png)
+
+Above table shows a summary of the design space sizes. For RegNet, the estimation is based on the size of quantization of its continuous parameters. In designing RegNetX, Author reduced the dimension of the original AnyNetX design space from 16 to 6 dimensions. The total size is reduced nearly 10 orders of magnitude.
+
