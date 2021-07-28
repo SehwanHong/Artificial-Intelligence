@@ -186,3 +186,15 @@ The Error EDF of RegNetX is shown in the leftmost image. Models in RegNetX have 
 
 Above table shows a summary of the design space sizes. For RegNet, the estimation is based on the size of quantization of its continuous parameters. In designing RegNetX, Author reduced the dimension of the original AnyNetX design space from 16 to 6 dimensions. The total size is reduced nearly 10 orders of magnitude.
 
+## Design Space Generalization
+
+The RegNet design space was designed in a low-compute, low-epoch traning regime with only a single block type. Author checks if proposed principles works on different settings such as higher floops, higher epoch, with 5-stage networks and with various block types.
+
+![RegNetX Generalization](./RegNetXGeneralization.png)
+
+In all cases the ordering of the design space is consistent with ![regnet>anyneta>anynete](https://latex.codecogs.com/svg.image?RegNetX%3EAnyNetX_E%3EAnyNetX_A). In other words, there is no signs of over fitting. The 5-stage results show the regular structure of RegNet can generalize to more stages, where AnyNetXA has even more degrees of freedom.
+
+![Block type used](./BlockTypesUsed.png)
+
+Above image show different block type used in this test cases. X block has the best result amongst various block design.
+
