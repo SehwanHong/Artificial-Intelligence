@@ -37,3 +37,29 @@ Final quantized linear parameterization shares similarity with previous work. Th
 1. provide empirical study justifying the design choices
 2. give insights tinto structural design choices that were not previously understood.
 
+# Design Space Design
+
+Author propose to design progressively simplified versions of an initial, unconstrained design space, refered as *design space design*. In each step of design process the input is an initial design space and the output is a refined design space, where the aim of each design step is to discover design principle that yield populations of a simpler or better performing model.
+
+## Tools for Design Space Design
+
+To evaluate and compare design spaces, author used [the tools introduced by Radosavovic et al](../NDSVR). The method is to quantify the quality of a design space by sampling a set of models from that design space and characterizeing the resulting model error distribution. 
+
+To obtain a distribution of model, author sample and train n models from a design space. For efficiency author primarily do so in a low-compute, low-epoch training regime.
+
+The primary tool for analyzing design space quality is the error empirical distribution function(EDF). The error EDF of n models with error ![e_i](https://latex.codecogs.com/svg.image?e_i) is given by:
+
+![error empirical distribution function](https://latex.codecogs.com/svg.image?F(e)=%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi=1%7D%5E%7Bn%7D%7B1%5Cleft%5Be_i%3Ce%5Cright%5D%7D)
+
+![error empirical distribution function](https://latex.codecogs.com/svg.image?F(e)) gives the fraction of model with error less than e. 
+
+![Statistic of the AnyNetX design space](./AnyNetXDesignSpace.png)
+
+The above image show the error EDF for n = 500 sampled models form the AnyNetX design space. Given a population for trained models, we can plot and analyze vaious network properties versus network error. Such visualization show 1D projections of a complex, high-dimensional space, and can help obtain insights into the design space. 
+
+To summarize:
+
+1. distribution of models obtained by sampling and training n models from a design space
+2. compute and plot error EDFs to summarize design space quality
+3. visualize various properties of a design space and use an empirical bootstrap to gain insight
+4. use these insights to refine the design space
