@@ -259,9 +259,9 @@ Above graph and table represent best RegNetX models and RegNetY models for each 
 
 ![Mobile Regime](./MobileRegime.png)
 
-The recent work on network design has foucsed on the mobile regime. When compareing RegNet models at 600MF to exisiting networks in above table. We observe that RegNet are effective in this regime considersing the substantial body of work on finding better mobile networks via both manual design and NAS.
+The recent work on network design has focused on the mobile regime. When comparing RegNet models at 600MF to existing networks in above table. We observe that RegNet are effective in this regime considering the substantial body of work on finding better mobile networks via both manual design and NAS.
 
-Author emphasize that RegNet models use only 100 epoch schedule without regularization except weight decay, while other models use longer scheduls with various enhancement.
+Author emphasize that RegNet models use only 100 epoch schedule without regularization except weight decay, while other models use longer schedules with various enhancement.
 
 ## Standard Baselines Comparison: ResNe(X)t
 
@@ -269,7 +269,7 @@ Author emphasize that RegNet models use only 100 epoch schedule without regulari
 
 ![ResNe(X)t comparison Table](./ResNetComparisonTable.png)
 
-RegnetX mdoels provide considerable improvements under all complexity metrics. Also RegNet model performs better under all complexity metrics. 
+RegNetX models provide considerable improvements under all complexity metrics. Also RegNet model performs better under all complexity metrics. 
 
 ## State-of-the-Art Comparison: Full Regime
 
@@ -280,9 +280,9 @@ EfficentNet is reproduced using training setup used for RegNet. Therefore the Ef
 
 For Low flop models, EfficentNet outperforms both RegNet. At Intermediate flops, RegNetY outperforms EfficentNet. At Higher flops both RegNetX and RegNetY outperform EfficentNet.
 
-For efficientNet activations scale linearly with flops compared to activation scaling with the square root of flops for RegNet. Thus, EfficentNet is slow in both inference and training time.
+For EfficentNet activations scale linearly with flops compared to activation scaling with the square root of flops for RegNet. Thus, EfficentNet is slow in both inference and training time.
 
 
 # Conclusion
 
-Author present a new network design paradigm. Designing network design spaces is a promissing avenue for future research.
+Author present a new network design paradigm. Designing network design spaces is a promising avenue for future research.
