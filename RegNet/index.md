@@ -281,3 +281,8 @@ EfficentNet is reproduced using training setup used for RegNet. Therefore the Ef
 For Low flop models, EfficentNet outperforms both RegNet. At Intermediate flops, RegNetY outperforms EfficentNet. At Higher flops both RegNetX and RegNetY outperform EfficentNet.
 
 For efficientNet activations scale linearly with flops compared to activation scaling with the square root of flops for RegNet. Thus, EfficentNet is slow in both inference and training time.
+
+
+# Conclusion
+
+Author present a new network design paradigm. Designing network design spaces is a promissing avenue for future research.
