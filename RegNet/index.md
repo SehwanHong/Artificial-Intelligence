@@ -119,7 +119,7 @@ The second refinement step closely follows the first. AnyNetXC use a shared grou
 
 ![Example good and bad AnyNetXC networks](./GoodNBadAnyNetXC.png)
 
-Examining the network structures of both good and bad network from AnyNetXC in image above. Top three graph represent good AnyNetXC Networks and bottom three represnet bad AnyNetXC.
+Examining the network structures of both good and bad network from AnyNetXC in image above. Top three graph represent good AnyNetXC Networks and bottom three represent bad AnyNetXC.
 
 From these graphs, there is a pattern: good networks have increasing widths. Applying these design principle of ![increasing width](https://latex.codecogs.com/svg.image?w_%7Bi&plus;1%7D%5Cgeq%20w_i) to AnyNetXC and refer to the design space as AnyNetXD. 
 
@@ -218,17 +218,17 @@ Author further analyze the RegNetX design space and revisit common deep network 
 
 ![Complexity Metrics](./ComplexityMetrics.png)
 
-In addition to flops and parameters, author analyze network activation which is defined as the size of ouput tensors of all convoluiton layers. Complexity measures of common convolution operators are described in the above table. Activations is not a common measure of network complexity but heavily affect runtime on memory-bound hardware accelerators, shown in the top-right image.
+In addition to flops and parameters, author analyze network activation which is defined as the size of output tensors of all convolution layers. Complexity measures of common convolution operators are described in the above table. Activations is not a common measure of network complexity but heavily affect runtime on memory-bound hardware accelerators, shown in the top-right image.
 
 For the best models in the population, activations increase with the square-root of flops, parameters increase linearly, and runtime is best modeled using both linear and a square-root term due to its dependence on both flops and activations.
 
 ### RegNetX constrained
 
-Using above findinds, author refine the RegNetX design space.
+Using above findings, author refine the RegNetX design space.
 
 1. Based on RegNet trend, RegNetX is set to have ![](https://latex.codecogs.com/svg.image?b=1), ![](https://latex.codecogs.com/svg.image?d\leq40), and ![](https://latex.codecogs.com/svg.image?w_m\geq2).
 2. Based on Complexity analysis, limit parameter and activations
-	* This yields fast, low-paramter, low-memory models without affecting accuarcy.
+	* This yields fast, low-parameter, low-memory models without affecting accuracy.
 
 ![](./RegNetXRefined.png)
 
@@ -236,11 +236,11 @@ Constrained version of RegNetX, marked by RegNetX C, has better results for ever
 
 ### Alternate Design Choices
 
-Modern mobile networks often employ the inverted bottleneck (![](https://latex.codecogs.com/svg.image?b<1)) along with depthwise convoluiton (![](https://latex.codecogs.com/svg.image?g=1)).
+Modern mobile networks often employ the inverted bottleneck (![](https://latex.codecogs.com/svg.image?b<1)) along with depthwise convolution (![](https://latex.codecogs.com/svg.image?g=1)).
 
 ![Alternate Design Choices](./AlternateDesignChoice.png)
 
-The inverted bottleneck degrades the EDF slightly and depthwise convolution performs even worse. Also shown in the right image, sacling the input image does not help improving accuracy for RegNetX
+The inverted bottleneck degrades the EDF slightly and depthwise convolution performs even worse. Also shown in the right image, scaling the input image does not help improving accuracy for RegNetX
 
 
 ### SE
@@ -248,3 +248,36 @@ The inverted bottleneck degrades the EDF slightly and depthwise convolution perf
 ![RegNetY(Y=X+SE)](./RegNetY.png)
 
 RegNetX with popular Squeeze and Excitation operation, abbreviated as RegNetY, yields better result than when it is not used.
+
+# Comparison to Existing Networks
+
+![Top result for RegNetX and RegNetY](./RegNetXY.png)
+
+Above graph and table represent best RegNetX models and RegNetY models for each flop regime. Though this linear structure of block index, we could observe an interesting pattern. The higher flop models have a large number of blocks in the third stage and a small number of blocks in the last stage. Group width g increase with complexity, but depth d saturates for large models.
+
+## State-of-the-Art Comparison: Mobile Regime
+
+![Mobile Regime](./MobileRegime.png)
+
+The recent work on network design has foucsed on the mobile regime. When compareing RegNet models at 600MF to exisiting networks in above table. We observe that RegNet are effective in this regime considersing the substantial body of work on finding better mobile networks via both manual design and NAS.
+
+Author emphasize that RegNet models use only 100 epoch schedule without regularization except weight decay, while other models use longer scheduls with various enhancement.
+
+## Standard Baselines Comparison: ResNe(X)t
+
+![ResNe(X)t comparison](./ResNetComparison.png)
+
+![ResNe(X)t comparison Table](./ResNetComparisonTable.png)
+
+RegnetX mdoels provide considerable improvements under all complexity metrics. Also RegNet model performs better under all complexity metrics. 
+
+## State-of-the-Art Comparison: Full Regime
+
+![EfficiencyNet comparison with different complexity metric](./EfficiencyNet.png)
+![EfficiencyNet comparison with RegNet](./EfficiencyNetComparison.png)
+
+EfficentNet is reproduced using training setup used for RegNet. Therefore the Efficiency Net result is lower than the original results.
+
+For Low flop models, EfficentNet outperforms both RegNet. At Intermediate flops, RegNetY outperforms EfficentNet. At Higher flops both RegNetX and RegNetY outperform EfficentNet.
+
+For efficientNet activations scale linearly with flops compared to activation scaling with the square root of flops for RegNet. Thus, EfficentNet is slow in both inference and training time.
