@@ -34,3 +34,30 @@ Final quantized linear parameterization은 이전 논문들과 비슷합니다. 
 1. design choice를 정당화 하는 empirical study를 재공합니다.
 2. 전에는 이해하지 못하는 structural design choice에 영감을 제공합니다.
 
+# Design Space Design
+
+저자는 초기의 제한없는 design space로부터 점진적으로 간단하게 만드는 것을 제시합니다. 이를 Design space design이라고 말합니다. Design process의 각 단계는, initial design space를 입력값으로 수정한 design space를 출력값으로 여깁니다. 각 design step의 목표는 간단한 모델의 집합이나 더 좋은 성능을 가진 모델을 만드는 새로운 설계원칙을 찾는 것입니다.
+
+## Tools for Design Space Design
+
+Design space를 평가하고 비교하기 위해 저자는 [Radosavovic과 다른 저자들이 소개한 도구](../../NDSVR/Korean/)를 사용합니다. 이러한 방식은 design space에서 model의 집합을 추출하여 design space의 성능을 수치로 표현합니다. 그리고 구한 model error dsitribution을 characterize 하빈다.
+
+Model의 distribution을 얻기위해서 저자는 design space로 부터 n개의 model을 sample하고 traniing 합니다. 효율성을 위해서 저자는 low-compute, low-epoch training 영역에서 사용합니다.
+
+Deisgh space quality를 해석하기 위한 도구로 error empirical distribution function을 사용합니다. n개의 model에 대한 Error EDF를 error ![e_i](https://latex.codecogs.com/svg.image?e_i)를 사용해서 나타내면:
+
+![error empirical distribution function](https://latex.codecogs.com/svg.image?F(e)=%5Cfrac%7B1%7D%7Bn%7D%5Csum_%7Bi=1%7D%5E%7Bn%7D%7B1%5Cleft%5Be_i%3Ce%5Cright%5D%7D)
+
+![error empirical distribution function](https://latex.codecogs.com/svg.image?F(e))는 error가 e보다 작은 model의 부분을 나타냅니다.
+
+![Statistic of the AnyNetX design space](../AnyNetXDesignSpace.png)
+
+위의 이미지는 n=500을 AnyNetX design space로 부터 추출한 error EDF를 나타낸 것입니다. 훈련된 model의 집합이 주어졌을 때, network properties와 network error사이의 관계를 그래프로 만들고 분석하였습니다. 이러한 모델의 시각화는 복잡하고 높은 차원의 정보를 1차원으로 줄여 design space에 관한 이해를 얻을 수 있도록 도와 줍니다.
+
+요약하자면,
+
+1. model의 distribution은 design space로부터 n개의 model을 추출하고 훈련하여 얻습니다.
+2. Error EDF를 계산하고 그래프로 정리하여 design space quality를 요약합니다.
+3. design space의 다양한 특성을 시각화 하고 empirical bootstrap을 통해 insight를 얻습니다.
+4. 이러한 insight를 활용해 design space를 개선합니다.
+
