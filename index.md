@@ -11,6 +11,7 @@ This is a collection of Neural Network repository where I will build a series of
 * [MobileNet V2](./MobileNet/V2/)
 * [ReXNet](./ReXNet)
 * [On Network Design Spaces for Visual Recognition](./NDSVR)
+* [RegNet](./RegNet/)
 
 ## Korean Version
 
@@ -23,5 +24,4 @@ This is a collection of Neural Network repository where I will build a series of
 * [On Network Design Spaces for Visual Recognition Korean version](./NDSVR/Korean)
 
 ## Inprogress
-* [RegNet](./DNDS/)
-* [RegNet Korean version](./DNDS/Korean)
+* [RegNet Korean version](./RegNet/Korean)
