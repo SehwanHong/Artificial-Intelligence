@@ -193,4 +193,53 @@ RegNet design space는 low-compute, low-epoch, 그리고 단일 block type으로
 
 위의 이미지는 이 test에서 사용한 다양한 block의 구조를 표현한 것입니다. 여기서 X block이 가장 좋은 결과를 가지고 있는 것을 확인 할 수 있습니다.
 
+# Analyzing the RegNetX Design Space
+
+저자는 RegNetX design space를 자세하게 연구하고 많이 사용하는 deep network design choice를 다시 한번 확인합니다. 이러한 연구를 통해서 사용되고 있는 것과는 다른 결과를 확인 할 수 있습니다. RegNetX의 design space는 좋은 model이 많기 때문에 sample의 수를 더 줄였고 대신 더 긴 epoch동안에 훈련을 하였습니다.
+
+### RegNet trends
+
+![RegNetX parameter trends](../RegNetXParameterTrend.png)
+
+1. 가장 좋은 model들의 깊이는 대부분 비슷했고 대체적으로 20개 내외의 block을 가지고 있습니다.
+	* 깊이가 깊으면 더 좋은 결과를 낸다고 알고 있는 것과는 다릅니다.
+2. Bottleneck ratio가 1일때의 결과가 가장 좋았습니다.
+	* 이는 Bottleneck을 없에는 효과가 있습니다.
+3. Width multiplier ![w_m](https://latex.codecogs.com/svg.image?w_m)는 대체적으로 2.5정도 입니다.
+	* 많이 사용하는 width를 2배로 늘리는 것과 비슷합니다.
+4. 다른 변수들은 complexity가 증가하면 같이 증가합니다.
+
+### Complexity analysis
+
+![Complexity Metrics](../ComplexityMetrics.png)
+
+Flops와 parameter를 사용하는 것과 동시에, 저자는 새로운 complexity metric인 network activation을 소개합니다. network activation은 모든 convolution 연산의 출력 tensor의 크기를 더한 것입니다. 연산을 하는 방식은 위에 표에 적혀져 있습니다. Activation을 사용하는 것은 특이한 방식이지만, memory가 제약된 상황에서 runtime에 영향을 많이 미칩니다. 오른쪽 위의 이미지를 통해서 확인 할 수 있습니다.
+
+가장 좋은 결과를 낸 model의 집합에서 activation은 flops의 제곱근에 비례하여 증가합니다. parameter의 경우 linear하게 증가하고, runtime은 linear와 동시에 제곱근에 비례합니다. 다른 말로, runtime은 activation과 flops에 의존합니다.
+
+### RegNetX constrained
+
+위에서 발견한 사실들을 가지고 RegNetX의 design space에 제약을 가합니다.
+
+1. RegNet trend에서 확인 한 사실을 가지고, ![](https://latex.codecogs.com/svg.image?b=1), ![](https://latex.codecogs.com/svg.image?d\leq40)와 ![](https://latex.codecogs.com/svg.image?w_m\geq2)를 적용합니다. 
+2. Complexity analysis에서 확인 한 것을 통해서 parameter와 activation을 제약합니다.
+	* 이는 정확도의 손실 없이 빠르고, low-paramter에 low-memory인 모델을 찾도록 도와줍니다.
+
+![](../RegNetXRefined.png)
+
+제약을 가한 RegNetX를 RegNetX C로 표현을 하고, RegNetX C의 결과는 모든 상황에서 더 좋은 정확도를 가지고 있습니다.
+
+### Alternate Design Choices
+
+Mobile Network는 Inverted Bottleneck(![](https://latex.codecogs.com/svg.image?b<1))과 depthwise convolution(![](https://latex.codecogs.com/svg.image?g=1))을 사용합니다.
+
+![Alternate Design Choices](../AlternateDesignChoice.png)
+
+결과를 확인해 보면, inverted bottleneck의 경우 EDF가 살짝 줄어드는 것을 볼 수 있습니다. 하지만 Depthwise convolution의 경우, 심각할정도로 많이 줄어듭니다. 오른쪽 이미지에서 보는 것 처럼, 이미지의 해상도를 변화시키는 것은 성능 향상이 일어나지 않습니다.
+
+### SE
+
+![RegNetY(Y=X+SE)](../RegNetY.png)
+
+RegNetX에 유명한 Squeeze and excitation연산을 추가 한 것을 RegNetY라고 부릅니다. RegNetY는 RegNetX보다 좋은 성능을 가지고 있습니다.
 
