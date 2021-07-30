@@ -28,7 +28,7 @@ Both manual and semi-automated network design typically focus on finding best-pe
 
 ### Comparing network
 
-The author of [On network design space for visual recognition](../NDSVR) proposed a methodology for comparing and analyzing populations of networks sampled from a design space. This distribution-level view is fully alight with goal of finding general design principles. Therefore, author adopt this methodology and demonstrate that it can serve as a useful tool for the design space design process.
+The author of [On network design space for visual recognition](../NDSVR) proposed a methodology for comparing and analyzing populations of networks sampled from a design space. This distribution-level view is fully-aligned with goal of finding general design principles. Therefore, author adopt this methodology and demonstrate that it can serve as a useful tool for the design space design process.
 
 ### Parameterization
 
@@ -64,7 +64,7 @@ To summarize:
 3. visualize various properties of a design space and use an empirical bootstrap to gain insight
 4. use these insights to refine the design space
 
-# The AnyNet Design Space
+## The AnyNet Design Space
 
 ![general network structural for models in AnyNet design space](./AnyNetDesignSpace.png)
 
@@ -141,7 +141,7 @@ The constraints on ![d_i](https://latex.codecogs.com/svg.image?d_i) and ![w_i](h
 
 ![The best 20 models form AnyNetXE in a single plot](./Best20AnyNetXE.png)
 
-Above image show the best 20 models form AnyNetXE in a single plot. For each model, per-block width ![w_j](https://latex.codecogs.com/svg.image?w_j) of every block j up to the network depth d. There are significant variance in the individual models(gray curves). However, there is a trivial linear fit(![](https://latex.codecogs.com/svg.image?w_j=48%5Ccdot(j&plus;1)), black solid line) that explain the trend of the growth of network widths for top models. *Note that the y-axis are logarithmic*
+Above image show the best 20 models from AnyNetXE in a single plot. For each model, per-block width ![w_j](https://latex.codecogs.com/svg.image?w_j) of every block j up to the network depth d. There are significant variance in the individual models(gray curves). However, there is a trivial linear fit(![](https://latex.codecogs.com/svg.image?w_j=48%5Ccdot(j&plus;1)), black solid line) that explain the trend of the growth of network widths for top models. *Note that the y-axis are logarithmic*
 
 Since individual models have quantized widths (piecewise constant functions), author introduce a linear parameterization for block widths:
 
@@ -163,7 +163,7 @@ Author test this parameterization by fitting to models from AnyNetX. Given a mod
 
 ![Quantized linear fit](./QuantizedLinearFit.png)
 
-Result for two top networks form AnyNetXE are shown in the image above. The quantized linear fits(dashed curves) are good fits of these best models(solid curves).
+Result for two top networks from AnyNetXE are shown in the image above. The quantized linear fits(dashed curves) are good fits of these best models(solid curves).
 
 ![](./LogRatioNetworkError.png)
 
@@ -253,7 +253,7 @@ RegNetX with popular Squeeze and Excitation operation, abbreviated as RegNetY, y
 
 ![Top result for RegNetX and RegNetY](./RegNetXY.png)
 
-Above graph and table represent best RegNetX models and RegNetY models for each flop regime. Though this linear structure of block index, we could observe an interesting pattern. The higher flop models have a large number of blocks in the third stage and a small number of blocks in the last stage. Group width g increase with complexity, but depth d saturates for large models.
+Above graph and table represent best RegNetX models and RegNetY models for each flop regime. Through this linear structure of block index, we could observe an interesting pattern. The higher flop models have a large number of blocks in the third stage and a small number of blocks in the last stage. Group width g increase with complexity, but depth d saturates for large models.
 
 ## State-of-the-Art Comparison: Mobile Regime
 
