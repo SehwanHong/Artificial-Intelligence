@@ -61,3 +61,136 @@ Deisgh space quality를 해석하기 위한 도구로 error empirical distributi
 3. design space의 다양한 특성을 시각화 하고 empirical bootstrap을 통해 insight를 얻습니다.
 4. 이러한 insight를 활용해 design space를 개선합니다.
 
+## The AnyNet Design Space
+
+![general network structural for models in AnyNet design space](../AnyNetDesignSpace.png)
+
+AnyNet design space의 기초적인 design은 아주 간단합니다. 위의 이미지에서 보는 것처럼, 입력 이미지가 주어졌다면, 인공신경망은, 간단한 stem, network body, 그리고 마지막으로 network head로 이루어졌습니다. Network body가 대부분의 연산을 실행하고, Network head가 마지막 출력 class를 예상합니다.
+
+AnyNet의 network body는 점진적으로 작아지는 4개의 stage로 이루어졌습니다. 각각의 stage는 연속된 동일한 block으로 이루어져 있습니다. 전체적으로, 각각의 stage i에 대해서, degree of freedom은 number of blocks, block width, 그리고 다른 block parameter를 포함하고 있습니다.
+
+![The X block](../Xblock.png)
+
+이 논문의 실험에는 기본적인 residual bottleneck block에 group convolution을 넣은 것을 사용합니다. 그리고 이 구조를 X block이라고 부릅니다. 위의 이미지에서 보는 것 처럼, 각각의 X block은 ![](https://latex.codecogs.com/svg.image?1\times1) conv, ![](https://latex.codecogs.com/svg.image?3\times3) group conv and a final ![](https://latex.codecogs.com/svg.image?1\times1) conv로 이루어져있습니다. ![](https://latex.codecogs.com/svg.image?1\times1) convs가 channel width를 변화 시킵니다. 모든 convolution 뒤에는 Batch normalization과 ReLU 를 사용합니다. 이 Block에는 총 3개의 변수가 있습니다: the width ![w_i](https://latex.codecogs.com/svg.image?w_i), bottleneck ratio ![b_i](https://latex.codecogs.com/svg.image?b_i), and group width ![g_i](https://latex.codecogs.com/svg.image?g_i). 
+
+X Block을 사용한 AnyNet을 AnyNetX라고 불리웁니다. 이 design space에서 16 degree of freedom이 있습니다. 총 4개의 stage에서 각각의 stage i가 4개의 parameter를 가집니다:
+
+1. the number of blocks ![d_i](https://latex.codecogs.com/svg.image?d_i)
+2. block width ![w_i](https://latex.codecogs.com/svg.image?w_i)
+3. bottleneck ratio ![b_i](https://latex.codecogs.com/svg.image?b_i)
+4. group width ![g_i](https://latex.codecogs.com/svg.image?g_i)
+
+이러한 변수들을 조정해서 정확한 모델을 만든다고 가정을 한다면, 저자는 log-uniform random sampling을 ![number of block](https://latex.codecogs.com/svg.image?d_i%5Cleq%2016), ![block width](https://latex.codecogs.com/svg.image?w_i%5Cleq%20128),  and divisible by 8, ![bottleneck ratio](https://latex.codecogs.com/svg.image?b_i%5Cin%5Cleft%5C%7B1,2,4%5Cright%5C%7D), and ![group width](https://latex.codecogs.com/svg.image?g_i%5Cin%5Cleft%5C%7B1,2,4,%5Ccdots,32%5Cright%5C%7D)에 적용합니다. 이러한 parameter를 사용해서 n=500이 되도록 추출을 하고 각 모델을 10epoch씩 훈련합니다.
+
+![Statistic of the AnyNetX design space](../AnyNetXDesignSpace.png)
+
+AnyNetX에 관한 기본적인 통계는 위의 이미지를 통해서 확인 할 수 있습니다. 
+
+위에서 제공한 parameter를 사용하면, AnyNetX의 design space에서 정확하게 ![approximation of possible models](https://latex.codecogs.com/svg.image?(16%5Ccdot128%5Ccdot3%5Ccdot6)%5E4%5Capprox10%5E%7B18%7D)개의 가능한 모델을 만들수 있습니다. ![](https://latex.codecogs.com/svg.image?10%5E%7B18%7D)개도 넘는 모델에서 가장 좋은 model을 찾기보다, 저자는 design space를 설명하고 개선할 수 있는 범용적인 설계 원칙을 탐색합니다.
+
+이러한 방식을 따르는 것에 4가지 목적이 있습니다.
+1. design space의 구조를 간단하게 만드는 것
+2. design space의 해석가능성을 향상시키는 것
+3. design space의 질을 유지하거나 향상시키는 것
+4. design space안에 있는 model의 다양성을 유지하는 것
+
+### AnyNetXA
+
+가장 처음 사용하는 아무런 제약이 없는 AnyNetX design space를 AnyNetXA라고 합니다.
+
+### AnyNetXB
+
+AnyNetXA의 design space에서 모든 stage i의 bottleneck ratio를 모두 동일하게 ![Shared bottleneck ratio](https://latex.codecogs.com/svg.image?b_i=b)로 만드는 design space를 AnyNetXB라고 합니다. AnyNetXA처럼 AnyNetXB의 design space에서 500개의 model을 추출하고 훈련했습니다.
+
+![AnyNetXA and AnyNetXB](../AnyNetXAB.png)
+
+위의 이미지에서 보는 것 처럼, AnyNetXA와 AnyNetXB의 EDF가 거의 동일하다는 것을 알 수 있습니다. 이를 통해서 bottleneck ratio을 모든 block에서 동일하게 사용하는 것은 정확도에 아무런 영향을 주지 못하는 것을 알 수 있습니다. 
+
+### AnyNetXC
+
+![AnyNetXB and AnyNetXC](../AnyNetXBC.png)
+
+두번째 개선점은, 첫번째와 유사합니다. AnyNetXC는 AnyNetXB에 group width를 모두 동일하게 만든 것입니다. AnyNetXC와 AnyNetXB가 유사한 EDF를 가지고 있기에 정확도의 차이는 없습니다. 다만, degree of freedom이 6개 줄어들었고, 가능한 model의 수가 10000배 정도 줄어들었습니다.
+
+### AnyNetXD
+
+![Example good and bad AnyNetXC networks](../GoodNBadAnyNetXC.png)
+
+AnyNetXC의 network structure중에서 좋은 결과를 낸 network와 나쁜 결과를 낸 network의 구조를 표현한 이미지가 위에 있습니다. 위의 3개의 그래프가 좋은 결과를 낸 network structure이고 밑의 3개가 나쁜 결과를 낸 network structure입니다.
+
+이 그래프를 통해서 한가지 pattern을 확인할 수 있습니다. 좋은 인공신경망의 경우 width가 증가하는 것을 알 수 있습니다. 이 설계 원칙, ![increasing width](https://latex.codecogs.com/svg.image?w_%7Bi&plus;1%7D%5Cgeq%20w_i)를 AnyNetXC에 적용한 것이 AnyNetXD입니다. 
+
+![AnyNetXC and AnyNetXD](../AnyNetXCD.png)
+
+이 그래프가 width에 여러가지 제약을 준 상태의 결과를 나타낸 것입니다. width가 증가할경우, AnyNetXD의 design space를 사용할 경우, EDF가 상당히 증가하는 것을 확인 할 수 있습니다.
+
+### AnyNetXE
+
+또 다른 공통적인 페턴이 있습니다. Stage의 깊이 ![d_i](https://latex.codecogs.com/svg.image?d_i)가 마지막 레이어를 제외하고 대체적으로 증가하는 추세를 가지는 것을 알 수 있습니다.
+
+![AnyNetXD and AnyNetXE](../AnyNetXDE.png)
+
+AnyNetXD에 ![increasing depth](https://latex.codecogs.com/svg.image?d_%7Bi&plus;1%7D%5Cgeq%20d_i)를 적용한 것을 AnyNetXE라고 합니다. AnyNetXE가 AnyNetXD보다 살짝 더 좋은 결과를 가지고 있습니다.
+
+![d_i](https://latex.codecogs.com/svg.image?d_i)와 ![w_i](https://latex.codecogs.com/svg.image?w_i)의 제약을 주는 것은 가각 design space를 4!만큼 줄입니다. 전체적으로 AnyNetXE는 AnyNetXA 보다 ![](https://latex.codecogs.com/svg.image?O(10%5E7))만큼 design space의 크기가 작습니다.
+
+## The RegNet Design Space
+
+![The best 20 models form AnyNetXE in a single plot](../Best20AnyNetXE.png)
+
+위의 이미지는 AnyNetXE에서 가장 좋은 결과를 낸 20개의 모델을 하나의 그래프에 나타낸 것입니다. 각각의 model 마다, j block에  per-block width ![w_j](https://latex.codecogs.com/svg.image?w_j) 를 깊이 d 만큼 가지고 있다고 가정합니다. 여기서 각각의 model은 다양하게 존제합니다(회색선). 모든 모델들의 network width의 성장을 설명하는 하나의 수식(![](https://latex.codecogs.com/svg.image?w_j=48%5Ccdot(j&plus;1)), black solid line)이 존재합니다. *여기서 y축은 logarithmic입니다.*
+
+모든 모델이 quantized width(부분선형함수)임으로, 저자는 block width를 위한 linear parameterization을 소개합니다.
+
+![linear parameterization](https://latex.codecogs.com/svg.image?u_j=w_0&plus;w_a%5Ccdot%20j%5C;%5C;%5C;%5Ctextrm%7Bfor%7D%5C;%5C;%5C;0%5Cleq%20j%20%3C%20d)
+
+위의 수식에서 나오는 3개지 변수는 depth ![d](https://latex.codecogs.com/svg.image?d), initial width ![initial width](https://latex.codecogs.com/svg.image?w_0%3E0), and slope ![slope](https://latex.codecogs.com/svg.image?w_a%3E0) 입니다. 위 수식을 사용해서 ![j<d](https://latex.codecogs.com/svg.image?j%3Cd)인 block들의 block width ![u_j](https://latex.codecogs.com/svg.image?u_j)를 구할 수 있습니다.
+
+![u_j](https://latex.codecogs.com/svg.image?u_j)를 quantize 하기 위해서, 저자는 새로운 변수 ![w_m](https://latex.codecogs.com/svg.image?w_m%3E0)를 소개합니다. 이변수를 사용하는 방법은 아래와 같습니다. 첫번째로, 위에서 얻을 수 있는 ![u_j](https://latex.codecogs.com/svg.image?u_j)를 기반으로 ![s_j](https://latex.codecogs.com/svg.image?s_j)를 구합니다. 이때  다음과 같은 수식을 적용가능해야합니다.
+
+![](https://latex.codecogs.com/svg.image?u_j=w_0%5Ccdot%20w_m%5E%7Bs_j%7D)
+
+![u_j](https://latex.codecogs.com/svg.image?u_j)를 quantize하기 위해서는 ![s_j](https://latex.codecogs.com/svg.image?s_j)를 반올림하는 것입니다. ![round s_j](https://latex.codecogs.com/svg.image?%5Cleft%5Clfloor%20s_j%20%5Cright%5Crceil)라는 수식으로 표현됩니다. 그리고 이를 통해서 quantized per-block widths ![w_j](https://latex.codecogs.com/svg.image?w_j)는 아래와 같은 수식으로 정리합니다.
+
+![](https://latex.codecogs.com/svg.image?w_j=w_0%5Ccdot%20w_m%5E%7B%5Cleft%5Clfloor%20s_j%20%5Cright%5Crceil%7D)
+
+위의 수식은 per-block 형식으로 만들어진 것입니다. per-stage형식으로 변환하는 것은 아주 간단합니다. 첫번째로 ![per stage width](https://latex.codecogs.com/svg.image?w_i=w_0%5Ccdot%20w_m%5Ei)로 변화시키는 것이 가장 처음이고 다음으로는 block의 개수를 ![number of block](https://latex.codecogs.com/svg.image?%5CSigma_j1%5Cleft%5B%5Cleft%5Clfloor%20s_j%5Cright%5Crceil=i%5Cright%5D)을 이용해서 구하는 것입니다.
+
+저자는 이 parameterization 방식을 AnyNetX 모델에 적용시켜 사용가능한 것인지 실험해보았습니다. 각각의 모델에 대해서 d를 network depth로 고정하고 grid seach를 사용해서 mean log-ratio(denoted by ![e_fit](https://latex.codecogs.com/svg.image?e_%7Bfit%7D))를 최소화 하는 ![w_0](https://latex.codecogs.com/svg.image?w_0), ![w_a](https://latex.codecogs.com/svg.image?w_a), and ![w_m](https://latex.codecogs.com/svg.image?w_m)를 구하는 것입니다.
+
+![Quantized linear fit](../QuantizedLinearFit.png)
+
+위의 이미지는 AnyNetXE의 가장 결과가 좋은 두개의 인공신경망입니다. 여기서 점선은 quantized linear fit이고 실선은 그들이 가지고 있는 가장 좋은 결과를 의미합니다.
+
+![](../LogRatioNetworkError.png)
+
+fitting error ![e_fit](https://latex.codecogs.com/svg.image?e_%7Bfit%7D)와 network error의 관계를 그래프로 표현한 것입니다. 이 이미지로 부터 두가지 관측된 결과가 있습니다.
+
+1. 좋은 결과를 가진 model은 모두 좋은 linear fit을 가지고 있습니다.
+2. 평균적으로, ![e_fit](https://latex.codecogs.com/svg.image?e_%7Bfit%7D)은 AnyNetXC에서 AnyNetXE로 갈때 증가합니다.
+
+Linear parameterization을 실험하기 위해서 저자는 linear parameterization만을 사용하는 design space를 설계했습니다. 이 인공신경망은 총 6개의 parameter(d, ![w_0](https://latex.codecogs.com/svg.image?w_0), ![w_a](https://latex.codecogs.com/svg.image?w_a), ![w_m](https://latex.codecogs.com/svg.image?w_m), b, g)로 구성되어 있습니다. 이러한 변수들을 사용해서 block width와 depth를 위의 수식들을 이용해서 구합니다. 이러한 형식으로 정해진 design space를 저자는 RegNet이라고 정의 했습니다. 이때 parameter들은 ![parameters](https://latex.codecogs.com/svg.image?d%3C64,%20w_0,w_a%3C256,%201.5%5Cleq%20w_m%5Cleq3,b%5Cin%5Cleft%5C%7B1,2,4%5Cright%5C%7D,%20g%5Cin%5Cleft%5C%7B1,2,%5Ccdots,32%5Cright%5C%7D)에서 선택하였습니다.
+
+![RegNet Design Space](../RegNetDesignSpace.png)
+
+RegNetX의 error EDF는 가장 왼쪽의 이미지에서 확인 할 수 있습니다. RegNetX의 모델은 AnyNetX의 모델보다 평균적으로 좋은 결과를 가지고 있습니다. 중간의 이미지는 두개의 제약을 더한 RegNet의 error EDF입니다. 첫번째는 ![](https://latex.codecogs.com/svg.image?w_m=2)이고 두번째는 ![](https://latex.codecogs.com/svg.image?w_0=w_a)입니다. 하지만 design space내의 model의 다양성을 유지하기 위해서 저자는 이러한 제약사항을 사용하지 않았습니다. 마지막이미지는 random search efficiency를 나타낸 것입니다.
+
+## Design Space Summary
+
+![Design Space Summary](../DesignSpaceSummary.png)
+
+위의 이미지는 design space의 크기를 정리한 것입니다. RegNet의 경우, 연속된 변수의 paramterization의 크기로 예측값을 구한 것입니다. RegNetX를 디자인하는 데 저자는 AnyNetXA design space로 부터 16개의 dimension로부터 6개로 줄였습니다. 전체적인 design space의 크기는 10자리 정도 줄였습니다.
+
+## Design Space Generalization
+
+RegNet design space는 low-compute, low-epoch, 그리고 단일 block type으로 설계되었습니다. 저자는 자신이 제시한 원칙이 다른 환경에서도 적용하는 지 확인을 하기 위해서, 높은 flops, higher epoch, 5-stage와 다양한 block type을 사용해서 설험했습니다.
+
+![RegNetX Generalization](../RegNetXGeneralization.png)
+
+모든 환경에서 design space의 성능은 항상 ![regnet>anyneta>anynete](https://latex.codecogs.com/svg.image?RegNetX%3EAnyNetX_E%3EAnyNetX_A)로 똑같습니다. 다른 말로 하면, overfitting은 일어나지 않았습니다.  5-stage의 실험의 경우, RegNet의 결과가 더 많은 stage에도 사용 가능한 것이라고 알려줬습니다. 이 경우에 AnyNetXA는 더 큰 design space를 가지게 됩니다.
+
+![Block type used](../BlockTypesUsed.png)
+
+위의 이미지는 이 test에서 사용한 다양한 block의 구조를 표현한 것입니다. 여기서 X block이 가장 좋은 결과를 가지고 있는 것을 확인 할 수 있습니다.
+
+
