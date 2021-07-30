@@ -273,3 +273,7 @@ RegNet을 훈련할때 사용하는 setting을 그대로 사용해서 EfficentNe
 Flop이 작은 모델의 경우 EfficentNet이 더 좋은 결과를 보여줍니다. 하지만, 중간 FLOPS의 경우 RegNetY가 EfficentNet보다 더 좋은 결과를 가지고 있고, FLOPS가 높은 경우 RegNetX와 RegNetY모두 EfficentNet보다 더 좋은 결과를 가지고 있습니다.
 
 또한 EfficentNet의 activation은 Flops와 linear하게 증가하는데 RegNet의 경우 square-root에 비례하게 증가합니다. 그렇기에 EfficentNet은 Inference와 Training time이 RegNet보다 느립니다.
+
+# Conclusion
+
+저자는 새로운 network design 방식을 소개합니다. Designing network design space는 미래 연구를 위한 유방한 방안입니다.
