@@ -243,3 +243,33 @@ Mobile Network는 Inverted Bottleneck(![](https://latex.codecogs.com/svg.image?b
 
 RegNetX에 유명한 Squeeze and excitation연산을 추가 한 것을 RegNetY라고 부릅니다. RegNetY는 RegNetX보다 좋은 성능을 가지고 있습니다.
 
+# Comparison to Existing Networks
+
+![Top result for RegNetX and RegNetY](../RegNetXY.png)
+
+위의 그래프는 가장 좋은 RegNetX와 RegNetY model을 각 flops 영역에서 나타낸 것입니다. 위에서 보인 Linear structure 그래프를 확인하면 신기한 pattern을 확인 할 수 있습니다. FLOP이 크면, 세번째 stage에 있는 block의 수가 많아지고 마지막 stage의 수는 아주 ㅁ낳이 작아집니다. Group width d 는 FLOP이 커지만 같이 커지지만, depth d는 큰 모델에서 더 커지지 않습니다.
+
+## State-of-the-Art Comparison: Mobile Regime
+
+![Mobile Regime](../MobileRegime.png)
+
+최근 몇년간의 network design은 mobile 환경에 집중을 해왔습니다. 그래서 그런 network들과 비교하기 위해서 600MF RegNetX와 RegNetY 모델을 비교합니다. RegNet 모델들이 더 효과적이라는 것을 알 수 있습니다. 왜냐하면 RegNet모델들은 100epoch정도 밖에 training을 하지 않았고 별다른 regulartization(weight decay을 제외한)을 사용하지 않았습니다. 또한 RegNet을 찾는데 걸리는 시간이 다른 manual design이나 NAS를 사용한 것보다 더 시간이 적게 걸렸기 때문입니다.
+
+## Standard Baselines Comparison: ResNe(X)t
+
+![ResNe(X)t comparison](../ResNetComparison.png)
+
+![ResNe(X)t comparison Table](../ResNetComparisonTable.png)
+
+RegNetX는 ResNe(X)t에 비해서 모든 complexity metrics에 대항하여 더 좋은 결과를 가지고 있습니다.
+
+## State-of-the-Art Comparison: Full Regime
+
+![EfficiencyNet comparison with different complexity metric](../EfficiencyNet.png)
+![EfficiencyNet comparison with RegNet](../EfficiencyNetComparison.png)
+
+RegNet을 훈련할때 사용하는 setting을 그대로 사용해서 EfficentNet을 훈련시켰습니다. 그래서 논문에서 나온 것보다는 정확도가 떨어지는 것을 알 수 있습니다.
+
+Flop이 작은 모델의 경우 EfficentNet이 더 좋은 결과를 보여줍니다. 하지만, 중간 FLOPS의 경우 RegNetY가 EfficentNet보다 더 좋은 결과를 가지고 있고, FLOPS가 높은 경우 RegNetX와 RegNetY모두 EfficentNet보다 더 좋은 결과를 가지고 있습니다.
+
+또한 EfficentNet의 activation은 Flops와 linear하게 증가하는데 RegNet의 경우 square-root에 비례하게 증가합니다. 그렇기에 EfficentNet은 Inference와 Training time이 RegNet보다 느립니다.
