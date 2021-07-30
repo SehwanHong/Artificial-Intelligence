@@ -277,3 +277,5 @@ Flop이 작은 모델의 경우 EfficentNet이 더 좋은 결과를 보여줍니
 # Conclusion
 
 저자는 새로운 network design 방식을 소개합니다. Designing network design space는 미래 연구를 위한 유방한 방안입니다.
+
+## [Link to Neural Net](../../)

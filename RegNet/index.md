@@ -286,3 +286,5 @@ For EfficentNet activations scale linearly with flops compared to activation sca
 # Conclusion
 
 Author present a new network design paradigm. Designing network design spaces is a promising avenue for future research.
+
+## [Link to Neural Net](../)
