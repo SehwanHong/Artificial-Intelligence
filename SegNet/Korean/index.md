@@ -1,34 +1,34 @@
 # [SegNet : A Deep Convolutional Encoder-Decoder Architecture For Image Segementation](https://arxiv.org/pdf/1511.00561.pdf)
 
-SegNet is a deep fully convolutional neural network architecture for pixel-wise segmentation. SegNet consist of encoder and decoder. Encoder of the SegNet is topologically identical to VGG16 networks. Decoder is an mirror of the encoder. The max-pooling layer on encoder is changed to up-sampling layer using the indicies computed in the max-pooling layer. This eliminated the need of learning for up-sampling
+SegNet은 deep convolutional neural network으로 pixel-wise segmentation을 하기 위해 만들어졌습니다. SegNet은 Encoder와 Decoder로 이루어 져 있는데, Encoder의 구조는 VGG16을 기반으로 만들어졌습니다. Decoder는 Encoder를 뒤집은 모양이며, Maxpooling layer를 up-sampling layer로 변환한 것 입니다. 이때 max-pooling layer에서는 max-pooling 한 index들을 저장하고 그 값을 이용하여 up-sampling 합니다. 이러한 방식은 up-sampling을 Train하지 않아도 되기에 더 빠른 속도로 network를 train할 수 있습니다.
 
 # Introduction
 
-SegNet is designed to be an efficient architecture for pixel-wise semantic segmentation. The primary purpose of this network is to understand the road scenes, identify model appearance (roads, building) and shapes (car, pedestrians, trees), and understanding the spatial-relationship (context) between different classes, such as road, sidewalks, crosswalk, etc.
+SegNet은 pixel-wise semantic segmentation을 효율적으로 이용하기 위해서 만들어졌습니다. 이 인공신경망의 일차적인 목표는 도로 상황에 대한 이해 입니다. 도로와 빌딩을 구분하고, 자동차와 사람, 나무의 모양을 인식하며, 공간에 대한 이해(도로와 인도의 차이점)를 하기 위함입니다.
 
 # Architecture
 
 ![SegNet Architecture](../SegNet_architecture.PNG)
 
-The above image is the architecture of the SegNet. SegNet consist of two different parts: Encoder and Decoder.
+위 이미지는 SegNet의 구조를 표현한 것입니다. SegNet은 크게 encoder와 decoder 두가지 부분으로 나누어져 있습니다.
 
 ## Encoder
 
-The Encoder of SegNet consist of 13 convolutional layers that is identical to the convolutional layers in VGG16. From the VGG16, the fully connected layers are eliminated to retain the high resolution feature maps. Also, eliminating the fully connected layers decreased the number of parameters in the encoder of SegNet.
+SegNet의 Encoder는 13개의 Convolutional layer로 이루어져있습니다. 이 13개의 layer는 VGG16의 Convolutional layer와 똑같습니다. 하지만 VGG16에 있던 Fully connected layer를 제외하였는데, 이는 feature map의 높은 해상도를 위함입니다. 또한 Fully connected layer를 제거함으로 parameter 수가 급격하게 줄어들었습니다.
 
-After each convolutional layer, batch-normalization and rectified linear non-linearity (max(x,0)) is applied. Pooling layer is consist of max-pooling with strides. In each pooling layer, pooling indicies are stored for up-sampling layer of decoder.
+각 Convolutional layer가 끝난 다음에는 Batch-normalization layer와 RELU가 제공굅니다. Pooling layer는 Max-pooling을 사용하고, 이때 pooling한 index를 기억해 decoding stage에서 사용하게 됩니다.
 
 ## Decoder
 
-The Decoder of SegNet are mirror image of Encoder. In the decoder, the max-pooling layer is subsituted with the up-sampling layer.
+SegNet의 Decoder는 Encoder를 뒤집은 것과 똑같습니다. 차이점이 있다고 하면, max-pooling layer가 up-sampling layer로 바뀐것입니다.
 
 ![SegNet upsampling](../SegNet_upsampling.PNG)
 
-The upsampling layer uses the Max-pooling indices from the max-pooling layer. They use the indices to set the values retained from the previous layers. The values that are not marked by the max-pooling indicies are set to zeros.
+Up-sampling layer는 Max pooling layer에서 얻은 Index를 사용합니다. 이 Index를 사용해서 feature map을 늘리고, 비어있는 pixel에는 0을 기본값으로 설정합니다.
 
-Compared to DeconvNet, SegNet does not contain fully connected layer. Eliminating the fully connected layer, SegNet have much less parameters and faster inference time. SegNet and DeconvNet uses similar non-trained up-sampling layer.
+DeconvNet과 비교했을 때, SegNet은 Fully connected layer를 사용하지 않습니다. 그렇기에 SegNet은 더 적은 parameter수를 가지고 있고, inference time도 빠릅니다. 또한 DeconvNet과 SegNet은 비슷한 up-sampling layer를 사용합니다.
 
-Compared to SegNet, Unet does not use pooling indices, but instead they store full feature map and concatenates with the up-sampled feature map. The up-sampling in U-net is using deconvolution.
+SegNet과 비교해서, Unet은 pooling indices를 사용하는 것이 아니라, feature map 전체를 저장합니다. 저장된 feature map은 deconvolution을 사용해서 얻은 feature map과 Concatenate 하여 convolution을 수행합니다.
 
 # Result
 
@@ -36,23 +36,23 @@ Compared to SegNet, Unet does not use pooling indices, but instead they store fu
 
 ![CamVid result](../SegNet_CamVid_result.PNG)
 
-The result is from the paper. According to the paper, comparing with traditional methods, SegNet have highest accuracy in classifying 8 out of 11 classes. Moreover, the global average is the highest amonst different neural networks. 
+기존에 사용하던 전통적인 방법과 비교했을때, SegNet이 11개의 class 중 8개의 class에서 가장 높은 정확도를 보였습니다. 또한 global accuracy의 경우 가장 좋은 결과를 가지고 있습니다. 
 
 ![CamVid result Deep learning](../SegNet_CamVid_result_deep_learning.PNG)
 
-Comparing with deep learning methods, as the iteration increases, SegNet have highest values in Global accuarcy, Class average accuracy, mean of intersection Union and accuracy of inter-class boundary delineation.
+Deep learning 방법과 비교한다면, iteration이 증가할수록, SegNet이 더 좋은 결과를 보여줍니다.
 
 ## SUN-RGBD indoor scene
 
 ![SUN-RGBD indoor scene result](../SegNet_SUN_RGBD.PNG)
 
-The result is from the paper. SegNet have better global accuracy and BFs. DeepLab have better result in mIoU, Class average accuracy, when Iteration is less than 140k. However, when the iteration increases over 140k, SegNet have better result in Global accuracy, Class average accuracy and BFs.
+Iteration이 작을 때 SegNet이 DeepLap과 비교했을때 Global accuracy와 BF에서는 우위를 점하지만, Class accuracy와 mIoU부분에서는 떨어집니다. 하지만 iteration이 140k 이상인 경우, SegNet이 mIoU를 제외하고는 모든 부분 에서 뛰어납니다.
 
 ## Memory and Inference Time
 
 ![Memory and Inference Time of SegNet](../SegNet_Memory.PNG)
 
-As seen in the above table, DeepLap and FCN have faster inference time than SegNet because both network does not have decoder while SegNet have the decoder portion in the network. Compared to DeconvNet, SegNet does not have Fully Connected layer. Therefore, SegNet have faster inference time.
+DeepLap과 FCN은 SegNet보다 Inference Time이 빠른데 이는 DeepLap과 FCN이 decoder를 가지고 있지 않기에 발생하는 것입니다. 또한 DeconvNet과 비교했을때  SegNet는 Fully Connected layer를 가지고 있지 않기에 더 빠른 Inference time과 더 적은 memory를 사용합니다.
 
 # [English Version](../)
 
