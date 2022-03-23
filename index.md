@@ -12,6 +12,7 @@ This is a collection of Neural Network repository where I will build a series of
 * [ReXNet](./ReXNet)
 * [On Network Design Spaces for Visual Recognition](./NDSVR)
 * [RegNet](./RegNet/)
+* [SegNet](./SegNet/)
 
 ## Korean Version
 
@@ -23,5 +24,6 @@ This is a collection of Neural Network repository where I will build a series of
 * [ReXNet Korean Verion](./ReXNet/Korean/) [자세한 워드파일](./ReXNet/Korean/ReXNet_Summary.docx)
 * [On Network Design Spaces for Visual Recognition Korean version](./NDSVR/Korean)
 * [RegNet Korean version](./RegNet/Korean)
+* [SegNet Korean version](./SegNet/Korean)
 
 ## Inprogress
