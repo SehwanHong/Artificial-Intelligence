@@ -80,3 +80,24 @@ The term minimizes distance between corresponding points. *K* is the collection 
 
 Optimize the iobjective using the biconjugate gradient stabilized method with algebraic multigrid preconditioning.
 
+# Inference
+
+Inferenece is performed by an extension of the mean-field inference algorithm introduced by Krahenbuhl and Koltun [Link](https://arxiv.org/pdf/1210.5644.pdf). The model is a collection of overlapping cliques and is different from the fully-connected model considered by Krahenbuhl and Koltun.
+
+Define a distribution Q that approximates the true distribution P, where similarity between distributions is measured by the KL-divergence, assuming Q factorizes over the individual variables: ![Q factorization](https://latex.codecogs.com/svg.image?Q(\mathbf{x})=\prod_{\mathbf{x}}{Q_{\mathbf{p}}(x_\mathbf{p})}). The *Q* is a distribution over the random variable. The mean-field updates have the following form:
+
+![mean field update](./mean_field_update.PNG)
+
+The ![](https://latex.codecogs.com/svg.image?\mathcal{N}_{p}^{1}) and ![](https://latex.codecogs.com/svg.image?\mathcal{N}_{p}^{1}) are the sets of neighbors of **P** in the two blocks that cover p. The updates can be performed efficiently using Gaussian filtering in feature space. Labeling can be obtained by assigning ![optimized value](https://latex.codecogs.com/svg.image?x_{\mathbf{p}}^{*}=\arg\max_{l}{Q_{\mathbf{p}}(l)})
+
+When the video length is large to fit in the memory, video can be splitted into chuncks of consecutive blocks. Consider two overlapping blocks b1 and b2, b1 is the last block in one chunk and b2 is the first block in the next chunck. Let Q1 and Q2 be the distribution produced by mean-field inference for these blocks in their repective chunks. Let [t1, t2] be the overlap region. Let Qt be the sought-after distribution for frame t in [t1,t2] and let Q1,t and Q2,t be the corresponding slices of Q1 and Q2. The transition between chunks with simple linear interpolation :
+
+![linear interpolation](./linear_interpolation.PNG)
+
+# Implementation
+
+The paper used two different unary potentials. The first is the TextonBoost Classifier. The second is a convolutional network refered to as Dilation unary [Link](https://arxiv.org/pdf/1511.07122.pdf).
+
+In all experiments, optimal flow is computed by LDOF. Controlled experiment with Discrete Flofw is conducted to evaluate the influence of the input flow. Long-term track are computed using the approach of Sundaram et al. CRF parameters are optimized using grid search on a subset of the validation set.
+
+The video is decomposed in the block using long-term track, when the half of the tracks in the frame are not present at the beginning of the block. This increase the internal coherence of each block. When half of the image is new compared to the first image, we update the block.
