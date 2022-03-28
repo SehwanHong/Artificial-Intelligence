@@ -16,9 +16,23 @@ The model is a set of cliques that conver overlapping blocks in the video volume
 
 The video is covered by overlapping blocks. A dense CRF is defined over each block. Feature space optimization is performed within blocks. Structured prediction is performed over multiple blocks.
 
-Each pixel in the video is identified by a vector ![pixel matrix](https://latex.codecogs.com/svg.image?\mathbf{p}&space;=&space;(b,t,i)&space;\in&space;\mathbb{R}^3). *b* i sthe block number, *t* is the frame number within block *b*, and *i* is the index of the pixel within the frame. The color of pixel **p** is denoted by ![pixel color](https://latex.codecogs.com/svg.image?\mathbf{I_p}\in\mathbb{R}^3) and the coordinates of pixel **P** is denoted by the ![pixel coordinate](https://latex.codecogs.com/svg.image?\mathbf{\bar{s}_p}\in\mathbb{R}^2). Let **P** be the set of pixels in the video
+Each pixel in the video is identified by a vector ![pixel matrix](https://latex.codecogs.com/svg.image?\mathbf{p}&space;=&space;(b,t,i)&space;\in&space;\mathbb{R}^3). *b* i sthe block number, *t* is the frame number within block *b*, and *i* is the index of the pixel within the frame. The color of pixel **p** is denoted by ![pixel color](https://latex.codecogs.com/svg.image?\mathbf{I_p}\in\mathbb{R}^3) and the coordinates of pixel **P** is denoted by the ![pixel coordinate](https://latex.codecogs.com/svg.image?\mathbf{\bar{s}_p}\in\mathbb{R}^2). Let **P** be the set of pixels in the video.
 
-A natural feature space for semantic video segmentation is six-dimensional and combines time, color, and posistions : ![feature space](https://latex.codecogs.com/svg.image?\mathbf{f_p}\in(t_\mathbf{p},\mathbf{I_p},\mathbf{\bar{s}_p}))
+Given pixel **p**, let ![X](https://latex.codecogs.com/svg.image?X_{\mathbf{p}}) be a random variable with the domain ![domain](https://latex.codecogs.com/svg.image?\mathcal{L}=\{l_{1},\cdots,l_{L}\}), where state ![state](https://latex.codecogs.com/svg.image?l_{i}) is a label. The ![X](https://latex.codecogs.com/svg.image?\mathcal{X}) will be a random field over **P** and let ![label assignment](https://latex.codecogs.com/svg.image?\mathbf{x}:\mathbf{P}\to\mathcal{L}) be a label assignment. The random field ![X](https://latex.codecogs.com/svg.image?\mathcal{X}) is characterized by Gibbs distribution ![distribution](https://latex.codecogs.com/svg.image?P\mathbf{(x|P)}) and the corresponding Gibbs Energy ![energy](https://latex.codecogs.com/svg.image?E\mathbf{(x|P)}).
+
+![Gibbs distribution and Gibbs energy](./Gibbs_distribution_Gibbs_energy.PNG)
+
+Here ![partition function](https://latex.codecogs.com/svg.image?Z\mathbf{(P)}=\sum_{x}\exp(-E\mathbf{(x|P)})) is the partition function and ![epsilon](https://latex.codecogs.com/svg.image?\mathcal{E}) is a neighborhood structure defined on pairs of variables. The neighborhood structure is a union of cliques: each block is covered by a clique, each pixel is covered by two blocks, and each variable is correspondingly covered by two fully-connected subgraphs in the random field. Our goal is to find a label assignment that minimizes the Gibbs energy.
+
+The first term in the energy equation specifies the cost of assigning label to pixel. The second term couple pairs of variables and penalize the inconsistent labeling. These terms are defined using Gaussian kernels
+
+![pairwise term](./pairwise_term.PNG)
+
+where the first term is a label compatibility term and the *w* are the mixture weights. *f* are the features associated with label respect to the pixel **p** and **q**. Each kernel has the following form:
+
+![kernel term](./kernel_term.PNG)
+
+Given a point, the feature is a vector in a D-dimensional feature space. A natural feature space for semantic video segmentation is six-dimensional and combines time, color, and posistions : ![feature space](https://latex.codecogs.com/svg.image?\mathbf{f_p}\in(t_\mathbf{p},\mathbf{I_p},\mathbf{\bar{s}_p}))
 
 # Feature Space Optimization
 
