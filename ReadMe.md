@@ -1,8 +1,11 @@
-# Neural Network repository
+# About Artificial Intelligence
 
-This is a collection of Neural Network repository where I will build a series of different neural network
+This Github website currently contains two part.
 
-## Currently what I have built
+## Neural Network Model Study
+Have studied different kinds of Neural Network Models
 
-* [ResNet](https://sehwanhong.github.io/NeuralNet/ResNet)
-* [ResNeXt](https://sehwanhong.github.io/NeuralNet/ResNet/ResNext)
+[Link](./ToNN/)
+
+## Face Anti-Spoofing
+Currently in progress
