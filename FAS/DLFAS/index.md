@@ -225,3 +225,25 @@ Anomaly detection for FAS assumes that the live samples are in a normal class as
 
 Anomaly detection based FAS methods would suffer from discrimination degradation.
 
+# Deep FAS with Advanced Sensor
+
+![Comparison with sensor/Hardware for FAS under 2 environment and three attack types](./Comparison_with_sensor_hardware_for_FAS.png)
+
+
+## Uni-Modal Deep Learning upon Specialized Sensor.
+
+![Summary of the representative deep learning FAS methods with specialized sensor/hardware inputs.](./Summary_of_represntative_DL_FAS_with_specialized_sensor.png)
+
+## Multi-Modal Deep Learning
+
+![Summary of the multi-modal deep learning FAS methods](./Summary_of_multi_modal_DL_FAS.png)
+
+Multi-modal FAS with acceptable costs are increasedly used in real-world application.
+
+### Multi-Modal Fusion
+
+Mainstream multi-modal FAS methods focus on feature level fusion strategy. There are few works that consider input-level and decision level fusions.
+
+### Cross-Modal Translation
+
+The missing modality issues can be raised when using multi-modal FAS. Therefore some uses cross-modal translation techniques to generate missing modal data.
