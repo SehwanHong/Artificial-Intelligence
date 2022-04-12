@@ -123,4 +123,105 @@ The protocol adopts 'leave one attack type out' to validate the model's generali
 
 Cross Dataset Cross Type Protocol to measure the FAS model's generalization on both unseen domain and unknown attack types.
 
+# Deep FAS with Commercial RGB Camera
+
+Comercial RGB camera is widely used in many real-world application scenarios. There are three main categories for exisiting deep learning based FAS methods using comercial RGB camera: Hybrid type learning methods combining both handcrafted and deep learning features; common end-to-end supervised deep learning methods; generalized deep learning methods.
+
+![Topology of the deep learning based FAS methods](./Topology_of_DL_FAS.png)
+
+![Chronological overview of the milestone deep learning based FAS methods using commercial RGB camera](./Chronological_overview_of_DL_FAS_RGB.png)
+
+## Hybrid Method
+
+![Table 3](./Table_3.png)
+
+DL and CNN achieved great success in many computer vision tasks. However for FAS, they suffer the overfitting problem due to the limited amount and diversity of the training data. Handcrafted features have been proven to be discriminative to distinguish bonafide from PAs. Some recent works combine handcrafted features with deep features for FAS. These Hybrid methods can be separated into three main categories.
+
+![Hybrid Frameworks for FAS](./Hybrid_Frameworks_for_FAS.png)
+
+The first method is to extract handcrafted features from inputs then employ CNN for semantic feature representation.
+
+The Second method is to extract handcrafted features from deep confolutional features.
+
+The thrid method is to fuse handcrafted and deep convolutional features fro more generic representation.
+
+## Common Deep Learning Method
+
+Common deep learning based methods directly learn the mapping functions from face inputs to spoof detection. Common deep learning frameworks usually include
+
+ * direct supervision with binary cross-entropy loss
+ * pixel-wise supervision with auxiliary task
+ * generative models.
+
+![Typical end-to-end deep learning frameworks for FAS](./Typical_E2E_DL_FW_FAS.png)
+
+### Direct Supervision with Binary Cross-Entropy loss
+
+FAS can be intuitively treated as a binary classification task. Numerous end-to-end deep learning methods are directly supervised with binary cross-entropy(CE) loss as well as other extented losses.
+
+![Summary of the representative common deep learning based FAS methods with binary cross-entropy supervision](./Summary_of_common_DL_FAS_binary_CE.png)
+
+Researchers have proposed various network architecture supervised by binary CE. There are few works modifying binary CE loss to provide more discriminative supervision signals
+
+## Pixel-wise Supervision
+
+Pixel-wise supervision can provide more fine-graned and contextual task-related clues for better intrinsic feature learning. There are two type of pixel-wise supervision. One based on the physical clues and discriminative design philosophy, auxiliary supervision signals. The other generative models with explicit pixel-wise supervision are recently utilized for generic spoofing parttern estimation.
+
+![Summary of the representative common deep learning based FAS methods with pixel-wise supervision](./Summary_of_common_DL_FAS_PW_supervision.png)
+
+### Pixel-wise supervision with Auxiliary Task
+
+According to human knowledge, most PAs(e.g. plain printed paper and electronic screen) merely have no genuine facial depth information. As a result, recent works adopt pixel-wise pseudo depth labels to guide the deep models, enforcing them predict the genuine depth for live samples, while zero maps for the spoof ones. Another method is to use binary mask.
+
+### Pixel-wise supervision with Generative Model
+ 
+Mine the visual spoof patterns existing in the spoof samples, aming to provide a more intuitive interpretation of the sample spoofness.
+
+## Generalizing Deep Learning Method
+
+Common end-to-end deep learning based FAS methods might generalize poorly on unseen dominant conditions and unknown attack types. Therefore these methodes are unreliable to be applied in practival applications with strong security needs. There are two methods on enhancing generalization capacity of the deep FAS models. One is domain adaptation and generalization techniques. The other is zero/few-shot learning and anomaly detection.
+
+### Generalization to Unseen Domain
+
+![Framework comparison among domain adaptation, domain generalization, and federate learning](./FW_comparison_DA_DG_FL.png)
+
+Domain adaptation technique leverage the knowledge from target domain to bridge the gap between source and target domains. Domain generalization helps learn the generalized feature representation from multiple source domain directly withous any access to target data. Federate learning framework is introduced in learning gneralized FAS models while preserving data privacy.
+
+![Summary of the representative generalized deep learning FAS methods to unseen domain](./Summary_of_generalized_DL_FAS_unseen_domain.png)
+
+#### Domain Adaptation
+
+Domain Adaptation technique alleviate the discrepancy between source and target domains. The distribution of source and target features are matched in a learned feature space. If the features have similar distrivutions, a classifier trained on features for the source samples can be used to classify the target live/spoof samples. However, it is difficult and expensive to collect a lot of unlabed data for traning.
+
+#### Domain Generalization
+
+Domain generalization assumes that there exists a generalized feature space underling the seen multiple source domains and the unseen but related target domain. Learned model from seen source domain can generalize well to the unseen target domain.
+
+This is a new hot spot in recent years. Domain generalization benefits FAS models to perform well in unseen domain, but it is still unknown whether it deteriorates the discrimination capability for spoofing detection under the seen scenarios.
+
+#### Federate Learning
+
+A genearlized FAS model can be obtianed when trained with face images from different distribution and different types of PAs. Federate learning, a distributed and privacy-preserving machine learning techinques, is introduced in FAS to simulataneously take advantage of rich live/spoof information available at different data owners while maintaining data privacy.
+
+To be specific, each trains its own FAS model. Server learns a global FAS model by iteratively aggregating model updates. Then the converged global fAS model would be utilized for inference.
+
+This solve the privacy of data sets, but neglects the privacy issues in the model level.
+
+### Generalization to Unknown Attack Types
+
+FAS models are vulnerable to emerging novel PAs. There are two general way of detecting unknown spoofing attack detection. One is zero/few-shot learning. The other is anomaly detection.
+
+![Summary of the generalized deep learning FAS methods to unknown attack types](./Summary_of_generalized_DL_FAS_unknown_attack_types.png)
+
+#### Zero/Few-Shot Learning
+
+Zero-Shot Learning aims to learn generalized and discriminative features from the predefined PAs for unknown novel PA detection. Few-Shot learning aims to quickly adapt the FAS model to new attacks by learning from both the predefined PAs and the collected very few samples of the new attack.
+
+The performance drops obviously when the data of the target attack types are unavailable for adaptation. The failed detection usually occurs in the challenging attack types, which share similar appearance distribution with the bonafide.
+
+#### Anomaly Detection
+
+Anomaly detection for FAS assumes that the live samples are in a normal class as they share more similar and compact feature representation while features from the spoof samples have large distribution discrepancies in the anomalous sample space due to the high variance of attack types and materials. Anomaly detection trains a reliable one-class classifier to cluster the live samples accurately. Then any samples outside the margin of  the live sample cluster would be detected as the attack.
+
+Anomaly detection based FAS methods would suffer from discrimination degradation.
 
