@@ -127,7 +127,7 @@ Cross Dataset Cross Type Protocol은 일반화를 확인하는 방법으로 unse
 
 # Deep FAS with Commercial RGB Camera
 
-Comercial RGB camera is widely used in many real-world application scenarios. There are three main categories for exisiting deep learning based FAS methods using comercial RGB camera: Hybrid type learning methods combining both handcrafted and deep learning features; common end-to-end supervised deep learning methods; generalized deep learning methods.
+상용 RGB 카메라는 많은 real-world application에 사용되고 있습니다. 이를 이용한 방식은 크게 3가지로 나뉠수 있습니다. 하나는 Hybrid type으로 Handcrafted method와 Deep learning을 합치는 방식입니다. 다른 하나는 end-to-end supervised deep learning입니다. 마지막으로 generalized deep learning method가 있습니다. 
 
 ![Topology of the deep learning based FAS methods](../Topology_of_DL_FAS.png)
 
@@ -137,19 +137,19 @@ Comercial RGB camera is widely used in many real-world application scenarios. Th
 
 ![Table 3](../Table_3.png)
 
-DL and CNN achieved great success in many computer vision tasks. However for FAS, they suffer the overfitting problem due to the limited amount and diversity of the training data. Handcrafted features have been proven to be discriminative to distinguish bonafide from PAs. Some recent works combine handcrafted features with deep features for FAS. These Hybrid methods can be separated into three main categories.
+DL과 CNN은 여러가지 영역에서 좋은 결과물들을 많이 만들어냈습니다. 하지만 FAS의 경우 overfitting 문제가 많이 발생하였습니다. 이는 Training data의 양이 너무 적고 다양성이 부족하기 때문입니다. 그렇기에 Handcrafted feature들을 사용해서 bonafide와 PA를 구분하는 방식을 사용했습니다. 최근 들어 이러한 방식을 DL과 같이 사용하는 방식이 늘었습니다. 이러한 Hybrid 방식은 크게 3가지로 나뉩니다.
 
 ![Hybrid Frameworks for FAS](../Hybrid_Frameworks_for_FAS.png)
 
-The first method is to extract handcrafted features from inputs then employ CNN for semantic feature representation.
+첫번쨰 방법은 Handcrafted feature를 input으로 받은 후, CNN을 사용해서 semantic feature representation을 가졌습니다.
 
-The Second method is to extract handcrafted features from deep confolutional features.
+두번째 방식은 Deep convolution feature에서 Handcrafted feature를 추출하는 방식입니다.
 
-The thrid method is to fuse handcrafted and deep convolutional features fro more generic representation.
+마지막 방식으로는 Handcrafted 방식과 Deep convolution을 따로 한 다음에 그 두개를 합치는 방식을 사용합니다.
 
 ## Common Deep Learning Method
 
-Common deep learning based methods directly learn the mapping functions from face inputs to spoof detection. Common deep learning frameworks usually include
+일반적인 DL은 input에서 spoof detection으로 한번에 이루어지도록 되어 있습니다. 이러한 방식은 크게 3가지로 나뉘어 있습니다.
 
  * direct supervision with binary cross-entropy loss
  * pixel-wise supervision with auxiliary task
@@ -159,73 +159,72 @@ Common deep learning based methods directly learn the mapping functions from fac
 
 ### Direct Supervision with Binary Cross-Entropy loss
 
-FAS can be intuitively treated as a binary classification task. Numerous end-to-end deep learning methods are directly supervised with binary cross-entropy(CE) loss as well as other extented losses.
+FAS를 가장 간단한 방식으로 살펴보면 Binary Classification으로 나타낼수 있습니다. 이때 Binary Cross Entropy를 사용하는 경우가 가장 많지만, 다른 Loss function도 사용하는 경우가 있습니다.
 
 ![Summary of the representative common deep learning based FAS methods with binary cross-entropy supervision](../Summary_of_common_DL_FAS_binary_CE.png)
 
-Researchers have proposed various network architecture supervised by binary CE. There are few works modifying binary CE loss to provide more discriminative supervision signals
-
 ## Pixel-wise Supervision
 
-Pixel-wise supervision can provide more fine-graned and contextual task-related clues for better intrinsic feature learning. There are two type of pixel-wise supervision. One based on the physical clues and discriminative design philosophy, auxiliary supervision signals. The other generative models with explicit pixel-wise supervision are recently utilized for generic spoofing parttern estimation.
+Pixel-wise supervision은 일반적으로 더 fine-grain하고 Contextual task-related한 특징들을 찾을 수 있습니다. 이러한 Pixel-wise supervision은 크게 두가지 방식으로 나뉩니다. 하나는 auxiliary supervision 시그널을 차는 방법이 있고, 다른 하느는 generative model을 사용하는 방식이 있습니다. 위의 사진에서 b와 c가 각각을 설명합니다.
 
 ![Summary of the representative common deep learning based FAS methods with pixel-wise supervision](../Summary_of_common_DL_FAS_PW_supervision.png)
 
 ### Pixel-wise supervision with Auxiliary Task
 
-According to human knowledge, most PAs(e.g. plain printed paper and electronic screen) merely have no genuine facial depth information. As a result, recent works adopt pixel-wise pseudo depth labels to guide the deep models, enforcing them predict the genuine depth for live samples, while zero maps for the spoof ones. Another method is to use binary mask.
+기반지식에 의하면 대부분의 PA들(사진이나 영상)들은 평면이 많이 있습니다. 그렇기에 Pseudo depth를 측정하여 실제 사람인지 아니면 PA인지를 확인하는 방식으로 분류합니다. 또 다른 방식으로는 Binary Mask를 훈련하는 방식이 있습니다.
 
 ### Pixel-wise supervision with Generative Model
  
-Mine the visual spoof patterns existing in the spoof samples, aming to provide a more intuitive interpretation of the sample spoofness.
+Generative Model은 encoding decoding 방식으로 다양한 spoofing pattern을 찾고 그를 기반으로 FAS를 합니다.
 
 ## Generalizing Deep Learning Method
 
-Common end-to-end deep learning based FAS methods might generalize poorly on unseen dominant conditions and unknown attack types. Therefore these methodes are unreliable to be applied in practival applications with strong security needs. There are two methods on enhancing generalization capacity of the deep FAS models. One is domain adaptation and generalization techniques. The other is zero/few-shot learning and anomaly detection.
+일반적인 방식의 E2E DL 기반의 FAS는 unseen domain이나 unknown attack에 일반화를 잘 하지 못하는 경향이 있습니다. 이러한 문제를 해결하기 위해서 크게 두가지 방식으로 나누어서 해결합니다. Unseen domain에 대하여 domain adaptation이나 generalization technique를 사용하고, Unknown attack에 대하여 zero/few-shot learning이나 anomaly detection을 사용합니다.
 
 ### Generalization to Unseen Domain
 
 ![Framework comparison among domain adaptation, domain generalization, and federate learning](../FW_comparison_DA_DG_FL.png)
 
-Domain adaptation technique leverage the knowledge from target domain to bridge the gap between source and target domains. Domain generalization helps learn the generalized feature representation from multiple source domain directly withous any access to target data. Federate learning framework is introduced in learning gneralized FAS models while preserving data privacy.
+
+Domain adaptation technique은 목표한 domain에 정보를 가지고 source와 Target domian간의 차이를 좁힙니다. Domain Generalization은 여러 Source를 사용하여 generalized 한 feature representaion을 배웁니다. 이때 target domain에 대한 정보를 가지고 있지 않습니다. Federate learning framework은 Data의 privacy를 존중하면서 Generalization을 성취하는 방식으로 만들어졌습니다.
 
 ![Summary of the representative generalized deep learning FAS methods to unseen domain](../Summary_of_generalized_DL_FAS_unseen_domain.png)
 
 #### Domain Adaptation
 
-Domain Adaptation technique alleviate the discrepancy between source and target domains. The distribution of source and target features are matched in a learned feature space. If the features have similar distrivutions, a classifier trained on features for the source samples can be used to classify the target live/spoof samples. However, it is difficult and expensive to collect a lot of unlabed data for traning.
+Domain Adaptation technique은 source와 target domains사이의 차이를 좁힙니다. Source와 Target feature들은 Learned Feature space에 분포하도록 만듭니다. 만약 이 두개가 비슷한 distibution에 존재한다면 Classifer은 정확하게 Live/Spoof를 분류할수 있습니다. 하지만 이러한 방식으로 문제를 풀기에는 수많은 unlabeled data를 모아야하는데 이는 어렵고 비쌉니다.
 
 #### Domain Generalization
 
-Domain generalization assumes that there exists a generalized feature space underling the seen multiple source domains and the unseen but related target domain. Learned model from seen source domain can generalize well to the unseen target domain.
+Domain generalization은 Seen data와 unseen이지만 관련된 data간에 generalized feature space가 존재한다고 가정을 합니다. 그럼 seen source data를 통해서 훈련한 model은 unseen target domain에 일반화를 잘 할 것입니다.
 
-This is a new hot spot in recent years. Domain generalization benefits FAS models to perform well in unseen domain, but it is still unknown whether it deteriorates the discrimination capability for spoofing detection under the seen scenarios.
+이 분야는 최근 몇년간 연구되어 가는 분야입니다. Domain generalization은 FAS model을 unseedn domain에 이점이 있습니다. 하지만 seen data에 관해서 능력이 떨어지는지 검증이 되지 않았습니다.
 
 #### Federate Learning
 
-A genearlized FAS model can be obtianed when trained with face images from different distribution and different types of PAs. Federate learning, a distributed and privacy-preserving machine learning techinques, is introduced in FAS to simulataneously take advantage of rich live/spoof information available at different data owners while maintaining data privacy.
+FAS model을 일반화하는 다른 방식은 여러가지 네트워크를 통해서 각각의 domain을 훈련하는 방식입니다. Federate Learning은 분산되어 있는 private-preserving ML 기술입니다. 이러한 방식은 데이터를 가지고 있는 다양한 Data owner들이 data privacy를 지키기 위해서 만들어졌습니다.
 
-To be specific, each trains its own FAS model. Server learns a global FAS model by iteratively aggregating model updates. Then the converged global fAS model would be utilized for inference.
+더 자세하게 말하면, 각 data center에서 FAS model을 훈련하고, 서버는 이들의 모델을 받아 업데이트를 합니다. Inference 할때는 서버를 사용해서 결과를 확인 합니다.
 
-This solve the privacy of data sets, but neglects the privacy issues in the model level.
+이러한 방식은 Data의 privacy를 가질 수 있지만, Model의 privacy를 무시하는 방식입니다.
 
 ### Generalization to Unknown Attack Types
 
-FAS models are vulnerable to emerging novel PAs. There are two general way of detecting unknown spoofing attack detection. One is zero/few-shot learning. The other is anomaly detection.
+FAS model은 새로운 PA에 대해서는 약합니다. 이를 해결하기 위한 두가지 방식이 있습니다. 하나는 zero/few-shot learning이고 다른 하나는 anomaly detection.
 
 ![Summary of the generalized deep learning FAS methods to unknown attack types](../Summary_of_generalized_DL_FAS_unknown_attack_types.png)
 
 #### Zero/Few-Shot Learning
 
-Zero-Shot Learning aims to learn generalized and discriminative features from the predefined PAs for unknown novel PA detection. Few-Shot learning aims to quickly adapt the FAS model to new attacks by learning from both the predefined PAs and the collected very few samples of the new attack.
+Zero-Shot Learning는 가지고 있는 PA랄 사용해서 일반화를 하고 unknown novel PA를 구분하는 방식으로 이루어집니다. Few-Shot learning은 가지고 있는 PA와 아주 적은량의 new attack 데이터를 가지고 변화에 적응하도록 합니다.
 
-The performance drops obviously when the data of the target attack types are unavailable for adaptation. The failed detection usually occurs in the challenging attack types, which share similar appearance distribution with the bonafide.
+이러한 방식은 attack type을 전혀 모르고 있는 상황에서는 소용이 없습니다. 또한 bonafide와 비슷환 외모를 가지고 있는 Attack type(화장, 문신, 가발)에 대해서는 인식을 하기 어려운 경우가 많습니다.
 
 #### Anomaly Detection
 
-Anomaly detection for FAS assumes that the live samples are in a normal class as they share more similar and compact feature representation while features from the spoof samples have large distribution discrepancies in the anomalous sample space due to the high variance of attack types and materials. Anomaly detection trains a reliable one-class classifier to cluster the live samples accurately. Then any samples outside the margin of  the live sample cluster would be detected as the attack.
+Anomaly detection은 Live sample이 normal class에 분류되고 그들은 비슷한 feature representaion을 가지고 있고 Spoof sample의 경우에는 다양한 공격 방식으로 여러가지 feature들이 분산되어 있다고 가정합니다. Anomaly detection은 one class classifier로 live sample을 cluster하도록 훈련합니다. 그리고 이 클러스터에서 벗어나는 것들을 attack으로 정의하도록 합니다.
 
-Anomaly detection based FAS methods would suffer from discrimination degradation.
+Anomaly detection은 discrimination degradation현상을 겪습니다.
 
 # Deep FAS with Advanced Sensor
 
@@ -240,12 +239,12 @@ Anomaly detection based FAS methods would suffer from discrimination degradation
 
 ![Summary of the multi-modal deep learning FAS methods](../Summary_of_multi_modal_DL_FAS.png)
 
-Multi-modal FAS with acceptable costs are increasedly used in real-world application.
+Multi-modal FAS 방식의 경우 경제적으로 많은 돈이 들어갑니다. 그렇기에 가성비가 있는 모델의 경우 real-world application에 사용됩니다.
 
 ### Multi-Modal Fusion
 
-Mainstream multi-modal FAS methods focus on feature level fusion strategy. There are few works that consider input-level and decision level fusions.
+Mainstream multi-modal FAS은 대부분 feature level fusion을 사용합니다. 몇몇의 경우에는 input-level이나 decision level fusions을 사용합니다.
 
 ### Cross-Modal Translation
 
-The missing modality issues can be raised when using multi-modal FAS. Therefore some uses cross-modal translation techniques to generate missing modal data.
+가끔 modality가 missing되는 Issue가 있을 경우가 존재합니다. 이러한 때를 대비해서 몇몇 네트워크는 cross-modal translation 기술을 사용합니다.
