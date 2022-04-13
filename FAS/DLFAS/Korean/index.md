@@ -24,82 +24,84 @@ Generative deep FAS는 사용되었지만 아직은 연구해야될 분야가 �
 
 ## Face Spoofing Attacks
 
-Attacks on automatic face recognition (AFR) system usuallay divide into two categories: digital manipulation and physical presentation attacks. Digital manipulations uses digital virtual domain. Physical presenatation attack present face upon physical mediums in front of physical face presentation attacks.
+Automatic Face Recognition(AFR)에 대한 공격은 크게 digitial Manipulation과 Physical presentation으로 나뉠수 있다. Digital Manipulation은 디지털 환경에서 복제를 하는 것이다. Physical presentation attack은 물리적인 물질을 이용해서 얼굴을 만들어서 공격을 하는 것이다.
 
 ![Face Anti-Spoofing Pipeline and Face Spoofing attacks](../FAS_pipeline_and_Face_spooning_attacks.png)
 
-As Shown in the images, there are two ways to integrate FAS with AFR:
+위의 이미지에서 보인것 처럼, FAS를 AFR에게 적용하는 방식은 크게 두가지로 나뉩니다.
 
- * Parallel fusion with predicted scores from FAS and AFR. The combined new final score is used to determine if the sample comes from a genuine user or not
- * Serial scheme for early face PAs detection and spoofing rejection, thus avoiding face accessing the subsequent face recognition phase.
+ * 하나는 병렬연산입니다. 이때 FAS와 AFS를 따로 Score를 계산을 합니다. 그 이후에 그 두개의 Score를 결합하여 이미지가 실제 이미지인지 아니지 파악하는 것입니다.
+ * 다른 하나는 직렬연산입니다. 처음에 PA을 detect하고 Spoofing 이미지를 Reject합니다. 그 뒤에 Face Recognition을 합니다.
 
-The image (b) represent some spoofing attack types. According to attacker's intention, face PAs can be divided into two typical cases
+그 아래에 있는 이미지(b)는 여러가지 spoofing attack type을 표현합니다. 이러한 방식은 공격하는 사람의 방식에 따라서 두가지로 나뉩니다.
 
- * Impersonation : spoof to be recognized as someone else via copying genuine user's factial attributes to special mediums such as photo, electronic screen, and 3D mask
- * Obfuscation : hide or remove the attacker's own identity using various methods such as glasses, makeup, wig, and disguised face
+ * Impersonation : 다른사람의 얼굴을 사용해서 AFR을 속이는 방식입니다. 사진, 디지털 화면, 그리고 3D 마스크등을 사용하는 방식입니다.
+ * Obfuscation : 얼굴의 일부분을 가리는 방식으로 공격자의 identity를 속이는 방식입니다. 짙은 화장을 하거나, 선글라스를 끼거나, 아니면 가발을 쓰는 방식입니다.
 
-Based on the Geometric property, PAs are broadly classified into 2D and 3D attacks.
+또한 Geometric property로 PA를 분류해보면, 2D와 3D 공격으로 분류할수 있다.
 
- * 2D PAs are carried out by presenting facial attributes using photo or video to the sensors
-    * Flat/Wrapped printed photos
-    * Eye/mouth-cut photos,
-    * Digital replay of videos
- * 3D PAs have become a new type of PAs as 3D printing technology. Face Masks are more realistic in terms of color, texture, and geometry. These masks are made of different materials
-    * Hard/Rigid mask : paper, resin, plaster, plastic
-    * flexible soft mask : silicon, latex
+ * 2D PA는 사진이나 영상을 보여주는 형식으로 되어 있습니다.
+   * 평면/곡면 사진
+   * 눈,입 구멍이 뚤린 사진
+   * 영상
+ * 3D PA는 3D 인쇄 기술이 발전하면서 생긴 새로운 공격방식입니다. 이러한 마스크들은 색, 질감 그리고 geometry를 사실적으로 표현합니다. 마스크들을 여러가지 제질로 만들어집니다.
+   * Hard/Rigid mask : paper, resin, plaster, plastic
+   * flexible soft mask : silicon, latex
 
-Based on the facial region covering, PAs be also separated as whole or partial attacks.
-
- * Whole attacks are common
+얼굴을 가리는 영역에 따라서도 나눌 수 있다.
+ * Whole attacks은 가장 흔한 방식의 공격이다.
     * Print photo
     * Video replay
     * 3D mask
- * partial attacks are uncommon
+ * partial attacks은 흔하지 않은 방식의 공격입니다.
     * Part-cut print photo
     * Eyeclasses
     * Partial tattoo
 
 ## Dataset for Face Anti-Spoofing
 
-Large-scale and diverse dataset are pivotal for deep learning based methods during both training and evaluating phase.
+Deep Learning을 기반으로 하는 방식은 훈련을 할때와 검증할때 다양하고 많은 양의 데이터가 필요합니다.
 
 ![Dataset visualiszation](../Visualization_of_Dataset.png)
 
-As shown in the images thereare different kinds of dataset, It might contain just RGB images with similar setting or might have multiple modalities.
+위의 이미지에서 보는것처럼, 다양한 종류의 데이터들이 있습니다. 위에서 보여진것 처럼 RGB를 비슷한 환경에서 찍은 사진이 있을 수 있고, 아니면 여러가지 센서들을 이용해서 데이터들이 있을 수 있습니다.
 
 ![public dataset for Face Anti-Spoofing](../Public_Dataset.png)
 
-I and V in the "#Live/Spoof" denotes 'images' and 'video'
+이 위의 이미지는 여러가지 데이터셋을 표현하는 이미지입니다. I/V는 각각 이미지와 비디오를 뜻합니다.
 
-There are three main trends for dataset progress:
+이러한 데이터셋을 만드는 세가지 트랜드가 있습니다.
 
  * Large scale data amount
-    * CelebA-Spoof and HiFiMask dataset contains more than 600000 unages and 50000 videos, where most of them are PAs
- * Diverse data distribution
-    * Besides common print and replay attacks (recorded in indoor), novel attack types are introduced.
+   * CelebA-Spoof와 HiFiMask dataset은 600000개 이상의 이미지와 50000개 이상의 비디오를 가지고 있습니다. 이 데이터의 대부분은 PA들입니다.
+ * 다양한 데이터 분포
+   * 일반적인 사진이나 비디오 뿐만아니라 새로운 공격 방식들도 많아졌습니다.
  * mutliple modalities and specialized sensors
-    * Apart from traditional RGB, recent dataset consider other sensors
-        * NIR
-        * Depth
-        * Thermal
-        * SWIR
-        * Other (Light field Camera)
+   * 일반적인 RGB데이터 뿐만아니라 다양한 센서를 사용합니다.
+     * NIR
+     * Depth
+     * Thermal
+     * SWIR
+     * Other (Light field Camera)
 
 ## Evaluation Metrics
 
-FAS system focuse on the concept of bonafide and PA acceptance and rejection. Two basic metrics False Rejection Rate and False Acceptance Rate are widely used.
+FAS system은 bonafide와 PA의 acceptance와 rejection을 기반으로 연산합니다. 가장 기본적인 두가지는 False Rejection Rate와 False Acceptance Rate를 가장 많이 쓴다.
 
-FAR is the ratio of incorrectly accepted spoffing attacks. FRR is the ratio of increectly rejected live accesses.
+FAR는 Spoffing attack을 사실이라고 판정한 비율이다. FRR는 실제 데이터를 가짜라고 판별한 비율이다.
 
-FAS follows ISO/IEC DIS 30107- 3:2017 standards to evaluate the performance of the FAS systems under different senarios.
 
-The most commonly used metrics in intra- and cross-testing scenarios ais Half Total Error Rate(HTER), Equal Error Rate(EER), and Area Under the Curve (AUC).
+FAS는 국제적인 기준 ISO/IEC DIS 30107- 3:2017 standards를 기반으로 다양한 시나리오에서의 퍼포먼스를 측정한다.
 
-HTER is found out by calculating the average of FRR and FAR. EER is a specific value of HTER at which FAR and FRR have equal values. AUC represents the degree of separablility between bonafide and spoofings.
+Intra- 와 Cross-Testing 에서 가장 많이 사용되는 것은 Half Total Error Rate(HTER), Equal Error Rate(EER), 그리고 Area Under the Curve(AUC)이다.
 
-Attack Presenataion Classification Error Rate(APCER), Bonafide Presentation Classification Error Rate (BPCER) and Average Classification Error Rate (ACER) suggested in ISO standard are also used for intra-dataset testing.
+HTER는 FRR과 FAR의 평균을 사용합니다. EER는 HTER의 특별한 값입니다. 이는 FAR과 FRR가 같은 값을 가지고 있을 때를 나타냅니다. AUC는 bonafide와 spoofing 간의 분리도를 나타냅니다.
 
-BPCER and APCER measure bonafide aand attack classification error rates, respectively. ACER is calulated as the mean of BPCER and APCER, evaluating the reliability of intra-dataset performance.
+
+Attack Presenataion Classification Error Rate(APCER), Bonafide Presentation Classification Error Rate (BPCER) 그리고 Average Classification Error Rate (ACER)
+또한 intra-dataset testing에 사용됩니다.
+
+BPCER와 APCER 는 각각 bonafide classification error와 Attack classification Error를 의미합니다. ACER는 BPCER와 APCER의 평균값고, intra-dataset의 reliability를 평가하는데 사용됩니다.
 
 ## Evaluation Protocols
 
@@ -107,21 +109,21 @@ BPCER and APCER measure bonafide aand attack classification error rates, respect
 
 ### Intra-Dataset Intra-Type Protocol
 
-Intra-dataset intra-type protocol has been widely used in most FAS datasets to evaluate the model's discrimination abuility for spoofing detection under scenarios with slight domain shift.
+Intra-dataset intra-type protocol는 환경의 변화가 거의 없는 상황에서 FAS Dataset를 평가하는 방식으로 많은 환경에서 사용되고 있습니다. 
 
-As the training and testing data are from the same datasets, they share similar domain distribution in terms of the recording environment, subject behavior. Due to strong discriminative feature representation ability via deep learning, many methods have reached satisfied performance (<5% ACER) under small domain shifts about external encironments, attack mediums and recording camera variation.
+Training과 Testing data가 같은 Dataset에서 추출되었기에, 그들은 녹화된 환경이나, 객체의 행동에 관하여 비슷한 domain distribution을 가지고 있습니다. Deep Learning 기술의 강한 discriminative feature representation ability 덕분에 좋은 퍼포먼스를 보여줍니다. 이는 외부 환경, 카메라 변화, 그리고 공격방식이 크게 변하지 않는 이상 좋은 결과물을 내줍니다.
 
 ### Cross-Dataset Intra-Type Protocol
 
-Cross-dataset level domain generalization ability measurement. This protocol tests on one or several datasets and then tests on unseen datasets.
+Cross-dataset은 일반화가 잘 되어 있는지를 확인하는 것입니다. 이 방식은 하나 또는 여러개의 dataset에서 훈련을 하고 unseen datasets을 가지고 결과물을 검증하는 방식을 사용합니다.
 
 ### Intra-Dataset Cross-Type Protocol
 
-The protocol adopts 'leave one attack type out' to validate the model's generalization for unknown attack types. One kind of attack type only appears in the testing stage.
+이 방식은 하나의 공격방식을 제외하고 훈련합니다. 그리고 나중에 그 공격방식을 몰랐을때 그를 분별할 수 있는지 실험하는 방식입니다.
 
 ### Cross-Dataset Cross-Type Protocol
 
-Cross Dataset Cross Type Protocol to measure the FAS model's generalization on both unseen domain and unknown attack types.
+Cross Dataset Cross Type Protocol은 일반화를 확인하는 방법으로 unseen domain과 unknown attack types에 대하여 검증하는 방식입니다.
 
 # Deep FAS with Commercial RGB Camera
 
