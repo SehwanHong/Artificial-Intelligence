@@ -4,7 +4,7 @@ Self-attention-based architectures, in particular Transformers, have become the 
 
 In computer vision, convolutional architecture remains dominant. Multiple works try combining CNN-like architetures with self-attention.In large-scale image recognition, classic ResNet like architecture are still state of art.
 
-When trained on mid-sized datasets such as ImageNet without strong regularization, these models yield modest accuracies of a few percentage point below ResNets of comparable size. This is because Transformers lack some of the inductive biases inheret to CNNs. Therefore do not generalize well when trained on insufficient amounts of data.
+When trained on mid-sized datasets such as ImageNet without strong regularization, the model yield modest accuracies of a few percentage point below ResNets of comparable size. This is because Transformers lack some of the inductive biases inheret to CNNs. Therefore do not generalize well when trained on insufficient amounts of data.
 
 If the models are trained on larger datasets (14M-300M images), Vision Transformer attains excellent results when pre-trained at sufficient scale and transferred to tasks with fewer data points. Through this, large scale training trupms inductive bias.
 
