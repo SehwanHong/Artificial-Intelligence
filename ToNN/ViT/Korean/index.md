@@ -28,7 +28,7 @@ ViT은 Transformer의 구조를 거의 변경없이 따르고있습니다.
 
 ## Vison Transformer (ViT)
 
-![ViT model overview](./ViT_model_overview.png)
+![ViT model overview](../ViT_model_overview.png)
 
 Transformer는 input을 1D sequence로 받습니다. 이미지를 처리하기 위해서, 이미지를 여러장의 patch sequence로 만들어여합니다.
 
@@ -42,7 +42,7 @@ Transformer의 encoder는 multihead self-attention과, MLP block이 alternate하
 
 MLP는 두 layer로 GELU non-linearity를 사용합니다.
 
-![ViT model equation](./ViT_model_equation.png)
+![ViT model equation](../ViT_model_equation.png)
 
 ### Inductive bias
 

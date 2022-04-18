@@ -15,6 +15,7 @@ This is a collection of Neural Network repository where I will build a series of
 * [SegNet](./SegNet/)
 * [FSO](./FSO/)
 * [Attention is all you need](./AAYN/)
+* [Visual Transformer](./ViT/)
 
 ## Korean Version
 
@@ -29,5 +30,6 @@ This is a collection of Neural Network repository where I will build a series of
 * [SegNet Korean version](./SegNet/Korean)
 * [FSO Korean version](./FSO/Korean/)
 * [Attention is all you need Korean](./AAYN/Korean/)
+* [Visual Transformer](./ViT/Korean/)
 
 ## Inprogress
