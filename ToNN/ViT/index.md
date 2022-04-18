@@ -10,7 +10,7 @@ If the models are trained on larger datasets (14M-300M images), Vision Transform
 
 # Related Work.
 
-Transformer have become the state of the art method in may NLP tasks. Large Transformer-based models are often pre-trained on large corpora and then fine-tuned for the task at hand.
+Transformer have become the state of the art method in many NLP tasks. Large Transformer-based models are often pre-trained on large corpora and then fine-tuned for the task at hand.
 
 Naive application of self-attention to image would require that each pixel attends to every other pixel. This does not scale to realistic input size. Many of specialized attention architeture demonstrate promissing results on computer vision task, but require complex engineering to be implemented efficiently on hardware accelerators.
 
