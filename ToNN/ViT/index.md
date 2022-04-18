@@ -6,7 +6,7 @@ In computer vision, convolutional architecture remains dominant. Multiple works 
 
 When trained on mid-sized datasets such as ImageNet without strong regularization, the model yield modest accuracies of a few percentage point below ResNets of comparable size. This is because Transformers lack some of the inductive biases inheret to CNNs. Therefore do not generalize well when trained on insufficient amounts of data.
 
-If the models are trained on larger datasets (14M-300M images), Vision Transformer attains excellent results when pre-trained at sufficient scale and transferred to tasks with fewer data points. Through this, large scale training trupms inductive bias.
+If the models are trained on larger datasets (14M-300M images), Vision Transformer attains excellent results when pre-trained at sufficient scale and transferred to tasks with fewer data points. Through this, large scale training trumps inductive bias.
 
 # Related Work.
 
