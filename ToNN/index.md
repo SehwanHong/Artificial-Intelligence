@@ -29,3 +29,5 @@ This is a collection of Neural Network repository where I will build a series of
 * [FSO Korean version](./FSO/Korean/)
 
 ## Inprogress
+* [Attention is all you need](./AAYN/)
+* [Attention is all you need Korean](./AAYN/Korean/)
