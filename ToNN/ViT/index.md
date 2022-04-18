@@ -50,7 +50,7 @@ Vision Tranformer has much less image-specific inductive bias than CNNs. In Vit 
 
 ### Hybrid Architecture.
 
-The input sequence can be formed from feature maps of a CNN. In this hybrid model, the patch embedding proejction is applied to patches extracted from a CNN feature map.
+The input sequence can be formed from feature maps of a CNN. In this hybrid model, the patch embedding projection is applied to patches extracted from a CNN feature map.
 
 ## Fine-Tuning and Higher Resolution
 
