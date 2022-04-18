@@ -32,7 +32,7 @@ ViT follow the original Transformer as closely as possible.
 
 The standard Transformer receives as input a 1D sequence of token embedding. To handle 2D images, the image is reshaped into a sequence of 2D Patches.
 
-The Transfromer uses constant latent vector sixe D through all of its layers. Similarly, the patch is flattened and mapped into D dimensions with trainable linear projection. This is called patch embedding.
+The Transfromer uses constant latent vector size D through all of its layers. Similarly, the patch is flattened and mapped into D dimensions with trainable linear projection. This is called patch embedding.
 
 The models prepend a learnable embedding to the sequence of embedding patches. This patch serve as the image representation y. Both during pre-training and fine-tuning, a classificiation head is attached to the learnable embedding patch. The classification head is impleneted by MLP with one hidden layer at pre-training time and by a single linear layer at fine-tuning time.
 
