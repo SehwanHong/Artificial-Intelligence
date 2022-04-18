@@ -14,6 +14,7 @@ This is a collection of Neural Network repository where I will build a series of
 * [RegNet](./RegNet/)
 * [SegNet](./SegNet/)
 * [FSO](./FSO/)
+* [Attention is all you need](./AAYN/)
 
 ## Korean Version
 
@@ -27,7 +28,6 @@ This is a collection of Neural Network repository where I will build a series of
 * [RegNet Korean version](./RegNet/Korean)
 * [SegNet Korean version](./SegNet/Korean)
 * [FSO Korean version](./FSO/Korean/)
+* [Attention is all you need Korean](./AAYN/Korean/)
 
 ## Inprogress
-* [Attention is all you need](./AAYN/)
-* [Attention is all you need Korean](./AAYN/Korean/)
