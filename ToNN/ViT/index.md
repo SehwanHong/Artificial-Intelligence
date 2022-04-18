@@ -38,7 +38,7 @@ The models prepend a learnable embedding to the sequence of embedding patches. T
 
 Position embeddings are added to the patch embedding to retain positional information. Standard learnable 1D position embedding. The result sequence of embedding vectors serves as input to the encoder.
 
-The Transformer encoder consist of alternating layers of multihead self-attention and MLP blocks. Layernorm is applied before every block, and residual connection after every block. and residual connection after every block.
+The Transformer encoder consist of alternating layers of multihead self-attention and MLP blocks. Layernorm is applied before every block, and residual connection after every block.
 
 The MLP contains two layers with a GELU non-linearity.
 
