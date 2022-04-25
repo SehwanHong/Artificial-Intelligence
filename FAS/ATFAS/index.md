@@ -57,5 +57,67 @@ The B is the Sample size, N is the Source Domain, and y is a prediction. S is th
 
 ## Ensemble Adapter
 
+The basic transfer learning strategy is to train a classifier on top of features extracted by a backbone network pretrained on ImageNet using anti-spoofing data. However, this gives poor performance on the face anti-spoofing task.
+* The backbone pretrained using a generic dataset cannot adapt well on the specific anti-spoofing facial data.
+* Features extracted from the pre-trained backbone network are high-level. Therefore it is not suitable for the face anti-spoofing task which needs to varify the difference between the low-level information.
+
+Fine-tuning a classifier and the backbone on anti-spoofing data result in a better result. However, the good performance is limited on the source domain. The performance on the target domain becomes unstable.
+
+The paper predicts the instability comes from two factors.
+* When fine-tuning large models with few samples, the catastrophic forgetting problem usually causes training instability.
+* The domain gap between the target samples and the source domain is large such that the target samples are close to the decicion boundary and have high uncertainty.
+
+The basic solution to this problem is to freeze a majority of the backbone and partially fine-tune the network. The approach with fine-tuning only top layers of backbone networks does not address this issue.
+
+### Adaptive module
+
+In NLP, the adapterBERT has been shown to successfully transfer the pre-trained BERT model to vairous downstream tasks without re-training the whole network. Similarly, the paper introduce the adapter layer to alleviate the instability issue.
+
 ![Ensemble adapter](./Ensemble_adapter.png)
 
+As shown in the above images, the adapter has a bottleneck architecture. It projects the n-dimensional features into lower dimension m, applies non-linear activation function GELU, the project back to n dimensions.
+
+The Adapter contains the skip connection. Thus, if the parameter of the projection head are initialized to near-zero, the adapter is nearly an identity function.
+
+As shown in the overview of the model structure, two adaptive modules are inserted into each transformer block. During the fine-tuning stage, the paper fix the original transformer back-bone and update the weights of adaptive modules. As adapter contains only a few parameters, they can be learned without optimization difficulites.
+
+Since the adapters contain a skip-connections, they generate representation with less deviation from the pre-trained models. With less deviation, the adapter alleviate the catastrophic forgetting problem, improving training stability.
+
+Adapter help adjust the feature distribution of the pre-trained transformer blocks to the face anti-spoofing data, maintaining the discriminative strength and good generalization ability of pre-trained transformer representation.
+
+### Ensemble adapters and cosine similarity loss.
+
+The ensemble adapter module achieve higher accuracy and minimize training instability issues. The paper replace the naive adapters with ensemble adapter modules. The ensemble adapters contains K adapters in parallel. In each ensemble adapter modules, the representation **h** is the input to K adapters and the outputs of adapters **h^k** are aggregated and forwarded to the next layer. 
+
+Multiple adapters learn repetitive information by simply ensembling the outputs. This result in not improving the discriminability of the features and leading to limited performance improvements.
+
+In order to learn diverse features from multiple adapters, the paper use cosine similarity loss. The consine loss enforces the outputs of the adapters to be dissimilar to each other and help learn diverse features.
+
+The Cosine loss is defined as follows.
+
+![Cosine loss function](./Cosine_Loss_function.png)
+
+In this formula, the paper assume the input image has N tokens and the feature dimension is D.
+
+## Feature-wise Transformation
+
+The goal is to learn a model that generalize well to the target domain using source datasets and a small subset of the target dataset. Due to the distribution mismatch of the source and target domains and limited target domain data during training, the model is prone to over-fitting.
+
+The paper include a feature-wise transformation layer into the transformer blocks. The scaleing and biase terms of affine transformations sample from Gaussian distribution.
+
+![Gaussian Distribution](./Gaussian_distribution.png)
+
+The W denote learnable sampling hyper parameters, and D denotes the channel dimensions of the activation map of each transformer block. Then apply the sampled affine transformation to intermediate features as follows.
+
+![Affine transformation](./affine_transformation.png)
+
+In practice the same affine transformation is applied across all patch embeddings.
+
+The paper insert FWT layer in each trasnformer block. The FWT layer is used only at traning and not used in testing. FWT is used to serve as feature-level data-augmentation to increase the diversity of traning samples. This dramatically reduce overfitting and improve stability and performance. 
+
+## Adaptive Transformer
+
+The proposed adaptive transformer consists of three stages: pre-training, fine-tuning and testing.
+* Pre-training : fix ViT backbone initialized with pre-trained weights form ImageNet and train the MLP head using the binary cross entropy.
+* Fine-Tuning : Two ensemble adaptor modules and an FWT layers to each transformer block. Train all ensemble adaptors and FWT layers with all the other weights fixed until convergence using cross entropy loss and cosine loss.
+* Testing : Remove the FWT layers and keep ensemble adaptors for cross-domain classification.
