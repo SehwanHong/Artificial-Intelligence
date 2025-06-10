@@ -1,5 +1,7 @@
 title: About Artificial Intelligence
 description: Different Kinds of Artifical Intelligence
+url: "https://sehwanhong.github.io"
+baseurl: "/Artificial-Intelligence"
 
 collections:
   FAS:
