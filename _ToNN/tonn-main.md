@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Tonn Main
+title: ToNN
 ---
 
 # Neural Network repository
