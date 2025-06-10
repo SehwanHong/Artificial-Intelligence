@@ -59,7 +59,7 @@ Inspired by the intuition that the bottlenecks actually contain all the necessar
 
 Residual block | Inverted Residual Block
 --------------|---------------
-![Residual Block](/assets/images/ToNN/mobilenet/v2/residualBlock.png) | ![Inverted Residual Block](/assets/images/ToNN/mobilenet/v2/invertedResidualBlock.png)
+![mobilenet_residualBlock.png](../../assets/images/ToNN/MobileNet/V2/mobilenet_residualBlock.png) | ![Inverted Residual Block](/assets/images/ToNN/mobilenet/v2/invertedResidualBlock.png)
 
 Residual block is normally represented as the left image. It is represented with wide -> narrow -> wide, creating a bottleneck structure. However, in this paper, author presents inverted residual where structure is narrow -> wide -> narrow. The diagonally hatched layer do not use non-linearlities to reserve the information loss by using non-linearlity.
 
