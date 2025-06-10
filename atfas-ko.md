@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Atfas Ko
-\1  - Korean
+tags:
+  - Korean
   - FAS
 ---
 # [Adaptive Transformers for Robust Few-shot Cross-domain Face Anti-spoofing]

@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Resnet Korean V2
-\1  - Korean
+tags:
+  - Korean
   - ToNN
 ---
 # [Identity Mapping in Deep Residual Networks](https://arxiv.org/pdf/1603.05027.pdf)

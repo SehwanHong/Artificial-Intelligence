@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Segnet Ko
-\1  - Korean
+tags:
   - ToNN
+  - Korean
 ---
 # [SegNet : A Deep Convolutional Encoder-Decoder Architecture For Image Segementation](https://arxiv.org/pdf/1511.00561.pdf)
 

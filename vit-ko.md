@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Vit Ko
-\1  - Korean
+tags:
   - ToNN
+  - Korean
 ---
 # [An Image is Worth 16x16 Words: Transformers for Iamge Recognition](https://arxiv.org/pdf/2010.11929.pdf)
 

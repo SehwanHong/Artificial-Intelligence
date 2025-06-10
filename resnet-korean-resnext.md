@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Resnet Korean Resnext
-\1  - Korean
+tags:
+  - Korean
   - ToNN
 ---
 # [Aggregated Residual Transformations for Deep Neural Network](https://arxiv.org/pdf/1611.05431.pdf)

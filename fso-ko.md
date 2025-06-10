@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Fso Ko
-\1  - Korean
+tags:
+  - Korean
   - ToNN
 ---
 # [Feature Space Optimization for Semantic Video Segmentation](http://vladlen.info/papers/FSO.pdf)

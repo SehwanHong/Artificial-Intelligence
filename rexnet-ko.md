@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Rexnet Ko
-\1  - Korean
+tags:
+  - Korean
   - ToNN
 ---
 # [Rethinking Channel Dimensions for Efficient Model Design](https://arxiv.org/pdf/2007.00992.pdf)
