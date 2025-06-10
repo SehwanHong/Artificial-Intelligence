@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Fso
+tags:
+  - ToNN
 ---
-
 # [Feature Space Optimization for Semantic Video Segmentation](http://vladlen.info/papers/FSO.pdf)
 
 The visual sensory inputs are normally a video. In the video, there are two kinds of information that are present, Spaital and temporal informations. The video contains spatial information within individual frames. The temporal information could be gathered across multiple frames.

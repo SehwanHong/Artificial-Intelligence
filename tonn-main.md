@@ -1,8 +1,9 @@
 ---
 layout: default
 title: ToNN
+tags:
+  - ToNN
 ---
-
 # Neural Network repository
 
 This is a collection of Neural Network repository where I will build a series of different neural network

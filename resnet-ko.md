@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Resnet Ko
+tags:
+  - ToNN
 ---
-
 # [Deep residual learning for image recognition](https://arxiv.org/pdf/1512.03385.pdf)
 
 인공신경망의 깊이가 깊어질수록 인공신경망을 훈련시키는 것에 대한 어려움을 해소하기 위해서 저자 Keiming He는 [Deep residual learning for image recognition](https://arxiv.org/pdf/1512.03385.pdf) 논문을 통해서  Residual Unit을 소개했습니다. 새로운 기반 기술인 Residual Unit은 인공신경망의 훈련을 쉽게 만들었습니다.

@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Fso Ko
+tags:
+  - ToNN
 ---
-
 # [Feature Space Optimization for Semantic Video Segmentation](http://vladlen.info/papers/FSO.pdf)
 
 일반적인 시각 정보는 비디오이다. 비디오 안에는 두가지 종류의 정보가 존재합니다. 공간적인 정보와 시간적인 정보입니다. 비디오에서 공간적인 정보는 하나의 프래임 안에서 찾을 수 있습니다. 시간적인 정보는 여러가지 프래임을 통해서 얻을 수 있습니다.

@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Segnet Ko
+tags:
+  - ToNN
 ---
-
 # [SegNet : A Deep Convolutional Encoder-Decoder Architecture For Image Segementation](https://arxiv.org/pdf/1511.00561.pdf)
 
 SegNet은 deep convolutional neural network으로 pixel-wise segmentation을 하기 위해 만들어졌습니다. SegNet은 Encoder와 Decoder로 이루어 져 있는데, Encoder의 구조는 VGG16을 기반으로 만들어졌습니다. Decoder는 Encoder를 뒤집은 모양이며, Maxpooling layer를 up-sampling layer로 변환한 것 입니다. 이때 max-pooling layer에서는 max-pooling 한 index들을 저장하고 그 값을 이용하여 up-sampling 합니다. 이러한 방식은 up-sampling을 Train하지 않아도 되기에 더 빠른 속도로 network를 train할 수 있습니다.

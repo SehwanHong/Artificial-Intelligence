@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Fas Main
+tags:
+  - FAS
 ---
-
 # Face Anti-Spoofing repository
 
 This is a collection of Face Anti-Spoofing repository where I will review papers about Face Anti-Spoofing

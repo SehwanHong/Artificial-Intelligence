@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Resnet Resnext
+tags:
+  - ToNN
 ---
-
 # [Aggregated Residual Transformations for Deep Neural Network](https://arxiv.org/pdf/1611.05431.pdf)
 
 Author of this paper wants to talk about redesigning residual block using multi-branch architecture so called aggregated Residual Block. This strategy creates a new dimension which the authors call as "cardinality".

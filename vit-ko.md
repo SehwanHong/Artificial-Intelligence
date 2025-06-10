@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Vit Ko
+tags:
+  - ToNN
 ---
-
 # [An Image is Worth 16x16 Words: Transformers for Iamge Recognition](https://arxiv.org/pdf/2010.11929.pdf)
 
 Self-attention-based 구조는, 특히 Transformer 계열은, natural language processing을 사용때 가장 많이 사용하는 model입니다. 가장 많이 사용하는 방식은 large text corpus들 이용해 pretrain하고 비슷한 task-specific data를 이용해 fine-tune 하는 방식을 이용 합니다.

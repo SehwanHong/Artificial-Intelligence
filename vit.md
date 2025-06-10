@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Vit
+tags:
+  - ToNN
 ---
-
 # [An Image is Worth 16x16 Words: Transformers for Iamge Recognition](https://arxiv.org/pdf/2010.11929.pdf)
 
 Self-attention-based architectures, in particular Transformers, have become the model of choice in natural language processing. The dominant approach is to pretrain on a large text corpus and then fine-tune on a smaller task-specific dataset.

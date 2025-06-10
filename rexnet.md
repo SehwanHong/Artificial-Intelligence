@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Rexnet
+tags:
+  - ToNN
 ---
-
 # [Rethinking Channel Dimensions for Efficient Model Design](https://arxiv.org/pdf/2007.00992.pdf)
 
 Designing an efficient model within limited computational cost is challenging. Author argues the accuracy of a lightweight model has been further limited by the design conventions.

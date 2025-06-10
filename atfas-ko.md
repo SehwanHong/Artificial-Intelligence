@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Atfas Ko
+tags:
+  - FAS
 ---
-
 # [Adaptive Transformers for Robust Few-shot Cross-domain Face Anti-spoofing]
 
 최신 FAS 방식은 intra-domain에서는 성능이 좋게나온다. 하지만, cross-domain의 경우에는 결과가 좋지않은 경우가 많다. Robust한 퍼포먼스를 내기 위해선 dataset이 다양한 이미지를 가지고 있어야 한다. 이러한 이미지들은 다양한 센서들로 찍은 복잡한 배경의 이미지여야 한다.

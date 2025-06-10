@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Resnet
+tags:
+  - ToNN
 ---
-
 # [Deep residual learning for image recognition](https://arxiv.org/pdf/1512.03385.pdf)
 
 Author of the paper [Deep residual learning for image recognition](https://arxiv.org/pdf/1512.03385.pdf) have introduced Residual Unit because deeper neural networks are more difficult to train. Thus presents a new framwork that makes training easier which is Residual Unit.

@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Mobilenet Ko
+tags:
+  - ToNN
 ---
-
 # [MobileNets:Efficient Convolutional Neural Networks for Mobile Vision Application](https://arxiv.org/pdf/1704.04861.pdf)
 
 Depthwise separable convolutions를 사용한 간소화된 architecture를 기반으로 MobileNet은 가벼운 DNN을 만드려고 합니다. 이 논문에서 저자는 두가지 global hyperparameter를 소개합니다. 이 두개의 hyperparameter는 효율적으로 정확도와 latency를 교환합니다.

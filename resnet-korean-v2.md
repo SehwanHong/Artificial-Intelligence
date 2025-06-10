@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Resnet Korean V2
+tags:
+  - ToNN
 ---
-
 # [Identity Mapping in Deep Residual Networks](https://arxiv.org/pdf/1603.05027.pdf)
 
 이 논문에서 저자는 Residual block의 propagation formulation을 분석했습니다. 또한 Skip connection을 하는 다양한 방식들을 분석했습다. 또한 다양한 activation 방식을 통해서 차이점들을 확인했습니다.

@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Atfas
+tags:
+  - FAS
 ---
-
 # [Adaptive Transformers for Robust Few-shot Cross-domain Face Anti-spoofing]
 
 Recent Face anti-spoofing methods perform well under the intra-domain setups. For Robust performance, dataset should contain larger appearance variations of images with complex scenes with different sensors.

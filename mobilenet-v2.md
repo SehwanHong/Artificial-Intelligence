@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Mobilenet V2
+tags:
+  - ToNN
 ---
-
 # [MobileNetV2: Inverted Residuals and Linear Bottlenecks](https://arxiv.org/pdf/1801.04381.pdf)
 
 In this paper, author describes a new mobile architecture, MobileNetV2, that improves the performance of mobile models on multiple tasks and benchmarks.

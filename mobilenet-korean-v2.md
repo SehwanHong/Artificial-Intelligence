@@ -1,8 +1,9 @@
 ---
 layout: default
 title: Mobilenet Korean V2
+tags:
+  - ToNN
 ---
-
 # [MobileNetV2: Inverted Residuals and Linear Bottlenecks](https://arxiv.org/pdf/1801.04381.pdf)
 
 이 논문에서 저자는 새로운 mobile architecture, MobileNetV2를 소개합니다. MobileNetV2는 전 모델보다 다양한 테스트 환경과 밴치마크에서 더 좋은 실적을 냅니다.
