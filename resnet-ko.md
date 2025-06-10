@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Resnet Ko
-tags:
+\1  - Korean
   - ToNN
 ---
 # [Deep residual learning for image recognition](https://arxiv.org/pdf/1512.03385.pdf)

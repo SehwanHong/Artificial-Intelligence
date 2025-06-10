@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Mobilenet Ko
-tags:
+\1  - Korean
   - ToNN
 ---
 # [MobileNets:Efficient Convolutional Neural Networks for Mobile Vision Application](https://arxiv.org/pdf/1704.04861.pdf)

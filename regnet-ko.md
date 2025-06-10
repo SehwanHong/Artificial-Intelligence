@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Regnet Ko
-tags:
+\1  - Korean
   - ToNN
 ---
 # [Designing Network Design Spaces](https://arxiv.org/pdf/2003.13678.pdf)

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Dlfas Ko
-tags:
+\1  - Korean
   - FAS
 ---
 # [Deep Learning for Face Anti-Spoofing: A Survey](https://arxiv.org/pdf/2106.14948.pdf)
