@@ -45,7 +45,7 @@ MobileNet 모델은 depthwise separable convolution을 기반으로 만들어졌
 
 기본적인 convolution은 입력값을 필터를 적용함과 동시에 합쳐서 단 하나의 단계로 출력값으로 변환합니다. 우리가 만약 입력 feature map을 ![D_F \times D_F \times M](https://latex.codecogs.com/svg.image?D_F&space;\times&space;D_F&space;\times&space;M)으로 출력 feature map을 ![D_F \times D_F \times N](https://latex.codecogs.com/svg.image?D_F&space;\times&space;D_F&space;\times&space;N)으로 표현한다면 기본 convolution layer의 kernel 크기를 다음과 같이 표현할 수 있습니다.
 
-![Standard Convolutional Filters](/assets/images/ToNN/Korean/standardConvFilter.png)
+![Standard Convolutional Filters](/assets/images/ToNN/MobileNet/standardConvFilter.png)
 
 위의 이미지에서 보인것 처럼, 기본 convolutional layer는 필터크기가 ![D_K \times D_K \times M \times N](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N)으로 표현 될 수 있습니다. 여기서 ![D_K](https://latex.codecogs.com/svg.image?D_K) 는  filter kernel의 크기,  ![M](https://latex.codecogs.com/svg.image?M)는 input Channel의 크기. ![N](https://latex.codecogs.com/svg.image?N)는 output Channel의 크기입니다..
 
@@ -61,7 +61,7 @@ Kernel의 크기와 입력값의 크기를 알고 있다면, 우리는 기본적
 
 Depthwise convolution은 depthwise separable convolution에서 필터하기 위한 단계입니다. 이 단계에서 하나의 필터가 하나의 입력 Channel에서 적용됩니다. 아래의 이미지와 같이, kernel 크기는 ![D_K \times D_K \times M \times 1](https://latex.codecogs.com/svg.image?D_K&space;\times&space;D_K&space;\times&space;M&space;\times&space;N)가 됩니다.
 
-![Depthwise convolution filter](/assets/images/ToNN/Korean/depthwiseConvFilter.png)
+![Depthwise convolution filter](/assets/images/ToNN/MobileNet/depthwiseConvFilter.png)
 
 Depthwise convolution 필터의 연산량은 기본 convolution layer보다 비교했을때 매우 작습니다. 왜냐하면 모든 입력값들을 필터하기 위한 추가적인 parameter가 필요 없기 때문입니다. 연산량을 수식으로 표현한다면 아래와 같습니다.
 
@@ -69,7 +69,7 @@ Depthwise convolution 필터의 연산량은 기본 convolution layer보다 비�
 
 Pointwise convolution은 depthwise separable convolution에서 필터된 값들을 합치는 단계입니다. 이 단계에서 ![1 \times 1](https://latex.codecogs.com/svg.image?1\times1) convolution이 모든 필터 값들을 합치는데 사용됩니다. 이때 kernel 크기는 ![1 \times 1 \times M \times N](https://latex.codecogs.com/svg.image?1\times1\times&space;M&space;\times&space;N)입니다
 
-![Pointwise convolution filter](/assets/images/ToNN/Korean/pointwiseConvFilter.png)
+![Pointwise convolution filter](/assets/images/ToNN/MobileNet/pointwiseConvFilter.png)
 
 Pointwise convolution 필터의 연산량은 입력값과 출력값에 비례합니다. 하지만 Kernel 크기와는 무관합니다. 이때의 연산량은 아래의 수식으로 표현됩니다.
 
@@ -89,13 +89,13 @@ MobileNet의 Kernel 크기가 ![3\times3](https://latex.codecogs.com/svg.image?3
 
 ## Network Structure and Training
 
-![mobilenet structure](/assets/images/ToNN/Korean/mobilenetStructure.png)
+![mobilenet structure](/assets/images/ToNN/MobileNet/mobilenetStructure.png)
 
 MobileNet의 기본적 구조는 depthwise separable convolution을 기반으로 만들어졌습니다. 이때 가장 첫번째 layer만은 Full convolution을 사용합니다. 마지막의 fully connected layer를 제외한 모든 layer는 batch normalization과 ReLU non-lineality가 뒤따릅니다. 마지막 레이어인 Funnly Connected layer는 softmax layer를 사용합니다. Downsamping은 depthwise convolution의 stride를 바꾸는 것으로 합니다. 가장 첫번째 layer인 standard convolution layer에서의 downsampling도 stride를 바꾸는 것으로 대신합니다. 마지막 average pooling은 공간 해상도를 1로 바꾸어 마지막 layer인 fully convolutional layer의 입력방식에 맞추어 줍니다. depthwise convolution과 pointwise convolution을 다른 layer라고 생각했을때 MobileNet은 총 28개의 layer로 이루어 져있습니다.
 
 Standard Convolutional layer | Depthwise Separable Convolutional Layer
 -----------|-----------
-![standard convolutional layer](/assets/images/ToNN/Korean/standardConvLayer.png) | ![depth wise separable convolutional layer](/assets/images/ToNN/Korean/depthwiseConvLayer.png)
+![standard convolutional layer](/assets/images/ToNN/MobileNet/standardConvLayer.png) | ![depth wise separable convolutional layer](/assets/images/ToNN/MobileNet/depthwiseConvLayer.png)
 
 위의 이미지는 standard convolution layer와 depthwiese separable convolutional layer의 차이점을 보여줍니다. 위에서 표현한것 처럼 standard convolution은 한단계에서 모든 것을 연산합니다. 반면, depthwise seaprable convolution은 depthwise separable convolution을 통해서 channel별로 filter하고 pointwise convolution을 통해서 입력값들을 합쳐 출력값으로 변환합니다.
 
@@ -129,42 +129,38 @@ Depthwise separable convolution의 효과와 layer의 갯수를 줄이는 것 �
 
 Depthwise separable convolution을 사용한 MobileNet과 Full convolution을 사용한 MobileNet의 비교.
 
-![depthwise separable vs full convolution mobile net](/assets/images/ToNN/Korean/compareConvolution.png)
+![depthwise separable vs full convolution mobile net](/assets/images/ToNN/MobileNet/compareConvolution.png)
 
 위의 테이블을 확인한 결과, depthwise seaprable convolution을 사용한 결과 9배정도 연산이 줄어들었고 1% 정도의 정확도가 줄어들었다.
 
 Width multiplier를 사용하는 얇은 모델과 더 적은 수의 layer를 사용하는 얕은 모델을 비교한다. 얕은 MobileNet을 만들기 위해서, 5개의 separable filter를 삭제했다. 이때의 feature map 크기는 ![14 14 512](https://latex.codecogs.com/svg.image?14\times14\times512)이다.
 
-![thin model vs shallow model](/assets/images/ToNN/Korean/compareThinShallow.png)
+![thin model vs shallow model](/assets/images/ToNN/MobileNet/compareThinShallow.png)
 
 위의 표를 확인해 보면, 얇은 모델과 얕은 모델 모두 비슷한 연산량과 parameter 수를 가지고 있다. 하지만 얇은 모델이 얕은 모델에 비해서 3% 더 정확하다.
 
 ## Model shrinking hyperparameters
 
-![mobile net width multiplier comparison](/assets/images/ToNN/Korean/mobilenetWidthMultiplier.png)
+![mobile net width multiplier comparison](/assets/images/ToNN/MobileNet/mobilenetWidthMultiplier.png)
 
 Width Multiplier ![alpha](https://latex.codecogs.com/svg.image?\alpha)를 이용한 MobileNet의 축소는 정확도와 연산량, 크기의 교환으로 이루어 진다. Width Mutliplier가 줄어들수록, 정확도도 부드럽게 줄어드는데, parameter의 수가 급격하게 작아지는 ![alpha](https://latex.codecogs.com/svg.image?\alpha=0.25)일때 정확도는 급격하게 떨어진다. 이 때는 parameter의 수가 너무저어서 정확한 결과값을 찾기가 어려워진다.
 
-![mobile net resolution mutliplier comparison](/assets/images/ToNN/Korean/mobilenetResolutionMultiplier.png)
+![mobile net resolution mutliplier comparison](/assets/images/ToNN/MobileNet/mobilenetResolutionMultiplier.png)
 
 resolution multiplier ![rho](https://latex.codecogs.com/svg.image?\rho)를 이용한 MobileNet의 축소는 정확도와 연산량, 크기의 교환으로 이루어 진다. Resolution  Mutliplier가 줄어들수록, 정확도도 부드럽게 줄어든다.
 
-![computation vs accuracy](/assets/images/ToNN/Korean/computationAccuracy.png)
+![computation vs accuracy](/assets/images/ToNN/MobileNet/computationAccuracy.png)
 
 위의 그래프를 확인해보면, Computational complexity에 비래해서 ImageNet benchmark값이 상승하는 것을 볼수 있다. 여기서 x축은 지수적으로 증가하는 것을 알아야한다.
 
-![parameter vs accuracy](/assets/images/ToNN/Korean/parameterAccuracy.png)
+![parameter vs accuracy](/assets/images/ToNN/MobileNet/parameterAccuracy.png)
 
 위의 그래프는 parameter의 개수과 정확도를 비교한 것이다. 여기서 parameter의 수가 높을 수록 정확도가 올라가는 것을 볼수 있다. 그리고 parameter의 수는 resolution multiplier와는 관계가 없는 것을 확인할 수 있다.
 
-![MobileNet vs popular models](/assets/images/ToNN/Korean/mobilenetPopularnet.png)
+![MobileNet vs popular models](/assets/images/ToNN/MobileNet/mobilenetPopularnet.png)
 
 MobileNet과 다른 유명한 인공신경망을 비교해보았다. MobileNet은 VGG16과 비슷한 정확도를 가지는데, 32배적은 parameter 수를 가지고 있고 27배 연산량이 작습니다. GoogleNet과 비교시, MobileNet이 1%정도 정확도가 높지만, 3배 정도 연산이 적고 1.5배정도 parameter 수가 적습니다.
 
-![small mobile net vs popular models](/assets/images/ToNN/Korean/smallMobileNetPopularNet.png)
+![small mobile net vs popular models](/assets/images/ToNN/MobileNet/smallMobileNetPopularNet.png)
 
 Width Multiplier를 0.5를 사용하고 해상도를 ![160 160](https://latex.codecogs.com/svg.image?160\times160)으로 줄인 MobileNet은 Squeezenet과 Alexnet에 비해서 확실하게 좋습니다. Squeezenet은 22베 많은 연산량에고 불구하고 3%정도 낮은 정확도를 보였고, AlexNet도 45배 많은 parameter에 9.4배 많은 연산량에도 불구하고 3%적은 정확도를 보였습니다.
-
-## [Link to Neural Net](../../)
-## [Link to Original version](../)
-## [Link to MobileNet V2](./V2/)

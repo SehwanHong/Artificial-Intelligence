@@ -50,23 +50,23 @@ Attention faction is mapping query and a set of key-value pairs to an output. Ou
 
 ### Scaled Dot-Product Attention
 
-![Scaled Dot Product Attention](/assets/images/ToNN/aayn/Scaled_Dot-Project_Attention.png)
+![Scaled Dot Product Attention](/assets/images/ToNN/AAYN/Scaled_Dot-Project_Attention.png)
 
 The input consist of query(Q), key(K) and value(V).
 
 First compute the dot project of the query with all keys. Scale is done by dividing each by root of dimension of key. Then applying the softmax function to obtiona the weight on the value. The mask is used in the decoder to block the information is needed.
 
-![attention equation](/assets/images/ToNN/aayn/Attention_equation.png)
+![attention equation](/assets/images/ToNN/AAYN/Attention_equation.png)
 
 ### Multi-Head Attention
 
 Instead of performing a single attention function with full dimension, it is beneficial to linearly project the queries, key and values h times with different, learned linear projection.
 
-![Multi-head Attention](/assets/images/ToNN/aayn/Multi-Head_Attention.png)
+![Multi-head Attention](/assets/images/ToNN/AAYN/Multi-Head_Attention.png)
 
 As shown in the image, after Scaled Dot-Project attention performed in parallel, these are concatenated and projected linearly.
 
-![Multi-head Attention equation](/assets/images/ToNN/aayn/Multi-Head_Attention_equation.png)
+![Multi-head Attention equation](/assets/images/ToNN/AAYN/Multi-Head_Attention_equation.png)
 
 In this work, h=8 and each dimension is d_model / h = 512/8 = 64.
 
@@ -82,7 +82,7 @@ The Transformer uses multi-head attention in three different ways:
 
 Each of the layers in encoder and decoder contains a fully connected feed-forward network. They have two linear transformations with ReLU activation in between. Input and output is d=512 and inner layer is 2048.
 
-![Fully connected feed forward network](/assets/images/ToNN/aayn/FFN.png)
+![Fully connected feed forward network](/assets/images/ToNN/AAYN/FFN.png)
 
 ## Embedding and Softmax.
 
@@ -92,7 +92,7 @@ The model use learned embedding to convert the input and ouput to vector of dime
 
 Since the input token does not contain any information about position and to use the order of the sequence, they use positional encoding.
 
-![Positional Encoding](/assets/images/ToNN/aayn/Positional_Encoding.png)
+![Positional Encoding](/assets/images/ToNN/AAYN/Positional_Encoding.png)
 
 # Why self-Attention
 
@@ -102,4 +102,4 @@ There is three desiderata that motivated to use self-attention.
 * Amount of computation that can be parallelized, measured by the minimum number of sequential operation required
 * The path length between long-range dependencies in the network, measured by maximum path length between two input and output positions.
 
-![](/assets/images/ToNN/aayn/complexity_different_network.png)
+![](/assets/images/ToNN/AAYN/complexity_different_network.png)

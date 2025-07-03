@@ -51,13 +51,13 @@ In the work, the paper assume using multiple dataset which have different doamin
 
 ## Vision Transformer
 
-![Overview of the network structure](/assets/images/FAS/atfas/Overview_structure.png)
+![Overview of the network structure](/assets/images/FAS/ATFAS/Overview_structure.png)
 
 The paper adopt the vision transformer as the backbone module. The input image is split and reshaped into a sequence of flattened 2D patches. For positional encoding, the paper used learnable positional embedding to the patch embedding. The paper use ViT to obtain the image representation and a multiple perceptron head to get the classification prediction.
 
 At each training iteration, sample the same amount of live and spoof images from source domain and a small set of target domain. For training cross entropy loss is used and defined as below.
 
-![Cross Entropy Loss](/assets/images/FAS/atfas/Cross_Entropy_loss.png)
+![Cross Entropy Loss](/assets/images/FAS/ATFAS/Cross_Entropy_loss.png)
 
 The B is the Sample size, N is the Source Domain, and y is a prediction. S is the domain for source, and T is for target. r is real, and f is false.
 
@@ -79,7 +79,7 @@ The basic solution to this problem is to freeze a majority of the backbone and p
 
 In NLP, the adapterBERT has been shown to successfully transfer the pre-trained BERT model to vairous downstream tasks without re-training the whole network. Similarly, the paper introduce the adapter layer to alleviate the instability issue.
 
-![Ensemble adapter](/assets/images/FAS/atfas/Ensemble_adapter.png)
+![Ensemble adapter](/assets/images/FAS/ATFAS/Ensemble_adapter.png)
 
 As shown in the above images, the adapter has a bottleneck architecture. It projects the n-dimensional features into lower dimension m, applies non-linear activation function GELU, the project back to n dimensions.
 
@@ -101,7 +101,7 @@ In order to learn diverse features from multiple adapters, the paper use cosine 
 
 The Cosine loss is defined as follows.
 
-![Cosine loss function](/assets/images/FAS/atfas/Cosine_Loss_function.png)
+![Cosine loss function](/assets/images/FAS/ATFAS/Cosine_Loss_function.png)
 
 In this formula, the paper assume the input image has N tokens and the feature dimension is D.
 
@@ -111,11 +111,11 @@ The goal is to learn a model that generalize well to the target domain using sou
 
 The paper include a feature-wise transformation layer into the transformer blocks. The scaleing and biase terms of affine transformations sample from Gaussian distribution.
 
-![Gaussian Distribution](/assets/images/FAS/atfas/Gaussian_distribution.png)
+![Gaussian Distribution](/assets/images/FAS/ATFAS/Gaussian_distribution.png)
 
 The W denote learnable sampling hyper parameters, and D denotes the channel dimensions of the activation map of each transformer block. Then apply the sampled affine transformation to intermediate features as follows.
 
-![Affine transformation](/assets/images/FAS/atfas/affine_transformation.png)
+![Affine transformation](/assets/images/FAS/ATFAS/affine_transformation.png)
 
 In practice the same affine transformation is applied across all patch embeddings.
 

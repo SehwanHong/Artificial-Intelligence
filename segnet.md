@@ -14,7 +14,7 @@ SegNet is designed to be an efficient architecture for pixel-wise semantic segme
 
 # Architecture
 
-![SegNet Architecture](/assets/images/ToNN/segnet/SegNet_architecture.PNG)
+![SegNet Architecture](/assets/images/ToNN/SegNet/SegNet_architecture.PNG)
 
 The above image is the architecture of the SegNet. SegNet consist of two different parts: Encoder and Decoder.
 
@@ -28,7 +28,7 @@ After each convolutional layer, batch-normalization and rectified linear non-lin
 
 The Decoder of SegNet are mirror image of Encoder. In the decoder, the max-pooling layer is subsituted with the up-sampling layer.
 
-![SegNet upsampling](/assets/images/ToNN/segnet/SegNet_upsampling.PNG)
+![SegNet upsampling](/assets/images/ToNN/SegNet/SegNet_upsampling.PNG)
 
 The upsampling layer uses the Max-pooling indices from the max-pooling layer. They use the indices to set the values retained from the previous layers. The values that are not marked by the max-pooling indicies are set to zeros.
 
@@ -40,26 +40,22 @@ Compared to SegNet, Unet does not use pooling indices, but instead they store fu
 
 ## CamVid Result
 
-![CamVid result](/assets/images/ToNN/segnet/SegNet_CamVid_result.PNG)
+![CamVid result](/assets/images/ToNN/SegNet/SegNet_CamVid_result.PNG)
 
 The result is from the paper. According to the paper, comparing with traditional methods, SegNet have highest accuracy in classifying 8 out of 11 classes. Moreover, the global average is the highest amonst different neural networks. 
 
-![CamVid result Deep learning](/assets/images/ToNN/segnet/SegNet_CamVid_result_deep_learning.PNG)
+![CamVid result Deep learning](/assets/images/ToNN/SegNet/SegNet_CamVid_result_deep_learning.PNG)
 
 Comparing with deep learning methods, as the iteration increases, SegNet have highest values in Global accuarcy, Class average accuracy, mean of intersection Union and accuracy of inter-class boundary delineation.
 
 ## SUN-RGBD indoor scene
 
-![SUN-RGBD indoor scene result](/assets/images/ToNN/segnet/SegNet_SUN_RGBD.PNG)
+![SUN-RGBD indoor scene result](/assets/images/ToNN/SegNet/SegNet_SUN_RGBD.PNG)
 
 The result is from the paper. SegNet have better global accuracy and BFs. DeepLab have better result in mIoU, Class average accuracy, when Iteration is less than 140k. However, when the iteration increases over 140k, SegNet have better result in Global accuracy, Class average accuracy and BFs.
 
 ## Memory and Inference Time
 
-![Memory and Inference Time of SegNet](/assets/images/ToNN/segnet/SegNet_Memory.PNG)
+![Memory and Inference Time of SegNet](/assets/images/ToNN/SegNet/SegNet_Memory.PNG)
 
 As seen in the above table, DeepLap and FCN have faster inference time than SegNet because both network does not have decoder while SegNet have the decoder portion in the network. Compared to DeconvNet, SegNet does not have Fully Connected layer. Therefore, SegNet have faster inference time.
-
-# [Korean Version](./Korean/)
-
-# [Link to Main page](../)

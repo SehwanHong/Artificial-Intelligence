@@ -21,7 +21,7 @@ tags:
 
 최적화를 하는 다른 방법으로는 유전 알고리즘을 사용하는 방식과 강화학습을 통한 구조 탐색이 있습니다. 하지만 이러한 방식의 단점은 인공신경망의 크기가 커진다는 것입니다.
 
-이 논문에서 사용한 인공신경망의 다자인은 [MobileNetV1](../)에 기반합니다.
+이 논문에서 사용한 인공신경망의 다자인은 [MobileNetV1](./mobilenet-ko.md)에 기반합니다.
 
 # Preliminaries, discussion and intuition
 
@@ -32,7 +32,7 @@ Depthwise Separable Convolution은 효율적인 인공신경망을 만드는 데
   1. Depthwise convolution
   2. pointwise convolution
 
-자세한 내용인 [링크](../)를 확인해 주시기 바랍니다.
+자세한 내용인 [링크](./mobilenet-ko.md)를 확인해 주시기 바랍니다.
 
 ## Linear Bottlenecks
 
@@ -42,7 +42,7 @@ Depthwise Separable Convolution은 효율적인 인공신경망을 만드는 데
 
 다른 한편으로, ReLU가 Channel을 압축하게되면, 그 Channel의 정보는 필연적으로 소실되게 됩니다. 하지만 채널의 수가 많다면, activation manifold가 정보를 보존하고 있을 가능성이 있습니다. 아래의 이미지가 이를 설명합니다.
 
-![ReLU transformations of low-dimensional manifold embedded in higher-dimensional spaces](/assets/images/ToNN/mobilenetrean/v2/ReLUtransformation.png)
+![ReLU transformations of low-dimensional manifold embedded in higher-dimensional spaces](/assets/images/ToNN/MobileNet/V2/ReLUtransformation.png)  
 
 이 예제에서, 가장 첫번째 나선은 n 차원 공간에 내장되어 있습니다. 이를 무작위 적인 행렬 ![T](https://latex.codecogs.com/svg.image?T)를 곱하고 ReLU를 사용한 다음 역행렬인 ![inverse of T](https://latex.codecogs.com/svg.image?T^{-1})를 사용해 다시 2D이미지로 변환한 것입니다. 여기서 ![n = 2,3](https://latex.codecogs.com/svg.image?n=2,3)일때 정보의 손실이 생겨 몇몇부분에는 하나의 선으로 변환 된 것을 확인할수 있습니다. 하지만 ![n = 15](https://latex.codecogs.com/svg.image?n=15)와 30일때에는 정보의 손실이 적어 입력값과 비슷한 이미지가 나옵니다.
 
@@ -59,17 +59,17 @@ Bottleneck 구조가 모든 정보를 보존한다는 사실로부터 착안하�
 
 Residual block | Inverted Residual Block
 --------------|---------------
-![Residual Block](/assets/images/ToNN/mobilenetrean/v2/residualBlock.png) | ![Inverted Residual Block](/assets/images/ToNN/mobilenetrean/v2/invertedResidualBlock.png)
+![Residual Block](/assets/images/ToNN/MobileNet/V2/residualBlock.png) | ![Inverted Residual Block](/assets/images/ToNN/MobileNet/V2/invertedResidualBlock.png)
 
 Residual Block은 보통 왼쪽의 이미지로 표현됩니다. 이미지에서 표현된것 처럼 wide -> narrow -> wide 의 형태로 bottleneck구조를 만들었습니다. 하지만 이 논문에서, 저자는 inverted residual을 제공합니다. 오른쪽의 이미지처럼 narrow -> wide -> narrow의 구조를 채택했습니다. 사선으로 표현된 부분은 non-linearlities를 사용하지 않습니다. 이는 non-linearlity를 사용해서 생기는 정보손실을 줄이기 위함입니다.
 
-Inverted residual block에서 사용하는 skip connection은 [ResNet](../../../ResNet/Korean/)에서 사용 하는 것과 같습니다. 이는 여러개의 레이어를 사용함에도 gradient가 vanishing하는 것을 방지하기 위함 입니다.
+Inverted residual block에서 사용하는 skip connection은 [ResNet](../../../ResNet/)에서 사용 하는 것과 같습니다. 이는 여러개의 레이어를 사용함에도 gradient가 vanishing하는 것을 방지하기 위함 입니다.
 
 Inverted Residual block은 메모리 사용량도 적고, 성능도 더 좋습니다.
 
 ### Running time and parameter count for bottleneck convolution
 
-![bottleneck residual block](/assets/images/ToNN/mobilenetrean/v2/bottleneckResidualBlock.png)
+![bottleneck residual block](/assets/images/ToNN/MobileNet/V2/bottleneckResidualBlock.png)
 
 위의 표는 inverse residual function의 가장 기본적인 구조를 나타낸 것입니다. 위의 입력값에서 ![h w](https://latex.codecogs.com/svg.image?h\times&space;w)는 이미지의 크기, ![k](https://latex.codecogs.com/svg.image?k)는 커널 사이즈, ![t](https://latex.codecogs.com/svg.image?t)는 expansion factor, ![d'](https://latex.codecogs.com/svg.image?d')와 ![d''](https://latex.codecogs.com/svg.image?d'')는 각각 입력채널의 수와 출력채널의 수 입니다. 이 값들을 사용해서 multi-add의 갯수를 구하면 아래와 같습니다.
 
@@ -77,7 +77,7 @@ Inverted Residual block은 메모리 사용량도 적고, 성능도 더 좋습�
 
 이 숫자는 depthwise separable convolution(이 링크에서 설명된)의 연산량보다 높습니다. 이는 추가적으로 들어간 ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution layer 때문입니다. 하지만, 입력과 출력의 차원이 depthwise convolution layer 보다 작기 때문에, bottleneck residual block의 전체적인 연산량은 작아집니다.
 
-![memory for mobilenet v1 and mobilenet v2](/assets/images/ToNN/mobilenetrean/v2/memory.png)
+![memory for mobilenet v1 and mobilenet v2](/assets/images/ToNN/MobileNet/V2/memory.png)
 
 위의 표에서 확인 할수 있습니다. 여기서 표현된 숫자들은, channel의 숫자/memory의 량을 적었습니다. 16bit float를 사용한다고 가정했을 때의 memory 사용량입니다. 여기서 MobileNetV2가 가정 적은 매모리를 사용합니다. ShuffleNet의 크기는 2x, g=3를 사용했는데, 이는 MobileNetV1과 MobileNetV2와의 성능을 맞추기 위함입니다.
 
@@ -88,7 +88,7 @@ Inverted Residual block은 메모리 사용량도 적고, 성능도 더 좋습�
 
 MobileNetV2의 구조는 가본적으로 32개의 필터를 가진 Fully convolution layer로 시작합니다. 이후로 19개의 residual bottleneck layer를 가지고 있습니다. 아래에 표를 확인하면 MobileNetV2의 구조를 확인할 수 있습니다.
 
-![Structure of MobileNet Version 2](/assets/images/ToNN/mobilenetrean/v2/mobileNetV2Structure.png)
+![Structure of MobileNet Version 2](/assets/images/ToNN/MobileNet/V2/mobileNetV2Structure.png)
 
 이 표에서 c는 출력 채널의 개수, n은 building block의 반복 횟수, s 는 가장 첫번째 레이어의 stride 크기(다른 레이어의 stride는 1입니다.) t는 expansion factor 입니다.
 
@@ -110,7 +110,7 @@ MobileNetV2에서 Residual Connection(identity Skip Connection)을 제외한 다
 
 ### Bottleneck Residual Block
 
-![Inverted Residual Block](/assets/images/ToNN/mobilenetrean/v2/invertedResidualBlock.png)
+![Inverted Residual Block](/assets/images/ToNN/MobileNet/V2/invertedResidualBlock.png)
 
 MobileNetV2의 구조는 위의 이미지와도 같습니다. 위의 구조의 operation은 다음과 같은 식으로 표현할수 있습니다. ![bottleneck operator](https://latex.codecogs.com/svg.image?F(x)=&space;\left&space;[&space;A&space;\circ&space;N&space;\circ&space;B&space;\right&space;]x)
 
@@ -139,11 +139,11 @@ T의 크기를 변화시키는 것에 전체적인 연산량은 변화하지 않
 
 ### Result
 
-![Preformance Curve for full model](/assets/images/ToNN/mobilenetrean/v2/performanceCurve.png)
+![Preformance Curve for full model](/assets/images/ToNN/MobileNet/V2/performanceCurve.png)
 
 위의 그래프는 MobileNetV2, MobileNetV1, ShuffleNet, NasNet을 사용했을 때 얻을 수 있는 다양한 결과를 나타낸 것입니다. 이때 resolution multiplier로 0.35, 0.5, 0.75, 1를 사용한 것입니다. MobileNetV2에서는 1.4를 추가적으로 사용해서 더 좋은 결과를 얻었습니다.
 
-![Performance Table for selected models](/assets/images/ToNN/mobilenetrean/v2/performanceTable.png)
+![Performance Table for selected models](/assets/images/ToNN/MobileNet/V2/performanceTable.png)
 
 위의 표는 그래프에서 선택된 모델을 나타낸 것입니다. 여기서 모델에 사용된 parameter의 갯수와 multi-add 연산량을 알수 있습니다. 마지막 숫자는 Google Pixel 1이라는 스마트 폰에서 Tensorflow Lite를 사용했을 때의 연산 시간을 표현한 것입니다. 이때 ShuffleNet의 시간은 표현이 되지 않았는데, 그이유는 shuffling과 group convolution 알고리즘이 지원되지 않았기 때문입니다.
 
@@ -158,12 +158,12 @@ T의 크기를 변화시키는 것에 전체적인 연산량은 변화하지 않
 이 논문에서 mobile에 더 최적화된 SSD의 새로운 버전을 소개합니다. SSD Lite라고도 불리우는 이 모델은 SSD의 예측 레이어의 일반적인 convolution 연산을 모두 separable convolution(depthwise 후에 pointwise)연산으로 바꾼 것입니다.
 
 
-![SSD and SSDLite configuration](/assets/images/ToNN/mobilenetrean/v2/SSD.png)
+![SSD and SSDLite configuration](/assets/images/ToNN/MobileNet/V2/SSD.png)
 
 MobileNetV2를 기반으로 80개의 class를 예측하는 SSD와 SSDLite의 크기와 연산량을 비교해보면, SSDLite가 대략 7배 정도 적은 parameter 수를 가지고 있고 연산량도 4배 적은 것을 확인 할 수 있습니다.
 
 
-![result for object detection](/assets/images/ToNN/mobilenetrean/v2/performanceObjectDetection.png)
+![result for object detection](/assets/images/ToNN/MobileNet/V2/performanceObjectDetection.png)
 
 MobileNetV2와 SSDLite를 동시에 사용 하는 것이 parameter와 multi-add의 수를 많이 줄이는 것에 비해 좋은 percision을 가집니다. MobileNetV1과 비교할 경우, 비슷한 정확도를 가지고 있지만, MobileNetV2가 조금더 빠릅니다. 또한, YOLOv2와 비교할 경우, MobileNetV2가 20배 더 효율적이고, parameter 가 10배 작습니다.
 
@@ -177,7 +177,7 @@ DeepLabv3를 사용하는 MobileNetV1과 MobileNetV2를 mobile segmentic segment
 2. 빠른 연산을 위한 DeepLabv3 head의 간소화
 3. performance boosting을 위한 다양한 inference 전략
 
-![semantic Segmentation result](/assets/images/ToNN/mobilenetrean/v2/performanceSementicSegmentation.png)
+![semantic Segmentation result](/assets/images/ToNN/MobileNet/V2/performanceSementicSegmentation.png)
 **MNetV2\*** Second last feature map is used for DeepLabv3 head.
 **OS**: output stride
 **ASPP**: Atrous Spatial Pyramid Pooling
@@ -195,7 +195,5 @@ DeepLabv3를 사용하는 MobileNetV1과 MobileNetV2를 mobile segmentic segment
 [Toward Data Science](https://towardsdatascience.com/mobilenetv2-inverted-residuals-and-linear-bottlenecks-8a4362f4ffd5)
 
 [Hongl tistory 1](https://hongl.tistory.com/195)
-[Hongl tistory 2](https://hongl.tistory.com/196)
 
-## [Link to Neural Net](../../../)
-## [Link to MobileNet](../)
+[Hongl tistory 2](https://hongl.tistory.com/196)

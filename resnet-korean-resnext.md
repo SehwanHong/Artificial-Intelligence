@@ -26,7 +26,7 @@ Inception model들은 성공적인 Multi-brach 구조들입니다. 모델안에 
 
 Inception module | Residual Module
 -----------------|-----------------
-![Inception Module](/assets/images/ToNN/resnetrean/resnext/InceptionModuleWithDimensionReductions.png) | ![Residual Module](/assets/images/ToNN/resnetrean/resnext/ResidualBlock.png)
+![Inception Module](/assets/images/ToNN/ResNet/ResNext/InceptionModuleWithDimensionReductions.png) | ![Residual Module](/assets/images/ToNN/ResNet/ResNext/ResidualBlock.png)
 
 위의 이미지를 통해서 기본적인 Residual Module도 Multi-brach 모델임을 확인할 수 있습니다. 여기서 Residual network은 Identity matrix와 2개의 연속된 convolution레이어가 brach 이지만, Inception module의 경우 다양한 Convolutional layer가 여러가지 방면으로 뻗어 있는 것을 확인할 수 있ㅅ브니다.
 
@@ -56,15 +56,15 @@ ResNeXt의 구조는 모듈화 되어있는 VGG와 ResNet의 디자인으로부�
 
 인공신경망에서 가장 간단한 형식의 뉴런을 살펴보면, 뉴런은 스칼라곱 연산을 합니다. 이때  이는 가장 기본적인 스칼라 곱을 합니다. 이는 Fully connected layers 와 convolutional layer에서 쓰는 base unit입니다.
 
-![Inner Product](/assets/images/ToNN/resnetrean/resnext/InnerProduct.png)
+![Inner Product](/assets/images/ToNN/ResNet/ResNext/InnerProduct.png)
 
 위의 수식은 aggregated Transformation이랑 비슷합니다. Aggregated Transformation은 아래의 식으로 확인 할 수 있습니다.
 
-![Aggregated Transformation](/assets/images/ToNN/resnetrean/resnext/AggregatedTrasnformation.png)
+![Aggregated Transformation](/assets/images/ToNN/ResNet/ResNext/AggregatedTrasnformation.png)
 
 여기서 ![x=[x_1,x_2,...,x_D]](https://latex.codecogs.com/svg.image?x=[x_1,x_2,...,x_D])는 D-Channel 입력 백터이고 ![w_i](https://latex.codecogs.com/svg.image?w_i) i-th Channel에 대한 필터의 weight 값입니다. 이 수식은 아래의 이미지와 같이 표한 될수 있습니다.
 
-![neuron](/assets/images/ToNN/resnetrean/resnext/neuron.png)
+![neuron](/assets/images/ToNN/ResNet/ResNext/neuron.png)
 
 뉴런을 구성하는 연산은 3가지로 나누어 질수 있습니다:
 
@@ -76,7 +76,7 @@ ResNeXt의 구조는 모듈화 되어있는 VGG와 ResNet의 디자인으로부�
 
 위에서 제공된 간단한 뉴런의 해석을 자세하게 살펴보면, Aggregated Transformation와 비슷한 형식으로 나타낼수 있습니다.
 
-![Formal aggregated transformation equation](/assets/images/ToNN/resnetrean/resnext/formalAggregatedTransformEquation.png)
+![Formal aggregated transformation equation](/assets/images/ToNN/ResNet/ResNext/formalAggregatedTransformEquation.png)
 
 여기서 ![tau_i(x)](https://latex.codecogs.com/svg.image?T_i(x))는 어떠한 함수를 사용해도 됩니다. Fully Connected layer는 물론 Convolutional layer도 괜찮습니다.
 
@@ -84,7 +84,7 @@ ResNeXt의 구조는 모듈화 되어있는 VGG와 ResNet의 디자인으로부�
 
 ResNeXt의 구조는 간단한 법칙에 의해서 지배됩니다. 모든 ![tau_i(x)](https://latex.codecogs.com/svg.image?T_i(x))는 같은 형식으로 이루어 져야한다. 이 법칙은 VGG에서 볼수 있던 던 같은 레이어를 반복하는 것의 연장선입니다. 이러한 방식은 hyperparameter의 갯수를 줄여서 모든 요인들을 독립적으로 변환할수 있게 만듭니다. 게다가 간단한 형식으로 인해서 레이어를 깊게 만들거나 넓게 만드는 것이 쉽습니다.
 
-![Structure of ResNext Block](/assets/images/ToNN/resnetrean/resnext/StructureOfResNextBlock.png)
+![Structure of ResNext Block](/assets/images/ToNN/ResNet/ResNext/StructureOfResNextBlock.png)
 
 위의 이미지는 ResNeXt의 가장 기본적인 Block의 표현방식을 나타냅니다. 이 이미지에서 a)는 Aggregated Residual transformations, b)는 a)와 같지만 early concatenation을 활용한 것이고, c)는 a)와 b)에서 group convolution을 사용한 것입니다.
 

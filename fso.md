@@ -18,7 +18,7 @@ The underlying problem of temporal regularization using simple append methods is
 
 The model is a set of cliques that conver overlapping blocks in the video volume. 
 
-![The temporal structure of the model](/assets/images/ToNN/fso/FSO_temporal_structure.PNG)
+![The temporal structure of the model](/assets/images/ToNN/FSO/FSO_temporal_structure.PNG)
 
 The video is covered by overlapping blocks. A dense CRF is defined over each block. Feature space optimization is performed within blocks. Structured prediction is performed over multiple blocks.
 
@@ -26,17 +26,17 @@ Each pixel in the video is identified by a vector ![pixel matrix](https://latex.
 
 Given pixel **p**, let ![X](https://latex.codecogs.com/svg.image?X_{\mathbf{p}}) be a random variable with the domain ![domain](https://latex.codecogs.com/svg.image?\mathcal{L}=\{l_{1},\cdots,l_{L}\}), where state ![state](https://latex.codecogs.com/svg.image?l_{i}) is a label. The ![X](https://latex.codecogs.com/svg.image?\mathcal{X}) will be a random field over **P** and let ![label assignment](https://latex.codecogs.com/svg.image?\mathbf{x}:\mathbf{P}\to\mathcal{L}) be a label assignment. The random field ![X](https://latex.codecogs.com/svg.image?\mathcal{X}) is characterized by Gibbs distribution ![distribution](https://latex.codecogs.com/svg.image?P\mathbf{(x|P)}) and the corresponding Gibbs Energy ![energy](https://latex.codecogs.com/svg.image?E\mathbf{(x|P)}).
 
-![Gibbs distribution and Gibbs energy](/assets/images/ToNN/fso/Gibbs_distribution_Gibbs_energy.PNG)
+![Gibbs distribution and Gibbs energy](/assets/images/ToNN/FSO/Gibbs_distribution_Gibbs_energy.PNG)
 
 Here ![partition function](https://latex.codecogs.com/svg.image?Z\mathbf{(P)}=\sum_{x}\exp(-E\mathbf{(x|P)})) is the partition function and ![epsilon](https://latex.codecogs.com/svg.image?\mathcal{E}) is a neighborhood structure defined on pairs of variables. The neighborhood structure is a union of cliques: each block is covered by a clique, each pixel is covered by two blocks, and each variable is correspondingly covered by two fully-connected subgraphs in the random field. Our goal is to find a label assignment that minimizes the Gibbs energy.
 
 The first term in the energy equation specifies the cost of assigning label to pixel. The second term couple pairs of variables and penalize the inconsistent labeling. These terms are defined using Gaussian kernels
 
-![pairwise term](/assets/images/ToNN/fso/pairwise_term.PNG)
+![pairwise term](/assets/images/ToNN/FSO/pairwise_term.PNG)
 
 where the first term is a label compatibility term and the *w* are the mixture weights. *f* are the features associated with label respect to the pixel **p** and **q**. Each kernel has the following form:
 
-![kernel term](/assets/images/ToNN/fso/kernel_term.PNG)
+![kernel term](/assets/images/ToNN/FSO/kernel_term.PNG)
 
 Given a point, the feature is a vector in a D-dimensional feature space. A natural feature space for semantic video segmentation is six-dimensional and combines time, color, and posistions : ![feature space](https://latex.codecogs.com/svg.image?\mathbf{f_p}\in(t_\mathbf{p},\mathbf{I_p},\mathbf{\bar{s}_p}))
 
@@ -48,7 +48,7 @@ The paper's approach involves optimizing a subspace of feature space to reduce E
 
 Lets define the block *b* consist of ![block size](https://latex.codecogs.com/svg.image?T\times&space;N). *T* is the number of frams in the block. *N* is the number of pixels in each frame. The optimization objective is defined as:
 
-![optimization objective](/assets/images/ToNN/fso/optimization_objective.PNG)
+![optimization objective](/assets/images/ToNN/FSO/optimization_objective.PNG)
 
 **s** are the position features for all pixels in the block, and **s*** are the optimal features.
 
@@ -58,7 +58,7 @@ The data term prevents the feature space embedding from drifting or collapsing u
 
 The data term ensures that points in the anchor frame do not drift far from their natural positions:
 
-![Data Term](/assets/images/ToNN/fso/data_term.PNG)
+![Data Term](/assets/images/ToNN/FSO/data_term.PNG)
 
 ![s bar p](https://latex.codecogs.com/svg.image?\mathbf{\bar{s}}_p) is the unoptimized natural feature space.
 
@@ -66,11 +66,11 @@ The data term ensures that points in the anchor frame do not drift far from thei
 
 The spatial regularizaer preserves the shpaes within color boundaries and detected contours. The regularizer is anisotropic second-order regularization over the 4-connected pixel grid.
 
-![Spatial regularization term](/assets/images/ToNN/fso/Spatial_regularization_term.PNG)
+![Spatial regularization term](/assets/images/ToNN/FSO/Spatial_regularization_term.PNG)
 
 ![Neighbors](https://latex.codecogs.com/svg.image?\mathcal{N}_i) is the set of neighbors of point ![point](https://latex.codecogs.com/svg.image?(b,t,i)). The weight reduce the effect of neihboring pixel's value.
 
-![Spatial regularization weights](/assets/images/ToNN/fso/spatial_regularization_weight.PNG)
+![Spatial regularization weights](/assets/images/ToNN/FSO/spatial_regularization_weight.PNG)
 
 The first factor is based on the color difference between two pixel.. The second fector is based on the contour strength. The contour strength is calculated using structured forest such that the the value is between 0 and 1. Then the contour strength is 1 the pixel is at the boundary.
 
@@ -78,7 +78,7 @@ The first factor is based on the color difference between two pixel.. The second
 
 The temporal regularizer ulls correspondeing points in different frams to assume similar positions in feature space
 
-![temporal regularization term](/assets/images/ToNN/fso/temporal_regularization_term.PNG)
+![temporal regularization term](/assets/images/ToNN/FSO/temporal_regularization_term.PNG)
 
 The term minimizes distance between corresponding points. *K* is the collection of correspondence pair where, **p** and **q** are established via optical flow and long term tracks.
 
@@ -92,13 +92,13 @@ Inferenece is performed by an extension of the mean-field inference algorithm in
 
 Define a distribution Q that approximates the true distribution P, where similarity between distributions is measured by the KL-divergence, assuming Q factorizes over the individual variables: ![Q factorization](https://latex.codecogs.com/svg.image?Q(\mathbf{x})=\prod_{\mathbf{x}}{Q_{\mathbf{p}}(x_\mathbf{p})}). The *Q* is a distribution over the random variable. The mean-field updates have the following form:
 
-![mean field update](/assets/images/ToNN/fso/mean_field_update.PNG)
+![mean field update](/assets/images/ToNN/FSO/mean_field_update.PNG)
 
 The ![](https://latex.codecogs.com/svg.image?\mathcal{N}_{p}^{1}) and ![](https://latex.codecogs.com/svg.image?\mathcal{N}_{p}^{1}) are the sets of neighbors of **P** in the two blocks that cover p. The updates can be performed efficiently using Gaussian filtering in feature space. Labeling can be obtained by assigning ![optimized value](https://latex.codecogs.com/svg.image?x_{\mathbf{p}}^{*}=\arg\max_{l}{Q_{\mathbf{p}}(l)})
 
 When the video length is large to fit in the memory, video can be splitted into chuncks of consecutive blocks. Consider two overlapping blocks b1 and b2, b1 is the last block in one chunk and b2 is the first block in the next chunck. Let Q1 and Q2 be the distribution produced by mean-field inference for these blocks in their repective chunks. Let [t1, t2] be the overlap region. Let Qt be the sought-after distribution for frame t in [t1,t2] and let Q1,t and Q2,t be the corresponding slices of Q1 and Q2. The transition between chunks with simple linear interpolation :
 
-![linear interpolation](/assets/images/ToNN/fso/linear_interpolation.PNG)
+![linear interpolation](/assets/images/ToNN/FSO/linear_interpolation.PNG)
 
 # Implementation
 

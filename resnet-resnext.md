@@ -25,7 +25,7 @@ The Inception models are successful multi-branch architectures where each branch
 
 Inception module | Residual Module
 -----------------|-----------------
-![Inception Module](/assets/images/ToNN/resnet/resnext/./InceptionModuleWithDimensionReductions.png) | ![Residual Module](/assets/images/ToNN/resnet/resnext/./ResidualBlock.png)
+![Inception Module](/assets/images/ToNN/ResNet/ResNext/InceptionModuleWithDimensionReductions.png) | ![Residual Module](/assets/images/ToNN/ResNet/ResNext/ResidualBlock.png)
 
 These two module use multibrach network, where Inception ResNet uses different types of convoluitonal layers and ResNet module uses Identity matrics and two convolutional layers.
 
@@ -55,15 +55,15 @@ With these two rules, authors designed template modules and all modules in a new
 
 The simplest neurons in artificial neural networks perform inner product(weighted sum), which is the elementary transformation done by fully connected nad convolutional layers.
 
-![Inner Product](/assets/images/ToNN/resnet/resnext/./InnerProduct.png)
+![Inner Product](/assets/images/ToNN/ResNet/ResNext/InnerProduct.png)
 
 Inner product equation, presented above, is similar to aggregated transformation shown below.
 
-![Aggregated Transformation](/assets/images/ToNN/resnet/resnext/./AggregatedTrasnformation.png)
+![Aggregated Transformation](/assets/images/ToNN/ResNet/ResNext/AggregatedTrasnformation.png)
 
 Where ![x=[x_1,x_2,...,x_D]](https://latex.codecogs.com/svg.image?x=[x_1,x_2,...,x_D]) is a D-Channel input vector to the neuron and ![w_i](https://latex.codecogs.com/svg.image?w_i) is a filter's weight for the i-th Channel. This equation could be represented as a figure below
 
-![neuron](/assets/images/ToNN/resnet/resnext/./neuron.png)
+![neuron](/assets/images/ToNN/ResNet/ResNext/neuron.png)
 
 The operations to build a neuron could be splitted in to three operations:
 
@@ -75,7 +75,7 @@ The operations to build a neuron could be splitted in to three operations:
 
 Giving above analysis of simple neuron, Aggregated Transformation will be formally presented as equation below.
 
-![Formal aggregated transformation equation](/assets/images/ToNN/resnet/resnext/./formalAggregatedTransformEquation.png)
+![Formal aggregated transformation equation](/assets/images/ToNN/ResNet/ResNext/formalAggregatedTransformEquation.png)
 
 where ![tau_i(x)](https://latex.codecogs.com/svg.image?T_i(x)) can be any arbitrary function.
 
@@ -83,7 +83,7 @@ In this equation C is the size of the set of transformations to be aggergated, a
 
 The structure of ResNext is using a simple design strategy: all ![tau_i(x)](https://latex.codecogs.com/svg.image?T_i(x)) have the same topology. This extends the style of VGG of repeating layers of same shape which is helpful for isolating a few factors and extending to any large number of trasnformations.
 
-![Structure of ResNext Block](/assets/images/ToNN/resnet/resnext/./StructureOfResNextBlock.png)
+![Structure of ResNext Block](/assets/images/ToNN/ResNet/ResNext/StructureOfResNextBlock.png)
 
 Above image represnet how ResNeXt blocks could be represented. In this image, a) is Aggregated Residual transformations, b) a block equivalent of a and implementing early concatenation, c0 a block equivalent of (a,b) implemented as group convolution.
 
@@ -98,4 +98,4 @@ https://takenotesforvision.tistory.com/12
 ## [Link to Neural Net](../../)
 ## [Link to Original Version](../)
 ## [Link to ResNet V2](../V2/)
-## [Link to Korean Version](../Korean/ResNext/)
+## [Link to Korean Version](../ResNext/)

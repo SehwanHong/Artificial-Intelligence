@@ -13,9 +13,9 @@ tags:
 
 가벼운 인공신경망을 설계하는 것은 연구자와 실무자 모두에게 중요한 일입니다. 유명한 인공신경망들은 비슷한 설계전략을 사용합니다. Low-dimension의 입력값을 class의 개수보다 더 많은 수의 channel을 가지도록 증폭시킵니다. 가벼운 인공신경망은 이러한 전략에 bottleneck을 결합시켜, 연산 효율을 올립니다. 대체적으로 대부분의 네트워크들은 low-dimension에서 시작해 high-dimension으로 증가시키는 방향으로 만들어집니다. **아래에 있는 이미지를 확인하세요**
 
-![Channel Configuration in Lightweight Network](/assets/images/ToNN/Korean/ChannelConfigurationLightweightNetwork.png)
+![Channel Configuration in Lightweight Network](/assets/images/ToNN/RexNet/ChannelConfigurationLightweightNetwork.png)
 
-위에서 표기된 channel configuration은 MobileNetV2(../MobileNet/Korean/V2/)에서 확인 할 수 있습니다. 이러한 channel dimension의 설계방식은 가벼운 인공신경망의 설계의 토대가 되었습니다. 인공신경망 구조 검색(Network Architecture Search(NAS))방식의 인공신경망들도 이러한 channel 설계방식을 기반으로 약간의 병형을 통해서 만들어졌습니다. 그리고 대부분의 검색은 인공신경망을 구성하는 building block에 한정되었습니다.
+위에서 표기된 channel configuration은 MobileNetV2(../MobileNet/V2/)에서 확인 할 수 있습니다. 이러한 channel dimension의 설계방식은 가벼운 인공신경망의 설계의 토대가 되었습니다. 인공신경망 구조 검색(Network Architecture Search(NAS))방식의 인공신경망들도 이러한 channel 설계방식을 기반으로 약간의 병형을 통해서 만들어졌습니다. 그리고 대부분의 검색은 인공신경망을 구성하는 building block에 한정되었습니다.
 
 저자는 현제 compact한 인공신경망의 channel 구조가 표현력을 제한 한다고 추론하였습니다. 이는 compact한 신경망이 FLOP-효율성에만 집중하기 때문이라고 표현합니다. 이를 통해서 저자는 더 효과적인 구성이 있을 것이라고 예측합니다.
 
@@ -50,7 +50,7 @@ Softmax layer는 logit을 entire class probability로 바꾸는 것을 어려워
 
 ### Layer Designs in practice
 
-ResNet 계열의 인공신경망들은([1](../ResNet/Korean), [2](../ResNet/Korean/V2), [3](../ResNet/Korean/ResNext)) bottleneck block을 사용합니다. Bottleneck 구조는 입력 channel을 두배씩 늘려서 마지막 레이어의 channel의 수가 class의 갯수를 넘기는 것을 목표로 하였습니다. 이보다 더 효율적인 인공신경망들은, inverted bottlenck의 channel의 크기를 천천히 늘립니다. 또한 마지막에서 두번쩨 레이어에서는 channel dimension의 크기를 키워 사용합니다. Bottleneck과 Inverted Bottlenek 모두 미리 정해진 expansion ratio를 가진 convolutional expansion layer를 포함하고 있습니다.
+ResNet 계열의 인공신경망들은([1](../ResNet/Korean), [2](../ResNet/V2), [3](../ResNet/ResNext)) bottleneck block을 사용합니다. Bottleneck 구조는 입력 channel을 두배씩 늘려서 마지막 레이어의 channel의 수가 class의 갯수를 넘기는 것을 목표로 하였습니다. 이보다 더 효율적인 인공신경망들은, inverted bottlenck의 channel의 크기를 천천히 늘립니다. 또한 마지막에서 두번쩨 레이어에서는 channel dimension의 크기를 키워 사용합니다. Bottleneck과 Inverted Bottlenek 모두 미리 정해진 expansion ratio를 가진 convolutional expansion layer를 포함하고 있습니다.
 
 저자는 다양한 인공신경망 모델에서 사용된 기본 구조에 대해서 의문을 가집니다. **여기서 사용된 기본구조의 레이어는 정확하게 설계가 되어있고, 새로운 인공신경망은 이러한 기본구조를 기반으로 만들면 되는 가?**
 
@@ -80,7 +80,7 @@ Building blocks is presented by following equation:
 
 ### Observations
 
-![Visualization of the Output Rank](/assets/images/ToNN/Korean/VisualizationOutputRank.png)
+![Visualization of the Output Rank](/assets/images/ToNN/RexNet/VisualizationOutputRank.png)
 
 위의 이미지가 rank의 변화를 입력 channel의 크기와 비교한 것입니다. Dimension ratio는 x출에 있고 이는 expansion ratio의 역수로 생각하면 됩니다.
 
@@ -100,7 +100,7 @@ Building blocks is presented by following equation:
 
 ### Verificaiton of the study
 
-![Factor analysis of the study](/assets/images/ToNN/Korean/FactorAnalysis.png)
+![Factor analysis of the study](/assets/images/ToNN/RexNet/FactorAnalysis.png)
 
 위에서 설명하는 이점을 확인하기 위해서 실험을 설계했습니다. 실험에 사용한 인공신경망은, 2개의 Inverted Bottleneck을 사용했고, Dimension ratio와 the first ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolutions in each IB 를 변경하였습니다. 처음으로는 expansion ratio를 20에서 6으로 줄였습니다. 다음으로는 DRfmf .22 에서 .8로 증가시켰습니다. 마지막으로는 ReLU6를 SiLU로 바꾸었습니다.
 
@@ -129,9 +129,9 @@ Optimization은 인공신경망의 탐색과 훈련을 통해서 구했습니다
 
 ## Search Results
 
-![Visualization of the searched model's channel dimensions vs. block index](/assets/images/ToNN/Korean/VisualizationSearchedModelChannelDimensionsBlockIndex.png)
+![Visualization of the searched model's channel dimensions vs. block index](/assets/images/ToNN/RexNet/VisualizationSearchedModelChannelDimensionsBlockIndex.png)
 
-![Detailed searched channel configurations](/assets/images/ToNN/Korean/DetailedSearchedChannelConfiguration.png)
+![Detailed searched channel configurations](/assets/images/ToNN/RexNet/DetailedSearchedChannelConfiguration.png)
 
 위의 그래프에서 보는 것처럼, 저자는 4가지 제한점을 준 상태에서 훈련을 하였습니다. 제한에 대한 자세한 설명은 위의 표를 참고해주시기 바람니다. 이러한 제한을 사용해서 상위 10%, 중간 10%, 하위 10%의 결과 값을 모았습니다.
 
@@ -151,7 +151,7 @@ Section 3에서 확인한 실험 결과에 기반하여, 첮번째 ![1 by 1](htt
 
 인공신경망은 ImageNet data를 기반으로 훈련되었습니다. Data augmentation은 기본적인 것으로 적용했고, SGD와 mini-batch 512를 4개의 GPU에서 사용하였습니다. 이 ReXNet의 결과를 다른 것과 비교한 표는 아레에 표현되었습니다.
 
-![Comparison of ImageNet performance](/assets/images/ToNN/Korean/ComparisonImageNet.png)
+![Comparison of ImageNet performance](/assets/images/ToNN/RexNet/ComparisonImageNet.png)
 
 위의 표에서 확인한 결과 ReXNet이 가장 높은 정확도를 가진 것을 확인 할 수 있습니다.
 
@@ -159,11 +159,11 @@ Section 3에서 확인한 실험 결과에 기반하여, 첮번째 ![1 by 1](htt
 
 ReXNet과 EfficientNet을 scalability에 관해서 비교한 것입니다.
 
-![Scalablity of ReXNet model](/assets/images/ToNN/Korean/ScalabilityModel.png)
+![Scalablity of ReXNet model](/assets/images/ToNN/RexNet/ScalabilityModel.png)
 
 이 표의 그래프는 아레에 표현되었습니다.
 
-![ImageNet accuracy and FLOPs and latencies](/assets/images/ToNN/Korean/ImageNetFLOPLatency.png)
+![ImageNet accuracy and FLOPs and latencies](/assets/images/ToNN/RexNet/ImageNetFLOPLatency.png)
 
 둘을 비교한 결과 ReXNet이 대체로 더 정확하고 latency는 물론 FLOPs도 작은 것을 확인 할 수 있습니다.
 
@@ -173,34 +173,31 @@ ReXNet과 EfficientNet을 scalability에 관해서 비교한 것입니다.
 
 ReXNet을 기반으로 object detection을 실행한 결과입니다. ReXNet에 SSDLite를 사용한 것입니다.
 
-![COCO Object detection result with SSDLite](/assets/images/ToNN/Korean/COCOObjectDetectionWithSSDLite.png)
+![COCO Object detection result with SSDLite](/assets/images/ToNN/RexNet/COCOObjectDetectionWithSSDLite.png)
 
 ### Training Faster RCNN
 
 ReXNet에 RCNN을 추가하여 성능을 확인 한 것입니다.
 
-![COCO object detection results with Faster RCNN and FPN](/assets/images/ToNN/Korean/COCOObjectDetectionWithRCNN.png)
+![COCO object detection results with Faster RCNN and FPN](/assets/images/ToNN/RexNet/COCOObjectDetectionWithRCNN.png)
 
 ## Fine-grained classification
 
 다양한 데이터셋에서 ImageNet에서 구한 모델을 기반으로 찾은 결과입니다.
-![Transfer learning results on fine-graned datasets](/assets/images/ToNN/Korean/TransferLearningResult.png)
+![Transfer learning results on fine-graned datasets](/assets/images/ToNN/RexNet/TransferLearningResult.png)
 
 ## COCO Instance Segmentation
 
 Mask RCNN 을 사용해 ReXNets의 instance segmentation에 대한 성능을 확인한 것입니다..
 
-![COCO instance segmentaion results with Mask RCNN and FPN](/assets/images/ToNN/Korean/COCOInstanceSegmentation.png)
+![COCO instance segmentaion results with Mask RCNN and FPN](/assets/images/ToNN/RexNet/COCOInstanceSegmentation.png)
 
 # Discussion
 
 ### Fixing network depth and searching models
 
-![Searched Channel Configuration under fixed depth](/assets/images/ToNN/Korean/ChannelConfigurationFixedDepth.png)
+![Searched Channel Configuration under fixed depth](/assets/images/ToNN/RexNet/ChannelConfigurationFixedDepth.png)
 
 
 Linear channel parameterization을 다양한 제한 상황에서 탐색한 것입니다. 인공신경망의 크기를 18과 30으로 고정한 다음 FLOPs에 다양한 성능의 제한을 준 것입니다. 위의 이미지에서 확인 할 수 있다싶이, channel의 크기가 linear하게 증가하는 것을 확인 할 수 있습니다. 이를 통해서 관례처럼 사용되던 channel configuration보다 높은 성능을 가지고 있는 것을 학인 할 수 있습니다.
 
-
-## Link to NeuralNet(../../)
-## Link to English Version(../)

@@ -29,14 +29,14 @@ End-to-End memory network은 recurrent attention mechanism을 기반으로 사�
 
 ### Encoder
 
-![Transformer Encoder structure](/assets/images/ToNN/Korean/Transformer_encoder.png)
+![Transformer Encoder structure](/assets/images/ToNN/AAYN/Transformer_encoder.png)
 
 Encoder는 6개의 동일한 래이어로 이루어져있습니다. 각각의 layer는 두개의 sublayer로 이루어져있습니다. 
 하나는 multi-head attention이고 다른 하나는 position-wise fully connected layer입니다. 각각의 sublayer의 연산이 끝이 나면 residual connection을 활용합니다. Input과 output dimension은 512입니다.
 
 ### Decoder
 
-![Transformer decoder structure](/assets/images/ToNN/Korean/Transformer_decoder.png)
+![Transformer decoder structure](/assets/images/ToNN/AAYN/Transformer_decoder.png)
 
 Decoder 또한 encoder와 비슷하게 6개의 Stack으로 이루어졌습니다. 또한 multi-head attention을 가장 처음사용하는 것도 비슷합니다. 두번째 레이어의 경우에는 output과 input을 합쳐 하나로 만듭니다. 이때 output은 query에 들어가고, input은 나머지 key와 value에 들어갑니다. 이후에 positionwise fullyconnected layer를 사용합니다.
 
@@ -46,23 +46,23 @@ Attention은 query와 key-value pair를 출력값에 mapping합니다. Output은
 
 ### Scaled Dot-Product Attention
 
-![Scaled Dot Product Attention](/assets/images/ToNN/Korean/Scaled_Dot-Project_Attention.png)
+![Scaled Dot Product Attention](/assets/images/ToNN/AAYN/Scaled_Dot-Project_Attention.png)
 
 입력값은 Query(Q), Key(K), Value(V)로 구할 수 있습니다.
 
 첫번째로는 query와 key 사이의 dot product를 구합니다. Scale은 key의 dimension의 루트값으로 나누어 주는 방식으로 사용했습니다. Softmax값을 사용해서 weight을 구해줍니다. 마지막으로 mask는 decoder에서 정보를 제한할때 사용합니다.
 
-![attention equation](/assets/images/ToNN/Korean/Attention_equation.png)
+![attention equation](/assets/images/ToNN/AAYN/Attention_equation.png)
 
 ### Multi-Head Attention
 
 전체 dimenstion에 하나의 attention function을 사용하는 것이 아니라 h개의 다른 함수를 사용해서 연속되게 사용하는 방식이 더 좋습니다.
 
-![Multi-head Attention](/assets/images/ToNN/Korean/Multi-Head_Attention.png)
+![Multi-head Attention](/assets/images/ToNN/AAYN/Multi-Head_Attention.png)
 
 위에서 본것 처럼 Scaled Dot-Project attention아 병렬로 처리되고 난다음에, concatenation을 통해서 하나로 만들고 그 후에 다시한번 linearly project를 합니다.
 
-![Multi-head Attention equation](/assets/images/ToNN/Korean/Multi-Head_Attention_equation.png)
+![Multi-head Attention equation](/assets/images/ToNN/AAYN/Multi-Head_Attention_equation.png)
 
 여기서 h=8를 사용하고 각각의 dimension은 d_model / h = 512 = 64로 연산할 수 있습니다.
 
@@ -78,7 +78,7 @@ Transformer는 multi-head attention을 세가지 방식으로 사용합니다
 
 Encoder와 decoder에서는 Fully connected feed-forward network를 가지고 있습니다. 이 network는 두개의 레이어로 이루어져있습니다. 그리고 첫번째 레이어와 두번째 레이어 사이에는 ReLU activation을 사용합니다. Input과 output의 dimension은 512이고 inner layer의 dimension은 2048입니다.
 
-![Fully connected feed forward network](/assets/images/ToNN/Korean/FFN.png)
+![Fully connected feed forward network](/assets/images/ToNN/AAYN/FFN.png)
 
 ## Embedding and Softmax.
 
@@ -88,7 +88,7 @@ Encoder와 decoder에서는 Fully connected feed-forward network를 가지고 �
 
 모든 입력값을 한번에 처리하기 위해서 각각의 input에 대하여 positional information을 사용해야합니다. 이는 sequenctial 한 정보를 가지고 있다고 가정하기 때문이며, 이때 positional encoding을 사요합니다.
 
-![Positional Encoding](/assets/images/ToNN/Korean/Positional_Encoding.png)
+![Positional Encoding](/assets/images/ToNN/AAYN/Positional_Encoding.png)
 
 # Why self-Attention
 
@@ -98,4 +98,4 @@ Self-attention을 사용하는 세가지 이유가 있습니다.
 * Amount of computation that can be parallelized, measured by the minimum number of sequential operation required
 * The path length between long-range dependencies in the network, measured by maximum path length between two input and output positions.
 
-![](/assets/images/ToNN/Korean/complexity_different_network.png)
+![](/assets/images/ToNN/AAYN/complexity_different_network.png)

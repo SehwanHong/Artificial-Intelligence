@@ -34,7 +34,7 @@ ViT follow the original Transformer as closely as possible.
 
 ## Vison Transformer (ViT)
 
-![ViT model overview](/assets/images/ToNN/vit/ViT_model_overview.png)
+![ViT model overview](/assets/images/ToNN/ViT/ViT_model_overview.png)
 
 The standard Transformer receives as input a 1D sequence of token embedding. To handle 2D images, the image is reshaped into a sequence of 2D Patches.
 
@@ -48,7 +48,7 @@ The Transformer encoder consist of alternating layers of multihead self-attentio
 
 The MLP contains two layers with a GELU non-linearity.
 
-![ViT model equation](/assets/images/ToNN/vit/ViT_model_equation.png)
+![ViT model equation](/assets/images/ToNN/ViT/ViT_model_equation.png)
 
 ### Inductive bias
 

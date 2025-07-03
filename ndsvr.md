@@ -12,7 +12,7 @@ In this paper, author introduce new comparison paradigm of distribution estimate
 
 There has been a general trend toward better empiricism in the literature on network architecture.
 
-![Comparing Network using different estimations](/assets/images/ToNN/ndsvr/ComparingNetworks.png)
+![Comparing Network using different estimations](/assets/images/ToNN/NDSVR/ComparingNetworks.png)
 
 In the early development stages, the simple method was used. The progress of the neural network was measured by simple point estimates. The architecture was marked superiror if it achieved lower error on a benchmark dataset, often irrespective of model complexity.
 
@@ -83,7 +83,7 @@ Author study three standarad model families:
 
 ### Design space
 
-![Design Space Parameterization](/assets/images/ToNN/ndsvr/DesignSpaceParameterization.png)
+![Design Space Parameterization](/assets/images/ToNN/NDSVR/DesignSpaceParameterization.png)
 
 As shown in the table above, author used networks consisting of a stem, followed by three stages and a head, as described in the table above.
 
@@ -91,7 +91,7 @@ As shown in the table above, author used networks consisting of a stem, followed
 * Vanilla design space uses an identical block structure as ResNet but without residual connection.
 * In the Case of ResNeXt design spaces, we use bottleneck blocks with groups.
 
-![Design Spaces](/assets/images/ToNN/ndsvr/DesignSpace.png)
+![Design Spaces](/assets/images/ToNN/NDSVR/DesignSpace.png)
 
 This table above specify the set of allowable hyperparameters for each. The notation, ![a, b, n](https://latex.codecogs.com/svg.image?a,b,c) means we sample, n values sapced about evenly in log spaces in the range a to b. From these value, we select independently for three network stages, number of blocks ![d_i](https://latex.codecogs.com/svg.image?d_i), and the number of channels per block ![w_i](https://latex.codecogs.com/svg.image?w_i).
 
@@ -120,7 +120,7 @@ The baseline model set (B) by uniform sampling 100 architecure from ResNet desig
 
 After traing, M's minimum error is lower than B's minimum error. Since the best error is lower, a naive comparison of point estimates concludes that M is superior. 
 
-![Point distribution](/assets/images/ToNN/ndsvr/PointDistribution.png)
+![Point distribution](/assets/images/ToNN/NDSVR/PointDistribution.png)
 
 Repeating this experiment yield the same results. Above image represent the difference in the minimum error of B and M over multiple trials. This experiment was simulated by repeatedly sampling B and M from the pool of 25k pre-trained models.
 
@@ -136,7 +136,7 @@ To compare distributions, author use empirical distribution functions(EDFs). Giv
 
 This equation represent the fraction of models with error less than e.
 
-![EDF](/assets/images/ToNN/ndsvr/EDF.png)
+![EDF](/assets/images/ToNN/NDSVR/EDF.png)
 
 Using B and M, author plotted the empirical distribution instead of just their minimum errors. The small tail to the bottom left indicate a small population of models with low error and the long tail on the upper right shows there are few models with error over 10%.
 
@@ -162,7 +162,7 @@ Relevant confounding factor is model complexity. The next section study how to c
 
 ### Unnormalized comparison
 
-![Comparisons conditinoed on complexity](/assets/images/ToNN/ndsvr/ComparisonComplexity.png)
+![Comparisons conditinoed on complexity](/assets/images/ToNN/NDSVR/ComparisonComplexity.png)
 
 The leftmost image shows the error EDFs for the ResNeXt-A and ResNeXt-B design spaces, which only differes in the allowable hyperparameter set in the above table.
 
@@ -174,7 +174,7 @@ This image present that different design space from the same model family under 
 
 Though different papers, we know that model's error is related to it's complexity; in particular more complex models are often more accurate.
 
-![Complexity vs Error](/assets/images/ToNN/ndsvr/ComplexityError.png)
+![Complexity vs Error](/assets/images/ToNN/NDSVR/ComplexityError.png)
 
 This two graphs plot the error of each trained model against its complexity, measured by either parameter or flop count. While there are poorly-performing high-complexity models, the best models have the highest complexity.
 
@@ -182,7 +182,7 @@ This two graphs plot the error of each trained model against its complexity, mea
 
 The difference between the ResNeXt-A and ResNeXt-B might be due to the differences in their complexity distributions.
 
-![Complexity Distribution](/assets/images/ToNN/ndsvr/ComplexityDistribution.png)
+![Complexity Distribution](/assets/images/ToNN/NDSVR/ComplexityDistribution.png)
 
 As shown in the image above, ResNeXt-A have more low compelxity models and ResNeXt-B have heavy tail of high-complexity models. Thus, it is plausible that ResNeXt-B's apparent superiority is due to the confounding effect of complexity.
 
@@ -210,7 +210,7 @@ An advantage of examining the full errror distribution of a design space is it g
 
 ### Distribution shape
 
-![Finding good models quickly](/assets/images/ToNN/ndsvr/FindingGoodModelQuickly.png)
+![Finding good models quickly](/assets/images/ToNN/NDSVR/FindingGoodModelQuickly.png)
 
 The left image shows EDFs for the Vanilla and ResNet design space. For ResNet majority(>80%) of the model have error under 8%. In constrast, the Vanilla design space has a much smaller fraction of such models(~15%). This represent it is easier to find a good ResNet model.
 
@@ -236,7 +236,7 @@ In practice far fewer samples can be used to compare distrubtions of models as w
 
 ### Qualitative analysis
 
-![Number of samples](/assets/images/ToNN/ndsvr/NumberOfSamples.png)
+![Number of samples](/assets/images/ToNN/NDSVR/NumberOfSamples.png)
 
 Left image shows EDFs for the ResNet design space with varying number of samples. Using 10 samples to generate EDF is quite nosizy, However, 100 samples gives reasonalbe approximation. 1000 sample is indistinguishable from 10000. Thus author suggest to use 100 to 1000 samples.
 
@@ -272,7 +272,7 @@ A cell takes output from two previous cells as inputs and contains a number of n
 
 ### Design Space
 
-![NAS Design Space](/assets/images/ToNN/ndsvr/NASDesignSpace.png)
+![NAS Design Space](/assets/images/ToNN/NDSVR/NASDesignSpace.png)
 
 From five different NAS model family, NASNet, AmoebaNet, PNAS, Enas, and DARTS was selected. As shown in the table above, most of the NASNet is limited to have five cell structure. The Output L means, loose node not used as input to other nodes, and A all nodes are concatenated to the output.
 
@@ -280,7 +280,7 @@ The full network architecture also varies slightly between recent papers. Thus a
 
 The network depth d and initial filter width are typically kept fixed. However these hyperparameters directly affect model complexity. 
 
-![NAS Complexity Distribution](/assets/images/ToNN/ndsvr/NASComplexityDistribution.png)
+![NAS Complexity Distribution](/assets/images/ToNN/NDSVR/NASComplexityDistribution.png)
 
 As Shown in the image above, each model generates different complexity. Therefore to factor this confounding factor, author vary w and d (![](https://latex.codecogs.com/svg.image?w%5Cin%5Cleft%5C%7B16,24,32%5Cright%5C%7D) and ![](https://latex.codecogs.com/svg.image?d%5Cin%5Cleft%5C%7B4,8,12,16,20%5Cright%5C%7D)).
 
@@ -296,7 +296,7 @@ Training approximately 1000 CIFAR models for each of the Five NAS design spaces.
 
 ### Distribution comparison
 
-![NAS Distribution Comparison](/assets/images/ToNN/ndsvr/NASDistribution.png)
+![NAS Distribution Comparison](/assets/images/ToNN/NDSVR/NASDistribution.png)
 
 Above image show normalized error EDFs for each of the NAS design spaces. The NASNet and Amoeba design space are noticeably worse than the others, while DARTS is best overall. Comparing ENAS and PNAS, they are similar but ENAS has more intermediate error while Enase has more lower/higher performing models.
 
@@ -304,7 +304,7 @@ Author thinks the gains in each paper may come from improvements of the design s
 
 ### Random Search efficiency
 
-![NAS Random Search Efficiecny](/assets/images/ToNN/ndsvr/NASEfficiency.png)
+![NAS Random Search Efficiecny](/assets/images/ToNN/NDSVR/NASEfficiency.png)
 
 From above image, we observe two interesting facts.
 
@@ -313,7 +313,7 @@ From above image, we observe two interesting facts.
 
 ## Comparisons to Standard Design Spaces
 
-![NAS vs Standard Design spaces](/assets/images/ToNN/ndsvr/NASvsStandard.png)
+![NAS vs Standard Design spaces](/assets/images/ToNN/NDSVR/NASvsStandard.png)
 
 From selecting best and worst performing NAS design spaces(DARTS and NASNet) and compare them to the ResNeXt design spaces. ResNet-B is on par with DARTS when normalized by parameter( as shown in the left), while DARTS slightly outperforms ResNeXt-B when normalized by flops(as shown in the right).
 
@@ -321,7 +321,7 @@ These result demonstarate that the design of the design space plays a key role a
 
 ## Sanity Check: point Comparison
 
-![Point Comparisons](/assets/images/ToNN/ndsvr/PointComparison.png)
+![Point Comparisons](/assets/images/ToNN/NDSVR/PointComparison.png)
 
 As a sanity check, author perform point comparisons using larger models and the exact training setting from DARTS with deep supervision, Cutout and modified DropPath. DARTS, ResNeXt, and ResNet-110.
 
@@ -333,4 +333,4 @@ Author present methodology for analyzing and comparing model design space. This 
 
 ## [Link to NeuralNet](../)
 
-## [Link to Korean](./Korean/)
+## [Link to Korean](./)

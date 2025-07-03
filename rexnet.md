@@ -12,7 +12,7 @@ Designing an efficient model within limited computational cost is challenging. A
 
 Designing a lightweight network architecture is crucial for both researcher and practitioners. Popular network share similar strategy where a low-dimensional input-channel is expanded by a few channel expansion layers toward surpassing the number of classes. Lightweight models also follow this strategies with some shrinking channels for computational efficiency. In general, the network start with low dimension then grows toward larger dimension. **see table below**
 
-![Channel Configuration in Lightweight Network](/assets/images/ToNN/rexnet/ChannelConfigurationLightweightNetwork.png)
+![Channel Configuration in Lightweight Network](/assets/images/ToNN/RexNet/ChannelConfigurationLightweightNetwork.png)
 
 This Channel configuration was introduced by [MobileNetV2](../MobileNet/V2/) and became the design convention of configuring channel dimensions in lightweight networks. Even network architecture search (NAS)-based models were designed upon the convention or little more exploration within few option near the configuration and focused on searching building blocks.
 
@@ -78,7 +78,7 @@ After the building block is calculated, author computes the *rank ratio* (![rank
 
 ### Observations
 
-![Visualization of the Output Rank](/assets/images/ToNN/rexnet/VisualizationOutputRank.png)
+![Visualization of the Output Rank](/assets/images/ToNN/RexNet/VisualizationOutputRank.png)
 
 Above image represents the rank changes with respect to the input channel dimension on average. Dimension ratio is on x axis is reciprocal of expansion ratio.
 
@@ -96,7 +96,7 @@ From the figure, we observe the following:
 
 ### Verificaiton of the study
 
-![Factor analysis of the study](/assets/images/ToNN/rexnet/FactorAnalysis.png)
+![Factor analysis of the study](/assets/images/ToNN/RexNet/FactorAnalysis.png)
 
 Author provide experimental backup to support current idea. The model trained in this paper consists of two inverted bottlenecks to ajust dimension ratio of IBs and the first ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolutions in each IB. Starting from the baseline with the low DR 1/20. Modified by increasing DR of the first ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution to 1/6; 2) increasing DR at every IB from .22 to .8; 3) replacing the first ReLU6 with SiLU in each IB.
 
@@ -124,9 +124,9 @@ Optimization is done alternatively by searching and training a network. Each mod
 
 ## Search Results
 
-![Visualization of the searched model's channel dimensions vs. block index](/assets/images/ToNN/rexnet/VisualizationSearchedModelChannelDimensionsBlockIndex.png)
+![Visualization of the searched model's channel dimensions vs. block index](/assets/images/ToNN/RexNet/VisualizationSearchedModelChannelDimensionsBlockIndex.png)
 
-![Detailed searched channel configurations](/assets/images/ToNN/rexnet/DetailedSearchedChannelConfiguration.png)
+![Detailed searched channel configurations](/assets/images/ToNN/RexNet/DetailedSearchedChannelConfiguration.png)
 
 As shown in the image, in this paper, author searched for four different constraints described in the Table 3. From these constrains, author collected top-10%, middle-10%, and bottom-10% to compare the model interms of accuacy.
 
@@ -146,7 +146,7 @@ Based on the experiment found above at section 3, ReLU 6 is replaced only after 
 
 The model is trained on ImageNet dataset using standard data augmentation and Stocastic Gradient Descent and mini batch size of 512 on four GPUs. The result of this Network with comparison is shown in the table below.
 
-![Comparison of ImageNet performance](/assets/images/ToNN/rexnet/ComparisonImageNet.png)
+![Comparison of ImageNet performance](/assets/images/ToNN/RexNet/ComparisonImageNet.png)
 
 Looking at the table, ReXNet have the highest accuracy among the model searched by NAS.
 
@@ -154,11 +154,11 @@ Looking at the table, ReXNet have the highest accuracy among the model searched 
 
 Comparing with ReXNet and EfficientNets about model scalability with performances.
 
-![Scalablity of ReXNet model](/assets/images/ToNN/rexnet/ScalabilityModel.png)
+![Scalablity of ReXNet model](/assets/images/ToNN/RexNet/ScalabilityModel.png)
 
 The graph version of above table is presented below.
 
-![ImageNet accuracy and FLOPs and latencies](/assets/images/ToNN/rexnet/ImageNetFLOPLatency.png)
+![ImageNet accuracy and FLOPs and latencies](/assets/images/ToNN/RexNet/ImageNetFLOPLatency.png)
 
 Comparing EfficiencyNet and ReXNet, ReXNet is generally more accurate and have lower latency.
 
@@ -168,34 +168,31 @@ Comparing EfficiencyNet and ReXNet, ReXNet is generally more accurate and have l
 
 Using the ReXNet backbone through object detection on the COCO dataset in SSDLite.
 
-![COCO Object detection result with SSDLite](/assets/images/ToNN/rexnet/COCOObjectDetectionWithSSDLite.png)
+![COCO Object detection result with SSDLite](/assets/images/ToNN/RexNet/COCOObjectDetectionWithSSDLite.png)
 
 ### Training Faster RCNN
 
 Adopted RCNN to explore maximal performance of ReXNet.
 
-![COCO object detection results with Faster RCNN and FPN](/assets/images/ToNN/rexnet/COCOObjectDetectionWithRCNN.png)
+![COCO object detection results with Faster RCNN and FPN](/assets/images/ToNN/RexNet/COCOObjectDetectionWithRCNN.png)
 
 ## Fine-grained classification
 
 Finetune the ImageNet-pretrained models on the datasets Food-101, Stanford Cars, FGVC Aircraft, and Oxford Flowers to verify the transferability.
 
-![Transfer learning results on fine-graned datasets](/assets/images/ToNN/rexnet/TransferLearningResult.png)
+![Transfer learning results on fine-graned datasets](/assets/images/ToNN/RexNet/TransferLearningResult.png)
 
 ## COCO Instance Segmentation
 
 Use Mask RCNN to validate the performance of ReXNets on instance segmentation.
 
-![COCO instance segmentaion results with Mask RCNN and FPN](/assets/images/ToNN/rexnet/COCOInstanceSegmentation.png)
+![COCO instance segmentaion results with Mask RCNN and FPN](/assets/images/ToNN/RexNet/COCOInstanceSegmentation.png)
 
 # Discussion
 
 ### Fixing network depth and searching models
 
-![Searched Channel Configuration under fixed depth](/assets/images/ToNN/rexnet/ChannelConfigurationFixedDepth.png)
+![Searched Channel Configuration under fixed depth](/assets/images/ToNN/RexNet/ChannelConfigurationFixedDepth.png)
 
 Linear channel parameterization by searching for new models under different constraints. Fixing network depth as 18 and 30, and given constraints with FLOPS. Above image presents that linear channel configurations outperforms the conventional configuration for vairous computational demends.
 
-
-
-## Link to NeuralNet(../)

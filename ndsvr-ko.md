@@ -13,7 +13,7 @@ tags:
 
 최근 논문들은 실증적 조사를 통해서 인공신경망의 구조에 대한 연구를 합니다. 이들은 더욱 더 나은 관찰 방식을 찾기 위해서 노력합니다.
 
-![Comparing Network using different estimations](/assets/images/ToNN/Korean/ComparingNetworks.png)
+![Comparing Network using different estimations](/assets/images/ToNN/NDSVR/ComparingNetworks.png)
 
 초기 연구단계에서는 간단한 방식을 사용했습니다. 인공신경망의 성능을 간단한 point estimate로 계산했습니다. 만약 새로운 인공신경망의 error가 다른 benchmark dataset에서 더 낮게 나오면, 이 인공신경망의 성능이 인공신경망의 복잡도에 관계없이 더 좋다고 여겼습니다.
 
@@ -84,7 +84,7 @@ Network Design Spaces를 해석하기 위해서 저자는 각각의 design space
 
 ### Design space
 
-![Design Space Parameterization](/assets/images/ToNN/Korean/DesignSpaceParameterization.png)
+![Design Space Parameterization](/assets/images/ToNN/NDSVR/DesignSpaceParameterization.png)
 
 위의 표에서 보는 것처럼 저자는 stem을 포함하여 3개의 stage와 head를 가진 인공신경망을 사용했습니다.
 
@@ -92,7 +92,7 @@ Network Design Spaces를 해석하기 위해서 저자는 각각의 design space
 * Vanilla design space는 ResNet design space와 같지만 residual conneciton이 없습니다.
 * ResNeXt design space는 bottleneck block과 group을 사용합니다.
 
-![Design Spaces](/assets/images/ToNN/Korean/DesignSpace.png)
+![Design Spaces](/assets/images/ToNN/NDSVR/DesignSpace.png)
 
 이 표는 각각의 모델에서 사용할 hyperparameter를 적은 것입니다. 여기서 ![a, b, n](https://latex.codecogs.com/svg.image?a,b,c) 표기법을 사용했습니다. n개의 hyperparameter를 a와 b 사이에서 log-scale uniform 하서 선택합니다. 3개의 독립적인 stage는 이러한 hyperparameter를 각자 block의 개수 ![d_i](https://latex.codecogs.com/svg.image?d_i)와 channel의 개수, ![w_i](https://latex.codecogs.com/svg.image?w_i)를 선택하게 됩니다. 
 
@@ -120,7 +120,7 @@ Point estimate를 사용해서 design space를 비교하는 것은 잘못되었�
 
 인공신경망의 훈련이 끝나고, M의 최소 error가 B의 최소 error 보다 작습니다. 이를 통해서 point estimate는 M을 Baseline model 인 B보다 더 낳다고 생각합니다.
 
-![Point distribution](/assets/images/ToNN/Korean/PointDistribution.png)
+![Point distribution](/assets/images/ToNN/NDSVR/PointDistribution.png)
 
 이러한 실험을 연속적으로 실행하면 위와 같은 실험 결과가나옵니다. 이 분표표는 B와 M의 최솟값의 차를 수회 반복해서 나타낸 결과 입니다. 이 실험은 25000개의 만들어진 모델에서 random하게 sample한 것으로 가장한것입니다.
 
@@ -136,7 +136,7 @@ Distribution을 비교하는 방식으로 저자는 empirical distribution funct
 
 위의 수식은 error가 e 보다 작은 model을 0과 1사이의 값으로 나타낸 것입니다.
 
-![EDF](/assets/images/ToNN/Korean/EDF.png)
+![EDF](/assets/images/ToNN/NDSVR/EDF.png)
 
 위에서 정의 한 B와 M을 사용하여 EDF를 그렸습니다. 앞에 작게 나타는 부분은 low error를 나타내는 부분이 적다는 것을 의미하고, 10%이상의 error 보다 큰 model 또한 적은 것을 알려주었습니다.
 
@@ -156,7 +156,7 @@ Distribution을 비교하는 것이 Design Space 에 관한 더 튼튼한 결론
 
 ### Unnormalized comparison
 
-![Comparisons conditinoed on complexity](/assets/images/ToNN/Korean/ComparisonComplexity.png)
+![Comparisons conditinoed on complexity](/assets/images/ToNN/NDSVR/ComparisonComplexity.png)
 
 가장 왼쪽의 graph가 ResNeXt-A와 ResNeXt-B의 error EDF를 나타낸 것입니다. 이둘의 차이는 hyperparameter의 차이밖에 없습니다.
 
@@ -168,7 +168,7 @@ Distribution을 비교하는 것이 Design Space 에 관한 더 튼튼한 결론
 
 다양한 논문을 통해서 우리는 인공신경망의 모델의 error가 복잡도와 관련이 있다는 사실을 알고 있습니다. 더 복잡한 인공신경망이 대체적으로 더 높은 정확도를 가진다.
 
-![Complexity vs Error](/assets/images/ToNN/Korean/ComplexityError.png)
+![Complexity vs Error](/assets/images/ToNN/NDSVR/ComplexityError.png)
 
 이 두 그래프를 확인하면, 각 훈련된 model의 error가 complexity에 비례하여 표현된 것을 나타냅니다. 복잡도는 parameter의 수나 FLOPs의 수로 계산되었습니다. 높은 복잡도의 모델이 낮은 정확도를 가질 때가 있지만, 대부분 높은 정확도를 가지는 모델은 높은 정확도를 가지고 있습니다.
 
@@ -176,7 +176,7 @@ Distribution을 비교하는 것이 Design Space 에 관한 더 튼튼한 결론
 
 ResNeXt-A와 ResNeXt-B의 차이는 그 둘의 complexity distribution에 의해서 나타난 것일 수도 있습니다.
 
-![Complexity Distribution](/assets/images/ToNN/Korean/ComplexityDistribution.png)
+![Complexity Distribution](/assets/images/ToNN/NDSVR/ComplexityDistribution.png)
 
 위의 그래프를 확인해보면, ResNeXt-A가 덜 복잡한 모델의 수가 더 많고, ResNeXt-B의 경우 복잡한 모델이 더 많습니다. 이는 ResNeXt-B의 높은 정확도는 복잡도의 영향을 받은 것일 수도 있습니다.
 
@@ -206,7 +206,7 @@ Full error distribution을 검증하는 것의 장점은 minimum achievable erro
 
 ### Distribution shape
 
-![Finding good models quickly](/assets/images/ToNN/Korean/FindingGoodModelQuickly.png)
+![Finding good models quickly](/assets/images/ToNN/NDSVR/FindingGoodModelQuickly.png)
 
 왼쪽 이미는 Vanilla와 ResNet design space의 EDF를 표현한 그래프입니다. ResNet의 경우 80%이상의 경우가 8%이하의 error rate를 가지고 있습니다. 하지만 Vanilla design space의 경우 훨씬 적은 15%정도의 model만 8%의 정확도를 가집니다. 이를 통해서 더 좋은 ResNet model을 찾는 것이 좋은 Vanilla model을 찾는 것 보다 쉽습니다.
 
@@ -232,7 +232,7 @@ Random search experiment를 모의 실험하기 위해서 m의 값을 n개의 �
 
 ### Qualitative analysis
 
-![Number of samples](/assets/images/ToNN/Korean/NumberOfSamples.png)
+![Number of samples](/assets/images/ToNN/NDSVR/NumberOfSamples.png)
 
 왼쪽의 이미지는 ResNet design space에서 다양한 sample수를 뽑은 것입니다. Sample의 수가 10개정도면 EDF가 상당히 많은 Noise를 가지고 있습니다. 100부터는 상당히 쓸만한 정도이고, 1000정도가 되면 다른 것들과 별 차이가 없습니다. 그래서 저자는 100에서 1000개의 sample을 사용하는 것을 추천합니다.
 
@@ -266,7 +266,7 @@ Cell은 자신 이전에 있는 2개의 cell 에서 입력을 받아옵니다. c
 
 ### Design Space
 
-![NAS Design Space](/assets/images/ToNN/Korean/NASDesignSpace.png)
+![NAS Design Space](/assets/images/ToNN/NDSVR/NASDesignSpace.png)
 
 다섯개의 NAS model family, NASNet AmoebaNet, PNAS, ENAS, DARTS가 선택되었습니다. 위의 표에서 보는 것처럼 대부분의 경우 5개의 Cell로 제한 되었습니다. 출력 L은 loose node를 의미하고 A는 모든 노드를 의미합니다.
 
@@ -274,7 +274,7 @@ Cell은 자신 이전에 있는 2개의 cell 에서 입력을 받아옵니다. c
 
 인공신경망의 깊이와 가장 첫번째 필터의 width는 고정되었습니다. 하지만 이러한 방식은 model complexity에 영향을 줍니다.
 
-![NAS Complexity Distribution](/assets/images/ToNN/Korean/NASComplexityDistribution.png)
+![NAS Complexity Distribution](/assets/images/ToNN/NDSVR/NASComplexityDistribution.png)
 
 위에서 보는 것처럼, 각각의 모델이 다 다른 복잡도를 가지고 있습니다. 이러한 방식을 조절하기 위해서 저자는 w와 d의 값을 (![](https://latex.codecogs.com/svg.image?w%5Cin%5Cleft%5C%7B16,24,32%5Cright%5C%7D)와 ![](https://latex.codecogs.com/svg.image?d%5Cin%5Cleft%5C%7B4,8,12,16,20%5Cright%5C%7D))으로 조절하였습니다.
 
@@ -290,7 +290,7 @@ Cell은 자신 이전에 있는 2개의 cell 에서 입력을 받아옵니다. c
 
 ### Distribution comparison
 
-![NAS Distribution Comparison](/assets/images/ToNN/Korean/NASDistribution.png)
+![NAS Distribution Comparison](/assets/images/ToNN/NDSVR/NASDistribution.png)
 
 위의 normalized error EDF를 확인할 수 있습니다. NASNet과 AmoebaNet이 가장 안좋은 결과를 가지고 있습니다. DARTS가 가장 좋은 결과를 가지고 있는 것 또한 확인 할 수 있습니다. ENAS와 PNAS는 비슷합니다. 하지만 ENAS가 중간 값에 더 좋고 PNAS가 lower/higher performing model을 가지고 있습니다. 
 
@@ -298,7 +298,7 @@ Cell은 자신 이전에 있는 2개의 cell 에서 입력을 받아옵니다. c
 
 ### Random Search efficiency
 
-![NAS Random Search Efficiecny](/assets/images/ToNN/Korean/NASEfficiency.png)
+![NAS Random Search Efficiecny](/assets/images/ToNN/NDSVR/NASEfficiency.png)
 
 위의 그래프를 통해서 두가지를 확인 할 수 있습니다.
 
@@ -307,7 +307,7 @@ Cell은 자신 이전에 있는 2개의 cell 에서 입력을 받아옵니다. c
 
 ## Comparisons to Standard Design Spaces
 
-![NAS vs Standard Design spaces](/assets/images/ToNN/Korean/NASvsStandard.png)
+![NAS vs Standard Design spaces](/assets/images/ToNN/NDSVR/NASvsStandard.png)
 
 NAS design space에서 최상의 결과를 낸 DARTS와 가장 안좋은 결과를 낸 NASNet을 일반적인 ResNeXt와 비교해보았습니다. ResNeXt-B의 경우 parameter로 normalize 한 경우 DARTS와 비슷한 결과를 낸 것을 확인 할 수 있습니다. 하지만 FLOPs로 normalize 한경우 ResNeXt-B가 살짝 결과 가 안좋습니다.
 
@@ -315,13 +315,10 @@ NAS design space에서 최상의 결과를 낸 DARTS와 가장 안좋은 결과�
 
 ## Sanity Check: point Comparison
 
-![Point Comparisons](/assets/images/ToNN/Korean/PointComparison.png)
+![Point Comparisons](/assets/images/ToNN/NDSVR/PointComparison.png)
 
 저자는 이런한 현상이 사실을 확인하기 위해서 deep supervision과 Cutout, modified DropPath를 사용해서 DARTS, ResNeXt 그리고 ResNet-110을 사용해서 비교한 것입니다. 이러한 결과는 위의 표에서 확인 할 수 있는데, 이러한 효과를통해서 ResNeXt가 DARTS가 비슷한 error rate를 가지는 것을 확인 할 수 있습니다.
 
 # Conclusion
 
 저자는 model design space를 해석하는 비교하는 새로운 방식을 소개합니다. 이러한 빙식은 다른 model type나 domain, task에 적용할 수 있습니다.
-
-## [Link to NeuralNet](../../)
-## [Link to English Version](../)

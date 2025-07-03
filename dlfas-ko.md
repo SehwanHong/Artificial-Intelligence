@@ -11,7 +11,7 @@ tags:
 
 Face Recognition은 Presentation Attack에 취약합니다. 이러한 공격의 종류들로는 인쇄된 매체들, 또는 디지털 영상, 화장, 그리고 3D 마스크 등이 있습니다. 안전한 Face Recognition system을 만들기 위해서 수많은 연구원들이 PAs를 막기 위해서 노력하고 있습니다.
 
-![Publications in Face Anti-Spoofing](/assets/images/FAS/Korean/Publication_in_FAS.png)
+![Publications in Face Anti-Spoofing](/assets/images/FAS/DLFAS/Publication_in_FAS.png)
 
 위의 그래프에서 확인 할 수 있다 싶이, 최근 몇년간 나온 논문의 수가 증가한 것을 확인 할 수 있습니다.
 
@@ -25,7 +25,7 @@ Pixel-wise Supervision은 Fine-grain하고, context-aware한 신호를 찾는 �
 
 Generative deep FAS는 사용되었지만 아직은 연구해야될 분야가 많이 있다. 아래의 테이블을 확인해보면 최대 50개 만 연구된 것을 알 수 있다.
 
-![History of Face Anti-Spoofing](/assets/images/FAS/Korean/History_of_FAS.png)
+![History of Face Anti-Spoofing](/assets/images/FAS/DLFAS/History_of_FAS.png)
 
 # Background
 
@@ -33,7 +33,7 @@ Generative deep FAS는 사용되었지만 아직은 연구해야될 분야가 �
 
 Automatic Face Recognition(AFR)에 대한 공격은 크게 digitial Manipulation과 Physical presentation으로 나뉠수 있다. Digital Manipulation은 디지털 환경에서 복제를 하는 것이다. Physical presentation attack은 물리적인 물질을 이용해서 얼굴을 만들어서 공격을 하는 것이다.
 
-![Face Anti-Spoofing Pipeline and Face Spoofing attacks](/assets/images/FAS/Korean/FAS_pipeline_and_Face_spooning_attacks.png)
+![Face Anti-Spoofing Pipeline and Face Spoofing attacks](/assets/images/FAS/DLFAS/FAS_pipeline_and_Face_spooning_attacks.png)
 
 위의 이미지에서 보인것 처럼, FAS를 AFR에게 적용하는 방식은 크게 두가지로 나뉩니다.
 
@@ -69,11 +69,11 @@ Automatic Face Recognition(AFR)에 대한 공격은 크게 digitial Manipulation
 
 Deep Learning을 기반으로 하는 방식은 훈련을 할때와 검증할때 다양하고 많은 양의 데이터가 필요합니다.
 
-![Dataset visualiszation](/assets/images/FAS/Korean/Visualization_of_Dataset.png)
+![Dataset visualiszation](/assets/images/FAS/DLFAS/Visualization_of_Dataset.png)
 
 위의 이미지에서 보는것처럼, 다양한 종류의 데이터들이 있습니다. 위에서 보여진것 처럼 RGB를 비슷한 환경에서 찍은 사진이 있을 수 있고, 아니면 여러가지 센서들을 이용해서 데이터들이 있을 수 있습니다.
 
-![public dataset for Face Anti-Spoofing](/assets/images/FAS/Korean/Public_Dataset.png)
+![public dataset for Face Anti-Spoofing](/assets/images/FAS/DLFAS/Public_Dataset.png)
 
 이 위의 이미지는 여러가지 데이터셋을 표현하는 이미지입니다. I/V는 각각 이미지와 비디오를 뜻합니다.
 
@@ -112,7 +112,7 @@ BPCER와 APCER 는 각각 bonafide classification error와 Attack classification
 
 ## Evaluation Protocols
 
-![Four evaluation protocols](/assets/images/FAS/Korean/four_evaluation_protocols.png)
+![Four evaluation protocols](/assets/images/FAS/DLFAS/four_evaluation_protocols.png)
 
 ### Intra-Dataset Intra-Type Protocol
 
@@ -136,17 +136,17 @@ Cross Dataset Cross Type Protocol은 일반화를 확인하는 방법으로 unse
 
 상용 RGB 카메라는 많은 real-world application에 사용되고 있습니다. 이를 이용한 방식은 크게 3가지로 나뉠수 있습니다. 하나는 Hybrid type으로 Handcrafted method와 Deep learning을 합치는 방식입니다. 다른 하나는 end-to-end supervised deep learning입니다. 마지막으로 generalized deep learning method가 있습니다. 
 
-![Topology of the deep learning based FAS methods](/assets/images/FAS/Korean/Topology_of_DL_FAS.png)
+![Topology of the deep learning based FAS methods](/assets/images/FAS/DLFAS/Topology_of_DL_FAS.png)
 
-![Chronological overview of the milestone deep learning based FAS methods using commercial RGB camera](/assets/images/FAS/Korean/Chronological_overview_of_DL_FAS_RGB.png)
+![Chronological overview of the milestone deep learning based FAS methods using commercial RGB camera](/assets/images/FAS/DLFAS/Chronological_overview_of_DL_FAS_RGB.png)
 
 ## Hybrid Method
 
-![Table 3](/assets/images/FAS/Korean/Table_3.png)
+![Table 3](/assets/images/FAS/DLFAS/Table_3.png)
 
 DL과 CNN은 여러가지 영역에서 좋은 결과물들을 많이 만들어냈습니다. 하지만 FAS의 경우 overfitting 문제가 많이 발생하였습니다. 이는 Training data의 양이 너무 적고 다양성이 부족하기 때문입니다. 그렇기에 Handcrafted feature들을 사용해서 bonafide와 PA를 구분하는 방식을 사용했습니다. 최근 들어 이러한 방식을 DL과 같이 사용하는 방식이 늘었습니다. 이러한 Hybrid 방식은 크게 3가지로 나뉩니다.
 
-![Hybrid Frameworks for FAS](/assets/images/FAS/Korean/Hybrid_Frameworks_for_FAS.png)
+![Hybrid Frameworks for FAS](/assets/images/FAS/DLFAS/Hybrid_Frameworks_for_FAS.png)
 
 첫번쨰 방법은 Handcrafted feature를 input으로 받은 후, CNN을 사용해서 semantic feature representation을 가졌습니다.
 
@@ -162,19 +162,19 @@ DL과 CNN은 여러가지 영역에서 좋은 결과물들을 많이 만들어�
  * pixel-wise supervision with auxiliary task
  * generative models.
 
-![Typical end-to-end deep learning frameworks for FAS](/assets/images/FAS/Korean/Typical_E2E_DL_FW_FAS.png)
+![Typical end-to-end deep learning frameworks for FAS](/assets/images/FAS/DLFAS/Typical_E2E_DL_FW_FAS.png)
 
 ### Direct Supervision with Binary Cross-Entropy loss
 
 FAS를 가장 간단한 방식으로 살펴보면 Binary Classification으로 나타낼수 있습니다. 이때 Binary Cross Entropy를 사용하는 경우가 가장 많지만, 다른 Loss function도 사용하는 경우가 있습니다.
 
-![Summary of the representative common deep learning based FAS methods with binary cross-entropy supervision](/assets/images/FAS/Korean/Summary_of_common_DL_FAS_binary_CE.png)
+![Summary of the representative common deep learning based FAS methods with binary cross-entropy supervision](/assets/images/FAS/DLFAS/Summary_of_common_DL_FAS_binary_CE.png)
 
 ## Pixel-wise Supervision
 
 Pixel-wise supervision은 일반적으로 더 fine-grain하고 Contextual task-related한 특징들을 찾을 수 있습니다. 이러한 Pixel-wise supervision은 크게 두가지 방식으로 나뉩니다. 하나는 auxiliary supervision 시그널을 차는 방법이 있고, 다른 하느는 generative model을 사용하는 방식이 있습니다. 위의 사진에서 b와 c가 각각을 설명합니다.
 
-![Summary of the representative common deep learning based FAS methods with pixel-wise supervision](/assets/images/FAS/Korean/Summary_of_common_DL_FAS_PW_supervision.png)
+![Summary of the representative common deep learning based FAS methods with pixel-wise supervision](/assets/images/FAS/DLFAS/Summary_of_common_DL_FAS_PW_supervision.png)
 
 ### Pixel-wise supervision with Auxiliary Task
 
@@ -190,12 +190,12 @@ Generative Model은 encoding decoding 방식으로 다양한 spoofing pattern을
 
 ### Generalization to Unseen Domain
 
-![Framework comparison among domain adaptation, domain generalization, and federate learning](/assets/images/FAS/Korean/FW_comparison_DA_DG_FL.png)
+![Framework comparison among domain adaptation, domain generalization, and federate learning](/assets/images/FAS/DLFAS/FW_comparison_DA_DG_FL.png)
 
 
 Domain adaptation technique은 목표한 domain에 정보를 가지고 source와 Target domian간의 차이를 좁힙니다. Domain Generalization은 여러 Source를 사용하여 generalized 한 feature representaion을 배웁니다. 이때 target domain에 대한 정보를 가지고 있지 않습니다. Federate learning framework은 Data의 privacy를 존중하면서 Generalization을 성취하는 방식으로 만들어졌습니다.
 
-![Summary of the representative generalized deep learning FAS methods to unseen domain](/assets/images/FAS/Korean/Summary_of_generalized_DL_FAS_unseen_domain.png)
+![Summary of the representative generalized deep learning FAS methods to unseen domain](/assets/images/FAS/DLFAS/Summary_of_generalized_DL_FAS_unseen_domain.png)
 
 #### Domain Adaptation
 
@@ -219,7 +219,7 @@ FAS model을 일반화하는 다른 방식은 여러가지 네트워크를 통�
 
 FAS model은 새로운 PA에 대해서는 약합니다. 이를 해결하기 위한 두가지 방식이 있습니다. 하나는 zero/few-shot learning이고 다른 하나는 anomaly detection.
 
-![Summary of the generalized deep learning FAS methods to unknown attack types](/assets/images/FAS/Korean/Summary_of_generalized_DL_FAS_unknown_attack_types.png)
+![Summary of the generalized deep learning FAS methods to unknown attack types](/assets/images/FAS/DLFAS/Summary_of_generalized_DL_FAS_unknown_attack_types.png)
 
 #### Zero/Few-Shot Learning
 
@@ -235,16 +235,16 @@ Anomaly detection은 discrimination degradation현상을 겪습니다.
 
 # Deep FAS with Advanced Sensor
 
-![Comparison with sensor/Hardware for FAS under 2 environment and three attack types](/assets/images/FAS/Korean/Comparison_with_sensor_hardware_for_FAS.png)
+![Comparison with sensor/Hardware for FAS under 2 environment and three attack types](/assets/images/FAS/DLFAS/Comparison_with_sensor_hardware_for_FAS.png)
 
 
 ## Uni-Modal Deep Learning upon Specialized Sensor.
 
-![Summary of the representative deep learning FAS methods with specialized sensor/hardware inputs.](/assets/images/FAS/Korean/Summary_of_represntative_DL_FAS_with_specialized_sensor.png)
+![Summary of the representative deep learning FAS methods with specialized sensor/hardware inputs.](/assets/images/FAS/DLFAS/Summary_of_represntative_DL_FAS_with_specialized_sensor.png)
 
 ## Multi-Modal Deep Learning
 
-![Summary of the multi-modal deep learning FAS methods](/assets/images/FAS/Korean/Summary_of_multi_modal_DL_FAS.png)
+![Summary of the multi-modal deep learning FAS methods](/assets/images/FAS/DLFAS/Summary_of_multi_modal_DL_FAS.png)
 
 Multi-modal FAS 방식의 경우 경제적으로 많은 돈이 들어갑니다. 그렇기에 가성비가 있는 모델의 경우 real-world application에 사용됩니다.
 

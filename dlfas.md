@@ -10,7 +10,7 @@ tags:
 
 Face recognition systems are vulnerable to presentation attacks (PAs) ranging from print, replay, makeup, 3D-masks. For secure face recognition system, researchers are actively searching to prevent the PAs.
 
-![Publications in Face Anti-Spoofing](/assets/images/FAS/dlfas/Publication_in_FAS.png)
+![Publications in Face Anti-Spoofing](/assets/images/FAS/DLFAS/Publication_in_FAS.png)
 
 As shown in the graph, the number of publications have been increased in recent years.
 
@@ -24,7 +24,7 @@ Pixel-wise supervision provides more fine-grain context-aware supervision signal
 
 A few generative deep FAS methods model the intrinsic spoofing patterns via relaxed pixel-wise reconstruction constaints. These models have limited numbers of deep learning methods.
 
-![History of Face Anti-Spoofing](/assets/images/FAS/dlfas/History_of_FAS.png)
+![History of Face Anti-Spoofing](/assets/images/FAS/DLFAS/History_of_FAS.png)
 
 # Background
 
@@ -32,7 +32,7 @@ A few generative deep FAS methods model the intrinsic spoofing patterns via rela
 
 Attacks on automatic face recognition (AFR) system usuallay divide into two categories: digital manipulation and physical presentation attacks. Digital manipulations uses digital virtual domain. Physical presenatation attack present face upon physical mediums in front of physical face presentation attacks.
 
-![Face Anti-Spoofing Pipeline and Face Spoofing attacks](/assets/images/FAS/dlfas/FAS_pipeline_and_Face_spooning_attacks.png)
+![Face Anti-Spoofing Pipeline and Face Spoofing attacks](/assets/images/FAS/DLFAS/FAS_pipeline_and_Face_spooning_attacks.png)
 
 As Shown in the images, there are two ways to integrate FAS with AFR:
 
@@ -69,11 +69,11 @@ Based on the facial region covering, PAs be also separated as whole or partial a
 
 Large-scale and diverse dataset are pivotal for deep learning based methods during both training and evaluating phase.
 
-![Dataset visualiszation](/assets/images/FAS/dlfas/Visualization_of_Dataset.png)
+![Dataset visualiszation](/assets/images/FAS/DLFAS/Visualization_of_Dataset.png)
 
 As shown in the images thereare different kinds of dataset, It might contain just RGB images with similar setting or might have multiple modalities.
 
-![public dataset for Face Anti-Spoofing](/assets/images/FAS/dlfas/Public_Dataset.png)
+![public dataset for Face Anti-Spoofing](/assets/images/FAS/DLFAS/Public_Dataset.png)
 
 I and V in the "#Live/Spoof" denotes 'images' and 'video'
 
@@ -109,7 +109,7 @@ BPCER and APCER measure bonafide aand attack classification error rates, respect
 
 ## Evaluation Protocols
 
-![Four evaluation protocols](/assets/images/FAS/dlfas/four_evaluation_protocols.png)
+![Four evaluation protocols](/assets/images/FAS/DLFAS/four_evaluation_protocols.png)
 
 ### Intra-Dataset Intra-Type Protocol
 
@@ -133,17 +133,17 @@ Cross Dataset Cross Type Protocol to measure the FAS model's generalization on b
 
 Comercial RGB camera is widely used in many real-world application scenarios. There are three main categories for exisiting deep learning based FAS methods using comercial RGB camera: Hybrid type learning methods combining both handcrafted and deep learning features; common end-to-end supervised deep learning methods; generalized deep learning methods.
 
-![Topology of the deep learning based FAS methods](/assets/images/FAS/dlfas/Topology_of_DL_FAS.png)
+![Topology of the deep learning based FAS methods](/assets/images/FAS/DLFAS/Topology_of_DL_FAS.png)
 
-![Chronological overview of the milestone deep learning based FAS methods using commercial RGB camera](/assets/images/FAS/dlfas/Chronological_overview_of_DL_FAS_RGB.png)
+![Chronological overview of the milestone deep learning based FAS methods using commercial RGB camera](/assets/images/FAS/DLFAS/Chronological_overview_of_DL_FAS_RGB.png)
 
 ## Hybrid Method
 
-![Table 3](/assets/images/FAS/dlfas/Table_3.png)
+![Table 3](/assets/images/FAS/DLFAS/Table_3.png)
 
 DL and CNN achieved great success in many computer vision tasks. However for FAS, they suffer the overfitting problem due to the limited amount and diversity of the training data. Handcrafted features have been proven to be discriminative to distinguish bonafide from PAs. Some recent works combine handcrafted features with deep features for FAS. These Hybrid methods can be separated into three main categories.
 
-![Hybrid Frameworks for FAS](/assets/images/FAS/dlfas/Hybrid_Frameworks_for_FAS.png)
+![Hybrid Frameworks for FAS](/assets/images/FAS/DLFAS/Hybrid_Frameworks_for_FAS.png)
 
 The first method is to extract handcrafted features from inputs then employ CNN for semantic feature representation.
 
@@ -159,13 +159,13 @@ Common deep learning based methods directly learn the mapping functions from fac
  * pixel-wise supervision with auxiliary task
  * generative models.
 
-![Typical end-to-end deep learning frameworks for FAS](/assets/images/FAS/dlfas/Typical_E2E_DL_FW_FAS.png)
+![Typical end-to-end deep learning frameworks for FAS](/assets/images/FAS/DLFAS/Typical_E2E_DL_FW_FAS.png)
 
 ### Direct Supervision with Binary Cross-Entropy loss
 
 FAS can be intuitively treated as a binary classification task. Numerous end-to-end deep learning methods are directly supervised with binary cross-entropy(CE) loss as well as other extented losses.
 
-![Summary of the representative common deep learning based FAS methods with binary cross-entropy supervision](/assets/images/FAS/dlfas/Summary_of_common_DL_FAS_binary_CE.png)
+![Summary of the representative common deep learning based FAS methods with binary cross-entropy supervision](/assets/images/FAS/DLFAS/Summary_of_common_DL_FAS_binary_CE.png)
 
 Researchers have proposed various network architecture supervised by binary CE. There are few works modifying binary CE loss to provide more discriminative supervision signals
 
@@ -173,7 +173,7 @@ Researchers have proposed various network architecture supervised by binary CE. 
 
 Pixel-wise supervision can provide more fine-graned and contextual task-related clues for better intrinsic feature learning. There are two type of pixel-wise supervision. One based on the physical clues and discriminative design philosophy, auxiliary supervision signals. The other generative models with explicit pixel-wise supervision are recently utilized for generic spoofing parttern estimation.
 
-![Summary of the representative common deep learning based FAS methods with pixel-wise supervision](/assets/images/FAS/dlfas/Summary_of_common_DL_FAS_PW_supervision.png)
+![Summary of the representative common deep learning based FAS methods with pixel-wise supervision](/assets/images/FAS/DLFAS/Summary_of_common_DL_FAS_PW_supervision.png)
 
 ### Pixel-wise supervision with Auxiliary Task
 
@@ -189,11 +189,11 @@ Common end-to-end deep learning based FAS methods might generalize poorly on uns
 
 ### Generalization to Unseen Domain
 
-![Framework comparison among domain adaptation, domain generalization, and federate learning](/assets/images/FAS/dlfas/FW_comparison_DA_DG_FL.png)
+![Framework comparison among domain adaptation, domain generalization, and federate learning](/assets/images/FAS/DLFAS/FW_comparison_DA_DG_FL.png)
 
 Domain adaptation technique leverage the knowledge from target domain to bridge the gap between source and target domains. Domain generalization helps learn the generalized feature representation from multiple source domain directly withous any access to target data. Federate learning framework is introduced in learning gneralized FAS models while preserving data privacy.
 
-![Summary of the representative generalized deep learning FAS methods to unseen domain](/assets/images/FAS/dlfas/Summary_of_generalized_DL_FAS_unseen_domain.png)
+![Summary of the representative generalized deep learning FAS methods to unseen domain](/assets/images/FAS/DLFAS/Summary_of_generalized_DL_FAS_unseen_domain.png)
 
 #### Domain Adaptation
 
@@ -217,7 +217,7 @@ This solve the privacy of data sets, but neglects the privacy issues in the mode
 
 FAS models are vulnerable to emerging novel PAs. There are two general way of detecting unknown spoofing attack detection. One is zero/few-shot learning. The other is anomaly detection.
 
-![Summary of the generalized deep learning FAS methods to unknown attack types](/assets/images/FAS/dlfas/Summary_of_generalized_DL_FAS_unknown_attack_types.png)
+![Summary of the generalized deep learning FAS methods to unknown attack types](/assets/images/FAS/DLFAS/Summary_of_generalized_DL_FAS_unknown_attack_types.png)
 
 #### Zero/Few-Shot Learning
 
@@ -233,16 +233,16 @@ Anomaly detection based FAS methods would suffer from discrimination degradation
 
 # Deep FAS with Advanced Sensor
 
-![Comparison with sensor/Hardware for FAS under 2 environment and three attack types](/assets/images/FAS/dlfas/Comparison_with_sensor_hardware_for_FAS.png)
+![Comparison with sensor/Hardware for FAS under 2 environment and three attack types](/assets/images/FAS/DLFAS/Comparison_with_sensor_hardware_for_FAS.png)
 
 
 ## Uni-Modal Deep Learning upon Specialized Sensor.
 
-![Summary of the representative deep learning FAS methods with specialized sensor/hardware inputs.](/assets/images/FAS/dlfas/Summary_of_represntative_DL_FAS_with_specialized_sensor.png)
+![Summary of the representative deep learning FAS methods with specialized sensor/hardware inputs.](/assets/images/FAS/DLFAS/Summary_of_represntative_DL_FAS_with_specialized_sensor.png)
 
 ## Multi-Modal Deep Learning
 
-![Summary of the multi-modal deep learning FAS methods](/assets/images/FAS/dlfas/Summary_of_multi_modal_DL_FAS.png)
+![Summary of the multi-modal deep learning FAS methods](/assets/images/FAS/DLFAS/Summary_of_multi_modal_DL_FAS.png)
 
 Multi-modal FAS with acceptable costs are increasedly used in real-world application.
 

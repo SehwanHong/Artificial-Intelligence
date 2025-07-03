@@ -20,7 +20,7 @@ There has been a lot of progress in algorithmic architecture exploration includi
 
 The new direction of bringing optimization methods include genetic algorithms and reinforcement learning to architectural search. However, drawback of these methodes is that the resulting network end up very complex.
 
-The network presented in this paper is designed based on [MobileNetV1](../). 
+The network presented in this paper is designed based on [MobileNetV1](/mobilenet). 
 
 # Preliminaries, discussion and intuition
 
@@ -31,8 +31,6 @@ Depthwise Separable Convolutions are a key building block for many efficient neu
   1. Depthwise convolution
   2. pointwise convolution
 
-For more detail, follow [this link](../)
-
 ## Linear Bottlenecks
 
 Consider a deep neural network consisting of n layers ![L_i](https://latex.codecogs.com/svg.image?L_i) each of which has an activation tensor of dimensions ![tensor dimension](https://latex.codecogs.com/svg.image?h_i\times&space;w_i\times&space;d_i). The set of layer activations(for any layer ![L_i](https://latex.codecogs.com/svg.image?L_i)) forms a "manifold of interest" which could be embedded in low-dimensional subspaces. In other words, the information encoded in d-channel pixels of a deep convolutional layer actually lie in some manifold, which in turn is embeddable into a low-dimensional subspace.
@@ -41,7 +39,7 @@ In general if a result of a layer transformation ![ReLU(Bx)](https://latex.codec
 
 On the other hand, when ReLU collapses the channel, it is inevitabley loses information in that channel. However, if we have lots of channels, there is a structure in the activation manifold that information might still be preserved in the other channel. The bottom image represent this example.
 
-![ReLU transformations of low-dimensional manifold embedded in higher-dimensional spaces](/assets/images/ToNN/mobilenet/v2/ReLUtransformation.png)
+![ReLU transformations of low-dimensional manifold embedded in higher-dimensional spaces](/assets/images/ToNN/MobileNet/V2/ReLUtransformation.png)
 
 In these example, the initial spiral is embedded into an n-dimensional space using random matrix ![T](https://latex.codecogs.com/svg.image?T) followed by ReLU, and then projected back to the 2d space using ![inverse of T](https://latex.codecogs.com/svg.image?T^{-1}). When ![n = 2,3](https://latex.codecogs.com/svg.image?n=2,3), there is an information loss where certain point of the manifold collaps into each other. While for ![n = 15](https://latex.codecogs.com/svg.image?n=15) to 30, the transformation is highly non-convex.
 
@@ -59,17 +57,17 @@ Inspired by the intuition that the bottlenecks actually contain all the necessar
 
 Residual block | Inverted Residual Block
 --------------|---------------
-![mobilenet_residualBlock.png](../../assets/images/ToNN/MobileNet/V2/mobilenet_residualBlock.png) | ![Inverted Residual Block](/assets/images/ToNN/mobilenet/v2/invertedResidualBlock.png)
+![mobilenet_residualBlock.png](/assets/images/ToNN/MobileNet/V2/mobilenet_residualBlock.png) | ![Inverted Residual Block](/assets/images/ToNN/MobileNet/V2/invertedResidualBlock.png)
 
 Residual block is normally represented as the left image. It is represented with wide -> narrow -> wide, creating a bottleneck structure. However, in this paper, author presents inverted residual where structure is narrow -> wide -> narrow. The diagonally hatched layer do not use non-linearlities to reserve the information loss by using non-linearlity.
 
-The use of shortcut in the inverted residual block is same as the [ResNet](../ResNet/) to improve the ability of a gradient to propagate across multiplier layers.
+The use of shortcut in the inverted residual block is same as the ResNet to improve the ability of a gradient to propagate across multiplier layers.
 
 Inverted Residual block uses less memory as well as having improved performance.
 
 ### Running time and parameter count for bottleneck convolution
 
-![bottleneck residual block](/assets/images/ToNN/mobilenet/v2/bottleneckResidualBlock.png)
+![bottleneck residual block](/assets/images/ToNN/MobileNet/V2/bottleneckResidualBlock.png)
 
 Above table represent the basic implementation structure of inverse Residual Block. For block size ![h w](https://latex.codecogs.com/svg.image?h\times&space;w), expansion factor ![t](https://latex.codecogs.com/svg.image?t) and kernel size ![k](https://latex.codecogs.com/svg.image?k) with ![d'](https://latex.codecogs.com/svg.image?d') input channels and ![d''](https://latex.codecogs.com/svg.image?d''), total number of multiply add required is
 
@@ -77,7 +75,7 @@ Above table represent the basic implementation structure of inverse Residual Blo
 
 This number is higher than Depthwise Separable Convolution([described in this page](../)) because of extra layer of ![1 by 1](https://latex.codecogs.com/svg.image?1\times1) convolution. However, using bottleneck residual block is more compact because of smaller input and output dimensions.
 
-![memory for mobilenet v1 and mobilenet v2](/assets/images/ToNN/mobilenet/v2/memory.png)
+![memory for mobilenet v1 and mobilenet v2](/assets/images/ToNN/MobileNet/V2/memory.png)
 
 Above table descibes the max number of channels/memory that needs to be macterialized at each spatial resolution for different architectures. In this situation, it is assume to use 16-bit  float for activation.
 
@@ -89,7 +87,7 @@ As described above, mobileNetV2 uses less memory compared to MobileNetV1. For Sh
 
 The architecture of MobileNetV2 contains the initiall fully convolutional layer with 32 filters, followed by 19 residual bottleneck layers descibed in the table below.
 
-![Structure of MobileNet Version 2](/assets/images/ToNN/mobilenet/v2/mobileNetV2Structure.png)
+![Structure of MobileNet Version 2](/assets/images/ToNN/MobileNet/V2/mobileNetV2Structure.png)
 
 c is the number of output channel, n number of repeatition for building block, s stride of the first layer, otherwise stride is 1. t is the expanstion factor.
 
@@ -111,7 +109,7 @@ Since there is no other structure rather than residual connection(identity short
 
 ### Bottleneck Residual Block
 
-![Inverted Residual Block](/assets/images/ToNN/mobilenet/v2/invertedResidualBlock.png)
+![Inverted Residual Block](/assets/images/ToNN/MobileNet/V2/invertedResidualBlock.png)
 
 In the MobileNetV2, the architecture is defined as the image above. The operation could be represented ad following equation, ![bottleneck operator](https://latex.codecogs.com/svg.image?F(x)=&space;\left&space;[&space;A&space;\circ&space;N&space;\circ&space;B&space;\right&space;]x)
 
@@ -140,11 +138,11 @@ The model is trained using Tensorflow. Optimizer is RMSPropOptimizer with decay 
 
 ### Result
 
-![Preformance Curve for full model](/assets/images/ToNN/mobilenet/v2/performanceCurve.png)
+![Preformance Curve for full model](/assets/images/ToNN/MobileNet/V2/performanceCurve.png)
 
 This graph represents all possible result of the MobileNetV2, MobileNetV1, ShuffleNet, Nas Net. For these networks, multiplier of 0.35, 0.5, 0.75, and 1 is used for all resulutions, and additional 1.4 is used on MobileNetV2 for 224 to obtain better result.
 
-![Performance Table for selected models](/assets/images/ToNN/mobilenet/v2/performanceTable.png)
+![Performance Table for selected models](/assets/images/ToNN/MobileNet/V2/performanceTable.png)
 
 From some of the selected model, we get the number of parameters and the Multi-adds. Last coloumn is implimentation of network in Google Pixel 1 using Tensorflow Lite. The number for shuffleNet is not reported because shuffling and group convolution algorithm are not yet supported.
 
@@ -156,11 +154,11 @@ Above table explains, that MobileNet V2 have higher accuracy rate compared to mo
 
 In this papaer, we introduce a mobie friendly variant of regular SSD(single shot detector). SSD Lite replace all the regular convolutions with separable convolutions(depthwise followed by pointwise) in SSD prediction layers.
 
-![SSD and SSDLite configuration](/assets/images/ToNN/mobilenet/v2/SSD.png)
+![SSD and SSDLite configuration](/assets/images/ToNN/MobileNet/V2/SSD.png)
 
 Comparison of the size and computational cost between SSD and SSDLite configured with MobileNetV2 and making predictions for 80 classes. SSDLite is approximately 7 times smaller in parameter size and 4 times smaller in computation.
 
-![result for object detection](/assets/images/ToNN/mobilenet/v2/performanceObjectDetection.png)
+![result for object detection](/assets/images/ToNN/MobileNet/V2/performanceObjectDetection.png)
 
 MobileNetV2 with SSDLite makes a decent predection using much less parameters and Multi-add computation. Compared to MobileNetV1, it have similar accuracy but MobileNetV2 computes littlebit faster than MobileNetV2. Also comparing with YOLOv2, MobileNetV2 is 20 times more efficient and 10 times more smaller while still outperforms YOLOv2.
 
@@ -174,7 +172,7 @@ Three design variation is tested in this paper.
 2. Simplifying the DeepLapv3 heads for faster computation
 3. Different inference strategies for boosting performance
 
-![semantic Segmentation result](/assets/images/ToNN/mobilenet/v2/performanceSementicSegmentation.png)
+![semantic Segmentation result](/assets/images/ToNN/MobileNet/V2/performanceSementicSegmentation.png)
 **MNetV2\*** Second last feature map is used for DeepLabv3 head.
 **OS**: output stride
 **ASPP**: Atrous Spatial Pyramid Pooling
@@ -192,7 +190,5 @@ Observation on the table
 [Toward Data Science](https://towardsdatascience.com/mobilenetv2-inverted-residuals-and-linear-bottlenecks-8a4362f4ffd5)
 
 [Hongl tistory 1](https://hongl.tistory.com/195)
-[Hongl tistory 2](https://hongl.tistory.com/196)
 
-## [Link to Neural Net](../../)
-## [Link to MobileNet](../)
+[Hongl tistory 2](https://hongl.tistory.com/196)

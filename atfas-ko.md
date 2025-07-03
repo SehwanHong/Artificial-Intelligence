@@ -48,13 +48,13 @@ Vision Transformer 기반의 model이 spoofing attack을 감지하기 ㅜ이해�
 
 ## Vision Transformer
 
-![Overview of the network structure](/assets/images/FAS/Korean/Overview_structure.png)
+![Overview of the network structure](/assets/images/FAS/ATFAS/Overview_structure.png)
 
 이 논문은 Vision transformer를 backbone으로 사용합니다. 입력갑은 작게 나눠지고 Flatten된 2D patch로 변화합니다. Positional Encoding은 learnable positional embeding을 사용합니다. 모델은 크게 Image representation을 얻기 위한 ViT과 classification prediction을 하기 위한 Multiple perceptron head로 이루어 져있습니다. 
 
 각각의 Training iteration에서 sorce domain과 적은양의 target domain에서 같은 양의 live와 spoof 이미지를 추출합니다. 훈련을 할때는 Cross Entropy loss가 사용되며 그 식은 아래와 같이 정의됩니다.
 
-![Cross Entropy Loss](/assets/images/FAS/Korean/Cross_Entropy_loss.png)
+![Cross Entropy Loss](/assets/images/FAS/ATFAS/Cross_Entropy_loss.png)
 
 여기서 B는 Sample size, N은 Source domain의 갯수, y는 예측값, S는 Source domain, T는 target Domain, R는 사실값, F는 가짜를 의미합니다.
 
@@ -76,7 +76,7 @@ Classifier와 backbone을 anti-spoofing 데이터에 Fine-tuning하는 것이 �
 
 자연어 처리에서 adapter BERT는 pre-trained된 BERT모델은 전체 모델을 훈련시키지 않고 다양한 task에 훌룡하게 적용시켰습니다. 빗스하게 이 논문에서도 adapter layer를 사용해서 안정성을 높이려고 합니다.
 
-![Ensemble adapter](/assets/images/FAS/Korean/Ensemble_adapter.png)
+![Ensemble adapter](/assets/images/FAS/ATFAS/Ensemble_adapter.png)
 
 위의 이미지에서 adapter는 bottleneck구조로 이루어져있습니다. n dimension인 입력값은 작은 dimension인 m으로 변환을 한다. 그 후에 GELU라는 Activation fucntion을 적용합니다. 그 후에 다시 m dimension을 n dimension으로 변환합니다.
 
@@ -98,7 +98,7 @@ Mulitple adapter로부터 다양한 feature를 배우기 위해서 논문은 cos
 
 Cosing loss는 아래와 같이 정의 할 수 있습니다.
 
-![Cosine loss function](/assets/images/FAS/Korean/Cosine_Loss_function.png)
+![Cosine loss function](/assets/images/FAS/ATFAS/Cosine_Loss_function.png)
 
 이 수식에서 논문은 N개의 토큰을 입력 받고 feature dimension이 D라고 가정합니다.
 
@@ -108,11 +108,11 @@ Cosing loss는 아래와 같이 정의 할 수 있습니다.
 
 이 논문은 feature-wise transformation을 사용합니다. 이는 affine transformation을 이용하는 방식으로 scaling 하고 bias term은 Gaussian Distribution을 기반으로 만들고 있습니다.
 
-![Gaussian Distribution](/assets/images/FAS/Korean/Gaussian_distribution.png)
+![Gaussian Distribution](/assets/images/FAS/ATFAS/Gaussian_distribution.png)
 
 여기서 W는 훈련가능한 sampling hyperparameter이고 D는 dimension이다. 이렇게 구해진 값을 ㅣ용해서 affine transformation을 사용해 아래와 같은 intermediate feature를 구합니다.
 
-![Affine transformation](/assets/images/FAS/Korean/affine_transformation.png)
+![Affine transformation](/assets/images/FAS/ATFAS/affine_transformation.png)
 
 실제로 affine transformation을 하는 경우에는 전체 patch embedding에 같은 affine transformation을 사용합니다.
 

@@ -12,7 +12,7 @@ The goal of this paper is to help advance the understanding of network design an
 
 In this work, author present a new network design paradigm that combines the advantages of manual design and NAS. Instead of focusing on designing individual network instances, author design design spaces that parameterize populations of network. Like in manual design, author aim for interpretability and to discover general design principles that describe network that are simple, work well, and generalize across setting. Like in NAS, author aim to take advantage of semi-automated procedures to help achieve these goal.
 
-![Design Space Design](/assets/images/ToNN/regnet/DesignSpaceDesign.png)
+![Design Space Design](/assets/images/ToNN/RegNet/DesignSpaceDesign.png)
 
 The general strategy is to progressively design simplified version of an initial design space while maintaining or improving its quality. As shown in the image above, the design started from initial design space A and apply two refinement steps to yield design space B and C. In this case, ![C B A](https://latex.codecogs.com/svg.image?C%5Csubseteq%20B%5Csubseteq%20A), and the error distributions are strictly improving from A to B to C. The hope is that design principles that apply to model populations are more likely to be robust and generalize. The overall process is analogous to manual design, elevated to the population level and guided via distribution estimates of network design spaces.
 
@@ -59,7 +59,7 @@ The primary tool for analyzing design space quality is the error empirical distr
 
 ![error empirical distribution function](https://latex.codecogs.com/svg.image?F(e)) gives the fraction of model with error less than e. 
 
-![Statistic of the AnyNetX design space](/assets/images/ToNN/regnet/AnyNetXDesignSpace.png)
+![Statistic of the AnyNetX design space](/assets/images/ToNN/RegNet/AnyNetXDesignSpace.png)
 
 The above image show the error EDF for n = 500 sampled models form the AnyNetX design space. Given a population for trained models, we can plot and analyze various network properties versus network error. Such visualization show 1D projections of a complex, high-dimensional space, and can help obtain insights into the design space. 
 
@@ -72,13 +72,13 @@ To summarize:
 
 ## The AnyNet Design Space
 
-![general network structural for models in AnyNet design space](/assets/images/ToNN/regnet/AnyNetDesignSpace.png)
+![general network structural for models in AnyNet design space](/assets/images/ToNN/RegNet/AnyNetDesignSpace.png)
 
 The basic design of networks in AnyNet design space is straightforward, as shown in the image above. Given an input image, a network consist of a simple stem, followed by the network body that performs the bulk of the computation, and a final network head that predicts the output class.
 
 The network body consists of 4 stages operating at progressively reduced resolution. Each stage consists of a sequence of identical blocks. In total, for each stage i,  the degrees of freedom include the number of blocks, block width, and any other block parameters.
 
-![The X block](/assets/images/ToNN/regnet/Xblock.png)
+![The X block](/assets/images/ToNN/RegNet/Xblock.png)
 
 Most of the experiments in this paper use the standard residual bottlenecks block with group convolution called X block. As represented in the image above, each X block consist of a ![](https://latex.codecogs.com/svg.image?1\times1) conv, ![](https://latex.codecogs.com/svg.image?3\times3) group conv and a final ![](https://latex.codecogs.com/svg.image?1\times1) conv. ![](https://latex.codecogs.com/svg.image?1\times1) convs alters the channel width. Batch normalization and ReLU follow each convolution. The block has 3 parameters: the width ![w_i](https://latex.codecogs.com/svg.image?w_i), bottleneck ratio ![b_i](https://latex.codecogs.com/svg.image?b_i), and group width ![g_i](https://latex.codecogs.com/svg.image?g_i). 
 
@@ -91,7 +91,7 @@ The AnyNet built with this structure is called AnyNetX. In this design space, th
 
 To obtain valid models, author perform log-uniform sampling of ![number of block](https://latex.codecogs.com/svg.image?d_i%5Cleq%2016), ![block width](https://latex.codecogs.com/svg.image?w_i%5Cleq%20128),  and divisible by 8, ![bottleneck ratio](https://latex.codecogs.com/svg.image?b_i%5Cin%5Cleft%5C%7B1,2,4%5Cright%5C%7D), and ![group width](https://latex.codecogs.com/svg.image?g_i%5Cin%5Cleft%5C%7B1,2,4,%5Ccdots,32%5Cright%5C%7D). From these parameters, repeat sampling until n=500, and train each model for 10 epochs.
 
-![Statistic of the AnyNetX design space](/assets/images/ToNN/regnet/AnyNetXDesignSpace.png)
+![Statistic of the AnyNetX design space](/assets/images/ToNN/RegNet/AnyNetXDesignSpace.png)
 
 Basic statistics for AnyNetX is shown in the above image.
 
@@ -111,25 +111,25 @@ Initial unconstrained AnyNetX design space is AnyNetXA
 
 Shared bottleneck ratio ![Shared bottleneck ratio](https://latex.codecogs.com/svg.image?b_i=b) for all stage i for the AnyNetXA design space is called AnyNetXB. Same as AnyNetXA, author sampled and trained 500 models from AnyNetXB.
 
-![AnyNetXA and AnyNetXB](/assets/images/ToNN/regnet/AnyNetXAB.png)
+![AnyNetXA and AnyNetXB](/assets/images/ToNN/RegNet/AnyNetXAB.png)
 
 The EDFs of AnyNetXA and AnyNetXB, shown in the image above, are virtually identical in both in the average and best case. Therefore, this indicates when coupling the bottleneck ratio does not effect the accuracy. In addition to being simpler, the AnyNetXB is more amenable to analysis.
 
 ### AnyNetXC
 
-![AnyNetXB and AnyNetXC](/assets/images/ToNN/regnet/AnyNetXBC.png)
+![AnyNetXB and AnyNetXC](/assets/images/ToNN/RegNet/AnyNetXBC.png)
 
 The second refinement step closely follows the first. AnyNetXC use a shared group width ![Shared Group width](https://latex.codecogs.com/svg.image?g_i=g) over AnyNetXB. Overall, AnyNetXC has 6 fewer degrees of freedom than AnyNetXA, and reduce the design space size nearly four orders of magnitude. 
 
 ### AnyNetXD
 
-![Example good and bad AnyNetXC networks](/assets/images/ToNN/regnet/GoodNBadAnyNetXC.png)
+![Example good and bad AnyNetXC networks](/assets/images/ToNN/RegNet/GoodNBadAnyNetXC.png)
 
 Examining the network structures of both good and bad network from AnyNetXC in image above. Top three graph represent good AnyNetXC Networks and bottom three represent bad AnyNetXC.
 
 From these graphs, there is a pattern: good networks have increasing widths. Applying these design principle of ![increasing width](https://latex.codecogs.com/svg.image?w_%7Bi&plus;1%7D%5Cgeq%20w_i) to AnyNetXC and refer to the design space as AnyNetXD. 
 
-![AnyNetXC and AnyNetXD](/assets/images/ToNN/regnet/AnyNetXCD.png)
+![AnyNetXC and AnyNetXD](/assets/images/ToNN/RegNet/AnyNetXCD.png)
 
 The graph above represent testing different constraints on the width of the network. When using increasing widths, AnyNetXD, EDF is improved substantially. 
 
@@ -137,7 +137,7 @@ The graph above represent testing different constraints on the width of the netw
 
 There is another interesting trend. The stage depth ![d_i](https://latex.codecogs.com/svg.image?d_i) tends to increase for the best models, although not necessarily in the last stage.
 
-![AnyNetXD and AnyNetXE](/assets/images/ToNN/regnet/AnyNetXDE.png)
+![AnyNetXD and AnyNetXE](/assets/images/ToNN/RegNet/AnyNetXDE.png)
 
 Applying constraints ![increasing depth](https://latex.codecogs.com/svg.image?d_%7Bi&plus;1%7D%5Cgeq%20d_i) on AnyNetXD is called AnyNetXE. AnyNetXE is slightly better than AnyNetXD.
 
@@ -145,7 +145,7 @@ The constraints on ![d_i](https://latex.codecogs.com/svg.image?d_i) and ![w_i](h
 
 ## The RegNet Design Space
 
-![The best 20 models form AnyNetXE in a single plot](/assets/images/ToNN/regnet/Best20AnyNetXE.png)
+![The best 20 models form AnyNetXE in a single plot](/assets/images/ToNN/RegNet/Best20AnyNetXE.png)
 
 Above image show the best 20 models from AnyNetXE in a single plot. For each model, per-block width ![w_j](https://latex.codecogs.com/svg.image?w_j) of every block j up to the network depth d. There are significant variance in the individual models(gray curves). However, there is a trivial linear fit(![](https://latex.codecogs.com/svg.image?w_j=48%5Ccdot(j&plus;1)), black solid line) that explain the trend of the growth of network widths for top models. *Note that the y-axis are logarithmic*
 
@@ -167,11 +167,11 @@ From this per-block ![w_j](https://latex.codecogs.com/svg.image?w_j) representat
 
 Author test this parameterization by fitting to models from AnyNetX. Given a model, compute the fit by setting d to the network depth and performing a grid search over ![w_0](https://latex.codecogs.com/svg.image?w_0), ![w_a](https://latex.codecogs.com/svg.image?w_a), and ![w_m](https://latex.codecogs.com/svg.image?w_m) to minimize the mean log-ratio(denoted by ![e_fit](https://latex.codecogs.com/svg.image?e_%7Bfit%7D)) of predicted to observed per-block widths.
 
-![Quantized linear fit](/assets/images/ToNN/regnet/QuantizedLinearFit.png)
+![Quantized linear fit](/assets/images/ToNN/RegNet/QuantizedLinearFit.png)
 
 Result for two top networks from AnyNetXE are shown in the image above. The quantized linear fits(dashed curves) are good fits of these best models(solid curves).
 
-![](/assets/images/ToNN/regnet/LogRatioNetworkError.png)
+![](/assets/images/ToNN/RegNet/LogRatioNetworkError.png)
 
 Plotting the fitting error ![e_fit](https://latex.codecogs.com/svg.image?e_%7Bfit%7D) versus network error for every network in AnyNetXC through AnyNetXE in the image above. From this image we could find two observations.
 
@@ -182,13 +182,13 @@ Plotting the fitting error ![e_fit](https://latex.codecogs.com/svg.image?e_%7Bfi
 
 To further test the linear parameterization, author design a design space that only	contains models with such linear structure. Particularly, network structure is specified by 6 parameters:  d, ![w_0](https://latex.codecogs.com/svg.image?w_0), ![w_a](https://latex.codecogs.com/svg.image?w_a), ![w_m](https://latex.codecogs.com/svg.image?w_m), b and g. Given these parameters, author generate block widths and depth using equations written above. With these definition author defined resulting space as RegNet. Parameter is sampled from ![parameters](https://latex.codecogs.com/svg.image?d%3C64,%20w_0,w_a%3C256,%201.5%5Cleq%20w_m%5Cleq3,b%5Cin%5Cleft%5C%7B1,2,4%5Cright%5C%7D,%20g%5Cin%5Cleft%5C%7B1,2,%5Ccdots,32%5Cright%5C%7D).
 
-![RegNet Design Space](/assets/images/ToNN/regnet/RegNetDesignSpace.png)
+![RegNet Design Space](/assets/images/ToNN/RegNet/RegNetDesignSpace.png)
 
 The Error EDF of RegNetX is shown in the leftmost image. Models in RegNetX have better average error than AnyNetX while maintaining the best models. The middle image represent two additional improvement. First is using ![](https://latex.codecogs.com/svg.image?w_m=2), and Second is ![](https://latex.codecogs.com/svg.image?w_0=w_a). However, to maintain the diversity of models, author did not impose either restrictions. The final image shows the random search efficiency for both AnyNetXA and RegNetX.
 
 ## Design Space Summary
 
-![Design Space Summary](/assets/images/ToNN/regnet/DesignSpaceSummary.png)
+![Design Space Summary](/assets/images/ToNN/RegNet/DesignSpaceSummary.png)
 
 Above table shows a summary of the design space sizes. For RegNet, the estimation is based on the size of quantization of its continuous parameters. In designing RegNetX, Author reduced the dimension of the original AnyNetX design space from 16 to 6 dimensions. The total size is reduced nearly 10 orders of magnitude.
 
@@ -196,11 +196,11 @@ Above table shows a summary of the design space sizes. For RegNet, the estimatio
 
 The RegNet design space was designed in a low-compute, low-epoch training regime with only a single block type. Author checks if proposed principles works on different settings such as higher flops, higher epoch, with 5-stage networks and with various block types.
 
-![RegNetX Generalization](/assets/images/ToNN/regnet/RegNetXGeneralization.png)
+![RegNetX Generalization](/assets/images/ToNN/RegNet/RegNetXGeneralization.png)
 
 In all cases the ordering of the design space is consistent with ![regnet>anyneta>anynete](https://latex.codecogs.com/svg.image?RegNetX%3EAnyNetX_E%3EAnyNetX_A). In other words, there is no signs of over fitting. The 5-stage results show the regular structure of RegNet can generalize to more stages, where AnyNetXA has even more degrees of freedom.
 
-![Block type used](/assets/images/ToNN/regnet/BlockTypesUsed.png)
+![Block type used](/assets/images/ToNN/RegNet/BlockTypesUsed.png)
 
 Above image show different block type used in this test cases. X block has the best result among various block design.
 
@@ -210,7 +210,7 @@ Author further analyze the RegNetX design space and revisit common deep network 
 
 ### RegNet trends
 
-![RegNetX parameter trends](/assets/images/ToNN/regnet/RegNetXParameterTrend.png)
+![RegNetX parameter trends](/assets/images/ToNN/RegNet/RegNetXParameterTrend.png)
 
 1. The depth of the best models is stable across regimes with an optimal block of ~20 blocks
 	* This is contrast to the common practice of using deeper models for higher flop regime
@@ -222,7 +222,7 @@ Author further analyze the RegNetX design space and revisit common deep network 
 
 ### Complexity analysis
 
-![Complexity Metrics](/assets/images/ToNN/regnet/ComplexityMetrics.png)
+![Complexity Metrics](/assets/images/ToNN/RegNet/ComplexityMetrics.png)
 
 In addition to flops and parameters, author analyze network activation which is defined as the size of output tensors of all convolution layers. Complexity measures of common convolution operators are described in the above table. Activations is not a common measure of network complexity but heavily affect runtime on memory-bound hardware accelerators, shown in the top-right image.
 
@@ -236,7 +236,7 @@ Using above findings, author refine the RegNetX design space.
 2. Based on Complexity analysis, limit parameter and activations
 	* This yields fast, low-parameter, low-memory models without affecting accuracy.
 
-![](/assets/images/ToNN/regnet/RegNetXRefined.png)
+![](/assets/images/ToNN/RegNet/RegNetXRefined.png)
 
 Constrained version of RegNetX, marked by RegNetX C, has better results for every different flops. 
 
@@ -244,26 +244,26 @@ Constrained version of RegNetX, marked by RegNetX C, has better results for ever
 
 Modern mobile networks often employ the inverted bottleneck (![](https://latex.codecogs.com/svg.image?b<1)) along with depthwise convolution (![](https://latex.codecogs.com/svg.image?g=1)).
 
-![Alternate Design Choices](/assets/images/ToNN/regnet/AlternateDesignChoice.png)
+![Alternate Design Choices](/assets/images/ToNN/RegNet/AlternateDesignChoice.png)
 
 The inverted bottleneck degrades the EDF slightly and depthwise convolution performs even worse. Also shown in the right image, scaling the input image does not help improving accuracy for RegNetX
 
 
 ### SE
 
-![RegNetY(Y=X+SE)](/assets/images/ToNN/regnet/RegNetY.png)
+![RegNetY(Y=X+SE)](/assets/images/ToNN/RegNet/RegNetY.png)
 
 RegNetX with popular Squeeze and Excitation operation, abbreviated as RegNetY, yields better result than when it is not used.
 
 # Comparison to Existing Networks
 
-![Top result for RegNetX and RegNetY](/assets/images/ToNN/regnet/RegNetXY.png)
+![Top result for RegNetX and RegNetY](/assets/images/ToNN/RegNet/RegNetXY.png)
 
 Above graph and table represent best RegNetX models and RegNetY models for each flop regime. Through this linear structure of block index, we could observe an interesting pattern. The higher flop models have a large number of blocks in the third stage and a small number of blocks in the last stage. Group width g increase with complexity, but depth d saturates for large models.
 
 ## State-of-the-Art Comparison: Mobile Regime
 
-![Mobile Regime](/assets/images/ToNN/regnet/MobileRegime.png)
+![Mobile Regime](/assets/images/ToNN/RegNet/MobileRegime.png)
 
 The recent work on network design has focused on the mobile regime. When comparing RegNet models at 600MF to existing networks in above table. We observe that RegNet are effective in this regime considering the substantial body of work on finding better mobile networks via both manual design and NAS.
 
@@ -271,16 +271,16 @@ Author emphasize that RegNet models use only 100 epoch schedule without regulari
 
 ## Standard Baselines Comparison: ResNe(X)t
 
-![ResNe(X)t comparison](/assets/images/ToNN/regnet/ResNetComparison.png)
+![ResNe(X)t comparison](/assets/images/ToNN/RegNet/ResNetComparison.png)
 
-![ResNe(X)t comparison Table](/assets/images/ToNN/regnet/ResNetComparisonTable.png)
+![ResNe(X)t comparison Table](/assets/images/ToNN/RegNet/ResNetComparisonTable.png)
 
 RegNetX models provide considerable improvements under all complexity metrics. Also RegNet model performs better under all complexity metrics. 
 
 ## State-of-the-Art Comparison: Full Regime
 
-![EfficiencyNet comparison with different complexity metric](/assets/images/ToNN/regnet/EfficiencyNet.png)
-![EfficiencyNet comparison with RegNet](/assets/images/ToNN/regnet/EfficiencyNetComparison.png)
+![EfficiencyNet comparison with different complexity metric](/assets/images/ToNN/RegNet/EfficiencyNet.png)
+![EfficiencyNet comparison with RegNet](/assets/images/ToNN/RegNet/EfficiencyNetComparison.png)
 
 EfficentNet is reproduced using training setup used for RegNet. Therefore the Efficiency Net result is lower than the original results.
 
@@ -292,5 +292,3 @@ For EfficentNet activations scale linearly with flops compared to activation sca
 # Conclusion
 
 Author present a new network design paradigm. Designing network design spaces is a promising avenue for future research.
-
-## [Link to Neural Net](../)

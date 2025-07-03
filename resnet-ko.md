@@ -50,7 +50,7 @@ Plain network는 VGG networks를 기반으로 해서 만들어졌습니다. 기�
 
 Downsampling은 convolutional layer 레이어에서 stride값을 2로 만들어 사용합니다.
 
-![plainNetwork](/assets/images/ToNN/Korean/plainNetwork.png)
+![plainNetwork](/assets/images/ToNN/ResNet/plainNetwork.png)
 
 ### Residual Network
 
@@ -62,7 +62,7 @@ Identity shortcut는 입력과 출력의 dimension이 같을 때 사용합니다
  1. identity mapping을 사용하고, 부족한 dimension은 0으로 padding 합니다.
  2. 위에 표기된 weight 값을 사용해서 projection을 통한 dimension matching을 해줍니다.
 
-![residualNetwork](/assets/images/ToNN/Korean/residualNetwork.png)
+![residualNetwork](/assets/images/ToNN/ResNet/residualNetwork.png)
 
 ## 참조
 https://m.blog.naver.com/laonple/221259295035  

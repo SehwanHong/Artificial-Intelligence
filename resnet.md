@@ -28,7 +28,7 @@ With the residual Learning reformulation, if the identity mapping is optimal, th
 
 ## Identity mapping by shortcuts
 
-![residual Block](/assets/images/ToNN/resnet/residualBlock.png)
+![residual Block](/assets/images/ToNN/ResNet/residualBlock.png)
 
 Residual Block is defined as ![y=F(x,W_l)+x](https://latex.codecogs.com/svg.image?y=F(x,W_l)+x). In this equation, x is input layer and y is output layer. ![F(x,W_l)](https://latex.codecogs.com/svg.image?F(x,W_l)) is residual mapping to be learned.
 
@@ -51,7 +51,7 @@ Plain network is inspired by the philosophy of VGG networks
 
 Downsampling is done by using convolutional layer that have stride of 2
 
-![plainNetwork](/assets/images/ToNN/resnet/plainNetwork.png)
+![plainNetwork](/assets/images/ToNN/ResNet/plainNetwork.png)
 
 ### Residual Network
 
@@ -63,18 +63,13 @@ When dimensions increase, consider two options:
  1. Using identity mapping with extra zero entried for increasing dimensions
  2. The projection shortcuts in equation 2, which is added weights for identity matrix. For example, 1x1 convolutions with stride 2 to match dimensions.
 
-![residualNetwork](/assets/images/ToNN/resnet/residualNetwork.png)
+![residualNetwork](/assets/images/ToNN/ResNet/residualNetwork.png)
 
 # Experiment
 
-Experiment is done using CIFAR-10 and Tensorflow. Code is available in [GitHub Repository](https://github.com/SehwanHong/ResNet).
+Experiment is done using CIFAR-10 and Tensorflow. 
 
 ## Reference
 https://m.blog.naver.com/laonple/221259295035  
 https://sike6054.github.io/blog/paper/first-post/  
 https://github.com/taki0112/ResNet-Tensorflow  
-
-## [Link to Neural Net](../)
-## [Link to ResNet version 2](./V2/)
-## [Link to ResNeXt](./ResNext/)
-## [Link to Korean Version](./Korean/)

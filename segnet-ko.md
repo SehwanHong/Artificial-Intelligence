@@ -15,7 +15,7 @@ SegNet은 pixel-wise semantic segmentation을 효율적으로 이용하기 위�
 
 # Architecture
 
-![SegNet Architecture](/assets/images/ToNN/Korean/SegNet_architecture.PNG)
+![SegNet Architecture](/assets/images/ToNN/SegNet/SegNet_architecture.PNG)
 
 위 이미지는 SegNet의 구조를 표현한 것입니다. SegNet은 크게 encoder와 decoder 두가지 부분으로 나누어져 있습니다.
 
@@ -29,7 +29,7 @@ SegNet의 Encoder는 13개의 Convolutional layer로 이루어져있습니다. �
 
 SegNet의 Decoder는 Encoder를 뒤집은 것과 똑같습니다. 차이점이 있다고 하면, max-pooling layer가 up-sampling layer로 바뀐것입니다.
 
-![SegNet upsampling](/assets/images/ToNN/Korean/SegNet_upsampling.PNG)
+![SegNet upsampling](/assets/images/ToNN/SegNet/SegNet_upsampling.PNG)
 
 Up-sampling layer는 Max pooling layer에서 얻은 Index를 사용합니다. 이 Index를 사용해서 feature map을 늘리고, 비어있는 pixel에는 0을 기본값으로 설정합니다.
 
@@ -41,23 +41,23 @@ SegNet과 비교해서, Unet은 pooling indices를 사용하는 것이 아니라
 
 ## CamVid Result
 
-![CamVid result](/assets/images/ToNN/Korean/SegNet_CamVid_result.PNG)
+![CamVid result](/assets/images/ToNN/SegNet/SegNet_CamVid_result.PNG)
 
 기존에 사용하던 전통적인 방법과 비교했을때, SegNet이 11개의 class 중 8개의 class에서 가장 높은 정확도를 보였습니다. 또한 global accuracy의 경우 가장 좋은 결과를 가지고 있습니다. 
 
-![CamVid result Deep learning](/assets/images/ToNN/Korean/SegNet_CamVid_result_deep_learning.PNG)
+![CamVid result Deep learning](/assets/images/ToNN/SegNet/SegNet_CamVid_result_deep_learning.PNG)
 
 Deep learning 방법과 비교한다면, iteration이 증가할수록, SegNet이 더 좋은 결과를 보여줍니다.
 
 ## SUN-RGBD indoor scene
 
-![SUN-RGBD indoor scene result](/assets/images/ToNN/Korean/SegNet_SUN_RGBD.PNG)
+![SUN-RGBD indoor scene result](/assets/images/ToNN/SegNet/SegNet_SUN_RGBD.PNG)
 
 Iteration이 작을 때 SegNet이 DeepLap과 비교했을때 Global accuracy와 BF에서는 우위를 점하지만, Class accuracy와 mIoU부분에서는 떨어집니다. 하지만 iteration이 140k 이상인 경우, SegNet이 mIoU를 제외하고는 모든 부분 에서 뛰어납니다.
 
 ## Memory and Inference Time
 
-![Memory and Inference Time of SegNet](/assets/images/ToNN/Korean/SegNet_Memory.PNG)
+![Memory and Inference Time of SegNet](/assets/images/ToNN/SegNet/SegNet_Memory.PNG)
 
 DeepLap과 FCN은 SegNet보다 Inference Time이 빠른데 이는 DeepLap과 FCN이 decoder를 가지고 있지 않기에 발생하는 것입니다. 또한 DeconvNet과 비교했을때  SegNet는 Fully Connected layer를 가지고 있지 않기에 더 빠른 Inference time과 더 적은 memory를 사용합니다.
 
